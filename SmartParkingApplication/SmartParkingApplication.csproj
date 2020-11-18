@@ -2164,11 +2164,10 @@
     <Content Include="Views\ManageUser\Edit.cshtml" />
     <Content Include="Views\ManageUser\WorkingCalendar.cshtml" />
     <Content Include="Views\ManageUser\Editworkingcalendar.cshtml" />
-    <Content Include="Views\ParkingPlaces\Create.cshtml" />
-    <Content Include="Views\ParkingPlaces\Delete.cshtml" />
-    <Content Include="Views\ParkingPlaces\Details.cshtml" />
-    <Content Include="Views\ParkingPlaces\Edit.cshtml" />
-    <Content Include="Views\ParkingPlaces\Index.cshtml" />
+    <Content Include="Views\ManagePPlace\Create.cshtml" />
+    <Content Include="Views\ManagePPlace\Delete.cshtml" />
+    <Content Include="Views\ManagePPlace\Details.cshtml" />
+    <Content Include="Views\ManagePPlace\Edit.cshtml" />
     <Content Include="Views\ManagePPlace\ManageStatusParkingPlace.cshtml" />
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
     <None Include="Web.Debug.config">
