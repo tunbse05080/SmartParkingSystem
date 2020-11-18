@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Editworkingcalendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Sửa lịch làm việc</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","ManageUser")">Quản lí nhân viên</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("WorkingCalendar","ManageUser")">Lịch làm việc</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sửa</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="list-group" id="list-tab" role="tablist">
+                                        <a class="list-group-item disabled" style="font-weight:bolder" id="" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Tên Nhân Viên</a>
+                                        <a class="list-group-item list-group-item-action active" id="" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Nguyễn Văn A</a>
+                                        <a class="list-group-item list-group-item-action" id="" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Nguyễn Văn B</a>
+                                        <a class="list-group-item list-group-item-action" id="" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Nguyễn Văn C</a>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" style="font-weight:bolder" disabled">Ca</li>
+                                        <li class="list-group-item">1</li>
+                                        <li class="list-group-item">2</li>
+                                        <li class="list-group-item">3</li>
+                                    </ul>
+                                </div>
+                                <div class="col-9">
+                                    <table id="example2" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Lặp lại</th>
+                                                <th>Thứ 2</th>
+                                                <th>Thứ 3</th>
+                                                <th>Thứ 4</th>
+                                                <th>Thứ 5</th>
+                                                <th>Thứ 6</th>
+                                                <th>Thứ 7</th>
+                                                <th>Chủ Nhật</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                                <td><input type="checkbox" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button style="width:120px" type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success float-right">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+</div>

@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SmartParkingModelStoreContainer" CdmEntityContainer="SmartParkingEntities">
+    <EntitySetMapping Name="Cards">
+      <EntityTypeMapping TypeName="SmartParkingModel.Card">
+        <MappingFragment StoreEntitySet="Card">
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Images">
+      <EntityTypeMapping TypeName="SmartParkingModel.Image">
+        <MappingFragment StoreEntitySet="Image">
+          <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+          <ScalarProperty Name="LinkImageIN" ColumnName="LinkImageIN" />
+          <ScalarProperty Name="LinkImageOut" ColumnName="LinkImageOut" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MonthlyIncomeStatements">
+      <EntityTypeMapping TypeName="SmartParkingModel.MonthlyIncomeStatement">
+        <MappingFragment StoreEntitySet="MonthlyIncomeStatement">
+          <ScalarProperty Name="MonthlyIncomeStatementID" ColumnName="MonthlyIncomeStatementID" />
+          <ScalarProperty Name="MonthlyTicketID" ColumnName="MonthlyTicketID" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MonthlyTickets">
+      <EntityTypeMapping TypeName="SmartParkingModel.MonthlyTicket">
+        <MappingFragment StoreEntitySet="MonthlyTicket">
+          <ScalarProperty Name="MonthlyTicketID" ColumnName="MonthlyTicketID" />
+          <ScalarProperty Name="CusName" ColumnName="CusName" />
+          <ScalarProperty Name="IdentityCard" ColumnName="IdentityCard" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="TypeOfVehicle" ColumnName="TypeOfVehicle" />
+          <ScalarProperty Name="LicensePlates" ColumnName="LicensePlates" />
+          <ScalarProperty Name="RegisDate" ColumnName="RegisDate" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notifications">
+      <EntityTypeMapping TypeName="SmartParkingModel.Notification">
+        <MappingFragment StoreEntitySet="Notification">
+          <ScalarProperty Name="NotificationID" ColumnName="NotificationID" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParkingPlaces">
+      <EntityTypeMapping TypeName="SmartParkingModel.ParkingPlace">
+        <MappingFragment StoreEntitySet="ParkingPlace">
+          <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+          <ScalarProperty Name="NameOfParking" ColumnName="NameOfParking" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="NumberOfSlot" ColumnName="NumberOfSlot" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prices">
+      <EntityTypeMapping TypeName="SmartParkingModel.Price">
+        <MappingFragment StoreEntitySet="Price">
+          <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+          <ScalarProperty Name="TypeOfvehicle" ColumnName="TypeOfvehicle" />
+          <ScalarProperty Name="DayPrice" ColumnName="DayPrice" />
+          <ScalarProperty Name="MonthPrice" ColumnName="MonthPrice" />
+          <ScalarProperty Name="FirstBlock" ColumnName="FirstBlock" />
+          <ScalarProperty Name="NextBlock" ColumnName="NextBlock" />
+          <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="SmartParkingModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schedules">
+      <EntityTypeMapping TypeName="SmartParkingModel.Schedule">
+        <MappingFragment StoreEntitySet="Schedule">
+          <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+          <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+          <ScalarProperty Name="TimeFinish" ColumnName="TimeFinish" />
+          <ScalarProperty Name="Slot" ColumnName="Slot" />
+          <ScalarProperty Name="TimeApply" ColumnName="TimeApply" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="SmartParkingModel.Transaction">
+        <MappingFragment StoreEntitySet="Transaction">
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
+          <ScalarProperty Name="TimeOutv" ColumnName="TimeOutv" />
+          <ScalarProperty Name="LicensePlates" ColumnName="LicensePlates" />
+          <ScalarProperty Name="TypeOfTicket" ColumnName="TypeOfTicket" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="SmartParkingModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="PassWork" ColumnName="PassWork" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="UserAddress" ColumnName="UserAddress" />
+          <ScalarProperty Name="IdentityCard" ColumnName="IdentityCard" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserSchedules">
+      <EntityTypeMapping TypeName="SmartParkingModel.UserSchedule">
+        <MappingFragment StoreEntitySet="UserSchedule">
+          <ScalarProperty Name="UserScheduleID" ColumnName="UserScheduleID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

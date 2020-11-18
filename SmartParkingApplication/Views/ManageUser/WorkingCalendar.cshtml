@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "WorkingCalendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Lịch làm việc</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","ManageUser")">Quản lí nhân viên</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Lịch làm việc</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <form autocomplete="off">
+                                <div class="flex-row d-flex justify-content-center">
+                                    <div class="col-lg-6 col-11 px-1">
+                                        <a>From: </a><input type="date" value="From" />
+                                        <a style="margin-left:15px">To: </a><input type="date" value="To" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Thứ 2</th>
+                                        <th>Thứ 3</th>
+                                        <th>Thứ 4</th>
+                                        <th>Thứ 5</th>
+                                        <th>Thứ 6</th>
+                                        <th>Thứ 7</th>
+                                        <th>Chủ Nhật</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Ca 1</td>
+                                        <td>Nguyễn Văn B</td>
+                                        <td>Nguyễn Văn B</td>
+                                        <td>Nguyễn Văn C</td>
+                                        <td>Nguyễn Văn D</td>
+                                        <td>Nguyễn Văn E</td>
+                                        <td>Nguyễn Văn F</td>
+                                        <td>Nguyễn Văn G</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ca 2</td>
+                                        <td>Nguyễn Văn B</td>
+                                        <td>Nguyễn Văn B</td>
+                                        <td>Nguyễn Văn C</td>
+                                        <td>Nguyễn Văn D</td>
+                                        <td>Nguyễn Văn E</td>
+                                        <td>Nguyễn Văn F</td>
+                                        <td>Nguyễn Văn G</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ca 3</td>
+                                        <td>Nguyễn Văn B</td>
+                                        <td>Nguyễn Văn B</td>
+                                        <td>Nguyễn Văn C</td>
+                                        <td>Nguyễn Văn D</td>
+                                        <td>Nguyễn Văn E</td>
+                                        <td>Nguyễn Văn F</td>
+                                        <td>Nguyễn Văn G</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br />
+                            <button style="width:120px" type="button" onclick="location.href='@Url.Action("Editworkingcalendar", "ManageUser")';return false;" class="btn btn-success float-right">Sửa</button>
+                        </div>
+                        <!-- /.card-body -->
+                        <!--</div>
+
+    </div>-->
+                        <!-- /.col -->
+                        <!--<div class="col-md-9">
+        <div class="card card-primary">
+            <div class="card-body p-0">-->
+                        <!-- THE CALENDAR -->
+                        <!--<div id="calendar"></div>
+    </div>-->
+                        <!-- /.card-body -->
+                        <!--</div>-->
+                        <!-- /.card -->
+                        <!--</div>-->
+                    </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container-fluid -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+
+</div>
+<!-- /.content-wrapper -->

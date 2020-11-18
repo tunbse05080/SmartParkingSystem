@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ff501e8a30a343b5871f98e1ce767829" Name="Diagram1">
+        <EntityTypeShape EntityType="SmartParkingModel.Card" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.Image" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.MonthlyIncomeStatement" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.MonthlyTicket" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.Notification" Width="1.5" PointX="5.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.ParkingPlace" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.Price" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.Role" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.Schedule" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.Transaction" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.User" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingModel.UserSchedule" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="SmartParkingModel.FK__MonthlyTi__CardI__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__Transacti__CardI__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__Image__Transacti__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__MonthlyIn__Month__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__MonthlyTi__Parki__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__Price__ParkingPl__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__Transacti__Parki__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__User__ParkingPla__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__User__RoleID__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__UserSched__Sched__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingModel.FK__UserSched__UserI__403A8C7D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
