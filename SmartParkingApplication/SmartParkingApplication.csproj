@@ -2077,6 +2077,7 @@
     <Compile Include="Controllers\ManageStatisticController.cs" />
     <Compile Include="Controllers\ManageTicketController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
+    <Compile Include="Controllers\ParkingPlacesController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2154,7 +2155,6 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\ManageIncome\Index.cshtml" />
     <Content Include="Views\ManageCard\Index.cshtml" />
-    <Content Include="Views\ManagePPlace\Index.cshtml" />
     <Content Include="Views\ManageTicket\Index.cshtml" />
     <Content Include="Views\Setting\Index.cshtml" />
     <Content Include="Views\ManageStatistic\Index.cshtml" />
@@ -2164,6 +2164,13 @@
     <Content Include="Views\ManageUser\Edit.cshtml" />
     <Content Include="Views\ManageUser\WorkingCalendar.cshtml" />
     <Content Include="Views\ManageUser\Editworkingcalendar.cshtml" />
+    <Content Include="Views\ParkingPlaces\Create.cshtml" />
+    <Content Include="Views\ParkingPlaces\Delete.cshtml" />
+    <Content Include="Views\ParkingPlaces\Details.cshtml" />
+    <Content Include="Views\ParkingPlaces\Edit.cshtml" />
+    <Content Include="Views\ParkingPlaces\Index.cshtml" />
+    <Content Include="Views\ManagePPlace\ManageStatusParkingPlace.cshtml" />
+    <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

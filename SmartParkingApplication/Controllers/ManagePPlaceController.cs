@@ -8,8 +8,13 @@ namespace SmartParkingApplication.Controllers
 {
     public class ManagePPlaceController : Controller
     {
-        // GET: ManagePPlace
-        public ActionResult Index()
+        // GET: ManageParkingPlace
+        public ActionResult ManageStatusParkingPlace()
+        {
+            return View();
+        }
+
+        public ActionResult ListParkingPlace()
         {
             return View();
         }

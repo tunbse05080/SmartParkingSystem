@@ -1,0 +1,75 @@
+﻿@model SmartParkingApplication.Models.ParkingPlace
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ParkingPlace</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameOfParking)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameOfParking)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfSlot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfSlot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfCar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfCar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfMotoBike)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfMotoBike)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberCarBlank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberCarBlank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberMotoBikeBlank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberMotoBikeBlank)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ParkingPlaceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
