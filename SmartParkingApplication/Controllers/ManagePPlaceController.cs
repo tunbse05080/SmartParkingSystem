@@ -55,7 +55,7 @@ namespace SmartParkingApplication.Controllers
             {
                 db.ParkingPlaces.Add(parkingPlace);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ListParkingPlace");
             }
 
             return View(parkingPlace);
@@ -87,7 +87,7 @@ namespace SmartParkingApplication.Controllers
             {
                 db.Entry(parkingPlace).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ListParkingPlace");
             }
             return View(parkingPlace);
         }
@@ -115,7 +115,7 @@ namespace SmartParkingApplication.Controllers
             ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
             db.ParkingPlaces.Remove(parkingPlace);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ListParkingPlace");
         }
 
         protected override void Dispose(bool disposing)
