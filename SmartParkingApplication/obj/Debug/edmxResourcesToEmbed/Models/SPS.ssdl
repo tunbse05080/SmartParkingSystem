@@ -57,6 +57,10 @@
     <Property Name="NameOfParking" Type="nvarchar" MaxLength="50" />
     <Property Name="Location" Type="nvarchar" MaxLength="50" />
     <Property Name="NumberOfSlot" Type="int" />
+    <Property Name="NumberOfCar" Type="int" />
+    <Property Name="NumberOfMotoBike" Type="int" />
+    <Property Name="NumberCarBlank" Type="int" />
+    <Property Name="NumberMotoBikeBlank" Type="int" />
   </EntityType>
   <EntityType Name="Price">
     <Key>
@@ -96,6 +100,16 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
           <Property Name="TotalPrice" Type="int" />
           <Property Name="IsReceived" Type="int" />
         </EntityType>-->
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="Transaction">
     <Key>
       <PropertyRef Name="TransactionID" />
@@ -282,6 +296,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
     <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserSchedule" EntityType="Self.UserSchedule" Schema="dbo" store:Type="Tables" />

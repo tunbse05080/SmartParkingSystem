@@ -68,6 +68,10 @@
     <NavigationProperty Name="Prices" Relationship="Self.FK__Price__ParkingPl__440B1D61" FromRole="ParkingPlace" ToRole="Price" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__4D94879B" FromRole="ParkingPlace" ToRole="Transaction" />
     <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__3D5E1FD2" FromRole="ParkingPlace" ToRole="User" />
+    <Property Name="NumberOfCar" Type="Int32" />
+    <Property Name="NumberOfMotoBike" Type="Int32" />
+    <Property Name="NumberCarBlank" Type="Int32" />
+    <Property Name="NumberMotoBikeBlank" Type="Int32" />
   </EntityType>
   <EntityType Name="Price">
     <Key>
@@ -336,5 +340,16 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserSchedule" EntitySet="UserSchedules" />
     </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="SmartParkingModel.sysdiagram" />
   </EntityContainer>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
 </Schema>

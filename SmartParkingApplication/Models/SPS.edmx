@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SmartParkingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SmartParkingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="CardID" />
@@ -62,6 +62,10 @@
           <Property Name="NameOfParking" Type="nvarchar" MaxLength="50" />
           <Property Name="Location" Type="nvarchar" MaxLength="50" />
           <Property Name="NumberOfSlot" Type="int" />
+          <Property Name="NumberOfCar" Type="int" />
+          <Property Name="NumberOfMotoBike" Type="int" />
+          <Property Name="NumberCarBlank" Type="int" />
+          <Property Name="NumberMotoBikeBlank" Type="int" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
@@ -101,6 +105,16 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
           <Property Name="TotalPrice" Type="int" />
           <Property Name="IsReceived" Type="int" />
         </EntityType>-->
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Transaction">
           <Key>
             <PropertyRef Name="TransactionID" />
@@ -287,6 +301,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSchedule" EntityType="Self.UserSchedule" Schema="dbo" store:Type="Tables" />
@@ -335,8 +350,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             <End Role="UserSchedule" EntitySet="UserSchedule" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SmartParkingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -408,6 +422,10 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <NavigationProperty Name="Prices" Relationship="Self.FK__Price__ParkingPl__440B1D61" FromRole="ParkingPlace" ToRole="Price" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__4D94879B" FromRole="ParkingPlace" ToRole="Transaction" />
           <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__3D5E1FD2" FromRole="ParkingPlace" ToRole="User" />
+          <Property Name="NumberOfCar" Type="Int32" />
+          <Property Name="NumberOfMotoBike" Type="Int32" />
+          <Property Name="NumberCarBlank" Type="Int32" />
+          <Property Name="NumberMotoBikeBlank" Type="Int32" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
@@ -676,7 +694,18 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             <End Role="User" EntitySet="Users" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="SmartParkingModel.sysdiagram" />
         </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -740,6 +769,10 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <EntitySetMapping Name="ParkingPlaces">
             <EntityTypeMapping TypeName="SmartParkingModel.ParkingPlace">
               <MappingFragment StoreEntitySet="ParkingPlace">
+                <ScalarProperty Name="NumberMotoBikeBlank" ColumnName="NumberMotoBikeBlank" />
+                <ScalarProperty Name="NumberCarBlank" ColumnName="NumberCarBlank" />
+                <ScalarProperty Name="NumberOfMotoBike" ColumnName="NumberOfMotoBike" />
+                <ScalarProperty Name="NumberOfCar" ColumnName="NumberOfCar" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
                 <ScalarProperty Name="NameOfParking" ColumnName="NameOfParking" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
@@ -817,6 +850,17 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
                 <ScalarProperty Name="UserScheduleID" ColumnName="UserScheduleID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SmartParkingModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -13,5 +13,10 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
         }
+
+        public ActionResult CreateParkingPlace()
+        {
+            return View();
+        }
     }
 }

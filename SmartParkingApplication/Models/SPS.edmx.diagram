@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ff501e8a30a343b5871f98e1ce767829" Name="Diagram1">
+      <Diagram DiagramId="ff501e8a30a343b5871f98e1ce767829" Name="Diagram1" ZoomLevel="67">
         <EntityTypeShape EntityType="SmartParkingModel.Card" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartParkingModel.Image" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartParkingModel.MonthlyIncomeStatement" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
