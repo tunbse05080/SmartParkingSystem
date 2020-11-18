@@ -64,14 +64,14 @@
     <Property Name="NameOfParking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="NumberOfSlot" Type="Int32" />
-    <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__Parki__49C3F6B7" FromRole="ParkingPlace" ToRole="MonthlyTicket" />
-    <NavigationProperty Name="Prices" Relationship="Self.FK__Price__ParkingPl__440B1D61" FromRole="ParkingPlace" ToRole="Price" />
-    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__4D94879B" FromRole="ParkingPlace" ToRole="Transaction" />
-    <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__3D5E1FD2" FromRole="ParkingPlace" ToRole="User" />
     <Property Name="NumberOfCar" Type="Int32" />
     <Property Name="NumberOfMotoBike" Type="Int32" />
     <Property Name="NumberCarBlank" Type="Int32" />
     <Property Name="NumberMotoBikeBlank" Type="Int32" />
+    <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__Parki__49C3F6B7" FromRole="ParkingPlace" ToRole="MonthlyTicket" />
+    <NavigationProperty Name="Prices" Relationship="Self.FK__Price__ParkingPl__440B1D61" FromRole="ParkingPlace" ToRole="Price" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__4D94879B" FromRole="ParkingPlace" ToRole="Transaction" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__3D5E1FD2" FromRole="ParkingPlace" ToRole="User" />
   </EntityType>
   <EntityType Name="Price">
     <Key>
@@ -104,6 +104,16 @@
     <Property Name="Slot" Type="Int32" />
     <Property Name="TimeApply" Type="DateTime" Precision="0" />
     <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__412EB0B6" FromRole="Schedule" ToRole="UserSchedule" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Transaction">
     <Key>
@@ -293,6 +303,7 @@
     <EntitySet Name="Prices" EntityType="Self.Price" />
     <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Transactions" EntityType="Self.Transaction" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="UserSchedules" EntityType="Self.UserSchedule" />
@@ -340,16 +351,5 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserSchedule" EntitySet="UserSchedules" />
     </AssociationSet>
-    <EntitySet Name="sysdiagrams" EntityType="SmartParkingModel.sysdiagram" />
   </EntityContainer>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
 </Schema>

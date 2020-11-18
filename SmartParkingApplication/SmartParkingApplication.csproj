@@ -2123,6 +2123,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SPS.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>SPS.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Transaction.cs">
       <DependentUpon>SPS.tt</DependentUpon>
     </Compile>
