@@ -2170,7 +2170,6 @@
     <Content Include="Views\ManagePPlace\Edit.cshtml" />
     <Content Include="Views\ManagePPlace\ManageStatusParkingPlace.cshtml" />
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
-    <Content Include="Views\ManagePPlace\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
