@@ -148,7 +148,16 @@ namespace SmartParkingApplication.Controllers
         //Edit working calendar
         public ActionResult Editworkingcalendar()
         {
-            return View();
+            List<Schedule> schedules = db.Schedules.ToList();
+            List<User> users = db.Users.ToList();
+            List<UserSchedule> userSchedules = db.UserSchedules.ToList();
+            ViewData["events"] = from us in userSchedules
+                                 join u in users on us.UserID equals u.UserID into table
+                                 from u in table.DefaultIfEmpty()
+                                 join s in schedules on us.ScheduleID equals s.ScheduleID into table1
+                                 from s in table1.DefaultIfEmpty()
+                                 select new MultipleTablesJoinClass { userSchedule = us, user = u, schedule = s };
+            return View(ViewData["events"]);
         }
     }
 }
