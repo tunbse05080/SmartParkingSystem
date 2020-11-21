@@ -2095,6 +2095,7 @@
     <Compile Include="Models\MonthlyTicket.cs">
       <DependentUpon>SPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MultipleTablesJoinClass.cs" />
     <Compile Include="Models\Notification.cs">
       <DependentUpon>SPS.tt</DependentUpon>
     </Compile>

@@ -16,25 +16,39 @@
 //    eventArr.push(eventObj);
 //}
 
-let calendarEl = document.getElementById('calendar');
-
-let calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    },
-    events: [
-        {
-            title: "Record",
-            start: "2020-11-14 02:00:00",
-            end: "2020-11-14 10:00:00"
+let eventsArr = loadData();
+let calendar = initCalendar();
+function loadData() {
+    let eventsArr = [];
+    let todoTable = document.getElementById("eventsTable");
+    let trElem = todoTable.getElementsByTagName("tr");
+    console.log(trElem);
+    for (let tr of trElem) {
+        console.log(tr);
+        let tdElems = tr.getElementsByTagName("td");
+        let eventObj = {
+            title: tdElems[0].innerText,
+            start: tdElems[1].innerText,
+            end: tdElems[2].innerText
+        }
+        eventsArr.push(eventObj);
+    }
+    return eventsArr;
+}
+function initCalendar() {
+    var calendarEl = document.getElementById('calendar');
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-    ],
-});
-
-calendar.render();
+        events: eventsArr,
+    });
+    calendar.render();
+    return calendar;
+}
 
 
     /* initialize the external events
