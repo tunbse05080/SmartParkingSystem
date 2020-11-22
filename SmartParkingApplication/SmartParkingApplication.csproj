@@ -2078,7 +2078,6 @@
     <Compile Include="Controllers\ManageStatisticController.cs" />
     <Compile Include="Controllers\ManageTicketController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
-    <Compile Include="Controllers\ParkingPlacesController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
