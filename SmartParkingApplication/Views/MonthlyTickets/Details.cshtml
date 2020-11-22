@@ -1,0 +1,99 @@
+﻿@model SmartParkingApplication.Models.MonthlyTicket
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MonthlyTicket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CusName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdentityCard)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdentityCard)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfVehicle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfVehicle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LicensePlates)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LicensePlates)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegisDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegisDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpiryDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Card.CardNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Card.CardNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParkingPlace.NameOfParking)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParkingPlace.NameOfParking)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MonthlyTicketID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

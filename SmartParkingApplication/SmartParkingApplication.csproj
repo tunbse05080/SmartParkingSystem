@@ -2078,6 +2078,7 @@
     <Compile Include="Controllers\ManageStatisticController.cs" />
     <Compile Include="Controllers\ManageTicketController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
+    <Compile Include="Controllers\MonthlyTicketsController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2171,6 +2172,11 @@
     <Content Include="Views\ManagePPlace\Edit.cshtml" />
     <Content Include="Views\ManagePPlace\ManageStatusParkingPlace.cshtml" />
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
+    <Content Include="Views\MonthlyTickets\Create.cshtml" />
+    <Content Include="Views\MonthlyTickets\Delete.cshtml" />
+    <Content Include="Views\MonthlyTickets\Details.cshtml" />
+    <Content Include="Views\MonthlyTickets\Edit.cshtml" />
+    <Content Include="Views\MonthlyTickets\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

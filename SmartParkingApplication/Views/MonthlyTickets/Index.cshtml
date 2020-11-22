@@ -1,0 +1,88 @@
+﻿@model IEnumerable<SmartParkingApplication.Models.MonthlyTicket>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CusName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdentityCard)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeOfVehicle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlates)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegisDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Card.CardNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkingPlace.NameOfParking)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CusName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdentityCard)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfVehicle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LicensePlates)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegisDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpiryDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Card.CardNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MonthlyTicketID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MonthlyTicketID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MonthlyTicketID })
+        </td>
+    </tr>
+}
+
+</table>
