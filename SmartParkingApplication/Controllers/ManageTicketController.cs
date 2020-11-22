@@ -13,5 +13,11 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
         }
+
+        //List ExtendTicket
+        public ActionResult ListExtendTicket()
+        {
+            return View();
+        }
     }
 }

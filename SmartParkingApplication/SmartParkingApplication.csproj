@@ -2177,6 +2177,8 @@
     <Content Include="Views\MonthlyTickets\Details.cshtml" />
     <Content Include="Views\MonthlyTickets\Edit.cshtml" />
     <Content Include="Views\MonthlyTickets\Index.cshtml" />
+    <Content Include="Views\ManageTicket\ListExtendTicket.cshtml" />
+    <Content Include="Views\ManageTicket\ExtendTicket.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
