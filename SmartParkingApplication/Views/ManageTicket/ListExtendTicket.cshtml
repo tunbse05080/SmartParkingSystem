@@ -11,12 +11,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tình trạng xe trong bãi đỗ</h1>
+                    <h1>Danh sách vé tháng</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
-                        <li class="breadcrumb-item active">Tình trạng bãi đỗ xe</li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","ManageTicket")">Quản lý vé</a></li>
+                        <li class="breadcrumb-item active">Gia hạn vé tháng</li>
                     </ol>
                 </div>
             </div>
@@ -142,23 +143,22 @@
                                     <!-- Modal body -->
                                     <div class="modal-body">
                                         <div class="form-horizontal">
-                                            <hr />
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-4" style="padding-left:40px">
+                                                    <div class="col-md-5" style="padding-left:40px">
                                                         Ngày đăng ký
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-7">
                                                         <input type="date" value="2020-11-20" disabled />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-4" style="padding-left:40px">
+                                                    <div class="col-md-5" style="padding-left:40px">
                                                         Ngày hết hạn
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-7">
                                                         <input type="date" value="2020-12-20" disabled />
                                                     </div>
                                                 </div>
@@ -169,20 +169,25 @@
                                                         Thời gian gia hạn
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#">1 tháng</a>
-                                                            <a class="dropdown-item" href="#">6 tháng</a>
-                                                            <a class="dropdown-item" href="#">1 năm</a>
+                                                        <div class="dropdown" style="width:100%">
+                                                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                1 tháng
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#">1 tháng</a>
+                                                                <a class="dropdown-item" href="#">6 tháng</a>
+                                                                <a class="dropdown-item" href="#">1 năm</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-4" style="padding-left:40px">
+                                                    <div class="col-md-5" style="padding-left:40px">
                                                         Thành tiền
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-7">
                                                         <input type="text" value="500.000 VND" disabled />
                                                     </div>
                                                 </div>
@@ -191,7 +196,7 @@
                                     </div>
                                     <!-- Modal footer -->
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-success" data-dismiss="modal">Gia Hạn</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Gia Hạn</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                                     </div>
                                 </div>
