@@ -57,7 +57,6 @@
                                     <tr>
                                         <th>Tên</th>
                                         <th>Ngày Sinh</th>
-                                        <th>Mail</th>
                                         <th>Số điện thoại</th>
                                         <th>Chức vụ</th>
                                         <th>Bãi đỗ</th>
@@ -75,9 +74,6 @@
                                             @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.email)
-                                        </td>
-                                        <td>
                                             @Html.DisplayFor(modelItem => item.Phone)
                                         </td>
                                         <td>
@@ -87,9 +83,9 @@
                                             @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking)
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary">@Html.ActionLink("Detail", "Details", new { id = item.UserID })</button>
+                                            <button type="button" class="btn btn-success">@Html.ActionLink("Details", "Details", new { id = item.UserID })</button>
                                             <button type="button" class="btn btn-success">@Html.ActionLink("Edit", "Edit", new { id = item.UserID })</button>
-                                            <button type="button" class="btn btn-danger">@Html.ActionLink("Edit", "Edit", new { id = item.UserID })</button>
+                                            <button type="button" class="btn btn-danger">@Html.ActionLink("Delete", "Edit", new { id = item.UserID })</button>
                                         </td>
                                     </tr>
                                     }
