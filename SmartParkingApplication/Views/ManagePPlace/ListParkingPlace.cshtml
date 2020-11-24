@@ -56,78 +56,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>FPT Place</td>
-                                        <td>Ha Noi</td>
-                                        <td>500</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Detail</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Xóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>FPT Place</td>
-                                        <td>Ha Noi</td>
-                                        <td>500</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Detail</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Xóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>FPT Place</td>
-                                        <td>Ha Noi</td>
-                                        <td>500</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Detail</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Xóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>FPT Place</td>
-                                        <td>Ha Noi</td>
-                                        <td>500</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Detail</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Xóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>FPT Place</td>
-                                        <td>Ha Noi</td>
-                                        <td>500</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Detail</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Xóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>FPT Place</td>
-                                        <td>Ha Noi</td>
-                                        <td>500</td>
-                                        <td>200</td>
-                                        <td>300</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Detail</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Xóa</button>
-                                        </td>
-                                    </tr>
+                                    @foreach (var item in ViewBag.listParkings)
+                                    {
+                                        <tr>
+                                            <td>@item.NameOfParking</td>
+                                            <td>@item.Location</td>
+                                            <td>@item.NumberOfSlot</td>
+                                            <td>@item.NumberOfCar</td>
+                                            <td>@item.NumberOfMotoBike</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary">Chi tiết</button>
+                                                <button type="button" onclick="location.href='@Url.Action("Edit", "ManagePPlace")';return false;" class="btn btn-success">Sửa</button>
+                                                <button type="button" class="btn btn-danger">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                                 <tfoot>
                                     <tr>

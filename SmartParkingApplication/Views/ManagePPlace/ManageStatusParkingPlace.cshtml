@@ -167,60 +167,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>36SA-12253</td>
-                                        <td>02/02/2020 08:08:08</td>
-                                        <td>02/02/2020 09:08:08</td>
-                                        <td>Vé tháng</td>
-                                        <td>123456</td>
-                                        <td>Xe máy</td>
-                                        <td>FPT Place</td>
-                                    </tr>
-                                    <tr>
-                                        <td>36SA-12253</td>
-                                        <td>02/02/2020 08:08:08</td>
-                                        <td>02/02/2020 09:08:08</td>
-                                        <td>Vé tháng</td>
-                                        <td>123456</td>
-                                        <td>Xe máy</td>
-                                        <td>FPT Place</td>
-                                    </tr>
-                                    <tr>
-                                        <td>36SA-12253</td>
-                                        <td>02/02/2020 08:08:08</td>
-                                        <td>02/02/2020 09:08:08</td>
-                                        <td>Vé tháng</td>
-                                        <td>123456</td>
-                                        <td>Xe máy</td>
-                                        <td>FPT Place</td>
-                                    </tr>
-                                    <tr>
-                                        <td>36SA-12253</td>
-                                        <td>02/02/2020 08:08:08</td>
-                                        <td>02/02/2020 09:08:08</td>
-                                        <td>Vé tháng</td>
-                                        <td>123456</td>
-                                        <td>Xe máy</td>
-                                        <td>FPT Place</td>
-                                    </tr>
-                                    <tr>
-                                        <td>36SA-12253</td>
-                                        <td>02/02/2020 08:08:08</td>
-                                        <td>02/02/2020 09:08:08</td>
-                                        <td>Vé tháng</td>
-                                        <td>123456</td>
-                                        <td>Xe máy</td>
-                                        <td>FPT Place</td>
-                                    </tr>
-                                    <tr>
-                                        <td>36SA-12253</td>
-                                        <td>02/02/2020 08:08:08</td>
-                                        <td>02/02/2020 09:08:08</td>
-                                        <td>Vé tháng</td>
-                                        <td>123456</td>
-                                        <td>Xe máy</td>
-                                        <td>FPT Place</td>
-                                    </tr>
+                                    @foreach (var item in ViewBag.transac)
+
+                                    {
+                                        string TypeOfTicket = string.Empty;
+                                        switch (item.TypeOfTicket)
+                                        {
+                                            case 0:
+                                                TypeOfTicket = "Vé Tháng";
+                                                break;
+                                            case 1:
+                                                TypeOfTicket = "Vé Lượt";
+                                                break;
+
+                                        }
+                                        <tr>
+
+                                            <td>@item.LicensePlates</td>
+                                            <td>@item.TimeIn</td>
+                                            <td>@item.TimeOutv</td>
+                                            <td>@TypeOfTicket</td>
+                                            <td>@item.Card.CardNumber</td>
+                                            <td>@item.LicensePlates</td>
+                                            <td>@item.ParkingPlace.NameOfParking</td>
+                                        </tr>
+                                    }
                                 </tbody>
                                 <tfoot>
                                     <tr>

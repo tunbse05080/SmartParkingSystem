@@ -15,11 +15,16 @@ namespace SmartParkingApplication.Controllers
         // GET: ManageParkingPlace
         public ActionResult ManageStatusParkingPlace()
         {
+            var trans = (from t in db.Transactions select t).ToList();
+            ViewBag.transac = trans;
+
             return View();
         }
 
         public ActionResult ListParkingPlace()
         {
+            var listParking = (from list in db.ParkingPlaces select list).ToList();
+            ViewBag.listParkings = listParking;
             return View();
         }
 
