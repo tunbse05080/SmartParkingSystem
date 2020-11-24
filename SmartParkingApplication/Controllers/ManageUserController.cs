@@ -15,7 +15,8 @@ namespace SmartParkingApplication.Controllers
         // GET: ManageUser
         public ActionResult Index()
         {
-            return View();
+            List<User> list = db.Users.ToList();
+            return View(list);
         }
 
         // GET: Users/Details/5
