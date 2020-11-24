@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<SmartParkingApplication.Models.ParkingPlace>
 @{
     ViewBag.Title = "ListParkingPlace";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -56,18 +56,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in ViewBag.listParkings)
+                                    @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item.NameOfParking</td>
-                                            <td>@item.Location</td>
-                                            <td>@item.NumberOfSlot</td>
-                                            <td>@item.NumberOfCar</td>
-                                            <td>@item.NumberOfMotoBike</td>
+                                            <td>@Html.DisplayFor(modelItem => item.NameOfParking)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.NumberOfSlot)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.NumberOfCar)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.NumberOfMotoBike)</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary">Chi tiết</button>
-                                                <button type="button" onclick="location.href='@Url.Action("Edit", "ManagePPlace")';return false;" class="btn btn-success">Sửa</button>
-                                                <button type="button" class="btn btn-danger">Xóa</button>
+                                                <button class="btn btn-primary" onclick="location.href='@Url.Action("Details", "ManagePPlace",new { id = item.ParkingPlaceID})'">Chi tiết</button>
+                                                <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManagePPlace",new { id = item.ParkingPlaceID})'">Sửa</button>
+                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManagePPlace",new { id = item.ParkingPlaceID})'">Xóa</button>
                                             </td>
                                         </tr>
                                     }

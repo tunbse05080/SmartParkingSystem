@@ -83,9 +83,9 @@
                                                 @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking)
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary" onclick="location.href='@Url.Action("Details", "ManageUser",new { id = item.UserID})';return false;">Chi tiết</button>
-                                                <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManageUser",new { id = item.UserID})';return false;">Sửa</button>
-                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManageUser",new { id = item.UserID})';return false;">Xóa</button>
+                                                <button class="btn btn-primary" onclick="location.href='@Url.Action("Details", "ManageUser",new { id = item.UserID})'">Chi tiết</button>
+                                                <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManageUser",new { id = item.UserID})'">Sửa</button>
+                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManageUser",new { id = item.UserID})'">Xóa</button>
                                             </td>
                                         </tr>
                                     }
@@ -94,7 +94,6 @@
                                     <tr>
                                         <th>Tên</th>
                                         <th>Ngày Sinh</th>
-                                        <th>Mail</th>
                                         <th>Số điện thoại</th>
                                         <th>Chức vụ</th>
                                         <th>Bãi đỗ</th>

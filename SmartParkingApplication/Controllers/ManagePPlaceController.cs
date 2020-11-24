@@ -24,8 +24,7 @@ namespace SmartParkingApplication.Controllers
         public ActionResult ListParkingPlace()
         {
             var listParking = (from list in db.ParkingPlaces select list).ToList();
-            ViewBag.listParkings = listParking;
-            return View();
+            return View(listParking);
         }
 
         // GET: ParkingPlaces/Details/5
