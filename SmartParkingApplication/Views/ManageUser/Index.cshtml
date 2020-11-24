@@ -72,7 +72,7 @@
                                             @Html.DisplayFor(modelItem => item.Name)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                                            @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.email)
@@ -84,10 +84,10 @@
                                             @Html.DisplayFor(modelItem => item.Role.RoleName)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking);
+                                            @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking)
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary">@Html.ActionLink("Detail", "Detail", new { id = item.UserID })</button>
+                                            <button type="button" class="btn btn-primary">@Html.ActionLink("Detail", "Details", new { id = item.UserID })</button>
                                             <button type="button" class="btn btn-success">@Html.ActionLink("Edit", "Edit", new { id = item.UserID })</button>
                                             <button type="button" class="btn btn-danger">@Html.ActionLink("Edit", "Edit", new { id = item.UserID })</button>
                                         </td>
