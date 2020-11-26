@@ -52,7 +52,7 @@
                                         <th>Sức chứa</th>
                                         <th>Sức chứa ô tô</th>
                                         <th>Sức chứa xe máy</th>
-                                        <th>Action</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,7 +67,7 @@
                                             <td>
                                                 <button class="btn btn-primary" onclick="location.href='@Url.Action("Details", "ManagePPlace",new { id = item.ParkingPlaceID})'">Chi tiết</button>
                                                 <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManagePPlace",new { id = item.ParkingPlaceID})'">Sửa</button>
-                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManagePPlace",new { id = item.ParkingPlaceID})'">Xóa</button>
+                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManagePPlace",new { id = item.ParkingPlaceID})'">Khóa</button>
                                             </td>
                                         </tr>
                                     }
@@ -79,7 +79,7 @@
                                         <th>Sức chứa</th>
                                         <th>Sức chứa ô tô</th>
                                         <th>Sức chứa xe máy</th>
-                                        <th>Action</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -60,7 +60,7 @@
                                         <th>Số điện thoại</th>
                                         <th>Chức vụ</th>
                                         <th>Bãi đỗ</th>
-                                        <th>Action</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,7 +85,7 @@
                                             <td>
                                                 <button class="btn btn-primary" onclick="location.href='@Url.Action("Details", "ManageUser",new { id = item.UserID})'">Chi tiết</button>
                                                 <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManageUser",new { id = item.UserID})'">Sửa</button>
-                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManageUser",new { id = item.UserID})'">Xóa</button>
+                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManageUser",new { id = item.UserID})'">Chấm dứt HĐ</button>
                                             </td>
                                         </tr>
                                     }
@@ -97,7 +97,7 @@
                                         <th>Số điện thoại</th>
                                         <th>Chức vụ</th>
                                         <th>Bãi đỗ</th>
-                                        <th>Action</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </tfoot>
                             </table>
