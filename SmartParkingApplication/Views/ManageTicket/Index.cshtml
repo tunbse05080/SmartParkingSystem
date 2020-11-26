@@ -42,43 +42,43 @@
                                     <a class="dropdown-item" href="#">Fsoft-2</a>
                                 </div>
                             </div><br />
-                                  <div class="row invoice-info">
-                                      <!-- ./col -->
-                                      <div class="col-lg-3 col-6">
-                                          <!-- small box -->
-                                          <div class="small-box bg-success">
-                                              <div class="inner">
-                                                  <h3>100<sup style="font-size: 20px"></sup></h3>
+                            <div class="row invoice-info">
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-success">
+                                        <div class="inner">
+                                            <h3>100<sup style="font-size: 20px"></sup></h3>
 
-                                                  <p>Tổng số vé</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <!-- ./col -->
-                                      <div class="col-lg-3 col-6">
-                                          <!-- small box -->
-                                          <div class="small-box bg-warning">
-                                              <div class="inner">
-                                                  <h3>50<sup style="font-size: 20px"></sup></h3>
+                                            <p>Tổng số vé</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-warning">
+                                        <div class="inner">
+                                            <h3>50<sup style="font-size: 20px"></sup></h3>
 
-                                                  <p>Số vé tháng</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <!-- ./col -->
-                                      <div class="col-lg-3 col-6">
-                                          <!-- small box -->
-                                          <div class="small-box bg-danger">
-                                              <div class="inner">
-                                                  <h3>50<sup style="font-size: 20px"></sup></h3>
+                                            <p>Số vé tháng</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-danger">
+                                        <div class="inner">
+                                            <h3>50<sup style="font-size: 20px"></sup></h3>
 
-                                                  <p>Số vé ngày</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <!-- ./col -->
-                                  </div>
-                            
+                                            <p>Số vé ngày</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-3">
                                     <button type="button" onclick="location.href='@Url.Action("Create", "ManageTicket")';return false;" class="btn btn-success">Đăng ký vé tháng</button>
@@ -101,10 +101,10 @@
                                     <tr>
                                         <th>Tên chủ thẻ</th>
                                         <th>Tên xe</th>
-                                        <th>Loại xe</th>
                                         <th>Biển số</th>
                                         <th>Ngày đăng ký</th>
                                         <th>Ngày hết hạn</th>
+                                        <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
@@ -112,10 +112,10 @@
                                     <tr>
                                         <td>Nguyễn Bá Tú</td>
                                         <td>CBR 150</td>
-                                        <td>Motobike</td>
                                         <td>99A96789</td>
                                         <td>20/11/2020</td>
                                         <td>20/12/2020</td>
+                                        <td>Còn 3 ngày</td>
                                         <td>
                                             <button type="button" class="btn btn-primary">Chi tiết</button>
                                             <button type="button" class="btn btn-success">Sửa</button>
@@ -125,10 +125,10 @@
                                     <tr>
                                         <td>Nguyễn Bá Tú</td>
                                         <td>CBR 150</td>
-                                        <td>Motobike</td>
                                         <td>99A96789</td>
                                         <td>20/11/2020</td>
                                         <td>20/12/2020</td>
+                                        <td>Còn 3 ngày</td>
                                         <td>
                                             <button type="button" class="btn btn-primary">Chi tiết</button>
                                             <button type="button" class="btn btn-success">Sửa</button>
@@ -138,10 +138,10 @@
                                     <tr>
                                         <td>Nguyễn Bá Tú</td>
                                         <td>CBR 150</td>
-                                        <td>Motobike</td>
                                         <td>99A96789</td>
                                         <td>20/11/2020</td>
                                         <td>20/12/2020</td>
+                                        <td>Còn 3 ngày</td>
                                         <td>
                                             <button type="button" class="btn btn-primary">Chi tiết</button>
                                             <button type="button" class="btn btn-success">Sửa</button>
@@ -151,10 +151,23 @@
                                     <tr>
                                         <td>Nguyễn Bá Tú</td>
                                         <td>CBR 150</td>
-                                        <td>Motobike</td>
                                         <td>99A96789</td>
                                         <td>20/11/2020</td>
                                         <td>20/12/2020</td>
+                                        <td>Đã hết hạn</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">Chi tiết</button>
+                                            <button type="button" class="btn btn-success">Sửa</button>
+                                            <button type="button" class="btn btn-danger" style="width:43%" data-toggle="modal" data-target="#myModal">Gia hạn HĐ</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nguyễn Bá Tú</td>
+                                        <td>CBR 150</td>
+                                        <td>99A96789</td>
+                                        <td>20/11/2020</td>
+                                        <td>20/12/2020</td>
+                                        <td>Còn 14 ngày</td>
                                         <td>
                                             <button type="button" class="btn btn-primary">Chi tiết</button>
                                             <button type="button" class="btn btn-success">Sửa</button>
@@ -164,23 +177,10 @@
                                     <tr>
                                         <td>Nguyễn Bá Tú</td>
                                         <td>CBR 150</td>
-                                        <td>Motobike</td>
                                         <td>99A96789</td>
                                         <td>20/11/2020</td>
                                         <td>20/12/2020</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Chấm dứt HĐ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nguyễn Bá Tú</td>
-                                        <td>CBR 150</td>
-                                        <td>Motobike</td>
-                                        <td>99A96789</td>
-                                        <td>20/11/2020</td>
-                                        <td>20/12/2020</td>
+                                        <td>Còn 10 ngày</td>
                                         <td>
                                             <button type="button" class="btn btn-primary">Chi tiết</button>
                                             <button type="button" class="btn btn-success">Sửa</button>
@@ -192,16 +192,87 @@
                                     <tr>
                                         <th>Tên chủ thẻ</th>
                                         <th>Tên xe</th>
-                                        <th>Loại xe</th>
                                         <th>Biển số</th>
                                         <th>Ngày đăng ký</th>
                                         <th>Ngày hết hạn</th>
+                                        <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->
+                        <!-- The Modal -->
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Gia Hạn Vé Tháng</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px">
+                                                        Ngày đăng ký
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="date" value="2020-11-20" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px">
+                                                        Ngày hết hạn
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="date" value="2020-12-20" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px">
+                                                        Thời gian gia hạn
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <div class="dropdown" style="width:100%">
+                                                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                1 tháng
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#">1 tháng</a>
+                                                                <a class="dropdown-item" href="#">6 tháng</a>
+                                                                <a class="dropdown-item" href="#">1 năm</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px">
+                                                        Thành tiền
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="text" value="500.000 VND" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Gia Hạn</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /.col -->
