@@ -20,18 +20,22 @@ namespace SmartParkingApplication.Controllers
         }
 
         // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        public JsonResult Details(int id)
         {
-            if (id == null)
+            var employee = db.Users.Find(id);
+            var gender = "";
+            var dateOfBirth = "";
+            if (employee.Gender == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                gender = "Nữ";
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            else
             {
-                return HttpNotFound();
+                gender = "Nam";
             }
-            return View(user);
+            dateOfBirth = employee.DateOfBirth.Value.ToString("dd/MM/yyyy");
+            var result = new { UserID = employee.UserID, UserName = employee.UserName, Name = employee.Name, UserAddress = employee.UserAddress, gender, dateOfBirth, Phone = employee.Phone, email = employee.email, IdentityCard = employee.IdentityCard, NameOfParking = employee.ParkingPlace.NameOfParking, RoleName = employee.Role.RoleName };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Create
