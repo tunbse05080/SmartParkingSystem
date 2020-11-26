@@ -4,7 +4,187 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <h2>ManageCard</h2>
-</div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Quản lý thẻ</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Quản lý thẻ</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
 
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+
+                            <div class="dropdown">
+                                <strong style="font-size:x-large">Bãi đỗ     </strong>
+                                <button class="btn btn-primary dropdown-toggle" style="margin-top:-10px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    FPT Place
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">FPT Place</a>
+                                    <a class="dropdown-item" href="#">Fsoft-1</a>
+                                    <a class="dropdown-item" href="#">Fsoft-2</a>
+                                </div>
+                            </div><br />
+                            <div class="row invoice-info">
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-success">
+                                        <div class="inner">
+                                            <h3>100<sup style="font-size: 20px"></sup></h3>
+
+                                            <p>Tổng số thẻ</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <button type="button" class="btn btn-success">Thêm thẻ</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <form class="form-inline active-purple-3 active-purple-4">
+                                        <i class="fas fa-search" aria-hidden="true"></i>
+                                        <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tên chủ thẻ</th>
+                                        <th>Tên xe</th>
+                                        <th>Loại xe</th>
+                                        <th>Biển số</th>
+                                        <th>Ngày đăng ký</th>
+                                        <th>Ngày hết hạn</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nguyễn Bá Tú</td>
+                                        <td>CBR 150</td>
+                                        <td>Motobike</td>
+                                        <td>99A96789</td>
+                                        <td>20/11/2020</td>
+                                        <td>20/12/2020</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">Chi tiết</button>
+                                            <button type="button" class="btn btn-success">Sửa</button>
+                                            <button type="button" class="btn btn-danger">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nguyễn Bá Tú</td>
+                                        <td>CBR 150</td>
+                                        <td>Motobike</td>
+                                        <td>99A96789</td>
+                                        <td>20/11/2020</td>
+                                        <td>20/12/2020</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">Chi tiết</button>
+                                            <button type="button" class="btn btn-success">Sửa</button>
+                                            <button type="button" class="btn btn-danger">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nguyễn Bá Tú</td>
+                                        <td>CBR 150</td>
+                                        <td>Motobike</td>
+                                        <td>99A96789</td>
+                                        <td>20/11/2020</td>
+                                        <td>20/12/2020</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">Chi tiết</button>
+                                            <button type="button" class="btn btn-success">Sửa</button>
+                                            <button type="button" class="btn btn-danger">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nguyễn Bá Tú</td>
+                                        <td>CBR 150</td>
+                                        <td>Motobike</td>
+                                        <td>99A96789</td>
+                                        <td>20/11/2020</td>
+                                        <td>20/12/2020</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">Chi tiết</button>
+                                            <button type="button" class="btn btn-success">Sửa</button>
+                                            <button type="button" class="btn btn-danger">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nguyễn Bá Tú</td>
+                                        <td>CBR 150</td>
+                                        <td>Motobike</td>
+                                        <td>99A96789</td>
+                                        <td>20/11/2020</td>
+                                        <td>20/12/2020</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">Chi tiết</button>
+                                            <button type="button" class="btn btn-success">Sửa</button>
+                                            <button type="button" class="btn btn-danger">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nguyễn Bá Tú</td>
+                                        <td>CBR 150</td>
+                                        <td>Motobike</td>
+                                        <td>99A96789</td>
+                                        <td>20/11/2020</td>
+                                        <td>20/12/2020</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">Chi tiết</button>
+                                            <button type="button" class="btn btn-success">Sửa</button>
+                                            <button type="button" class="btn btn-danger">Xóa</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Tên chủ thẻ</th>
+                                        <th>Tên xe</th>
+                                        <th>Loại xe</th>
+                                        <th>Biển số</th>
+                                        <th>Ngày đăng ký</th>
+                                        <th>Ngày hết hạn</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
