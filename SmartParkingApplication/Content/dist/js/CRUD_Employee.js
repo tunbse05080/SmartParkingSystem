@@ -62,17 +62,17 @@ function getDetailByID(EmployeeID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#Id').val(result.UserID)
-            $('#UserName').val(result.UserName)
-            $('#FullName').val(result.Name)
-            $('#DateOfBirth').val(result.dateOfBirth)
-            $('#Gender').val(result.gender)
-            $('#Address').val(result.UserAddress)
-            $('#IdentityCard').val(result.IdentityCard)
-            $('#PhoneNumber').val(result.Phone)
-            $('#Email').val(result.email)
-            $('#RoleName').val(result.RoleName)
-            $('#ParkingPlace').val(result.NameOfParking)
+            $('#IdD').val(result.UserID)
+            $('#UserNameD').val(result.UserName)
+            $('#FullNameD').val(result.Name)
+            $('#DateOfBirthD').val(result.dateOfBirth)
+            $('#GenderD').val(result.gender)
+            $('#AddressD').val(result.UserAddress)
+            $('#IdentityCardD').val(result.IdentityCard)
+            $('#PhoneNumberD').val(result.Phone)
+            $('#EmailD').val(result.email)
+            $('#RoleNameD').val(result.RoleName)
+            $('#ParkingPlaceD').val(result.NameOfParking)
 
             $('#myModalDetail').modal('show');
             $('#btnAdd').hide();
@@ -121,12 +121,15 @@ function Add() {
     var empObj = {
         UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
+        Password: $('#Password').val(),
         DateOfBirth: $('#DateOfBirth').val(),
         Gender: $('#Gender').val(),
         UserAddress: $('#Address').val(),
         Phone: $('#PhoneNumber').val(),    
         email: $('#Email').val(),
-        IdentityCard: $('#IdentityCard').val(),     
+        IdentityCard: $('#IdentityCard').val(),
+        ContractSigningDate: $('ContractSigningDate').val(),
+        ContractExpirationDate: $('ContractExpirationDate').val(),
         RoleID: $('#RoleName').val(),
         ParkingPlaceID: $('#ParkingPlace').val(),
     };
