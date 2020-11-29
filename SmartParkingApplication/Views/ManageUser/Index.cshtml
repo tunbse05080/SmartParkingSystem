@@ -64,31 +64,6 @@
                                     </tr>
                                 </thead>
                                 <tbody class="tbody">
-                                    @*@foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Name)
-                                            </td>
-                                            <td>
-                                                @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Phone)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Role.RoleName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking)
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="getByID(@Html.DisplayFor(modelItem => item.UserID))">Chi tiết</button>
-                                                <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManageUser",new { id = item.UserID})'">Sửa</button>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(@Html.DisplayFor(modelItem => item.UserID))">Chấm dứt HĐ</button>
-                                            </td>
-                                        </tr>
-                                    }*@
                                 </tbody>
                                 <tfoot>
                                     <tr>
