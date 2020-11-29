@@ -46,7 +46,9 @@ namespace SmartParkingApplication.Controllers
                 gender = "Nam";
             }
             dateOfBirth = employee.DateOfBirth.Value.ToString("dd/MM/yyyy");
-            var result = new { UserID = employee.UserID, UserName = employee.UserName, Name = employee.Name, UserAddress = employee.UserAddress, gender, dateOfBirth, Phone = employee.Phone, email = employee.email, IdentityCard = employee.IdentityCard, NameOfParking = employee.ParkingPlace.NameOfParking, RoleName = employee.Role.RoleName };
+            var contractSigningDate = employee.ContractSigningDate.Value.ToString("dd/MM/yyyy");
+            var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
+            var result = new {  employee.UserID, employee.UserName, employee.Name, employee.UserAddress, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking,employee.Role.RoleName, contractSigningDate, contractExpirationDate};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

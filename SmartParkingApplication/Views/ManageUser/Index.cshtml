@@ -90,7 +90,7 @@
                                         <form class="row">
                                             <div class="form-group col-sm-4">
                                                 <label for="Id">Id</label>
-                                                <input type="text" class="form-control" id="Id" placeholder="Id" disabled/>
+                                                <input type="text" class="form-control" id="Id" placeholder="Id" disabled />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="UserName">Tên tài khoản</label>
@@ -134,7 +134,7 @@
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="ContractExpirationDate">Ngày hết HĐ</label>
-                                                <input type="date" class="form-control" id="ContractExpirationDate" placeholder="Ngày hết HĐ" />
+                                                <input type="text" class="form-control" id="ContractExpirationDate" placeholder="Ngày hết HĐ" disabled/>
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="RoleName">Chức vụ</label>
@@ -157,54 +157,62 @@
                         <!-- The Modal Detail -->
                         <div class="modal fade" id="myModalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
-                                <div class="modal-content">
+                                <div class="modal-content" style="width:110%">
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         <form class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label for="Id">ID</label>
+                                            <div class="form-group col-sm-4">
+                                                <label for="Id">Id</label>
                                                 <input type="text" class="form-control" id="IdD" placeholder="Id" disabled />
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="UserName">Tên tài khoản</label>
                                                 <input type="text" class="form-control" id="UserNameD" placeholder="Tên tài khoản" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="FullName">Tên đầy đủ</label>
                                                 <input type="text" class="form-control" id="FullNameD" placeholder="Tên đầy đủ" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="DateOfBirth">Ngày Sinh</label>
                                                 <input type="text" class="form-control" id="DateOfBirthD" placeholder="Ngày Sinh" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="Gender">Giới tính</label>
                                                 <input type="text" class="form-control" id="GenderD" placeholder="Giới tính" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="Address">Địa chỉ</label>
                                                 <input type="text" class="form-control" id="AddressD" placeholder="Địa chỉ" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="PhoneNumber">Số điện thoại</label>
                                                 <input type="text" class="form-control" id="PhoneNumberD" placeholder="Số điện thoại" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="Email">Email</label>
                                                 <input type="text" class="form-control" id="EmailD" placeholder="Email" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="IdentityCard">Số CMND</label>
                                                 <input type="text" class="form-control" id="IdentityCardD" placeholder="Số CMND" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
+                                                <label for="ContractSigningDate">Ngày ký HĐ</label>
+                                                <input type="text" class="form-control" id="ContractSigningDateD" placeholder="Ngày ký HĐ" value="" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ContractExpirationDate">Ngày hết HĐ</label>
+                                                <input type="text" class="form-control" id="ContractExpirationDateD" placeholder="Ngày hết HĐ" disabled/>
+                                            </div>
+                                            <div class="form-group col-sm-4">
                                                 <label for="RoleName">Chức vụ</label>
                                                 <input type="text" class="form-control" id="RoleNameD" placeholder="Chức vụ" disabled/>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-4">
                                                 <label for="ParkingPlace">Bãi làm việc</label>
                                                 <input type="text" class="form-control" id="ParkingPlaceD" placeholder="Bãi làm việc" disabled/>
                                             </div>
@@ -216,6 +224,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <!-- /.col -->

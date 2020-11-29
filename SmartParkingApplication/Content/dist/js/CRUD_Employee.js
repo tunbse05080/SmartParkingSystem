@@ -22,19 +22,70 @@ function loadDateNow() {
 }
 
 
-//Function for getting detail data base on EmployeeID
+//Function for getting data base on EmployeeID
 function getByID(EmployeeID) {
-    $('#Id').css('border-color', 'lightgrey');
-    $('#UserName').css('border-color', 'lightgrey');
-    $('#FullName').css('border-color', 'lightgrey');
-    $('#DateOfBirth').css('border-color', 'lightgrey');
-    $('#Gender').css('border-color', 'lightgrey');
-    $('#Address').css('border-color', 'lightgrey');
-    $('#IdentityCard').css('border-color', 'lightgrey');
-    $('#PhoneNumber').css('border-color', 'lightgrey');
-    $('#Email').css('border-color', 'lightgrey');
-    $('#RoleName').css('border-color', 'lightgrey');
-    $('#ParkingPlace').css('border-color', 'lightgrey');
+    $.ajax({
+        url: "/ManageUser/Details/" + EmployeeID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#Id').val(result.UserID)
+            $('#UserName').val(result.UserName)
+            $('#FullName').val(result.Name)
+            $('#DateOfBirth').val(result.dateOfBirth)
+            $('#Gender').val(result.gender)
+            $('#Address').val(result.UserAddress)
+            $('#IdentityCard').val(result.IdentityCard)
+            $('#PhoneNumber').val(result.Phone)
+            $('#Email').val(result.email)
+            $('#RoleName').val(result.RoleName)
+            $('#ParkingPlace').val(result.NameOfParking)
+            $('#ContractSigningDate').val(result.contractSigningDate);
+            $('#ContractExpirationDate').val(result.contractExpirationDate);
+
+            $('#myModal').modal('show');
+            $('#btnAdd').hide();
+            $('#btnUpdate').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+//Function for getting detail data base on EmployeeID
+function getDetailByID(EmployeeID) {
+    $.ajax({
+        url: "/ManageUser/Details/" + EmployeeID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#IdD').val(result.UserID)
+            $('#UserNameD').val(result.UserName)
+            $('#FullNameD').val(result.Name)
+            $('#DateOfBirthD').val(result.dateOfBirth)
+            $('#GenderD').val(result.gender)
+            $('#AddressD').val(result.UserAddress)
+            $('#IdentityCardD').val(result.IdentityCard)
+            $('#PhoneNumberD').val(result.Phone)
+            $('#EmailD').val(result.email)
+            $('#RoleNameD').val(result.RoleName)
+            $('#ParkingPlaceD').val(result.NameOfParking)
+            $('#ContractSigningDateD').val(result.contractSigningDate);
+            $('#ContractExpirationDateD').val(result.contractExpirationDate);
+
+            $('#myModalDetail').modal('show');
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+//Function for getting detail data base on EmployeeID
+function getIdToDropContract() {
     $.ajax({
         url: "/ManageUser/Details/" + EmployeeID,
         type: "GET",
@@ -54,49 +105,7 @@ function getByID(EmployeeID) {
             $('#ParkingPlace').val(result.NameOfParking)
 
             $('#myModal').modal('show');
-            $('#btnAdd').hide();
-            $('#btnUpdate').show();
-        },
-        error: function (errormessage) {
-            alert("Exception:" + EmployeeID + errormessage.responseText);
-        }
-    });
-    return false;
-}
-
-function getDetailByID(EmployeeID) {
-    $('#Id').css('border-color', 'lightgrey');
-    $('#UserName').css('border-color', 'lightgrey');
-    $('#FullName').css('border-color', 'lightgrey');
-    $('#DateOfBirth').css('border-color', 'lightgrey');
-    $('#Gender').css('border-color', 'lightgrey');
-    $('#Address').css('border-color', 'lightgrey');
-    $('#IdentityCard').css('border-color', 'lightgrey');
-    $('#PhoneNumber').css('border-color', 'lightgrey');
-    $('#Email').css('border-color', 'lightgrey');
-    $('#RoleName').css('border-color', 'lightgrey');
-    $('#ParkingPlace').css('border-color', 'lightgrey');
-    $.ajax({
-        url: "/ManageUser/Details/" + EmployeeID,
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#IdD').val(result.UserID)
-            $('#UserNameD').val(result.UserName)
-            $('#FullNameD').val(result.Name)
-            $('#DateOfBirthD').val(result.dateOfBirth)
-            $('#GenderD').val(result.gender)
-            $('#AddressD').val(result.UserAddress)
-            $('#IdentityCardD').val(result.IdentityCard)
-            $('#PhoneNumberD').val(result.Phone)
-            $('#EmailD').val(result.email)
-            $('#RoleNameD').val(result.RoleName)
-            $('#ParkingPlaceD').val(result.NameOfParking)
-
-            $('#myModalDetail').modal('show');
-            $('#btnAdd').hide();
-            $('#btnUpdate').show();
+            $('#btnDrop').show();
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
@@ -185,8 +194,11 @@ function Update() {
         Phone: $('#PhoneNumber').val(),
         email: $('#Email').val(),
         IdentityCard: $('#IdentityCard').val(),
+        ContractSigningDate: $('#ContractSigningDate').val(),
+        ContractExpirationDate: $('#ContractExpirationDate').val(),
         RoleID: $('#RoleName').val(),
         ParkingPlaceID: $('#ParkingPlace').val(),
+
     };
     $.ajax({
         url: "/ManageUser/Update",
@@ -197,15 +209,6 @@ function Update() {
         success: function (result) {
             loadData();
             $('#myModal').modal('hide');
-            //$('#Id').val("");
-            //$('#UserName').val("");
-            //$('#FullName').val("");
-            //$('#DateOfBirth').val("");
-            //$('#Gender').val("");
-            //$('#Address').val("");
-            //$('#PhoneNumber').val("");
-            //$('#Email').val("");
-            //$('#IdentityCard').val("");
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -243,6 +246,13 @@ function validate() {
     }
     else {
         $('#UserName').css('border-color', 'lightgrey');
+    }
+    if ($('#PassWord').val().trim() == "") {
+        $('#PassWord').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#PassWord').css('border-color', 'lightgrey');
     }
     if ($('#FullName').val().trim() == "") {
         $('#FullName').css('border-color', 'Red');
@@ -292,6 +302,20 @@ function validate() {
     }
     else {
         $('#IdentityCard').css('border-color', 'lightgrey');
+    }
+    if ($('#ParkingPlace').val().trim() == "") {
+        $('#ParkingPlace').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#ParkingPlace').css('border-color', 'lightgrey');
+    }
+    if ($('#RoleName').val().trim() == "") {
+        $('#RoleName').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#RoleName').css('border-color', 'lightgrey');
     }
     return isValid;
 }
