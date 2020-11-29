@@ -39,3 +39,19 @@ function getByID(EmployeeID) {
     });
     return false;
 }
+
+function DropContract(EmployeeID) {
+    $.ajax({
+        url: "/ManageUser/DropContract/" + EmployeeID,
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('pDrop').text("Chấm dứt hợp đồng thành công!");
+            $('btnDrop').hide();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    })
+}

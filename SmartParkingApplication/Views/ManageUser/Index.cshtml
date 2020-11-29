@@ -66,28 +66,28 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td>
-                                            @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Phone)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Role.RoleName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking)
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="getByID(@Html.DisplayFor(modelItem => item.UserID))">Chi tiết</button>
-                                            <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManageUser",new { id = item.UserID})'">Sửa</button>
-                                            <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "ManageUser",new { id = item.UserID})'">Chấm dứt HĐ</button>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.DateOfBirth).ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Phone)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Role.RoleName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ParkingPlace.NameOfParking)
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="getByID(@Html.DisplayFor(modelItem => item.UserID))">Chi tiết</button>
+                                                <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManageUser",new { id = item.UserID})'">Sửa</button>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="DropContract(@Html.DisplayFor(modelItem => item.UserID))">Chấm dứt HĐ</button>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                                 <tfoot>
@@ -103,7 +103,7 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <!-- The Modal -->
+                        <!-- The Modal Detail-->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -162,6 +162,26 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
                                         <button type="button" class="btn btn-success" id="btnUpdate">Sửa</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- The Modal Drop a contract-->
+                        <div class="modal fade" id="myModalDropContract" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row">
+                                            <p id="pDrop">Bạn có muốn chấm dứt hợp đồng với nhân viên này?</p>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success" id="btnDrop">Đồng ý</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
