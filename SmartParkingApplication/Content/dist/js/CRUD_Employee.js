@@ -44,6 +44,47 @@ function getByID(EmployeeID) {
     return false;
 }
 
+function getDetailByID(EmployeeID) {
+    $('#Id').css('border-color', 'lightgrey');
+    $('#UserName').css('border-color', 'lightgrey');
+    $('#FullName').css('border-color', 'lightgrey');
+    $('#DateOfBirth').css('border-color', 'lightgrey');
+    $('#Gender').css('border-color', 'lightgrey');
+    $('#Address').css('border-color', 'lightgrey');
+    $('#IdentityCard').css('border-color', 'lightgrey');
+    $('#PhoneNumber').css('border-color', 'lightgrey');
+    $('#Email').css('border-color', 'lightgrey');
+    $('#RoleName').css('border-color', 'lightgrey');
+    $('#ParkingPlace').css('border-color', 'lightgrey');
+    $.ajax({
+        url: "/ManageUser/Details/" + EmployeeID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#Id').val(result.UserID)
+            $('#UserName').val(result.UserName)
+            $('#FullName').val(result.Name)
+            $('#DateOfBirth').val(result.dateOfBirth)
+            $('#Gender').val(result.gender)
+            $('#Address').val(result.UserAddress)
+            $('#IdentityCard').val(result.IdentityCard)
+            $('#PhoneNumber').val(result.Phone)
+            $('#Email').val(result.email)
+            $('#RoleName').val(result.RoleName)
+            $('#ParkingPlace').val(result.NameOfParking)
+
+            $('#myModalDetail').modal('show');
+            $('#btnAdd').hide();
+            $('#btnUpdate').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+
 //Load Data function
 function loadData() {
     $.ajax({
@@ -60,7 +101,7 @@ function loadData() {
                 html += '<td>' + item.Phone + '</td>';
                 html += '<td>' + item.RoleName + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
-                html += '<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick = "getByID(' + item.UserID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                 html += '</tr>';
             });
             $('.tbody').html(html);
