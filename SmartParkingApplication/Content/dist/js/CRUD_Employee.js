@@ -35,7 +35,7 @@ function getByID(EmployeeID) {
 
             $('#myModal').modal('show');
             $('#btnAdd').hide();
-            $('#btnUpdate').hide();
+            $('#btnUpdate').show();
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
@@ -87,7 +87,7 @@ function Add() {
         email: $('#Email').val(),
         IdentityCard: $('#IdentityCard').val(),     
         RoleID: $('#RoleName').val(),
-        ParkingPlaceID: $('#ParkingPlace').val(),     
+        ParkingPlaceID: $('#ParkingPlace').val(),
     };
     $.ajax({
         url: "/ManageUser/Create",
@@ -112,16 +112,17 @@ function Update() {
         return false;
     }
     var empObj = {
-        EmployeeID: $('#UserName').val(),
+        UserID: $('#Id').val(),
+        UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
-        Age: $('#DateOfBirth').val(),
-        State: $('#Gender').val(),
-        Country: $('#Address').val(),
-        Country: $('#PhoneNumber').val(),
-        Country: $('#Email').val(),
-        Country: $('#IdentityCard').val(),
-        Country: $('#RoleName').val(),
-        Country: $('#ParkingPlace').val(),
+        DateOfBirth: $('#DateOfBirth').val(),
+        Gender: $('#Gender').val(),
+        UserAddress: $('#Address').val(),
+        Phone: $('#PhoneNumber').val(),
+        email: $('#Email').val(),
+        IdentityCard: $('#IdentityCard').val(),
+        RoleID: $('#RoleName').val(),
+        ParkingPlaceID: $('#ParkingPlace').val(),
     };
     $.ajax({
         url: "/ManageUser/Update",
@@ -132,15 +133,15 @@ function Update() {
         success: function (result) {
             loadData();
             $('#myModal').modal('hide');
-            $('#Id').val("");
-            $('#UserName').val("");
-            $('#FullName').val("");
-            $('#DateOfBirth').val("");
-            $('#Gender').val("");
-            $('#Address').val("");
-            $('#PhoneNumber').val("");
-            $('#Email').val("");
-            $('#IdentityCard').val("");
+            //$('#Id').val("");
+            //$('#UserName').val("");
+            //$('#FullName').val("");
+            //$('#DateOfBirth').val("");
+            //$('#Gender').val("");
+            //$('#Address').val("");
+            //$('#PhoneNumber').val("");
+            //$('#Email').val("");
+            //$('#IdentityCard').val("");
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
