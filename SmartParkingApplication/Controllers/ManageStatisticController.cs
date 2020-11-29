@@ -9,7 +9,13 @@ namespace SmartParkingApplication.Controllers
     public class ManageStatisticController : Controller
     {
         // GET: ManageStatistic
-        public ActionResult Index()
+
+        public ActionResult IncomeStatistic()
+        {
+            return View();
+        }
+
+        public ActionResult DensityStatistic()
         {
             return View();
         }

@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "DensityStatistic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Quản lý thẻ</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Thống kê mật độ xe</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+
+                            <div class="dropdown">
+                                <strong style="font-size:x-large">Bãi đỗ     </strong>
+                                <button class="btn btn-primary dropdown-toggle" style="margin-top:-10px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    FPT Place
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">FPT Place</a>
+                                    <a class="dropdown-item" href="#">Fsoft-1</a>
+                                    <a class="dropdown-item" href="#">Fsoft-2</a>
+                                </div>
+                            </div><br />
+                                  <div class="row invoice-info w-50">
+                                      <table class="table table-avatar">
+                                          <thead>
+                                              <tr class="bg-green">
+                                                  <th></th>
+                                                  <th>Xe tồn trong bãi</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr>
+                                                  <td style="font-weight:bolder">Xe máy</td>
+                                                  <td style="padding-left:55px">123</td>
+                                              </tr>
+                                              <tr>
+                                                  <td style="font-weight:bolder">Ô tô</td>
+                                                  <td style="padding-left:55px">123</td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- BAR CHART -->
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h3 class="card-title">Bar Chart</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart">
+                                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

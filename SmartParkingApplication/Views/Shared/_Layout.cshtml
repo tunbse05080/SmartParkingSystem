@@ -237,12 +237,31 @@
                         </li> <!--End quản lí thẻ-->
                         <!--Thống kê-->
                         <li class="nav-item">
-                            <a href="@Url.Action("Index","ManageStatistic")" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-chart-bar"></i>
                                 <p>
                                     Thống kê
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("IncomeStatistic","ManageStatistic")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Doanh thu
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("DensityStatistic","ManageStatistic")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Mật độ xe
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li> <!--End thống kê-->
                         <!--Thiết lập giá vé-->
                         <li class="nav-item">
