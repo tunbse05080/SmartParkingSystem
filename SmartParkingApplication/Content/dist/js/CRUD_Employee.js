@@ -1,6 +1,26 @@
 ﻿$(document).ready(function () {
     loadData();
+    loadDateNow();
 });
+
+function loadDateNow() {
+    // body...
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = mm + '/' + dd + '/' + yyyy;
+    document.getElementById("ContractSigningDate").defaultValue = today + " 12:00:00AM";
+}
+
 
 //Function for getting detail data base on EmployeeID
 function getByID(EmployeeID) {
@@ -121,15 +141,15 @@ function Add() {
     var empObj = {
         UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
-        Password: $('#Password').val(),
+        PassWork: $('#PassWord').val(),
         DateOfBirth: $('#DateOfBirth').val(),
         Gender: $('#Gender').val(),
         UserAddress: $('#Address').val(),
-        Phone: $('#PhoneNumber').val(),    
+        Phone: $('#PhoneNumber').val(),
         email: $('#Email').val(),
         IdentityCard: $('#IdentityCard').val(),
-        ContractSigningDate: $('ContractSigningDate').val(),
-        ContractExpirationDate: $('ContractExpirationDate').val(),
+        ContractSigningDate: $('#ContractSigningDate').val(),
+        ContractExpirationDate: $('#ContractExpirationDate').val(),
         RoleID: $('#RoleName').val(),
         ParkingPlaceID: $('#ParkingPlace').val(),
     };

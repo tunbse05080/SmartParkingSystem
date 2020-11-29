@@ -105,6 +105,16 @@
     <Property Name="TimeApply" Type="DateTime" Precision="0" />
     <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="Schedule" ToRole="UserSchedule" />
   </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
   <EntityType Name="Transaction">
     <Key>
       <PropertyRef Name="TransactionID" />
@@ -296,6 +306,7 @@
     <EntitySet Name="Prices" EntityType="Self.Price" />
     <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Transactions" EntityType="Self.Transaction" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="UserSchedules" EntityType="Self.UserSchedule" />

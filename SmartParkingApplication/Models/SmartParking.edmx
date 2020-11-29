@@ -105,6 +105,16 @@ warning 6013: The table/view 'SmartParkings.dbo.StaffPayMoney' does not have a p
           <Property Name="TotalPrice" Type="int" />
           <Property Name="IsReceived" Type="int" />
         </EntityType>-->
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Transaction">
           <Key>
             <PropertyRef Name="TransactionID" />
@@ -294,6 +304,7 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSchedule" EntityType="Self.UserSchedule" Schema="dbo" store:Type="Tables" />
@@ -451,6 +462,16 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
           <Property Name="Slot" Type="Int32" />
           <Property Name="TimeApply" Type="DateTime" Precision="0" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="Schedule" ToRole="UserSchedule" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -643,6 +664,7 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
           <EntitySet Name="Prices" EntityType="Self.Price" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserSchedules" EntityType="Self.UserSchedule" />
@@ -794,6 +816,17 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
                 <ScalarProperty Name="TimeFinish" ColumnName="TimeFinish" />
                 <ScalarProperty Name="Slot" ColumnName="Slot" />
                 <ScalarProperty Name="TimeApply" ColumnName="TimeApply" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SmartParkingsModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
