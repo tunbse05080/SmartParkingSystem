@@ -78,14 +78,19 @@ function Add() {
         return false;
     }
     var empObj = {
-        EmployeeID: $('#EmployeeID').val(),
-        Name: $('#Name').val(),
-        Age: $('#Age').val(),
-        State: $('#State').val(),
-        Country: $('#Country').val()
+        UserName: $('#UserName').val(),
+        Name: $('#FullName').val(),
+        DateOfBirth: $('#DateOfBirth').val(),
+        Gender: $('#Gender').val(),
+        UserAddress: $('#Address').val(),
+        Phone: $('#PhoneNumber').val(),    
+        email: $('#Email').val(),
+        IdentityCard: $('#IdentityCard').val(),     
+        RoleID: $('#RoleName').val(),
+        ParkingPlaceID: $('#ParkingPlace').val(),     
     };
     $.ajax({
-        url: "/Home/Add",
+        url: "/ManageUser/Create",
         data: JSON.stringify(empObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
@@ -107,14 +112,19 @@ function Update() {
         return false;
     }
     var empObj = {
-        EmployeeID: $('#EmployeeID').val(),
-        Name: $('#Name').val(),
-        Age: $('#Age').val(),
-        State: $('#State').val(),
-        Country: $('#Country').val(),
+        EmployeeID: $('#UserName').val(),
+        Name: $('#FullName').val(),
+        Age: $('#DateOfBirth').val(),
+        State: $('#Gender').val(),
+        Country: $('#Address').val(),
+        Country: $('#PhoneNumber').val(),
+        Country: $('#Email').val(),
+        Country: $('#IdentityCard').val(),
+        Country: $('#RoleName').val(),
+        Country: $('#ParkingPlace').val(),
     };
     $.ajax({
-        url: "/Home/Update",
+        url: "/ManageUser/Update",
         data: JSON.stringify(empObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
@@ -122,11 +132,15 @@ function Update() {
         success: function (result) {
             loadData();
             $('#myModal').modal('hide');
-            $('#EmployeeID').val("");
-            $('#Name').val("");
-            $('#Age').val("");
-            $('#State').val("");
-            $('#Country').val("");
+            $('#Id').val("");
+            $('#UserName').val("");
+            $('#FullName').val("");
+            $('#DateOfBirth').val("");
+            $('#Gender').val("");
+            $('#Address').val("");
+            $('#PhoneNumber').val("");
+            $('#Email').val("");
+            $('#IdentityCard').val("");
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -136,15 +150,83 @@ function Update() {
 
 //Function for clearing the textboxes
 function clearTextBox() {
-    $('#EmployeeID').val("");
-    $('#Name').val("");
-    $('#Age').val("");
-    $('#State').val("");
-    $('#Country').val("");
-    $('#btnUpdate').hide();
+    $('#Id').val("");
+    $('#UserName').val("");
+    $('#FullName').val("");
+    $('#DateOfBirth').val("");
+    $('#Gender').val("");
+    $('#Address').val("");
+    $('#PhoneNumber').val("");
+    $('#Email').val("");
+    $('#IdentityCard').val("");
+    $('#RoleName').val("");
+    $('#ParkingPlace').val("");
     $('#btnAdd').show();
-    $('#Name').css('border-color', 'lightgrey');
-    $('#Age').css('border-color', 'lightgrey');
-    $('#State').css('border-color', 'lightgrey');
-    $('#Country').css('border-color', 'lightgrey');
+    $('#btnUpdate').hide();
+    //$('#Email').css('border-color', 'lightgrey');
+    //$('#IdentityCard').css('border-color', 'lightgrey');
+    //$('#State').css('border-color', 'lightgrey');
+    //$('#Country').css('border-color', 'lightgrey');
+}
+
+//Valdidation using jquery
+function validate() {
+    var isValid = true;
+    if ($('#UserName').val().trim() == "") {
+        $('#UserName').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#UserName').css('border-color', 'lightgrey');
+    }
+    if ($('#FullName').val().trim() == "") {
+        $('#FullName').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#FullName').css('border-color', 'lightgrey');
+    }
+    if ($('#DateOfBirth').val().trim() == "") {
+        $('#DateOfBirth').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#DateOfBirth').css('border-color', 'lightgrey');
+    }
+    if ($('#Gender').val().trim() == "") {
+        $('#Gender').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#Gender').css('border-color', 'lightgrey');
+    }
+    if ($('#Address').val().trim() == "") {
+        $('#Address').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#Address').css('border-color', 'lightgrey');
+    }
+    if ($('#PhoneNumber').val().trim() == "") {
+        $('#PhoneNumber').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#PhoneNumber').css('border-color', 'lightgrey');
+    }
+    if ($('#Email').val().trim() == "") {
+        $('#Email').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#Email').css('border-color', 'lightgrey');
+    }
+    if ($('#IdentityCard').val().trim() == "") {
+        $('#IdentityCard').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#IdentityCard').css('border-color', 'lightgrey');
+    }
+    return isValid;
 }

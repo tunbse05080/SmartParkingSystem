@@ -50,31 +50,18 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Users/Create
-        public ActionResult Create()
-        {
-            ViewBag.ParkingPlaceID = new SelectList(db.ParkingPlaces, "ParkingPlaceID", "NameOfParking");
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName");
-            return View();
-        }
-
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,Name,UserName,PassWork,DateOfBirth,Gender,UserAddress,IdentityCard,Phone,email,RoleID,ParkingPlaceID")] User user)
+        public JsonResult Create(User user)
         {
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.ParkingPlaceID = new SelectList(db.ParkingPlaces, "ParkingPlaceID", "NameOfParking", user.ParkingPlaceID);
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
-            return View(user);
+            return Json(user,JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Edit/5

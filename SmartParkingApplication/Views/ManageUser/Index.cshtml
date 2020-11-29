@@ -34,7 +34,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button type="button" onclick="location.href='@Url.Action("Create", "ManageUser")';return false;" class="btn btn-success">Thêm nhân viên</button>
+                                    <button type="button" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();" class="btn btn-success">Thêm nhân viên</button>
                                 </div>
                                 <div class="col-md-3">
                                     <button type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success">Lịch làm việc</button>
@@ -90,11 +90,11 @@
                                         <form class="row">
                                             <div class="form-group col-sm-6">
                                                 <label for="Id">ID</label>
-                                                <input type="text" class="form-control" id="Id" placeholder="Id" disabled />
+                                                <input type="text" class="form-control" id="Id" placeholder="Id" disabled/>
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="UserName">Tên tài khoản</label>
-                                                <input type="text" class="form-control" id="UserName" placeholder="Tên tài khoản" disabled />
+                                                <input type="text" class="form-control" id="UserName" placeholder="Tên tài khoản" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="FullName">Tên đầy đủ</label>
@@ -102,35 +102,35 @@
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="DateOfBirth">Ngày Sinh</label>
-                                                <input type="text" class="form-control" id="DateOfBirth" placeholder="Ngày Sinh" disabled />
+                                                <input type="text" class="form-control" id="DateOfBirth" placeholder="Ngày Sinh" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="Gender">Giới tính</label>
-                                                <input type="text" class="form-control" id="Gender" placeholder="Giới tính" disabled />
+                                                <input type="text" class="form-control" id="Gender" placeholder="Giới tính" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="Address">Địa chỉ</label>
-                                                <input type="text" class="form-control" id="Address" placeholder="Địa chỉ" disabled />
+                                                <input type="text" class="form-control" id="Address" placeholder="Địa chỉ" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="PhoneNumber">Số điện thoại</label>
-                                                <input type="text" class="form-control" id="PhoneNumber" placeholder="Số điện thoại" disabled />
+                                                <input type="text" class="form-control" id="PhoneNumber" placeholder="Số điện thoại" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="Email">Email</label>
-                                                <input type="text" class="form-control" id="Email" placeholder="Email" disabled />
+                                                <input type="text" class="form-control" id="Email" placeholder="Email" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="IdentityCard">Số CMND</label>
-                                                <input type="text" class="form-control" id="IdentityCard" placeholder="Số CMND" disabled />
+                                                <input type="text" class="form-control" id="IdentityCard" placeholder="Số CMND" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="RoleName">Chức vụ</label>
-                                                <input type="text" class="form-control" id="RoleName" placeholder="Chức vụ" disabled />
+                                                <input type="text" class="form-control" id="RoleName" placeholder="Chức vụ" />
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="ParkingPlace">Bãi làm việc</label>
-                                                <input type="text" class="form-control" id="ParkingPlace" placeholder="Bãi làm việc" disabled />
+                                                <input type="text" class="form-control" id="ParkingPlace" placeholder="Bãi làm việc" />
                                             </div>
                                         </form>
                                     </div>
