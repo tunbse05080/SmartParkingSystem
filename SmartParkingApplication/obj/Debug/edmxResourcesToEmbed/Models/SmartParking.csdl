@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmartParkingsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="CardID" />
+    </Key>
+    <Property Name="CardID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__CardI__4E88ABD4" FromRole="Card" ToRole="MonthlyTicket" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Card" ToRole="Transaction" />
+  </EntityType>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LinkImageIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LinkImageOut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransactionID" Type="Int32" />
+    <NavigationProperty Name="Transaction" Relationship="Self.FK__Image__Transacti__4CA06362" FromRole="Image" ToRole="Transaction" />
+  </EntityType>
+  <EntityType Name="MonthlyIncomeStatement">
+    <Key>
+      <PropertyRef Name="MonthlyIncomeStatementID" />
+    </Key>
+    <Property Name="MonthlyIncomeStatementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MonthlyTicketID" Type="Int32" />
+    <Property Name="TotalPrice" Type="Int32" />
+    <NavigationProperty Name="MonthlyTicket" Relationship="Self.FK__MonthlyIn__Month__4D94879B" FromRole="MonthlyIncomeStatement" ToRole="MonthlyTicket" />
+  </EntityType>
+  <EntityType Name="MonthlyTicket">
+    <Key>
+      <PropertyRef Name="MonthlyTicketID" />
+    </Key>
+    <Property Name="MonthlyTicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdentityCard" Type="Int32" />
+    <Property Name="Phone" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TypeOfVehicle" Type="Int32" />
+    <Property Name="LicensePlates" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RegisDate" Type="DateTime" Precision="0" />
+    <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
+    <Property Name="CardID" Type="Int32" />
+    <Property Name="ParkingPlaceID" Type="Int32" />
+    <NavigationProperty Name="Card" Relationship="Self.FK__MonthlyTi__CardI__4E88ABD4" FromRole="MonthlyTicket" ToRole="Card" />
+    <NavigationProperty Name="MonthlyIncomeStatements" Relationship="Self.FK__MonthlyIn__Month__4D94879B" FromRole="MonthlyTicket" ToRole="MonthlyIncomeStatement" />
+    <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__MonthlyTi__Parki__4F7CD00D" FromRole="MonthlyTicket" ToRole="ParkingPlace" />
+  </EntityType>
+  <EntityType Name="Notification">
+    <Key>
+      <PropertyRef Name="NotificationID" />
+    </Key>
+    <Property Name="NotificationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Time" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="ParkingPlace">
+    <Key>
+      <PropertyRef Name="ParkingPlaceID" />
+    </Key>
+    <Property Name="ParkingPlaceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NameOfParking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfSlot" Type="Int32" />
+    <Property Name="NumberOfCar" Type="Int32" />
+    <Property Name="NumberOfMotoBike" Type="Int32" />
+    <Property Name="NumberCarBlank" Type="Int32" />
+    <Property Name="NumberMotoBikeBlank" Type="Int32" />
+    <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__Parki__4F7CD00D" FromRole="ParkingPlace" ToRole="MonthlyTicket" />
+    <NavigationProperty Name="Prices" Relationship="Self.FK__Price__ParkingPl__5070F446" FromRole="ParkingPlace" ToRole="Price" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="ParkingPlace" ToRole="Transaction" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="ParkingPlace" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Price">
+    <Key>
+      <PropertyRef Name="PriceID" />
+    </Key>
+    <Property Name="PriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeOfvehicle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DayPrice" Type="Int32" />
+    <Property Name="MonthPrice" Type="Int32" />
+    <Property Name="FirstBlock" Type="Int32" />
+    <Property Name="NextBlock" Type="Int32" />
+    <Property Name="ParkingPlaceID" Type="Int32" />
+    <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Price__ParkingPl__5070F446" FromRole="Price" ToRole="ParkingPlace" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Schedule">
+    <Key>
+      <PropertyRef Name="ScheduleID" />
+    </Key>
+    <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TimeStart" Type="Time" Precision="7" />
+    <Property Name="TimeFinish" Type="Time" Precision="7" />
+    <Property Name="Slot" Type="Int32" />
+    <Property Name="TimeApply" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="Schedule" ToRole="UserSchedule" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TimeIn" Type="DateTime" Precision="3" />
+    <Property Name="TimeOutv" Type="DateTime" Precision="3" />
+    <Property Name="LicensePlates" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TypeOfTicket" Type="Int32" />
+    <Property Name="TotalPrice" Type="Int32" />
+    <Property Name="CardID" Type="Int32" />
+    <Property Name="ParkingPlaceID" Type="Int32" />
+    <NavigationProperty Name="Card" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Transaction" ToRole="Card" />
+    <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__4CA06362" FromRole="Transaction" ToRole="Image" />
+    <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="Transaction" ToRole="ParkingPlace" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PassWork" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="Gender" Type="Int32" />
+    <Property Name="UserAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdentityCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="Int32" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ContractSigningDate" Type="DateTime" Precision="0" />
+    <Property Name="ContractRenewalDate" Type="DateTime" Precision="0" />
+    <Property Name="ContractExpirationDate" Type="DateTime" Precision="0" />
+    <Property Name="RoleID" Type="Int32" />
+    <Property Name="ParkingPlaceID" Type="Int32" />
+    <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="User" ToRole="ParkingPlace" />
+    <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="User" ToRole="UserSchedule" />
+  </EntityType>
+  <EntityType Name="UserSchedule">
+    <Key>
+      <PropertyRef Name="UserScheduleID" />
+    </Key>
+    <Property Name="UserScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="ScheduleID" Type="Int32" />
+    <NavigationProperty Name="Schedule" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="UserSchedule" ToRole="Schedule" />
+    <NavigationProperty Name="User" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="UserSchedule" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__MonthlyTi__CardI__4E88ABD4">
+    <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
+    <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="CardID" />
+      </Principal>
+      <Dependent Role="MonthlyTicket">
+        <PropertyRef Name="CardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__CardI__534D60F1">
+    <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="CardID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="CardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Image__Transacti__4CA06362">
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
+    <End Role="Image" Type="Self.Image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaction">
+        <PropertyRef Name="TransactionID" />
+      </Principal>
+      <Dependent Role="Image">
+        <PropertyRef Name="TransactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MonthlyIn__Month__4D94879B">
+    <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="0..1" />
+    <End Role="MonthlyIncomeStatement" Type="Self.MonthlyIncomeStatement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonthlyTicket">
+        <PropertyRef Name="MonthlyTicketID" />
+      </Principal>
+      <Dependent Role="MonthlyIncomeStatement">
+        <PropertyRef Name="MonthlyTicketID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MonthlyTi__Parki__4F7CD00D">
+    <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+    <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParkingPlace">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Principal>
+      <Dependent Role="MonthlyTicket">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Price__ParkingPl__5070F446">
+    <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+    <End Role="Price" Type="Self.Price" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParkingPlace">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Principal>
+      <Dependent Role="Price">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Parki__5441852A">
+    <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParkingPlace">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__ParkingPla__5535A963">
+    <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParkingPlace">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="ParkingPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__RoleID__5629CD9C">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserSched__Sched__571DF1D5">
+    <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
+    <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedule">
+        <PropertyRef Name="ScheduleID" />
+      </Principal>
+      <Dependent Role="UserSchedule">
+        <PropertyRef Name="ScheduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserSched__UserI__5812160E">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserSchedule">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmartParkingsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cards" EntityType="Self.Card" />
+    <EntitySet Name="Images" EntityType="Self.Image" />
+    <EntitySet Name="MonthlyIncomeStatements" EntityType="Self.MonthlyIncomeStatement" />
+    <EntitySet Name="MonthlyTickets" EntityType="Self.MonthlyTicket" />
+    <EntitySet Name="Notifications" EntityType="Self.Notification" />
+    <EntitySet Name="ParkingPlaces" EntityType="Self.ParkingPlace" />
+    <EntitySet Name="Prices" EntityType="Self.Price" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+    <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserSchedules" EntityType="Self.UserSchedule" />
+    <AssociationSet Name="FK__MonthlyTi__CardI__4E88ABD4" Association="Self.FK__MonthlyTi__CardI__4E88ABD4">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__CardI__534D60F1" Association="Self.FK__Transacti__CardI__534D60F1">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Image__Transacti__4CA06362" Association="Self.FK__Image__Transacti__4CA06362">
+      <End Role="Transaction" EntitySet="Transactions" />
+      <End Role="Image" EntitySet="Images" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MonthlyIn__Month__4D94879B" Association="Self.FK__MonthlyIn__Month__4D94879B">
+      <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
+      <End Role="MonthlyIncomeStatement" EntitySet="MonthlyIncomeStatements" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MonthlyTi__Parki__4F7CD00D" Association="Self.FK__MonthlyTi__Parki__4F7CD00D">
+      <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+      <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Price__ParkingPl__5070F446" Association="Self.FK__Price__ParkingPl__5070F446">
+      <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+      <End Role="Price" EntitySet="Prices" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Parki__5441852A" Association="Self.FK__Transacti__Parki__5441852A">
+      <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__ParkingPla__5535A963" Association="Self.FK__User__ParkingPla__5535A963">
+      <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__RoleID__5629CD9C" Association="Self.FK__User__RoleID__5629CD9C">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserSched__Sched__571DF1D5" Association="Self.FK__UserSched__Sched__571DF1D5">
+      <End Role="Schedule" EntitySet="Schedules" />
+      <End Role="UserSchedule" EntitySet="UserSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserSched__UserI__5812160E" Association="Self.FK__UserSched__UserI__5812160E">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserSchedule" EntitySet="UserSchedules" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

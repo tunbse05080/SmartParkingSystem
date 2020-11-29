@@ -63,8 +63,8 @@
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
+                                <tbody class="tbody">
+                                    @*@foreach (var item in Model)
                                     {
                                         <tr>
                                             <td>
@@ -85,10 +85,10 @@
                                             <td>
                                                 <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="getByID(@Html.DisplayFor(modelItem => item.UserID))">Chi tiết</button>
                                                 <button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "ManageUser",new { id = item.UserID})'">Sửa</button>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="DropContract(@Html.DisplayFor(modelItem => item.UserID))">Chấm dứt HĐ</button>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(@Html.DisplayFor(modelItem => item.UserID))">Chấm dứt HĐ</button>
                                             </td>
                                         </tr>
-                                    }
+                                    }*@
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="FullName">Tên đầy đủ</label>
-                                                <input type="text" class="form-control" id="FullName" placeholder="Tên đầy đủ" disabled />
+                                                <input type="text" class="form-control" id="FullName" placeholder="Tên đầy đủ"/>
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="DateOfBirth">Ngày Sinh</label>

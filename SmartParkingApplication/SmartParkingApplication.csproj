@@ -1964,15 +1964,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\SPS.Context.tt">
+    <Content Include="Models\SmartParking.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SPS.edmx</DependentUpon>
-      <LastGenOutput>SPS.Context.cs</LastGenOutput>
+      <DependentUpon>SmartParking.edmx</DependentUpon>
+      <LastGenOutput>SmartParking.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\SPS.tt">
+    <Content Include="Models\SmartParking.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SPS.edmx</DependentUpon>
-      <LastGenOutput>SPS.cs</LastGenOutput>
+      <DependentUpon>SmartParking.edmx</DependentUpon>
+      <LastGenOutput>SmartParking.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2053,12 +2053,12 @@
     <Content Include="Content\plugins\summernote\summernote.js.map" />
     <Content Include="Content\plugins\summernote\summernote.min.js.map" />
     <Content Include="Content\plugins\toastr\toastr.js.map" />
-    <EntityDeploy Include="Models\SPS.edmx">
+    <EntityDeploy Include="Models\SmartParking.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SPS.Designer.cs</LastGenOutput>
+      <LastGenOutput>SmartParking.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\SPS.edmx.diagram">
-      <DependentUpon>SPS.edmx</DependentUpon>
+    <Content Include="Models\SmartParking.edmx.diagram">
+      <DependentUpon>SmartParking.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2085,59 +2085,56 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Card.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Image.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MonthlyIncomeStatement.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MonthlyTicket.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MultipleTablesJoinClass.cs" />
     <Compile Include="Models\Notification.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ParkingPlace.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Price.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Schedule.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SPS.Context.cs">
+    <Compile Include="Models\SmartParking.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SPS.Context.tt</DependentUpon>
+      <DependentUpon>SmartParking.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SPS.cs">
+    <Compile Include="Models\SmartParking.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SPS.Designer.cs">
+    <Compile Include="Models\SmartParking.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SPS.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserSchedule.cs">
-      <DependentUpon>SPS.tt</DependentUpon>
+      <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,7 +12,7 @@ namespace SmartParkingApplication.Controllers
 {
     public class MonthlyTicketsController : Controller
     {
-        private SmartParkingEntities db = new SmartParkingEntities();
+        private SmartParkingsEntities db = new SmartParkingsEntities();
 
         // GET: MonthlyTickets
         public ActionResult Index()

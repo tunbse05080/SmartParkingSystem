@@ -11,12 +11,24 @@ namespace SmartParkingApplication.Controllers
 {
     public class ManageUserController : Controller
     {
-        private SmartParkingEntities db = new SmartParkingEntities();
+        private SmartParkingsEntities db = new SmartParkingsEntities();
         // GET: ManageUser
         public ActionResult Index()
         {
-            List<User> list = db.Users.ToList();
-            return View(list);
+            //List<User> list = db.Users.ToList();
+            return View();
+        }
+
+        public JsonResult LoadData()
+        {
+            var users = from r in db.Roles
+                        join u in db.Users on r.RoleID equals u.RoleID into table1
+                        from u in table1.DefaultIfEmpty()
+                        join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
+                        from p in table2.DefaultIfEmpty()
+                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, p.NameOfParking, r.RoleName };
+            
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Details/5

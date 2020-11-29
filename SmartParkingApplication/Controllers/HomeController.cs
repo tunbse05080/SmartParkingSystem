@@ -12,7 +12,7 @@ namespace SmartParkingApplication.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            SmartParkingEntities db = new SmartParkingEntities();
+            SmartParkingsEntities db = new SmartParkingsEntities();
             List<User> listUser = db.Users.ToList();
             List<ParkingPlace> listPPlace = db.ParkingPlaces.ToList();
             List<MonthlyTicket> listMonthlyTickets = db.MonthlyTickets.ToList();

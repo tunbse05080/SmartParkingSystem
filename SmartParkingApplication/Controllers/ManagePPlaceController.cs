@@ -11,7 +11,7 @@ namespace SmartParkingApplication.Controllers
 {
     public class ManagePPlaceController : Controller
     {
-        private SmartParkingEntities db = new SmartParkingEntities();
+        private SmartParkingsEntities db = new SmartParkingsEntities();
         // GET: ManageParkingPlace
         public ActionResult ManageStatusParkingPlace()
         {

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SmartParkingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="CardID" />
@@ -97,7 +97,7 @@
           <Property Name="TimeApply" Type="date" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+warning 6013: The table/view 'SmartParkings.dbo.StaffPayMoney' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="StaffPayMoney">
           <Property Name="isDone" Type="int" />
           <Property Name="TransactionID" Type="int" />
@@ -105,16 +105,6 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
           <Property Name="TotalPrice" Type="int" />
           <Property Name="IsReceived" Type="int" />
         </EntityType>-->
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Transaction">
           <Key>
             <PropertyRef Name="TransactionID" />
@@ -142,6 +132,9 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
           <Property Name="IdentityCard" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="int" />
           <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContractSigningDate" Type="date" />
+          <Property Name="ContractRenewalDate" Type="date" />
+          <Property Name="ContractExpirationDate" Type="date" />
           <Property Name="RoleID" Type="int" />
           <Property Name="ParkingPlaceID" Type="int" />
         </EntityType>
@@ -153,7 +146,7 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
           <Property Name="UserID" Type="int" />
           <Property Name="ScheduleID" Type="int" />
         </EntityType>
-        <Association Name="FK__Image__Transacti__5070F446">
+        <Association Name="FK__Image__Transacti__4CA06362">
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
           <End Role="Image" Type="Self.Image" Multiplicity="*" />
           <ReferentialConstraint>
@@ -165,7 +158,7 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MonthlyIn__Month__5535A963">
+        <Association Name="FK__MonthlyIn__Month__4D94879B">
           <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="0..1" />
           <End Role="MonthlyIncomeStatement" Type="Self.MonthlyIncomeStatement" Multiplicity="*" />
           <ReferentialConstraint>
@@ -177,7 +170,7 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MonthlyTi__CardI__48CFD27E">
+        <Association Name="FK__MonthlyTi__CardI__4E88ABD4">
           <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
           <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,7 +182,7 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MonthlyTi__Parki__49C3F6B7">
+        <Association Name="FK__MonthlyTi__Parki__4F7CD00D">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
           <ReferentialConstraint>
@@ -201,7 +194,7 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Price__ParkingPl__440B1D61">
+        <Association Name="FK__Price__ParkingPl__5070F446">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="Price" Type="Self.Price" Multiplicity="*" />
           <ReferentialConstraint>
@@ -214,12 +207,12 @@ warning 6013: The table/view 'SmartParking.dbo.StaffPayMoney' does not have a pr
           </ReferentialConstraint>
         </Association>
         <!--Errors Found During Generation:
-error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__StaffPayM__Trans__571DF1D5" />-->
+error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__StaffPayM__Trans__5165187F" />-->
         <!--Errors Found During Generation:
-error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__StaffPayM__UserS__5812160E" />-->
-        <Association Name="FK__Transacti__CardI__4CA06362">
+error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__StaffPayM__UserS__52593CB8" />-->
+        <Association Name="FK__Transacti__CardI__534D60F1">
           <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -231,7 +224,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Parki__4D94879B">
+        <Association Name="FK__Transacti__Parki__5441852A">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -243,7 +236,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__ParkingPla__3D5E1FD2">
+        <Association Name="FK__User__ParkingPla__5535A963">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -255,7 +248,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__RoleID__3C69FB99">
+        <Association Name="FK__User__RoleID__5629CD9C">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -267,7 +260,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserSched__Sched__412EB0B6">
+        <Association Name="FK__UserSched__Sched__571DF1D5">
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
           <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
           <ReferentialConstraint>
@@ -279,7 +272,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserSched__UserI__403A8C7D">
+        <Association Name="FK__UserSched__UserI__5812160E">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
           <ReferentialConstraint>
@@ -291,7 +284,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SmartParkingModelStoreContainer">
+        <EntityContainer Name="SmartParkingsModelStoreContainer">
           <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyIncomeStatement" EntityType="Self.MonthlyIncomeStatement" Schema="dbo" store:Type="Tables" />
@@ -301,51 +294,50 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSchedule" EntityType="Self.UserSchedule" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Image__Transacti__5070F446" Association="Self.FK__Image__Transacti__5070F446">
+          <AssociationSet Name="FK__Image__Transacti__4CA06362" Association="Self.FK__Image__Transacti__4CA06362">
             <End Role="Transaction" EntitySet="Transaction" />
             <End Role="Image" EntitySet="Image" />
           </AssociationSet>
-          <AssociationSet Name="FK__MonthlyIn__Month__5535A963" Association="Self.FK__MonthlyIn__Month__5535A963">
+          <AssociationSet Name="FK__MonthlyIn__Month__4D94879B" Association="Self.FK__MonthlyIn__Month__4D94879B">
             <End Role="MonthlyTicket" EntitySet="MonthlyTicket" />
             <End Role="MonthlyIncomeStatement" EntitySet="MonthlyIncomeStatement" />
           </AssociationSet>
-          <AssociationSet Name="FK__MonthlyTi__CardI__48CFD27E" Association="Self.FK__MonthlyTi__CardI__48CFD27E">
+          <AssociationSet Name="FK__MonthlyTi__CardI__4E88ABD4" Association="Self.FK__MonthlyTi__CardI__4E88ABD4">
             <End Role="Card" EntitySet="Card" />
             <End Role="MonthlyTicket" EntitySet="MonthlyTicket" />
           </AssociationSet>
-          <AssociationSet Name="FK__MonthlyTi__Parki__49C3F6B7" Association="Self.FK__MonthlyTi__Parki__49C3F6B7">
+          <AssociationSet Name="FK__MonthlyTi__Parki__4F7CD00D" Association="Self.FK__MonthlyTi__Parki__4F7CD00D">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
             <End Role="MonthlyTicket" EntitySet="MonthlyTicket" />
           </AssociationSet>
-          <AssociationSet Name="FK__Price__ParkingPl__440B1D61" Association="Self.FK__Price__ParkingPl__440B1D61">
+          <AssociationSet Name="FK__Price__ParkingPl__5070F446" Association="Self.FK__Price__ParkingPl__5070F446">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
             <End Role="Price" EntitySet="Price" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__CardI__4CA06362" Association="Self.FK__Transacti__CardI__4CA06362">
+          <AssociationSet Name="FK__Transacti__CardI__534D60F1" Association="Self.FK__Transacti__CardI__534D60F1">
             <End Role="Card" EntitySet="Card" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Parki__4D94879B" Association="Self.FK__Transacti__Parki__4D94879B">
+          <AssociationSet Name="FK__Transacti__Parki__5441852A" Association="Self.FK__Transacti__Parki__5441852A">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__ParkingPla__3D5E1FD2" Association="Self.FK__User__ParkingPla__3D5E1FD2">
+          <AssociationSet Name="FK__User__ParkingPla__5535A963" Association="Self.FK__User__ParkingPla__5535A963">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__RoleID__3C69FB99" Association="Self.FK__User__RoleID__3C69FB99">
+          <AssociationSet Name="FK__User__RoleID__5629CD9C" Association="Self.FK__User__RoleID__5629CD9C">
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserSched__Sched__412EB0B6" Association="Self.FK__UserSched__Sched__412EB0B6">
+          <AssociationSet Name="FK__UserSched__Sched__571DF1D5" Association="Self.FK__UserSched__Sched__571DF1D5">
             <End Role="Schedule" EntitySet="Schedule" />
             <End Role="UserSchedule" EntitySet="UserSchedule" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserSched__UserI__403A8C7D" Association="Self.FK__UserSched__UserI__403A8C7D">
+          <AssociationSet Name="FK__UserSched__UserI__5812160E" Association="Self.FK__UserSched__UserI__5812160E">
             <End Role="User" EntitySet="User" />
             <End Role="UserSchedule" EntitySet="UserSchedule" />
           </AssociationSet>
@@ -354,7 +346,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SmartParkingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SmartParkingsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="CardID" />
@@ -363,8 +355,8 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" />
-          <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__CardI__48CFD27E" FromRole="Card" ToRole="MonthlyTicket" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__CardI__4CA06362" FromRole="Card" ToRole="Transaction" />
+          <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__CardI__4E88ABD4" FromRole="Card" ToRole="MonthlyTicket" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Card" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -374,7 +366,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="LinkImageIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LinkImageOut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransactionID" Type="Int32" />
-          <NavigationProperty Name="Transaction" Relationship="Self.FK__Image__Transacti__5070F446" FromRole="Image" ToRole="Transaction" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__Image__Transacti__4CA06362" FromRole="Image" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="MonthlyIncomeStatement">
           <Key>
@@ -383,7 +375,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="MonthlyIncomeStatementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MonthlyTicketID" Type="Int32" />
           <Property Name="TotalPrice" Type="Int32" />
-          <NavigationProperty Name="MonthlyTicket" Relationship="Self.FK__MonthlyIn__Month__5535A963" FromRole="MonthlyIncomeStatement" ToRole="MonthlyTicket" />
+          <NavigationProperty Name="MonthlyTicket" Relationship="Self.FK__MonthlyIn__Month__4D94879B" FromRole="MonthlyIncomeStatement" ToRole="MonthlyTicket" />
         </EntityType>
         <EntityType Name="MonthlyTicket">
           <Key>
@@ -400,9 +392,9 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
           <Property Name="CardID" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
-          <NavigationProperty Name="Card" Relationship="Self.FK__MonthlyTi__CardI__48CFD27E" FromRole="MonthlyTicket" ToRole="Card" />
-          <NavigationProperty Name="MonthlyIncomeStatements" Relationship="Self.FK__MonthlyIn__Month__5535A963" FromRole="MonthlyTicket" ToRole="MonthlyIncomeStatement" />
-          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__MonthlyTi__Parki__49C3F6B7" FromRole="MonthlyTicket" ToRole="ParkingPlace" />
+          <NavigationProperty Name="Card" Relationship="Self.FK__MonthlyTi__CardI__4E88ABD4" FromRole="MonthlyTicket" ToRole="Card" />
+          <NavigationProperty Name="MonthlyIncomeStatements" Relationship="Self.FK__MonthlyIn__Month__4D94879B" FromRole="MonthlyTicket" ToRole="MonthlyIncomeStatement" />
+          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__MonthlyTi__Parki__4F7CD00D" FromRole="MonthlyTicket" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -423,10 +415,10 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="NumberOfMotoBike" Type="Int32" />
           <Property Name="NumberCarBlank" Type="Int32" />
           <Property Name="NumberMotoBikeBlank" Type="Int32" />
-          <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__Parki__49C3F6B7" FromRole="ParkingPlace" ToRole="MonthlyTicket" />
-          <NavigationProperty Name="Prices" Relationship="Self.FK__Price__ParkingPl__440B1D61" FromRole="ParkingPlace" ToRole="Price" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__4D94879B" FromRole="ParkingPlace" ToRole="Transaction" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__3D5E1FD2" FromRole="ParkingPlace" ToRole="User" />
+          <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__Parki__4F7CD00D" FromRole="ParkingPlace" ToRole="MonthlyTicket" />
+          <NavigationProperty Name="Prices" Relationship="Self.FK__Price__ParkingPl__5070F446" FromRole="ParkingPlace" ToRole="Price" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="ParkingPlace" ToRole="Transaction" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="ParkingPlace" ToRole="User" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
@@ -439,7 +431,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="FirstBlock" Type="Int32" />
           <Property Name="NextBlock" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
-          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Price__ParkingPl__440B1D61" FromRole="Price" ToRole="ParkingPlace" />
+          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Price__ParkingPl__5070F446" FromRole="Price" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -447,7 +439,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleID__3C69FB99" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="Schedule">
           <Key>
@@ -458,17 +450,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="TimeFinish" Type="Time" Precision="7" />
           <Property Name="Slot" Type="Int32" />
           <Property Name="TimeApply" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__412EB0B6" FromRole="Schedule" ToRole="UserSchedule" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="Schedule" ToRole="UserSchedule" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -482,9 +464,9 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="TotalPrice" Type="Int32" />
           <Property Name="CardID" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
-          <NavigationProperty Name="Card" Relationship="Self.FK__Transacti__CardI__4CA06362" FromRole="Transaction" ToRole="Card" />
-          <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__5070F446" FromRole="Transaction" ToRole="Image" />
-          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Transacti__Parki__4D94879B" FromRole="Transaction" ToRole="ParkingPlace" />
+          <NavigationProperty Name="Card" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Transaction" ToRole="Card" />
+          <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__4CA06362" FromRole="Transaction" ToRole="Image" />
+          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="Transaction" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -500,11 +482,14 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="IdentityCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="Int32" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractSigningDate" Type="DateTime" Precision="0" />
+          <Property Name="ContractRenewalDate" Type="DateTime" Precision="0" />
+          <Property Name="ContractExpirationDate" Type="DateTime" Precision="0" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
-          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__3D5E1FD2" FromRole="User" ToRole="ParkingPlace" />
-          <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleID__3C69FB99" FromRole="User" ToRole="Role" />
-          <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__403A8C7D" FromRole="User" ToRole="UserSchedule" />
+          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="User" ToRole="ParkingPlace" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="User" ToRole="UserSchedule" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -513,10 +498,10 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <Property Name="UserScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="ScheduleID" Type="Int32" />
-          <NavigationProperty Name="Schedule" Relationship="Self.FK__UserSched__Sched__412EB0B6" FromRole="UserSchedule" ToRole="Schedule" />
-          <NavigationProperty Name="User" Relationship="Self.FK__UserSched__UserI__403A8C7D" FromRole="UserSchedule" ToRole="User" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="UserSchedule" ToRole="Schedule" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="UserSchedule" ToRole="User" />
         </EntityType>
-        <Association Name="FK__MonthlyTi__CardI__48CFD27E">
+        <Association Name="FK__MonthlyTi__CardI__4E88ABD4">
           <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
           <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
           <ReferentialConstraint>
@@ -528,7 +513,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__CardI__4CA06362">
+        <Association Name="FK__Transacti__CardI__534D60F1">
           <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -540,7 +525,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Image__Transacti__5070F446">
+        <Association Name="FK__Image__Transacti__4CA06362">
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
           <End Role="Image" Type="Self.Image" Multiplicity="*" />
           <ReferentialConstraint>
@@ -552,7 +537,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MonthlyIn__Month__5535A963">
+        <Association Name="FK__MonthlyIn__Month__4D94879B">
           <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="0..1" />
           <End Role="MonthlyIncomeStatement" Type="Self.MonthlyIncomeStatement" Multiplicity="*" />
           <ReferentialConstraint>
@@ -564,7 +549,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MonthlyTi__Parki__49C3F6B7">
+        <Association Name="FK__MonthlyTi__Parki__4F7CD00D">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
           <ReferentialConstraint>
@@ -576,7 +561,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Price__ParkingPl__440B1D61">
+        <Association Name="FK__Price__ParkingPl__5070F446">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="Price" Type="Self.Price" Multiplicity="*" />
           <ReferentialConstraint>
@@ -588,7 +573,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Parki__4D94879B">
+        <Association Name="FK__Transacti__Parki__5441852A">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -600,7 +585,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__ParkingPla__3D5E1FD2">
+        <Association Name="FK__User__ParkingPla__5535A963">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -612,7 +597,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__RoleID__3C69FB99">
+        <Association Name="FK__User__RoleID__5629CD9C">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -624,7 +609,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserSched__Sched__412EB0B6">
+        <Association Name="FK__UserSched__Sched__571DF1D5">
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
           <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
           <ReferentialConstraint>
@@ -636,7 +621,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserSched__UserI__403A8C7D">
+        <Association Name="FK__UserSched__UserI__5812160E">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
           <ReferentialConstraint>
@@ -648,7 +633,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SmartParkingEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SmartParkingsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cards" EntityType="Self.Card" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="MonthlyIncomeStatements" EntityType="Self.MonthlyIncomeStatement" />
@@ -658,51 +643,50 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
           <EntitySet Name="Prices" EntityType="Self.Price" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Schedules" EntityType="Self.Schedule" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserSchedules" EntityType="Self.UserSchedule" />
-          <AssociationSet Name="FK__MonthlyTi__CardI__48CFD27E" Association="Self.FK__MonthlyTi__CardI__48CFD27E">
+          <AssociationSet Name="FK__MonthlyTi__CardI__4E88ABD4" Association="Self.FK__MonthlyTi__CardI__4E88ABD4">
             <End Role="Card" EntitySet="Cards" />
             <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__CardI__4CA06362" Association="Self.FK__Transacti__CardI__4CA06362">
+          <AssociationSet Name="FK__Transacti__CardI__534D60F1" Association="Self.FK__Transacti__CardI__534D60F1">
             <End Role="Card" EntitySet="Cards" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Image__Transacti__5070F446" Association="Self.FK__Image__Transacti__5070F446">
+          <AssociationSet Name="FK__Image__Transacti__4CA06362" Association="Self.FK__Image__Transacti__4CA06362">
             <End Role="Transaction" EntitySet="Transactions" />
             <End Role="Image" EntitySet="Images" />
           </AssociationSet>
-          <AssociationSet Name="FK__MonthlyIn__Month__5535A963" Association="Self.FK__MonthlyIn__Month__5535A963">
+          <AssociationSet Name="FK__MonthlyIn__Month__4D94879B" Association="Self.FK__MonthlyIn__Month__4D94879B">
             <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
             <End Role="MonthlyIncomeStatement" EntitySet="MonthlyIncomeStatements" />
           </AssociationSet>
-          <AssociationSet Name="FK__MonthlyTi__Parki__49C3F6B7" Association="Self.FK__MonthlyTi__Parki__49C3F6B7">
+          <AssociationSet Name="FK__MonthlyTi__Parki__4F7CD00D" Association="Self.FK__MonthlyTi__Parki__4F7CD00D">
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Price__ParkingPl__440B1D61" Association="Self.FK__Price__ParkingPl__440B1D61">
+          <AssociationSet Name="FK__Price__ParkingPl__5070F446" Association="Self.FK__Price__ParkingPl__5070F446">
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="Price" EntitySet="Prices" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Parki__4D94879B" Association="Self.FK__Transacti__Parki__4D94879B">
+          <AssociationSet Name="FK__Transacti__Parki__5441852A" Association="Self.FK__Transacti__Parki__5441852A">
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__ParkingPla__3D5E1FD2" Association="Self.FK__User__ParkingPla__3D5E1FD2">
+          <AssociationSet Name="FK__User__ParkingPla__5535A963" Association="Self.FK__User__ParkingPla__5535A963">
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__RoleID__3C69FB99" Association="Self.FK__User__RoleID__3C69FB99">
+          <AssociationSet Name="FK__User__RoleID__5629CD9C" Association="Self.FK__User__RoleID__5629CD9C">
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserSched__Sched__412EB0B6" Association="Self.FK__UserSched__Sched__412EB0B6">
+          <AssociationSet Name="FK__UserSched__Sched__571DF1D5" Association="Self.FK__UserSched__Sched__571DF1D5">
             <End Role="Schedule" EntitySet="Schedules" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserSched__UserI__403A8C7D" Association="Self.FK__UserSched__UserI__403A8C7D">
+          <AssociationSet Name="FK__UserSched__UserI__5812160E" Association="Self.FK__UserSched__UserI__5812160E">
             <End Role="User" EntitySet="Users" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
           </AssociationSet>
@@ -712,9 +696,9 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SmartParkingModelStoreContainer" CdmEntityContainer="SmartParkingEntities">
+        <EntityContainerMapping StorageEntityContainer="SmartParkingsModelStoreContainer" CdmEntityContainer="SmartParkingsEntities">
           <EntitySetMapping Name="Cards">
-            <EntityTypeMapping TypeName="SmartParkingModel.Card">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Card">
               <MappingFragment StoreEntitySet="Card">
                 <ScalarProperty Name="CardID" ColumnName="CardID" />
                 <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
@@ -724,7 +708,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Images">
-            <EntityTypeMapping TypeName="SmartParkingModel.Image">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Image">
               <MappingFragment StoreEntitySet="Image">
                 <ScalarProperty Name="ImageID" ColumnName="ImageID" />
                 <ScalarProperty Name="LinkImageIN" ColumnName="LinkImageIN" />
@@ -734,7 +718,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MonthlyIncomeStatements">
-            <EntityTypeMapping TypeName="SmartParkingModel.MonthlyIncomeStatement">
+            <EntityTypeMapping TypeName="SmartParkingsModel.MonthlyIncomeStatement">
               <MappingFragment StoreEntitySet="MonthlyIncomeStatement">
                 <ScalarProperty Name="MonthlyIncomeStatementID" ColumnName="MonthlyIncomeStatementID" />
                 <ScalarProperty Name="MonthlyTicketID" ColumnName="MonthlyTicketID" />
@@ -743,7 +727,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MonthlyTickets">
-            <EntityTypeMapping TypeName="SmartParkingModel.MonthlyTicket">
+            <EntityTypeMapping TypeName="SmartParkingsModel.MonthlyTicket">
               <MappingFragment StoreEntitySet="MonthlyTicket">
                 <ScalarProperty Name="MonthlyTicketID" ColumnName="MonthlyTicketID" />
                 <ScalarProperty Name="CusName" ColumnName="CusName" />
@@ -760,7 +744,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="SmartParkingModel.Notification">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
                 <ScalarProperty Name="NotificationID" ColumnName="NotificationID" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
@@ -768,7 +752,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ParkingPlaces">
-            <EntityTypeMapping TypeName="SmartParkingModel.ParkingPlace">
+            <EntityTypeMapping TypeName="SmartParkingsModel.ParkingPlace">
               <MappingFragment StoreEntitySet="ParkingPlace">
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
                 <ScalarProperty Name="NameOfParking" ColumnName="NameOfParking" />
@@ -782,7 +766,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Prices">
-            <EntityTypeMapping TypeName="SmartParkingModel.Price">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Price">
               <MappingFragment StoreEntitySet="Price">
                 <ScalarProperty Name="PriceID" ColumnName="PriceID" />
                 <ScalarProperty Name="TypeOfvehicle" ColumnName="TypeOfvehicle" />
@@ -795,7 +779,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="SmartParkingModel.Role">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -803,7 +787,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Schedules">
-            <EntityTypeMapping TypeName="SmartParkingModel.Schedule">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Schedule">
               <MappingFragment StoreEntitySet="Schedule">
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
                 <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
@@ -813,19 +797,8 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="SmartParkingModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="SmartParkingModel.Transaction">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Transaction">
               <MappingFragment StoreEntitySet="Transaction">
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
@@ -839,7 +812,7 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="SmartParkingModel.User">
+            <EntityTypeMapping TypeName="SmartParkingsModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -851,13 +824,16 @@ error 6004: The table 'SmartParking.dbo.StaffPayMoney' is referenced by a relati
                 <ScalarProperty Name="IdentityCard" ColumnName="IdentityCard" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="ContractSigningDate" ColumnName="ContractSigningDate" />
+                <ScalarProperty Name="ContractRenewalDate" ColumnName="ContractRenewalDate" />
+                <ScalarProperty Name="ContractExpirationDate" ColumnName="ContractExpirationDate" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserSchedules">
-            <EntityTypeMapping TypeName="SmartParkingModel.UserSchedule">
+            <EntityTypeMapping TypeName="SmartParkingsModel.UserSchedule">
               <MappingFragment StoreEntitySet="UserSchedule">
                 <ScalarProperty Name="UserScheduleID" ColumnName="UserScheduleID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
