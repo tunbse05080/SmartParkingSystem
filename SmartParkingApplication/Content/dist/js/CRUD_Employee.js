@@ -119,11 +119,13 @@ function getIdToDropContract() {
 
 //Load Data function
 function loadData() {
+    var name = $('#txtNameSearch').val();
     $.ajax({
         url: "/ManageUser/LoadData",
         type: "GET",
         contentType: "application/json;charset=utf-8",
         data: {
+            name: name,
             page: pageConfig,
             pageSize: 5
         },
