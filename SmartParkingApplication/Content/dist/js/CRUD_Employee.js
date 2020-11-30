@@ -1,7 +1,9 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     loadData();
-    loadDateNow();
 });
+
+var pageConfig = 1;
 
 function loadDateNow() {
     // body...
@@ -18,7 +20,8 @@ function loadDateNow() {
     }
 
     today = mm + '/' + dd + '/' + yyyy;
-    document.getElementById("ContractSigningDate").defaultValue = today + " 12:00:00AM";
+    today = today + " 12:00:00AM";
+    return today;
 }
 
 
@@ -120,10 +123,15 @@ function loadData() {
         url: "/ManageUser/LoadData",
         type: "GET",
         contentType: "application/json;charset=utf-8",
+        data: {
+            page: pageConfig,
+            pageSize: 5
+        },
         dataType: "json",
         success: function (result) {
+            var data = result.data;
             var html = '';
-            $.each(result, function (key, item) {
+            $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.Name + '</td>';
                 html += '<td>' + item.DateOfBirth + '</td>';
@@ -134,9 +142,29 @@ function loadData() {
                 html += '</tr>';
             });
             $('.tbody').html(html);
+            paging(result.total, function () {
+                loadData();
+            });
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
+        }
+    });
+}
+
+//paging
+function paging(totalRow, callback) {
+    var totalPage = Math.ceil(totalRow / 5)
+    $('#pagination').twbsPagination({
+        totalPages: totalPage,
+        first: "Đầu",
+        next: "Tiếp",
+        last: "Cuối",
+        prev: "Trước",
+        visiblePages: 10,
+        onPageClick: function (event, page) {
+            pageConfig = page;
+            setTimeout(callback, 200);
         }
     });
 }
@@ -209,6 +237,7 @@ function Update() {
         success: function (result) {
             loadData();
             $('#myModal').modal('hide');
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -218,6 +247,7 @@ function Update() {
 
 //Function for clearing the textboxes
 function clearTextBox() {
+    var date = loadDateNow();
     $('#Id').val("");
     $('#UserName').val("");
     $('#FullName').val("");
@@ -229,6 +259,9 @@ function clearTextBox() {
     $('#IdentityCard').val("");
     $('#RoleName').val("");
     $('#ParkingPlace').val("");
+    $('#ContractSigningDate').val(""+date);
+    $('#ContractExpirationDate').val("");
+    
     $('#btnAdd').show();
     $('#btnUpdate').hide();
     //$('#Email').css('border-color', 'lightgrey');
