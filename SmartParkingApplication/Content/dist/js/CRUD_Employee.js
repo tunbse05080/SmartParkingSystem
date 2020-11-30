@@ -1,7 +1,10 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     loadData();
     loadDateNow();
 });
+
+var pageConfig = 1;
 
 function loadDateNow() {
     // body...
@@ -120,10 +123,15 @@ function loadData() {
         url: "/ManageUser/LoadData",
         type: "GET",
         contentType: "application/json;charset=utf-8",
+        data: {
+            page: pageConfig,
+            pageSize: 5
+        },
         dataType: "json",
         success: function (result) {
+            var data = result.data;
             var html = '';
-            $.each(result, function (key, item) {
+            $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.Name + '</td>';
                 html += '<td>' + item.DateOfBirth + '</td>';
@@ -134,9 +142,24 @@ function loadData() {
                 html += '</tr>';
             });
             $('.tbody').html(html);
+            paging(result.total, function () {
+                loadData();
+            });
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
+        }
+    });
+}
+
+function paging(totalRow, callback) {
+    var totalPage = Math.ceil(totalRow / 5)
+    $('#pagination').twbsPagination({
+        totalPages: totalPage,
+        visiblePages: 10,
+        onPageClick: function (event, page) {
+            pageConfig = page;
+            setTimeout(callback, 200);
         }
     });
 }

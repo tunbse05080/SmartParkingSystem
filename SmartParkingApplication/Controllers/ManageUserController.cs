@@ -16,19 +16,22 @@ namespace SmartParkingApplication.Controllers
         public ActionResult Index()
         {
             //List<User> list = db.Users.ToList();
+            
             return View();
         }
 
-        public JsonResult LoadData()
+        public JsonResult LoadData(int page,int pageSize = 5)
         {
             var users = from r in db.Roles
                         join u in db.Users on r.RoleID equals u.RoleID into table1
                         from u in table1.DefaultIfEmpty()
                         join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
                         from p in table2.DefaultIfEmpty()
+                        orderby u.UserID
                         select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, p.NameOfParking, r.RoleName };
-            
-            return Json(users, JsonRequestBehavior.AllowGet);
+            var model = users.Skip((page - 1) * pageSize).Take(pageSize);
+            var totalRow = users.Count();
+            return Json(new { data = model, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Details/5

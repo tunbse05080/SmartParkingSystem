@@ -1351,6 +1351,7 @@
     <Content Include="Content\plugins\jquery-validation\localization\methods_nl.min.js" />
     <Content Include="Content\plugins\jquery-validation\localization\methods_pt.js" />
     <Content Include="Content\plugins\jquery-validation\localization\methods_pt.min.js" />
+    <Content Include="Content\plugins\jquery.twbsPagination.min.js" />
     <Content Include="Content\plugins\jquery\jquery.js" />
     <Content Include="Content\plugins\jquery\jquery.min.js" />
     <Content Include="Content\plugins\jquery\jquery.slim.js" />
