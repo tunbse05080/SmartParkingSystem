@@ -240,6 +240,8 @@ function clearTextBox() {
 //Valdidation using jquery
 function validate() {
     var isValid = true;
+    var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
+    var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
     if ($('#UserName').val().trim() == "") {
         $('#UserName').css('border-color', 'Red');
         isValid = false;
@@ -247,7 +249,7 @@ function validate() {
     else {
         $('#UserName').css('border-color', 'lightgrey');
     }
-    if ($('#PassWord').val().trim() == "") {
+    if ($('#PassWord').val().trim() == "" || !pwd.test($('#PassWord').val().trim())) {
         $('#PassWord').css('border-color', 'Red');
         isValid = false;
     }
@@ -289,7 +291,7 @@ function validate() {
     else {
         $('#PhoneNumber').css('border-color', 'lightgrey');
     }
-    if ($('#Email').val().trim() == "") {
+    if ($('#Email').val().trim() == "" || !email.test($('#Email').val().trim())) {
         $('#Email').css('border-color', 'Red');
         isValid = false;
     }
