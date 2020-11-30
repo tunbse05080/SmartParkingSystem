@@ -1,7 +1,6 @@
 ﻿
 $(document).ready(function () {
     loadData();
-    loadDateNow();
 });
 
 var pageConfig = 1;
@@ -21,7 +20,8 @@ function loadDateNow() {
     }
 
     today = mm + '/' + dd + '/' + yyyy;
-    document.getElementById("ContractSigningDate").defaultValue = today + " 12:00:00AM";
+    today = today + " 12:00:00AM";
+    return today;
 }
 
 
@@ -152,10 +152,15 @@ function loadData() {
     });
 }
 
+//paging
 function paging(totalRow, callback) {
     var totalPage = Math.ceil(totalRow / 5)
     $('#pagination').twbsPagination({
         totalPages: totalPage,
+        first: "Đầu",
+        next: "Tiếp",
+        last: "Cuối",
+        prev: "Trước",
         visiblePages: 10,
         onPageClick: function (event, page) {
             pageConfig = page;
@@ -232,6 +237,7 @@ function Update() {
         success: function (result) {
             loadData();
             $('#myModal').modal('hide');
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -241,6 +247,7 @@ function Update() {
 
 //Function for clearing the textboxes
 function clearTextBox() {
+    var date = loadDateNow();
     $('#Id').val("");
     $('#UserName').val("");
     $('#FullName').val("");
@@ -252,6 +259,9 @@ function clearTextBox() {
     $('#IdentityCard').val("");
     $('#RoleName').val("");
     $('#ParkingPlace').val("");
+    $('#ContractSigningDate').val(""+date);
+    $('#ContractExpirationDate').val("");
+    
     $('#btnAdd').show();
     $('#btnUpdate').hide();
     //$('#Email').css('border-color', 'lightgrey');
