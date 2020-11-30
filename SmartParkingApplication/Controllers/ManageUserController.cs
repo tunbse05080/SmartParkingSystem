@@ -33,9 +33,10 @@ namespace SmartParkingApplication.Controllers
             {
                 users = users.Where(x => x.Name.Contains(name));
             }
-            var model = users.Skip((page - 1) * pageSize).Take(pageSize);
             var totalRow = users.Count();
-            return Json(new { data = model, total = totalRow }, JsonRequestBehavior.AllowGet);
+            users = users.Skip((page - 1) * pageSize).Take(pageSize);
+            
+            return Json(new { data = users, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Details/5

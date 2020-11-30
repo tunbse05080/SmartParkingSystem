@@ -118,7 +118,7 @@ function getIdToDropContract() {
 }
 
 //Load Data function
-function loadData() {
+function loadData(changePageSize) {
     var name = $('#txtNameSearch').val();
     $.ajax({
         url: "/ManageUser/LoadData",
@@ -146,7 +146,7 @@ function loadData() {
             $('.tbody').html(html);
             paging(result.total, function () {
                 loadData();
-            });
+            }, changePageSize);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -155,8 +155,16 @@ function loadData() {
 }
 
 //paging
-function paging(totalRow, callback) {
-    var totalPage = Math.ceil(totalRow / 5)
+function paging(totalRow, callback, changePageSize) {
+    var totalPage = Math.ceil(totalRow / 5);
+
+    //Unbind pagination if it existed or click change pageSize
+    if ($('#pagination').length === 0 || changePageSize === true) {
+        $('#pagination').empty();
+        $('#pagination').removeData("twbs-pagination");
+        $('#pagination').unbind("page");
+    }
+
     $('#pagination').twbsPagination({
         totalPages: totalPage,
         first: "Đầu",
@@ -199,7 +207,7 @@ function Add() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadData();
+            loadData(true);
             $('#myModal').modal('hide');
         },
         error: function (errormessage) {
@@ -237,7 +245,7 @@ function Update() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadData();
+            loadData(true);
             $('#myModal').modal('hide');
 
         },
