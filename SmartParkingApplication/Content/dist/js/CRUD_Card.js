@@ -1,7 +1,4 @@
-﻿$(document).ready(function () {
-    loadDataCard();
-});
-
+﻿
 var pageConfigCard = 1;
 
 //Load Data function
@@ -38,6 +35,7 @@ function loadDataCard(changePageSizeCard) {
         }
     });
 }
+
 function pagingCard(totalRowCard, callback, changePageSizeCard) {
     var totalPageCard = Math.ceil(totalRowCard / 5);
 
