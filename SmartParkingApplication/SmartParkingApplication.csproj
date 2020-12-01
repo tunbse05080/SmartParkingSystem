@@ -2161,8 +2161,6 @@
     <Content Include="Views\ManageCard\Index.cshtml" />
     <Content Include="Views\ManageTicket\Index.cshtml" />
     <Content Include="Views\Setting\Index.cshtml" />
-    <Content Include="Views\ManageUser\Create.cshtml" />
-    <Content Include="Views\ManageUser\Edit.cshtml" />
     <Content Include="Views\ManageUser\WorkingCalendar.cshtml" />
     <Content Include="Views\ManageUser\Editworkingcalendar.cshtml" />
     <Content Include="Views\ManagePPlace\Create.cshtml" />
