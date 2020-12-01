@@ -80,58 +80,7 @@
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>0004210508</td>
-                                        <td>2020-12-10</td>
-                                        <td>Đang sử dụng</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Khóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>0004210508</td>
-                                        <td>2020-12-10</td>
-                                        <td>Đang sử dụng</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Khóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>0004210508</td>
-                                        <td>2020-12-10</td>
-                                        <td>Đang sử dụng</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Khóa</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>0004210508</td>
-                                        <td>2020-12-10</td>
-                                        <td>Đang bị khóa</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" style="width:17%" class="btn btn-danger">Mở</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>0004210508</td>
-                                        <td>2020-12-10</td>
-                                        <td>Chưa sử dụng</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Khóa</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody class="tbody" id="tbodyCard"></tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Số thẻ</th>
@@ -141,9 +90,10 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div id="paginationCard" class="pagination" style="margin-top:10px">
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
-                    </div>
                 </div>
                 <!-- /.col -->
             </div>
