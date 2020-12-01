@@ -106,7 +106,7 @@ function AddCard() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadData(true);
+            loadDataCard(true);
             $('#myModalCard').modal('hide');
         },
         error: function (errormessage) {
@@ -117,19 +117,20 @@ function AddCard() {
 
 function UpdateCard() {
     var empCardObj = {
-        CardNumber: $('#CardNumber').val(),
-        Date: $('#Date').val(),
-        Status: $('#Stauts').val(),
+        CardID: $('#IdCardEdit').val(),
+        CardNumber: $('#CardNumberEdit').val(),
+        Date: $('#DateCardEdit').val(),
+        Status: $('#StatusCardEdit').val(),
     };
     $.ajax({
-        url: "/ManageCard/Update",
+        url: "/ManageCard/UpdateCard",
         data: JSON.stringify(empCardObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadData(true);
-            $('#myModalUpdateCard').modal('hide');
+            loadDataCard(true);
+            $('#myModalUpdate').modal('hide');
 
         },
         error: function (errormessage) {
@@ -140,15 +141,15 @@ function UpdateCard() {
 
 function getCardByID(CardID) {
     $.ajax({
-        url: "/ManageCard/UpdateCard/" + CardID,
+        url: "/ManageCard/CardDetails/" + CardID,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#Id').val("");
-            $('#CardNumber').val("");
-            $('#Date').val("" + date);
-            $('#Status').val("");
+            $('#IdCardEdit').val(result.CardID);
+            $('#CardNumberEdit').val(result.CardNumber);
+            $('#DateCardEdit').val(result.Date);
+            $('#StatusCardEdit').val(result.Status);
 
             $('#myModalUpdate').modal('show');
             $('#btnAddCard').hide();

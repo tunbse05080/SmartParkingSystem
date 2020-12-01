@@ -1,6 +1,7 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -48,7 +49,7 @@ namespace SmartParkingApplication.Controllers
             base.Dispose(disposing);
         }
 
-        public JsonResult UpdateCard(int id)
+        public JsonResult CardDetails(int id)
         {
             var card = db.Cards.Find(id);
             var Status = "";
@@ -66,6 +67,16 @@ namespace SmartParkingApplication.Controllers
             }
             var result = new { card.CardID, card.CardNumber, card.Date, Status};
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateCard(Card card)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(card).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(card, JsonRequestBehavior.AllowGet);
         }
     }
 
