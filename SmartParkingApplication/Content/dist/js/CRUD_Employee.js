@@ -285,12 +285,14 @@ function validate() {
     var isValid = true;
     var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
     var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+    var idcard = new RegExp('^[0-9]{9,}$');
     if ($('#UserName').val().trim() == "" || $('#UserName').val().trim().length < 4) {
         $('#UserName').prop("title", "Tên tài khoản > 4 ký tự.");
         $('#UserName').css('border-color', 'Red');
         isValid = false;
     }
     else {
+        $('#UserName').prop("title", "");
         $('#UserName').css('border-color', 'lightgrey');
     }
     if ($('#PassWord').val().trim() == "" || !pwd.test($('#PassWord').val().trim())) {
@@ -299,6 +301,7 @@ function validate() {
         isValid = false;
     }
     else {
+        $('#PassWord').prop("title", "");
         $('#PassWord').css('border-color', 'lightgrey');
     }
     if ($('#FullName').val().trim() == "" || $('#FullName').val().trim().length < 4) {
@@ -307,6 +310,7 @@ function validate() {
         isValid = false;
     }
     else {
+        $('#FullName').prop("title", "");
         $('#FullName').css('border-color', 'lightgrey');
     }
     if ($('#DateOfBirth').val().trim() == "") {
@@ -316,8 +320,7 @@ function validate() {
     else {
         $('#DateOfBirth').css('border-color', 'lightgrey');
     }
-    if ($('#Gender').val().trim() == "" || ($('#Gender').val().trim().toLowercase() != "nam" && $('#Gender').val().trim().toLowercase() != "nữ")) {
-        $('#Gender').prop("title", "Giới tính chỉ nam hoặc nữ.");
+    if ($('#Gender').val().trim() == "") {
         $('#Gender').css('border-color', 'Red');
         isValid = false;
     }
@@ -339,17 +342,21 @@ function validate() {
         $('#PhoneNumber').css('border-color', 'lightgrey');
     }
     if ($('#Email').val().trim() == "" || !email.test($('#Email').val().trim())) {
+        $('#Email').prop("title", "Email trống hoặc không đúng định dạng.");
         $('#Email').css('border-color', 'Red');
         isValid = false;
     }
     else {
+        $('#Email').prop("title", "");
         $('#Email').css('border-color', 'lightgrey');
     }
-    if ($('#IdentityCard').val().trim() == "") {
+    if ($('#IdentityCard').val().trim() == "" || !idcard.test($('#IdentityCard').val().trim())) {
+        $('#IdentityCard').prop("title", "CMND/CCCD trống hoặc sai định dạng.");
         $('#IdentityCard').css('border-color', 'Red');
         isValid = false;
     }
     else {
+        $('#IdentityCard').prop("title", "")
         $('#IdentityCard').css('border-color', 'lightgrey');
     }
     if ($('#ParkingPlace').val().trim() == "") {
