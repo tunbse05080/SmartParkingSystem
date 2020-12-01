@@ -18,7 +18,7 @@ namespace SmartParkingApplication.Controllers
         }
         public JsonResult LoadData(string nameC,int pageCard,int pageSizeCard = 5)
         {
-            var CardNumber = from c in db.Cards select new { c.CardID,c.CardNumber,c.Status };
+            var CardNumber = from c in db.Cards select new { c.CardID,c.CardNumber,c.Status,c.Date };
             if (!string.IsNullOrEmpty(nameC))
             {
                 CardNumber = CardNumber.Where(x => x.CardNumber.Contains(nameC));
