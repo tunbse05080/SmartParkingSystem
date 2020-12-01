@@ -15,46 +15,46 @@ namespace SmartParkingApplication.Controllers
         // GET: ManageParkingPlace
         public ActionResult ManageStatusParkingPlace()
         {
-            var trans = (from t in db.Transactions orderby t.TimeIn select t).ToList();
-            ViewBag.transac = trans;
+            //var trans = (from t in db.Transactions orderby t.TimeIn select t).ToList();
+            //ViewBag.transac = trans;
 
             return View();
         }
-        public JsonResult LoadData(int page, String name, int pageSize = 5)
+        public JsonResult LoadData(int page, String nameSSP, int pageSize = 5)
         {
-            var trans = from t in db.Transactions
-                        join c in db.Cards on t.CardID equals c.CardID into table1
-                        from c in table1.DefaultIfEmpty()
-                        orderby t.TimeIn
-                        select new { t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber, t.ParkingPlace };
-           
+            var trans = from t in db.Transactions select t;
+            
+
+            if (!string.IsNullOrEmpty(nameSSP))
+            {
+                trans = trans.Where(x => x.LicensePlates.Contains(nameSSP));
+            }
             var totalRow = trans.Count();
             trans = trans.Skip((page - 1) * pageSize).Take(pageSize);
 
-            return Json(new { data = trans, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { dataSSP = trans, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult Details(int id)
-        {
-            var trans = db.Transactions.Find(id);
+        //public JsonResult Details(int id)
+        //{
+        //   // var trans = db.Transactions.Find(id);
 
-            var TypeOfTicket = "";
-            if (trans.TypeOfTicket == 0)
-            {
-                TypeOfTicket = "Vé Tháng";
-            }
-            else
-            {
-                TypeOfTicket = "Vé Lượt";
-            }
-            var TimeIn = trans.TimeIn.Value.ToString();
-            var Timeout = trans.TimeOutv.Value.ToString();
+        //   // var TypeOfTicket = "";
+        //   // if (trans.TypeOfTicket == 0)
+        //   // {
+        //   //     TypeOfTicket = "Vé Lượt";
+        //   // }
+        //   // else
+        //   // {
+        //   //     TypeOfTicket = "Vé Tháng";
+        //   // }
             
             
-           // var contractSigningDate = employee.ContractSigningDate.Value.ToString("dd/MM/yyyy");
-           // var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
-            var result = new { trans.LicensePlates,TimeIn, Timeout, trans.TypeOfTicket, trans.Card.CardNumber, trans.ParkingPlace };
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+            
+        //   //// var contractSigningDate = employee.ContractSigningDate.Value.ToString("dd/MM/yyyy");
+        //   //// var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
+        //   // var result = new { trans.LicensePlates,trans.TimeIn, trans.TimeOutv, trans.TypeOfTicket, trans.ParkingPlace,trans.CardID };
+        //   // return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult ListParkingPlace()
         {
