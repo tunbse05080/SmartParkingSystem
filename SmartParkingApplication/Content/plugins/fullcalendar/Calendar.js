@@ -1,7 +1,7 @@
 ﻿
-let eventsArr = loadData();
+let eventsArr = loadDataCalendar();
 let calendar = initCalendar();
-function loadData() {
+function loadDataCalendar() {
     let eventsArr = [];
     let todoTable = document.getElementById("eventsTable");
     let trElem = todoTable.getElementsByTagName("tr");
@@ -19,42 +19,30 @@ function loadData() {
     return eventsArr;
 }
 
-function loadData1() {
-    let eventsArr = [];
-    $.ajax({
-        url: "/ManageUser/LoadData",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        data: {
-            name: name,
-            page: pageConfig,
-            pageSize: 5
-        },
-        dataType: "json",
-        success: function (result) {
-            var data = result.data;
-            var html = '';
-            $.each(data, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.Name + '</td>';
-                html += '<td>' + item.DateOfBirth + '</td>';
-                html += '<td>' + item.Phone + '</td>';
-                html += '<td>' + item.RoleName + '</td>';
-                html += '<td>' + item.NameOfParking + '</td>';
-                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
-                html += '</tr>';
-            });
-            $('.tbody').html(html);
-            paging(result.total, function () {
-                loadData();
-            }, changePageSize);
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-    return eventsArr;
-}
+//function loadDataCalendar() {
+//    let eventsArr = [];
+//    $.ajax({
+//        url: "/ManageUser/LoadData",
+//        type: "GET",
+//        contentType: "application/json;charset=utf-8",
+//        dataType: "json",
+//        success: function (result) {
+//            var data = result.data;
+//            $.each(data, function (key, item) {
+//                let eventObj = {
+//                    title: data.Name,
+//                    start: data.timeStart,
+//                    end: data.timeFinish,
+//                }
+//                eventsArr.push(eventObj);
+//            });
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//    return eventsArr;
+//}
 
 function initCalendar() {
     var calendarEl = document.getElementById('calendar');
