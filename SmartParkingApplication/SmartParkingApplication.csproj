@@ -2080,7 +2080,6 @@
     <Compile Include="Controllers\ManageStatisticController.cs" />
     <Compile Include="Controllers\ManageTicketController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
-    <Compile Include="Controllers\MonthlyTicketsController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2163,17 +2162,8 @@
     <Content Include="Views\Setting\Index.cshtml" />
     <Content Include="Views\ManageUser\WorkingCalendar.cshtml" />
     <Content Include="Views\ManageUser\Editworkingcalendar.cshtml" />
-    <Content Include="Views\ManagePPlace\Create.cshtml" />
-    <Content Include="Views\ManagePPlace\Delete.cshtml" />
-    <Content Include="Views\ManagePPlace\Details.cshtml" />
-    <Content Include="Views\ManagePPlace\Edit.cshtml" />
     <Content Include="Views\ManagePPlace\ManageStatusParkingPlace.cshtml" />
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
-    <Content Include="Views\MonthlyTickets\Create.cshtml" />
-    <Content Include="Views\MonthlyTickets\Delete.cshtml" />
-    <Content Include="Views\MonthlyTickets\Details.cshtml" />
-    <Content Include="Views\MonthlyTickets\Edit.cshtml" />
-    <Content Include="Views\MonthlyTickets\Index.cshtml" />
     <Content Include="Views\ManageTicket\ListExtendTicket.cshtml" />
     <Content Include="Views\ManageStatistic\IncomeStatistic.cshtml" />
     <Content Include="Views\ManageStatistic\DensityStatistic.cshtml" />

@@ -41,6 +41,12 @@ namespace SmartParkingApplication.Controllers
             return Json(new { dataSSP = trans, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
 
+        //public JsonResult LoadInfoPPlace()
+        //{
+        //    var result = 0;
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
+
         public ActionResult ListParkingPlace()
         {
             var listParking = (from list in db.ParkingPlaces select list).ToList();
