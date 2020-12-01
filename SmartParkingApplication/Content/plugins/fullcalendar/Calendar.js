@@ -1,21 +1,4 @@
-﻿//let eventArr = [];
-
-//let eventsTable = document.getElementById("eventsTable");
-
-//let trElements = eventsTable.getElementByTagName("tr");
-
-//for (let tr of trElements) {
-
-//    let tdElements = tr.getElementByTagName("td");
-//    let eventObj = {
-//        id: tdElements[0].innerText,
-//        title: tdElements[1].innerText,
-//        start: tdElements[2].innerText,
-//    }
-    
-//    eventArr.push(eventObj);
-//}
-
+﻿
 let eventsArr = loadData();
 let calendar = initCalendar();
 function loadData() {
@@ -35,6 +18,44 @@ function loadData() {
     }
     return eventsArr;
 }
+
+function loadData1() {
+    let eventsArr = [];
+    $.ajax({
+        url: "/ManageUser/LoadData",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: {
+            name: name,
+            page: pageConfig,
+            pageSize: 5
+        },
+        dataType: "json",
+        success: function (result) {
+            var data = result.data;
+            var html = '';
+            $.each(data, function (key, item) {
+                html += '<tr>';
+                html += '<td>' + item.Name + '</td>';
+                html += '<td>' + item.DateOfBirth + '</td>';
+                html += '<td>' + item.Phone + '</td>';
+                html += '<td>' + item.RoleName + '</td>';
+                html += '<td>' + item.NameOfParking + '</td>';
+                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                html += '</tr>';
+            });
+            $('.tbody').html(html);
+            paging(result.total, function () {
+                loadData();
+            }, changePageSize);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+    return eventsArr;
+}
+
 function initCalendar() {
     var calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {

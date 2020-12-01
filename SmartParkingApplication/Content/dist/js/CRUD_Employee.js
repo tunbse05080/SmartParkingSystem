@@ -143,7 +143,7 @@ function loadData(changePageSize) {
                 html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                 html += '</tr>';
             });
-            $('.tbody').html(html);
+            $('#tbodyUser').html(html);
             paging(result.total, function () {
                 loadData();
             }, changePageSize);
@@ -285,7 +285,9 @@ function validate() {
     var isValid = true;
     var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
     var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+    var msg = ' không thể trống hoặc sai định dạng ';
     if ($('#UserName').val().trim() == "") {
+        $('#UserName').prop("title", "Username" + msg);
         $('#UserName').css('border-color', 'Red');
         isValid = false;
     }
