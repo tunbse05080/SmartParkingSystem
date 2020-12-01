@@ -286,7 +286,7 @@ function validate() {
     var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
     var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
     if ($('#UserName').val().trim() == "" || $('#UserName').val().trim().length < 4) {
-        $('#UserName').prop("title", "Username > 4 ký tự.");
+        $('#UserName').prop("title", "Tên tài khoản > 4 ký tự.");
         $('#UserName').css('border-color', 'Red');
         isValid = false;
     }
@@ -294,14 +294,15 @@ function validate() {
         $('#UserName').css('border-color', 'lightgrey');
     }
     if ($('#PassWord').val().trim() == "" || !pwd.test($('#PassWord').val().trim())) {
-        $('#PassWord').prop("title", "PassWord >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)");
+        $('#PassWord').prop("title", "Mật khấu >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)");
         $('#PassWord').css('border-color', 'Red');
         isValid = false;
     }
     else {
         $('#PassWord').css('border-color', 'lightgrey');
     }
-    if ($('#FullName').val().trim() == "") {
+    if ($('#FullName').val().trim() == "" || $('#FullName').val().trim().length < 4) {
+        $('#FullName').prop("title", "Tên đầy đủ > 4 ký tự.");
         $('#FullName').css('border-color', 'Red');
         isValid = false;
     }
