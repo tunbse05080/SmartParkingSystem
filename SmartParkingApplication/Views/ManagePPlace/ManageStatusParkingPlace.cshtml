@@ -110,6 +110,7 @@
 
                                     {
                                         string TypeOfTicket = string.Empty;
+                                        string TypeOfCar = string.Empty;
                                         switch (item.TypeOfTicket)
                                         {
                                             case 0:
@@ -120,6 +121,7 @@
                                                 break;
 
                                         }
+                                        
                                         <tr>
 
                                             <td>@item.LicensePlates</td>
@@ -129,8 +131,9 @@
                                             <td>@item.Card.CardNumber</td>
                                             <td>@item.LicensePlates</td>
                                         </tr>
-                                    }
+                                        }
                                 </tbody>
+
                                 <tfoot>
                                     <tr>
                                         <th>Biển số</th>
@@ -142,9 +145,10 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div id="pagination" class="pagination" style="margin-top:10px">
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
-                    </div>
                 </div>
                 <!-- /.col -->
             </div>
