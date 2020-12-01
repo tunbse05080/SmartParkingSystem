@@ -22,7 +22,7 @@ function loadDataCard(changePageSizeCard) {
                 html += '<td>' + item.CardNumber + '</td>';
                 html += '<td>' + item.Date + '</td>';
                 html += '<td>' + item.Status + '</td>';
-                html += '<td><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Khóa thẻ</button></td>';
+                html += '<td><button class="btn btn-success" onclick="return getCardByID(' + item.CardID + ')" > Sửa </button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getCardByID(' + item.CardID + ')">Khóa thẻ</button></td>';
                 html += '</tr>';
             });
             $('#tbodyCard').html(html);
@@ -113,4 +113,50 @@ function AddCard() {
             alert(errormessage.responseText);
         }
     });
+}
+
+function UpdateCard() {
+    var empCardObj = {
+        CardNumber: $('#CardNumber').val(),
+        Date: $('#Date').val(),
+        Status: $('#Stauts').val(),
+    };
+    $.ajax({
+        url: "/ManageCard/Update",
+        data: JSON.stringify(empCardObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadData(true);
+            $('#myModalUpdateCard').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+function getCardByID(CardID) {
+    $.ajax({
+        url: "/ManageCard/UpdateCard/" + CardID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#Id').val("");
+            $('#CardNumber').val("");
+            $('#Date').val("" + date);
+            $('#Status').val("");
+
+            $('#myModalUpdate').modal('show');
+            $('#btnAddCard').hide();
+            $('#btnUpdateCard').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + CardID + errormessage.responseText);
+        }
+    });
+    return false;
 }

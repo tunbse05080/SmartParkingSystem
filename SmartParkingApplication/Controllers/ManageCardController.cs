@@ -47,6 +47,26 @@ namespace SmartParkingApplication.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public JsonResult UpdateCard(int id)
+        {
+            var card = db.Cards.Find(id);
+            var Status = "";
+            if (card.Status == 0)
+            {
+                Status = "Hỏng";
+            }
+            if (card.Status == 1)
+            {
+                Status = "Đang sử dụng";
+            }
+            if (card.Status == 2)
+            {
+                Status = "Chưa sử dụng";
+            }
+            var result = new { card.CardID, card.CardNumber, card.Date, Status};
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 
 }
