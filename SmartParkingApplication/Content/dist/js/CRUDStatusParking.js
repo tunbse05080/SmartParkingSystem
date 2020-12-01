@@ -4,6 +4,8 @@ var pageConfigSPP = 1;
 //Load Data function
 function loadDataStatusParking(changePageSizeSPP) {
     var nameSPP = $('#txtNameSearchSPP').val();
+    var timeTo = $('#txtTimeToSPP').val();
+    var timeFrom = $('#txtTimeFromSPP').val();
     $.ajax({
         url: "/ManagePPlace/LoadDataStatusPP",
         type: "GET",
@@ -11,7 +13,9 @@ function loadDataStatusParking(changePageSizeSPP) {
         data: {
             nameSSP: nameSPP,
             pageSPP: pageConfigSPP,
-            pageSizeSPP: 5
+            pageSizeSPP: 5,
+            timeFrom: timeFrom,
+            timeTo: timeTo
         },
         dataType: "json",
         success: function (result) {
@@ -33,6 +37,9 @@ function loadDataStatusParking(changePageSizeSPP) {
             }, changePageSizeSPP);
         },
         error: function (errormessage) {
+            if (timeFrom == null && timeTo == null) {
+                alert("Làm ơn nhập thời gian vào và ra!");
+            }
             alert(errormessage.responseText);
         }
     });

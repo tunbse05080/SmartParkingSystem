@@ -18,7 +18,7 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
-        public JsonResult LoadDataStatusPP(int pageSPP, String nameSSP, int pageSizeSPP = 5)
+        public JsonResult LoadDataStatusPP(int pageSPP,DateTime timeTo, DateTime timeFrom , String nameSSP, int pageSizeSPP = 5)
         {
             var trans = from t in db.Transactions
                         join c in db.Cards on t.CardID equals c.CardID into table1
@@ -28,6 +28,13 @@ namespace SmartParkingApplication.Controllers
             if (!string.IsNullOrEmpty(nameSSP))
             {
                 trans = trans.Where(x => x.LicensePlates.Contains(nameSSP));
+            }else if(!string.IsNullOrEmpty(timeFrom.ToString()) && !string.IsNullOrEmpty(timeTo.ToString()))
+            {
+                trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo);
+            }
+            else
+            {
+                trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo && x.LicensePlates.Contains(nameSSP));
             }
             var totalRow = trans.Count();
             trans = trans.Skip((pageSPP - 1) * pageSizeSPP).Take(pageSizeSPP);
