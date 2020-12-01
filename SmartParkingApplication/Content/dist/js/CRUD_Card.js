@@ -14,7 +14,7 @@ function loadDataCard(changePageSizeCard) {
         data: {
             nameC: nameCard,
             pageCard: pageConfigCard,
-            pageSizeCard: 3
+            pageSizeCard: 5
         },
         dataType: "json",
         success: function (result) {
@@ -54,7 +54,7 @@ function pagingCard(totalRowCard, callback, changePageSizeCard) {
         next: "Tiếp",
         last: "Cuối",
         prev: "Trước",
-        visiblePages: 5,
+        visiblePages:   10 ,
         onPageClick: function (event, pageCard) {
             pageConfigCard = pageCard;
             setTimeout(callback, 200);
