@@ -270,9 +270,9 @@ function clearTextBox() {
     $('#IdentityCard').val("");
     $('#RoleName').val("");
     $('#ParkingPlace').val("");
-    $('#ContractSigningDate').val(""+date);
+    $('#ContractSigningDate').val("" + date);
     $('#ContractExpirationDate').val("");
-    
+
     $('#btnAdd').show();
     $('#btnUpdate').hide();
     //$('#Email').css('border-color', 'lightgrey');
@@ -287,6 +287,7 @@ function validate() {
     var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
     var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
     var idcard = new RegExp('^[0-9]{9,}$');
+    var phone = new RegExp('^(09|03|07|08|05){1}([0-9]{8})$');
     if ($('#UserName').val().trim() == "" || $('#UserName').val().trim().length < 4) {
         $('#UserName').prop("title", "Tên tài khoản > 4 ký tự.");
         $('#UserName').css('border-color', 'Red');
@@ -335,11 +336,13 @@ function validate() {
     else {
         $('#Address').css('border-color', 'lightgrey');
     }
-    if ($('#PhoneNumber').val().trim() == "") {
+    if ($('#PhoneNumber').val().trim() == "" || !phone.test($('#PhoneNumber').val().trim())) {
+        $('#PhoneNumber').prop("title", "Số điện thoại trống hoặc định dạng sai.");
         $('#PhoneNumber').css('border-color', 'Red');
         isValid = false;
     }
     else {
+        $('#PhoneNumber').prop("title", "");
         $('#PhoneNumber').css('border-color', 'lightgrey');
     }
     if ($('#Email').val().trim() == "" || !email.test($('#Email').val().trim())) {
