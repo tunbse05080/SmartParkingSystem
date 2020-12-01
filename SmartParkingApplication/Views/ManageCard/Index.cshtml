@@ -58,7 +58,7 @@
 
                             <div class="row">
                                 <div class="col-md-9">
-                                    <button type="button" class="btn btn-success">Thêm thẻ</button>
+                                    <button type="button" data-toggle="modal" data-target="#myModalCard" onclick="clearTextBoxCard();" class="btn btn-success">Thêm thẻ</button>
                                 </div>
                                 <div class="col-md-3">
                                     <form class="form-inline active-purple-3 active-purple-4">
@@ -93,6 +93,43 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+                        <!-- The Modal -->
+                        <div class="modal fade" id="myModalCard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Thêm thẻ </h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="form-group">
+                                            <label for="Id">Id</label>
+                                            <input type="text" class="form-control" id="Id" placeholder="Id" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CardNumber">Số thẻ</label>
+                                            <input type="text" class="form-control" id="CardNumber" placeholder="Số thẻ" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Date">Ngày nhập</label>
+                                            <input type="text" class="form-control" id="Date" placeholder="Ngày nhập" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Status">trạng thái thẻ</label>
+                                            <input type="text" class="form-control" id="Status" placeholder="trạng thái thẻ" />
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="btnAddCard" onclick="return AddCard();">thêm</button>
+                                        <button type="button" class="btn btn-success" id="btnUpdate" onclick="Update();">Sửa</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.col -->
             </div>

@@ -28,5 +28,25 @@ namespace SmartParkingApplication.Controllers
 
             return Json(new { dataCard = CardNumber,total = totalRow}, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult Create(Card card)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Cards.Add(card);
+                db.SaveChanges();
+            }
+
+            return Json(card, JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
+
 }

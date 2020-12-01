@@ -22,7 +22,7 @@ function loadDataCard(changePageSizeCard) {
                 html += '<td>' + item.CardNumber + '</td>';
                 html += '<td>' + item.Date + '</td>';
                 html += '<td>' + item.Status + '</td>';
-                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.CardID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                html += '<td><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Khóa thẻ</button></td>';
                 html += '</tr>';
             });
             $('#tbodyCard').html(html);
@@ -56,6 +56,61 @@ function pagingCard(totalRowCard, callback, changePageSizeCard) {
         onPageClick: function (event, pageCard) {
             pageConfigCard = pageCard;
             setTimeout(callback, 200);
+        }
+    });
+}
+function clearTextBoxCard() {
+    var date = loadDateCardNow();
+    $('#Id').val("");
+    $('#CardNumber').val("");
+    $('#Date').val("" + date);
+    $('#Status').val("");
+
+    $('#btnAdd').show();
+    $('#btnUpdate').hide();
+    //$('#Email').css('border-color', 'lightgrey');
+    //$('#IdentityCard').css('border-color', 'lightgrey');
+    //$('#State').css('border-color', 'lightgrey');
+    //$('#Country').css('border-color', 'lightgrey');
+}
+
+function loadDateCardNow() {
+    // body...
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = mm + '/' + dd + '/' + yyyy;
+    today = today + " 12:00:00AM";
+    return today;
+}
+
+function AddCard() {
+    var empCardObj = {
+        CardNumber: $('#CardNumber').val(),
+        Date: $('#Date').val(),
+        Status: $('#Stauts').val(),
+    };
+    $.ajax({
+        url: "/ManageCard/Create",
+        data: JSON.stringify(empCardObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadData(true);
+            $('#myModalCard').modal('hide');
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
         }
     });
 }
