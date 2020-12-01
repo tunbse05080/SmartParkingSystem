@@ -3,13 +3,13 @@ var pageConfigSPP = 1;
 
 //Load Data function
 function loadDataStatusParking(changePageSizeSPP) {
-    var name = $('#txtNameSearchSPP').val();
+    var nameSPP = $('#txtNameSearchSPP').val();
     $.ajax({
         url: "/ManagePPlace/LoadDataStatusPP",
         type: "GET",
         contentType: "application/json;charset=utf-8",
         data: {
-            nameSSP: name,
+            nameSSP: nameSPP,
             pageSPP: pageConfigSPP,
             pageSizeSPP: 5
         },
@@ -39,8 +39,8 @@ function loadDataStatusParking(changePageSizeSPP) {
 }
 
 //paging
-function pagingSPP(totalRow, callback, changePageSizeSPP) {
-    var totalPage = Math.ceil(totalRow / 5);
+function pagingSPP(totalRowSPP, callback, changePageSizeSPP) {
+    var totalPageSPP = Math.ceil(totalRowSPP / 5);
 
     //Unbind pagination if it existed or click change pageSize
     if ($('#paginationSPP').length === 0 || changePageSizeSPP === true) {
@@ -50,7 +50,7 @@ function pagingSPP(totalRow, callback, changePageSizeSPP) {
     }
 
     $('#paginationSPP').twbsPagination({
-        totalPages: totalPage,
+        totalPages: totalPageSPP,
         first: "Đầu", 
         next: "Tiếp",
         last: "Cuối",

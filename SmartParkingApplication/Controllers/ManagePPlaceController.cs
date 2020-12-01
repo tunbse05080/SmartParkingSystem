@@ -27,7 +27,7 @@ namespace SmartParkingApplication.Controllers
                         select new { t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber };
             if (!string.IsNullOrEmpty(nameSSP))
             {
-                trans = trans.Where(x => x.LicensePlates.Equals(nameSSP));
+                trans = trans.Where(x => x.LicensePlates.Contains(nameSSP));
             }
             var totalRow = trans.Count();
             trans = trans.Skip((pageSPP - 1) * pageSizeSPP).Take(pageSizeSPP);
