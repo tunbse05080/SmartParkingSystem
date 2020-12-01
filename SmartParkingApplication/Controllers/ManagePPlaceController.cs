@@ -15,8 +15,8 @@ namespace SmartParkingApplication.Controllers
         // GET: ManageParkingPlace
         public ActionResult ManageStatusParkingPlace()
         {
-            //var trans = (from t in db.Transactions orderby t.TimeIn select t).ToList();
-            //ViewBag.transac = trans;
+            var trans = (from t in db.Transactions orderby t.TimeIn select t).ToList();
+            ViewBag.transac = trans;
 
             return View();
         }
