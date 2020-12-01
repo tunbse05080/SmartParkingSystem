@@ -316,7 +316,7 @@ function validate() {
     else {
         $('#DateOfBirth').css('border-color', 'lightgrey');
     }
-    if ($('#Gender').val().trim() == "" || ($('#Gender').val().trim().toLowercase() != "nam") && $('#Gender').val().trim().toLowercase() != "nữ")) {
+    if ($('#Gender').val().trim() == "" || ($('#Gender').val().trim().toLowercase() != "nam" && $('#Gender').val().trim().toLowercase() != "nữ")) {
         $('#Gender').prop("title", "Giới tính chỉ nam hoặc nữ.");
         $('#Gender').css('border-color', 'Red');
         isValid = false;
