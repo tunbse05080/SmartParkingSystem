@@ -18,7 +18,7 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
-        public JsonResult LoadDataStatusPP(int pageSPP,DateTime timeTo, DateTime timeFrom , String nameSSP, int pageSizeSPP = 5)
+        public JsonResult LoadDataStatusPP(int pageSPP,DateTime timeFrom, DateTime timeTo , String nameSSP, int pageSizeSPP = 5)
         {
             var trans = from t in db.Transactions
                         join c in db.Cards on t.CardID equals c.CardID into table1
