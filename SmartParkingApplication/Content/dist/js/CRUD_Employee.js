@@ -1,6 +1,7 @@
 ﻿
 $(document).ready(function () {
     loadData();
+    loadDataCard();
 });
 
 var pageConfig = 1;
