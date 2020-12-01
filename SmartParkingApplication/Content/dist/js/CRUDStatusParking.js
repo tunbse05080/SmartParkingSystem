@@ -1,35 +1,65 @@
 ﻿
-$(document).ready(function () {
-    loadDataStatusParking();
-});
+var pageConfigSPP = 1;
 
-var pageConfig = 1;
-
-
+//Load Data function
+function loadDataStatusParking(changePageSizeSPP) {
+    var name = $('#txtNameSearchSPP').val();
+    $.ajax({
+        url: "/ManagePPlace/LoadDataStatusPP",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        data: {
+            nameSSP: name,
+            pageSPP: pageConfigSPP,
+            pageSizeSPP: 5
+        },
+        dataType: "json",
+        success: function (result) {
+            var data = result.dataSSP;
+            var html = '';
+            $.each(data, function (key, item) {
+                html += '<tr>';
+                html += '<td>' + item.LicensePlates + '</td>';
+                html += '<td>' + item.TimeIn + '</td>';
+                html += '<td>' + item.TimeOutv + '</td>';
+                html += '<td>' + item.TypeOfTicket + '</td>';
+                html += '<td>' + item.CardNumber + '</td>';
+                html += '<td>' + 'Xe máy' + '</td>';
+                html += '</tr>';
+            });
+            $('#tbodyStatusPP').html(html);
+            pagingSPP(result.total, function () {
+                loadDataStatusParking();
+            }, changePageSizeSPP);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
 
 //paging
-function pagingParkingPlace(totalRow, callback, changePageSize) {
+function pagingSPP(totalRow, callback, changePageSizeSPP) {
     var totalPage = Math.ceil(totalRow / 5);
 
     //Unbind pagination if it existed or click change pageSize
-    if ($('#pagination').length === 0 || changePageSize === true) {
-        $('#pagination').empty();
-        $('#pagination').removeData("twbs-pagination");
-        $('#pagination').unbind("page");
+    if ($('#paginationSPP').length === 0 || changePageSizeSPP === true) {
+        $('#paginationSPP').empty();
+        $('#paginationSPP').removeData("twbs-pagination");
+        $('#paginationSPP').unbind("page");
     }
 
-    $('#pagination').twbsPagination({
+    $('#paginationSPP').twbsPagination({
         totalPages: totalPage,
-        first: "Đầu",
+        first: "Đầu", 
         next: "Tiếp",
         last: "Cuối",
         prev: "Trước",
         visiblePages: 10,
-        onPageClick: function (event, page) {
-            pageConfig = page;
+        onPageClick: function (event, pageSPP) {
+            pageConfigSPP = pageSPP;
             setTimeout(callback, 200);
         }
     });
 }
 
-//Add Data Function

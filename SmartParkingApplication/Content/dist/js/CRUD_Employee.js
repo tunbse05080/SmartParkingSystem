@@ -2,6 +2,7 @@
 $(document).ready(function () {
     loadData();
     loadDataCard();
+    loadDataStatusParking();
 });
 
 var pageConfig = 1;
