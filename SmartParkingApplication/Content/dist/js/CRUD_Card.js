@@ -173,7 +173,7 @@ function getCardByID(CardID) {
 function validate{
     var isValid = true;
     var rfidCard = new RegExp('^[0-9]{10,}$');
-    if ($('#CardNumber').val().trim() == "" || $('#CardNumber').val().trim().length < 10) {
+    if ($('#CardNumber').val().trim() == "" || !rfidCard.test($('#CardNumber').val().trim())) {
         $('#CardNumber').prop("title", "Số thẻ trống hoặc sai định dạng(>9 số).");
         $('#CardNumber').css('border-color', 'Red');
         isValid = false;
