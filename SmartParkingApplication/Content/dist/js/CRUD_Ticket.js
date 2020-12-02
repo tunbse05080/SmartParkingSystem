@@ -26,7 +26,7 @@ function loadDataTicket(changePageSizeTicket) {
                 html += '<td>' + item.LicensePlates + '</td>';
                 html += '<td>' + item.RegisDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
-                html += '<td><button class="btn btn-success" onclick="return getCardByID(' + item.CardID + ')" > Sửa </button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getCardByID(' + item.CardID + ')">Khóa thẻ</button></td>';
+                html += '<td><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Sửa </button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getTicketByID(' + item.MonthlyTicketID + ')">Gia hạn</button></td>';
                 html += '</tr>';
             });
             $('#tbodyTicket').html(html);
@@ -139,7 +139,7 @@ function UpdateTicket() {
         ExpiryDate: $('#ExpiryDate').val(),
     };
     $.ajax({
-        url: "/ManageTicket/Create",
+        url: "/ManageTicket/Ticket",
         data: JSON.stringify(empTicketObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
