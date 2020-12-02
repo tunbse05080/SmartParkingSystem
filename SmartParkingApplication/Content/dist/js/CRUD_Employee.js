@@ -3,6 +3,7 @@ $(document).ready(function () {
     loadData();
     loadDataCard();
     loadDataStatusParking();
+    loadDataTicket();
 });
 
 var pageConfig = 1;

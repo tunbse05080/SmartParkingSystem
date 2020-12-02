@@ -1,4 +1,4 @@
-﻿var pageConfigCard = 1;
+﻿var pageConfigTicket = 1;
 
 //Load Data function
 function loadDataTicket(changePageSizeTicket) {
