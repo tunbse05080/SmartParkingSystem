@@ -182,7 +182,7 @@ namespace SmartParkingApplication.Controllers
                 newRow["Chức vụ"] = item.Role.RoleName;
                 newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
                // newRow["Số CMND"] = item.UserName;
-
+               //full fesh
 
 
                 dt.Rows.Add(newRow);
