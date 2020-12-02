@@ -170,7 +170,7 @@ function getCardByID(CardID) {
     return false;
 }
 
-function validate{
+function validate() {
     var isValid = true;
     var rfidCard = new RegExp('^[0-9]{10,}$');
     if ($('#CardNumber').val().trim() == "" || !rfidCard.test($('#CardNumber').val().trim())) {
