@@ -148,8 +148,13 @@ namespace SmartParkingApplication.Controllers
             dt.Columns.Add("Số điện thoại", typeof(int));
             dt.Columns.Add("Email", typeof(String));
             dt.Columns.Add("Số CMND", typeof(int));
-            dt.Columns.Add("Ngày ký HĐ", typeof(String));
-            dt.Columns.Add("Ngày hết HĐ", typeof(String));
+            dt.Columns.Add("Ngày Ký HĐ", typeof(String));
+            dt.Columns.Add("Ngày Hết HĐ", typeof(String));
+            // them ngay gia han
+            dt.Columns.Add("Ngày Gia hạn", typeof(String));
+
+
+           
             dt.Columns.Add("Chức vụ", typeof(String));
             dt.Columns.Add("Bãi làm việc", typeof(String));
 
@@ -176,9 +181,9 @@ namespace SmartParkingApplication.Controllers
                 newRow["Số CMND"] = item.IdentityCard;
                 // newRow["Ngày ký HĐ"] = item.UserName;
                 // newRow["Ngày hết HĐ"] = item.UserName;
-                newRow["Ngày ký HĐ"] = item.ContractSigningDate;
-                newRow["Ngày hết HĐ"] = item.ContractExpirationDate;
-                newRow["Ngày gia hạn"] = item.ContractRenewalDate;
+                newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
+                newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
+                newRow["Ngày Gia hạn"] = item.ContractRenewalDate;
                 newRow["Chức vụ"] = item.Role.RoleName;
                 newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
                // newRow["Số CMND"] = item.UserName;
