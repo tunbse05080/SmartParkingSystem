@@ -154,3 +154,31 @@ function UpdateTicket() {
         }
     });
 }
+
+function getTicketByID(MonthlyTicketID) {
+    $.ajax({
+        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#MonthlyTicketIDEdit').val(result.MonthlyTicketID);
+            $('#CusNameEdit').val(result.CusName);
+            $('#IdentityCardEdit').val(result.IdentityCard);
+            $('#PhoneEdit').val(result.Phone);
+            $('#EmailEdit').val(result.Email);
+            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
+            $('#LicensePlatesEdit').val(result.LicensePlates);
+            $('#RegisDateEdit').val(result.RegisDate);
+            $('#ExpiryDateEdit').val(result.ExpiryDate);
+
+            $('#myModalUpdateTicket').modal('show');
+            $('#btnAddTicket').hide();
+            $('#btnUpdateTicket').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + MonthlyTicketID + errormessage.responseText);
+        }
+    });
+    return false;
+}
