@@ -4,6 +4,7 @@ $(document).ready(function () {
     loadDataCard();
     loadDataStatusParking();
     loadDataTicket();
+    loadDataParkingPlace();
 });
 
 var pageConfig = 1;

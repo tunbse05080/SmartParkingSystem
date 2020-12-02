@@ -63,12 +63,12 @@ namespace SmartParkingApplication.Controllers
         //    return Json(result, JsonRequestBehavior.AllowGet);
         //}
 
-        //public ActionResult ListParkingPlace()
-        //{
-        //    var listParking = (from list in db.ParkingPlaces select list).ToList();
-        //    return View(listParking);
-        //}
-        
+        public ActionResult ListParkingPlace()
+        {
+            //var listParking = (from list in db.ParkingPlaces select list).ToList();
+            return View();
+        }
+
         public JsonResult loadDataParkingPlace(int pagepp, string namepp, int pageSizepp = 5)
         {
             var parking = from p in db.ParkingPlaces select new { p.NameOfParking,p.Location,p.NumberOfCar,p.NumberOfMotoBike};
@@ -76,7 +76,7 @@ namespace SmartParkingApplication.Controllers
             var totalRow = parking.Count();
             parking = parking.Skip((pagepp - 1) * pageSizepp).Take(pageSizepp);
 
-            return Json(new { dataSSP = parking, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { datapp = parking, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ParkingPlaces/Details/5
