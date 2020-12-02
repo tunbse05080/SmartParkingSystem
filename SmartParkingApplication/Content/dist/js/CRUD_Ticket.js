@@ -39,3 +39,27 @@ function loadDataTicket(changePageSizeTicket) {
         }
     });
 }
+
+function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
+    var totalPageTicket = Math.ceil(totalRowTicket / 5);
+
+    //Unbind pagination if it existed or click change pageSize
+    if ($('#paginationTicket').length === 0 || changePageSizeTicket === true) {
+        $('#paginationTicket').empty();
+        $('#paginationTicket').removeData("twbs-pagination");
+        $('#paginationTicket').unbind("page");
+    }
+
+    $('#paginationTicket').twbsPagination({
+        totalPages: totalPageTicket,
+        first: "Đầu",
+        next: "Tiếp",
+        last: "Cuối",
+        prev: "Trước",
+        visiblePages: 10,
+        onPageClick: function (event, pageTicket) {
+            pageConfigTicket = pageTicket;
+            setTimeout(callback, 200);
+        }
+    });
+}
