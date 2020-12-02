@@ -126,3 +126,31 @@ function AddTicket() {
         }
     });
 }
+
+function UpdateTicket() {
+    var empTicketObj = {
+        CusName: $('#CusName').val(),
+        IdentityCard: $('#IdentityCard').val(),
+        Phone: $('#Phone').val(),
+        Email: $('#Email').val(),
+        TypeOfVehicle: $('#TypeOfVehicle').val(),
+        LicensePlates: $('#LicensePlates').val(),
+        RegisDate: $('#RegisDate').val(),
+        ExpiryDate: $('#ExpiryDate').val(),
+    };
+    $.ajax({
+        url: "/ManageTicket/Create",
+        data: JSON.stringify(empTicketObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataTicket(true);
+            $('#myModalUpdateTicket').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
