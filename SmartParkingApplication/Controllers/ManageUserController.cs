@@ -130,14 +130,21 @@ namespace SmartParkingApplication.Controllers
         public ActionResult XuatFileExel()
         {
 
-            var ds = db.Users.ToList();
-            var phong = db.ParkingPlaces.ToList();
+            var user = db.Users.ToList();
+            var parking  = db.ParkingPlaces.ToList();
+            var role = db.Roles.ToList();
             var gv = new GridView();
             //===================================================
             DataTable dt = new DataTable();
             //Add Datacolumn
-            DataColumn workCol = dt.Columns.Add("Họ tên", typeof(String));
+            DataColumn workCol = dt.Columns.Add("Họ và tên", typeof(String));
 
+            dt.Columns.Add("", typeof(String));
+            dt.Columns.Add("Phòng ban", typeof(String));
+            dt.Columns.Add("Phòng ban", typeof(String));
+            dt.Columns.Add("Phòng ban", typeof(String));
+            dt.Columns.Add("Phòng ban", typeof(String));
+            dt.Columns.Add("Phòng ban", typeof(String));
             dt.Columns.Add("Phòng ban", typeof(String));
             dt.Columns.Add("Chức vụ", typeof(String));
             dt.Columns.Add("Học vấn", typeof(String));
@@ -146,12 +153,12 @@ namespace SmartParkingApplication.Controllers
             //Add in the datarow
 
 
-            foreach (var item in ds)
+            foreach (var item in user)
             {
                 DataRow newRow = dt.NewRow();
                 newRow["Họ tên"] = item.UserName;
                 newRow["Phòng ban"] = item.email;
-                newRow["Chức vụ"] = item.ParkingPlace;
+                newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
                 newRow["Học vấn"] = item.Name;
                 newRow["Chuyên ngành"] = item.UserAddress;
 
