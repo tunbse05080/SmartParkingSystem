@@ -161,3 +161,7 @@ function getCardByID(CardID) {
     });
     return false;
 }
+
+function validate{
+
+}
