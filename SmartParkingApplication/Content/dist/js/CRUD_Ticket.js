@@ -63,3 +63,66 @@ function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
         }
     });
 }
+
+function clearTextBoxTicket() {
+    var date = loadDateTicketNow();
+    $('#Id').val("");
+    $('#CusName').val("");
+    $('#IdentityCard').val("");
+    $('#Phone').val("");
+    $('#Email').val("");
+    $('#TypeOfVehicle').val("");
+    $('#LicensePlates').val("");
+    $('#RegisDate').val("" + date);
+    $('#ExpiryDate').val("" + date);
+
+    $('#btnAdd').show();
+    $('#btnUpdate').hide();
+
+}
+
+function loadDateTicketNow() {
+    // body...
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = mm + '/' + dd + '/' + yyyy;
+    today = today + " 12:00:00AM";
+    return today;
+}
+
+function AddTicket() {
+    var empTicketObj = {
+        CusName: $('#CusName').val(),
+        IdentityCard: $('#IdentityCard').val(),
+        Phone: $('#Phone').val(),
+        Email: $('#Email').val(),
+        TypeOfVehicle: $('#TypeOfVehicle').val(),
+        LicensePlates: $('#LicensePlates').val(),
+        RegisDate: $('#RegisDate').val(),
+        ExpiryDate: $('#ExpiryDate').val(),
+    };
+    $.ajax({
+        url: "/ManageTicket/Create",
+        data: JSON.stringify(empTicketObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataTicket(true);
+            $('#myModalTicket').modal('hide');
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
