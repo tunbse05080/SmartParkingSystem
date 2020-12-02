@@ -31,14 +31,30 @@ namespace SmartParkingApplication.Controllers
             }else if(!string.IsNullOrEmpty(timeFrom.ToString()) && !string.IsNullOrEmpty(timeTo.ToString()))
             {
                 trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo);
+                //foreach (var item in trans)
+                //{
+                //    var timeIn = item.TimeIn;
+                //    var timeOut = item.TimeOutv;
+                //    var tr = new { LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = item.TypeOfTicket, CardNumber = item.CardNumber };
+                //    int i = tr.TimeIn.CompareTo(timeFrom);
+                //}
             }
             else
             {
                 trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo && x.LicensePlates.Contains(nameSSP));
             }
-            var totalRow = trans.Count();
+            List<Object> list = new List<object>();
+            foreach (var item in trans)
+            {
+                var timeIn = item.TimeIn.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var timeOut = item.TimeOutv.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var tr = new { LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = item.TypeOfTicket, CardNumber = item.CardNumber };
+                list.Add(tr);
+            }
+
+            var totalRow = list.Count();
             trans = trans.Skip((pageSPP - 1) * pageSizeSPP).Take(pageSizeSPP);
-            return Json(new { dataSSP = trans, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { dataSSP = list, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
 
         //public JsonResult LoadInfoPPlace()
