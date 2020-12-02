@@ -127,6 +127,8 @@ namespace SmartParkingApplication.Controllers
                                  select new MultipleTablesJoinClass { userSchedule = us, user = u, schedule = s };
             return View(ViewData["events"]);
         }
+
+        //Xuat file Exel User
         public ActionResult XuatFileExel()
         {
 
@@ -139,16 +141,18 @@ namespace SmartParkingApplication.Controllers
             //Add Datacolumn
             DataColumn workCol = dt.Columns.Add("Họ và tên", typeof(String));
 
-            dt.Columns.Add("", typeof(String));
-            dt.Columns.Add("Phòng ban", typeof(String));
-            dt.Columns.Add("Phòng ban", typeof(String));
-            dt.Columns.Add("Phòng ban", typeof(String));
-            dt.Columns.Add("Phòng ban", typeof(String));
-            dt.Columns.Add("Phòng ban", typeof(String));
-            dt.Columns.Add("Phòng ban", typeof(String));
+            dt.Columns.Add("Tên Tài Khoản", typeof(String));
+            dt.Columns.Add("Ngày Sinh", typeof(String));
+            dt.Columns.Add("Giới tính", typeof(String));
+            dt.Columns.Add("Địa chỉ", typeof(String));
+            dt.Columns.Add("Số điện thoại", typeof(int));
+            dt.Columns.Add("Email", typeof(String));
+            dt.Columns.Add("Số CMND", typeof(int));
+            dt.Columns.Add("Ngày ký HĐ", typeof(String));
+            dt.Columns.Add("Ngày hết HĐ", typeof(String));
             dt.Columns.Add("Chức vụ", typeof(String));
-            dt.Columns.Add("Học vấn", typeof(String));
-            dt.Columns.Add("Chuyên ngành", typeof(String));
+            dt.Columns.Add("Bãi làm việc", typeof(String));
+
 
             //Add in the datarow
 
@@ -156,11 +160,26 @@ namespace SmartParkingApplication.Controllers
             foreach (var item in user)
             {
                 DataRow newRow = dt.NewRow();
-                newRow["Họ tên"] = item.UserName;
-                newRow["Phòng ban"] = item.email;
-                newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
-                newRow["Học vấn"] = item.Name;
-                newRow["Chuyên ngành"] = item.UserAddress;
+                // newRow["Họ tên"] = item.UserName;
+                //newRow["Phòng ban"] = item.email;
+                //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
+                //newRow["Học vấn"] = item.Name;
+                //newRow["Chuyên ngành"] = item.UserAddress;
+
+                newRow["Họ và tên"] = item.Name;
+                newRow["Tên Tài Khoản"] = item.UserName;
+                newRow["Giới tính"] = item.Gender;
+                newRow["Địa chỉ"] = item.UserAddress;
+                newRow["Số điện thoại"] = item.Phone;
+                newRow["Email"] = item.email;
+                newRow["Số CMND"] = item.IdentityCard;
+                newRow["Ngày ký HĐ"] = item.UserName;
+                newRow["Ngày hết HĐ"] = item.UserName;
+                newRow["Chức vụ"] = item.UserName;
+                newRow["Bãi làm việc"] = item.UserName;
+               // newRow["Số CMND"] = item.UserName;
+
+
 
                 dt.Rows.Add(newRow);
             }
