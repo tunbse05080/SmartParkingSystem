@@ -38,7 +38,7 @@ namespace SmartParkingApplication.Controllers
             var totalRow = ticket.Count();
             ticket = ticket.OrderByDescending(x => x.MonthlyTicketID).Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
 
-            return Json(new { dataCard = list, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { dataTicket = list, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Create(MonthlyTicket ticket)

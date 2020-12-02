@@ -2,13 +2,13 @@
 
 //Load Data function
 function loadDataTicket(changePageSizeTicket) {
-    var nameCard = $('#txtSearchTicket').val();
+    var nameTicket = $('#txtSearchTicket').val();
     $.ajax({
         url: "/ManageTicket/LoadData",
         type: "GET",
         contentType: "application/json;charset=utf-8",
         data: {
-            nameT: nameCard,
+            nameT: nameTicket,
             pageTicket: pageConfigTicket,
             pageSizeTicket: 5
         },
