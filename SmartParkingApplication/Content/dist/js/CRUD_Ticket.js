@@ -126,3 +126,59 @@ function AddTicket() {
         }
     });
 }
+
+function UpdateTicket() {
+    var empTicketObj = {
+        CusName: $('#CusName').val(),
+        IdentityCard: $('#IdentityCard').val(),
+        Phone: $('#Phone').val(),
+        Email: $('#Email').val(),
+        TypeOfVehicle: $('#TypeOfVehicle').val(),
+        LicensePlates: $('#LicensePlates').val(),
+        RegisDate: $('#RegisDate').val(),
+        ExpiryDate: $('#ExpiryDate').val(),
+    };
+    $.ajax({
+        url: "/ManageTicket/Create",
+        data: JSON.stringify(empTicketObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataTicket(true);
+            $('#myModalUpdateTicket').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+function getTicketByID(MonthlyTicketID) {
+    $.ajax({
+        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#MonthlyTicketIDEdit').val(result.MonthlyTicketID);
+            $('#CusNameEdit').val(result.CusName);
+            $('#IdentityCardEdit').val(result.IdentityCard);
+            $('#PhoneEdit').val(result.Phone);
+            $('#EmailEdit').val(result.Email);
+            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
+            $('#LicensePlatesEdit').val(result.LicensePlates);
+            $('#RegisDateEdit').val(result.RegisDate);
+            $('#ExpiryDateEdit').val(result.ExpiryDate);
+
+            $('#myModalUpdateTicket').modal('show');
+            $('#btnAddTicket').hide();
+            $('#btnUpdateTicket').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + MonthlyTicketID + errormessage.responseText);
+        }
+    });
+    return false;
+}
