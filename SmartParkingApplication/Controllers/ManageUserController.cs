@@ -184,7 +184,6 @@ namespace SmartParkingApplication.Controllers
                // newRow["Số CMND"] = item.UserName;
                //full fesh
 
-
                 dt.Rows.Add(newRow);
             }
 
