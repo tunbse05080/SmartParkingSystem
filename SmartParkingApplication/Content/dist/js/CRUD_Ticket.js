@@ -63,3 +63,20 @@ function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
         }
     });
 }
+
+function clearTextBoxTicket() {
+    var date = loadDateTicketNow();
+    $('#Id').val("");
+    $('#CusName').val("");
+    $('#IdentityCard').val("");
+    $('#Phone').val("");
+    $('#Email').val("");
+    $('#TypeOfVehicle').val("");
+    $('#LicensePlates').val("");
+    $('#RegisDate').val("" + date);
+    $('#ExpiryDate').val("" + date);
+
+    $('#btnAdd').show();
+    $('#btnUpdate').hide();
+
+}
