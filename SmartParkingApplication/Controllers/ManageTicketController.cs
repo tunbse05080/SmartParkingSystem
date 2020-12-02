@@ -1,6 +1,7 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -76,6 +77,16 @@ namespace SmartParkingApplication.Controllers
             var ExpiryDate = ticket.ExpiryDate.Value.ToString("dd/MM/yyyy");
             var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateTicket(MonthlyTicket ticket)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(ticket, JsonRequestBehavior.AllowGet);
         }
     }
 }
