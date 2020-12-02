@@ -24,10 +24,19 @@ namespace SmartParkingApplication.Controllers
             {
                 CardNumber = CardNumber.Where(x => x.CardNumber.Contains(nameC));
             }
+
+            List<Object> list = new List<object>();
+            foreach (var item in CardNumber)
+            {
+                var date = item.Date.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var tr = new { CardID = item.CardID, CardNumber = item.CardNumber, Status = item.Status, Date = date};
+                list.Add(tr);
+            }
+
             var totalRow = CardNumber.Count();
             CardNumber = CardNumber.OrderByDescending(x => x.CardID).Skip((pageCard - 1) * pageSizeCard).Take(pageSizeCard);
 
-            return Json(new { dataCard = CardNumber,total = totalRow}, JsonRequestBehavior.AllowGet);
+            return Json(new { dataCard = list,total = totalRow}, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Create(Card card)
         {
