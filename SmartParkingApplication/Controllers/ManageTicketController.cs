@@ -1,6 +1,7 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -60,5 +61,32 @@ namespace SmartParkingApplication.Controllers
             base.Dispose(disposing);
         }
 
+        public JsonResult TicketDetails(int id)
+        {
+            var ticket = db.MonthlyTickets.Find(id);
+            var typeOfVehicle = "";
+            if (ticket.TypeOfVehicle == 0)
+            {
+                typeOfVehicle = "Xe máy";
+            }
+            if (ticket.TypeOfVehicle == 1)
+            {
+                typeOfVehicle = "Ô tô";
+            }
+            var RegisDate = ticket.RegisDate.Value.ToString("dd/MM/yyyy");
+            var ExpiryDate = ticket.ExpiryDate.Value.ToString("dd/MM/yyyy");
+            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateTicket(MonthlyTicket ticket)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(ticket, JsonRequestBehavior.AllowGet);
+        }
     }
 }
