@@ -160,7 +160,7 @@ function getCardByID(CardID) {
             $('#StatusCardEdit').val(result.Status);
 
             $('#myModalUpdate').modal('show');
-            $('#btnAddCard').hide();
+            //$('#btnAddCard').hide();
             $('#btnUpdateCard').show();
         },
         error: function (errormessage) {
