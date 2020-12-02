@@ -79,16 +79,16 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-3">
-                                    <button type="button" onclick="location.href='@Url.Action("Create", "ManageTicket")';return false;" class="btn btn-success">Đăng ký vé tháng</button>
+                                <div class="col-md-4">
+                                    <button type="button" data-toggle="modal" data-target="#myModalTicket" onclick="clearTextBoxTicket();" class="btn btn-success">Đăng kí vé tháng</button>
                                 </div>
-                                <div class="col-md-3">
+                                @*<div class="col-md-3">
                                     <button type="button" onclick="location.href='@Url.Action("ListExtendTicket", "ManageTicket")';return false;" class="btn btn-success">Gia hạn vé tháng</button>
-                                </div>
-                                <div class="col-md-3">
+                                </div>*@
+                                <div class="col-md-4">
                                     <button type="button" class="btn btn-success">Xuất báo cáo vé sắp hết hạn</button>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <form class="form-inline active-purple-3 active-purple-4">
                                         <i class="fas fa-search" aria-hidden="true"></i>
                                         <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /.card-header -->
+                        <!-- /.Ticket-header -->
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
@@ -110,86 +110,7 @@
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Nguyễn Bá Tú</td>
-                                        <td>CBR 150</td>
-                                        <td>99A96789</td>
-                                        <td>20/11/2020</td>
-                                        <td>20/12/2020</td>
-                                        <td>Còn 3 ngày</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Chấm dứt HĐ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nguyễn Bá Tú</td>
-                                        <td>CBR 150</td>
-                                        <td>99A96789</td>
-                                        <td>20/11/2020</td>
-                                        <td>20/12/2020</td>
-                                        <td>Còn 3 ngày</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Chấm dứt HĐ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nguyễn Bá Tú</td>
-                                        <td>CBR 150</td>
-                                        <td>99A96789</td>
-                                        <td>20/11/2020</td>
-                                        <td>20/12/2020</td>
-                                        <td>Còn 3 ngày</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Chấm dứt HĐ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nguyễn Bá Tú</td>
-                                        <td>CBR 150</td>
-                                        <td>99A96789</td>
-                                        <td>20/11/2020</td>
-                                        <td>20/12/2020</td>
-                                        <td>Đã hết hạn</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger" style="width:43%" data-toggle="modal" data-target="#myModal">Gia hạn HĐ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nguyễn Bá Tú</td>
-                                        <td>CBR 150</td>
-                                        <td>99A96789</td>
-                                        <td>20/11/2020</td>
-                                        <td>20/12/2020</td>
-                                        <td>Còn 14 ngày</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Chấm dứt HĐ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nguyễn Bá Tú</td>
-                                        <td>CBR 150</td>
-                                        <td>99A96789</td>
-                                        <td>20/11/2020</td>
-                                        <td>20/12/2020</td>
-                                        <td>Còn 10 ngày</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Chi tiết</button>
-                                            <button type="button" class="btn btn-success">Sửa</button>
-                                            <button type="button" class="btn btn-danger">Chấm dứt HĐ</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody class="tbody" id="tbodyTicket"></tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Tên chủ thẻ</th>
@@ -203,7 +124,62 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <!-- /.card-body -->
+                        <!-- /.Ticket-body -->
+
+                        <!-- The Modal create new Monthly Ticket -->
+                        <div class="modal fade" id="myModalTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Đăng kí vé tháng </h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="Id">Id</label>
+                                            <input type="text" class="form-control" id="Id" placeholder="Id" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CusName">Tên chủ xe</label>
+                                            <input type="text" class="form-control" id="CusName" placeholder="Số thẻ" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="IdentityCard">Số CMND</label>
+                                            <input type="text" class="form-control" id="IdentityCard" placeholder="Số CMND" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Email">Email</label>
+                                            <input type="text" class="form-control" id="Email" placeholder="Email" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Phone">Số điện thoại</label>
+                                            <input type="text" class="form-control" id="Phone" placeholder="Số điện thoai" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="TypeOfVehicle">Loại xe</label>
+                                            <input type="text" class="form-control" id="TypeOfVehicle" placeholder="Loại xe" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="LicensePlates">Biển số xe</label>
+                                            <input type="text" class="form-control" id="LicensePlates" placeholder="Biển số xe" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="RegisDate">Ngày đăng kí</label>
+                                            <input type="text" class="form-control" id="RegisDate" placeholder="Ngày đăng kí" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ExpiryDate">Ngày hết hạn</label>
+                                            <input type="text" class="form-control" id="ExpiryDate" placeholder="Ngày hết hạn" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="btnAddTicket" onclick="return AddTicket();">thêm</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- The Modal -->
                         <div class="modal" id="myModal">
                             <div class="modal-dialog">

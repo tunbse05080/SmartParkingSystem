@@ -452,7 +452,6 @@ F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Deb
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.dll
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.pdb
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
-E:\ki 9\test\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
 D:\New folder\SmartParkingApplication\bin\SmartParkingApplication.dll.config
 D:\New folder\SmartParkingApplication\bin\SmartParkingApplication.dll
 D:\New folder\SmartParkingApplication\bin\SmartParkingApplication.pdb
