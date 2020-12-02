@@ -40,5 +40,18 @@ namespace SmartParkingApplication.Controllers
             return Json(new { dataCard = list, total = totalRow }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult Create(MonthlyTicket ticket)
+        {
+            if (ModelState.IsValid)
+            {
+                db.MonthlyTickets.Add(ticket);
+                db.SaveChanges();
+            }
+
+            return Json(ticket, JsonRequestBehavior.AllowGet);
+        }
+
+
+
     }
 }
