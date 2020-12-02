@@ -135,7 +135,7 @@ namespace SmartParkingApplication.Controllers
             var user = db.Users.ToList();
             var parking  = db.ParkingPlaces.ToList();
             var role = db.Roles.ToList();
-            var gv = new GridView();
+            var alluser = new GridView();
             //===================================================
             DataTable dt = new DataTable();
             //Add Datacolumn
@@ -167,16 +167,20 @@ namespace SmartParkingApplication.Controllers
                 //newRow["Chuyên ngành"] = item.UserAddress;
 
                 newRow["Họ và tên"] = item.Name;
+                newRow["Ngày Sinh"] = item.DateOfBirth;
                 newRow["Tên Tài Khoản"] = item.UserName;
                 newRow["Giới tính"] = item.Gender;
                 newRow["Địa chỉ"] = item.UserAddress;
                 newRow["Số điện thoại"] = item.Phone;
                 newRow["Email"] = item.email;
                 newRow["Số CMND"] = item.IdentityCard;
-                newRow["Ngày ký HĐ"] = item.UserName;
-                newRow["Ngày hết HĐ"] = item.UserName;
-                newRow["Chức vụ"] = item.UserName;
-                newRow["Bãi làm việc"] = item.UserName;
+                // newRow["Ngày ký HĐ"] = item.UserName;
+                // newRow["Ngày hết HĐ"] = item.UserName;
+                newRow["Ngày ký HĐ"] = item.ContractSigningDate;
+                newRow["Ngày hết HĐ"] = item.ContractExpirationDate;
+                newRow["Ngày gia hạn"] = item.ContractRenewalDate;
+                newRow["Chức vụ"] = item.Role.RoleName;
+                newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
                // newRow["Số CMND"] = item.UserName;
 
 
@@ -185,9 +189,9 @@ namespace SmartParkingApplication.Controllers
             }
 
             //====================================================
-            gv.DataSource = dt;
+            alluser.DataSource = dt;
             // gv.DataSource = ds;
-            gv.DataBind();
+            alluser.DataBind();
 
             Response.ClearContent();
             Response.Buffer = true;
@@ -199,7 +203,7 @@ namespace SmartParkingApplication.Controllers
             StringWriter objStringWriter = new StringWriter();
             HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
 
-            gv.RenderControl(objHtmlTextWriter);
+            alluser.RenderControl(objHtmlTextWriter);
 
             Response.Output.Write(objStringWriter.ToString());
             Response.Flush();
