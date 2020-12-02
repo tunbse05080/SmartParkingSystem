@@ -1,11 +1,15 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace SmartParkingApplication.Controllers
 {
@@ -123,5 +127,58 @@ namespace SmartParkingApplication.Controllers
                                  select new MultipleTablesJoinClass { userSchedule = us, user = u, schedule = s };
             return View(ViewData["events"]);
         }
-    }
+        public ActionResult XuatFileExel()
+        {
+
+            var ds = db.Users.ToList();
+            var phong = db.ParkingPlaces.ToList();
+            var gv = new GridView();
+            //===================================================
+            DataTable dt = new DataTable();
+            //Add Datacolumn
+            DataColumn workCol = dt.Columns.Add("Họ tên", typeof(String));
+
+            dt.Columns.Add("Phòng ban", typeof(String));
+            dt.Columns.Add("Chức vụ", typeof(String));
+            dt.Columns.Add("Học vấn", typeof(String));
+            dt.Columns.Add("Chuyên ngành", typeof(String));
+
+            //Add in the datarow
+
+
+            foreach (var item in ds)
+            {
+                DataRow newRow = dt.NewRow();
+                newRow["Họ tên"] = item.UserName;
+                newRow["Phòng ban"] = item.email;
+                newRow["Chức vụ"] = item.ParkingPlace;
+                newRow["Học vấn"] = item.Name;
+                newRow["Chuyên ngành"] = item.UserAddress;
+
+                dt.Rows.Add(newRow);
+            }
+
+            //====================================================
+            gv.DataSource = dt;
+            // gv.DataSource = ds;
+            gv.DataBind();
+
+            Response.ClearContent();
+            Response.Buffer = true;
+
+            Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
+            Response.ContentType = "application/ms-excel";
+
+            Response.Charset = "";
+            StringWriter objStringWriter = new StringWriter();
+            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+
+            gv.RenderControl(objHtmlTextWriter);
+
+            Response.Output.Write(objStringWriter.ToString());
+            Response.Flush();
+            Response.End();
+            return Redirect("/ManageUser");
+        }
+        }
 }
