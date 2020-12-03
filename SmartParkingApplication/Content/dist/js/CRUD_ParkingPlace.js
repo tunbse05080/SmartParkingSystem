@@ -67,30 +67,57 @@ function loadDataParkingPlace(changsizepp) {
         });
     }
 }
-function getTicketByID(MonthlyTicketID) {
+function getTicketByID(ParkingPlaceID) {
     $.ajax({
-        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
+        url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#MonthlyTicketTK').val(result.MonthlyTicketID);
-            $('#CusNameTK').val(result.CusName);
-            $('#IdentityCardTK').val(result.IdentityCard);
-            $('#PhoneTK').val(result.Phone);
-            $('#EmailTK').val(result.Email);
-            $('#TypeOfVehicleTK').val(result.TypeOfVehicle);
-            $('#LicensePlatesTK').val(result.LicensePlates);
-            $('#RegisDateTK').val(result.RegisDate);
-            $('#ExpiryDateTk').val(result.ExpiryDate);
+            $('#ParkingPlaceIDPP').val(result.ParkingPlaceID);
+            $('#NameOfParkingPP').val(result.NameOfParking);
+            $('#LocationPP').val(result.Location);
+            $('#NumberOfSlotPP').val(result.NumberOfSlot);
+            $('#NumberOfCarPP').val(result.NumberOfCar);
+            $('#NumberOfMotoBikePP').val(result.NumberOfMotoBike);
+            $('#NumberCarBlankPP').val(result.NumberCarBlank);
+            $('#NumberMotoBikeBlankPP').val(result.NumberMotoBikeBlank);
+            
 
-            $('#myModalTicket1').modal('show');
-            $('#btnAddTicket').modal('show');
+            $('#myModalPPUpdate').modal('show');
+            $('#btnUpdatePP').modal('show');
 
         },
         error: function (errormessage) {
-            alert("Exception:" + MonthlyTicketID + errormessage.responseText);
+            alert("Exception:" + ParkingPlaceID + errormessage.responseText);
         }
     });
     return false;
+}
+function UpdateCard() {
+    var res = validate();
+    if (res == false) {
+        return false;
+    }
+    var empCardObj = {
+        CardID: $('#IdCardEdit').val(),
+        CardNumber: $('#CardNumberEdit').val(),
+        Date: $('#DateCardEdit').val(),
+        Status: $('#StatusCardEdit').val(),
+    };
+    $.ajax({
+        url: "/ManageCard/UpdateCard",
+        data: JSON.stringify(empCardObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataCard(true);
+            $('#myModalUpdate').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }

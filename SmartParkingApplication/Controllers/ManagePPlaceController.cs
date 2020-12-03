@@ -111,6 +111,25 @@ namespace SmartParkingApplication.Controllers
             return View(parkingPlace);
         }
 
+
+        public JsonResult ParkingPlaceDetails(int id)
+        {
+            var parking = db.ParkingPlaces.Find(id);
+           
+            var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfSlot, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdatePP(ParkingPlace parking)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(parking).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(parking, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: ParkingPlaces/Create
         public ActionResult Create()
         {
@@ -120,34 +139,34 @@ namespace SmartParkingApplication.Controllers
         // POST: ParkingPlaces/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ParkingPlaceID,NameOfParking,Location,NumberOfSlot,NumberOfCar,NumberOfMotoBike,NumberCarBlank,NumberMotoBikeBlank")] ParkingPlace parkingPlace)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ParkingPlaces.Add(parkingPlace);
-                db.SaveChanges();
-                return RedirectToAction("ListParkingPlace");
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "ParkingPlaceID,NameOfParking,Location,NumberOfSlot,NumberOfCar,NumberOfMotoBike,NumberCarBlank,NumberMotoBikeBlank")] ParkingPlace parkingPlace)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.ParkingPlaces.Add(parkingPlace);
+        //        db.SaveChanges();
+        //        return RedirectToAction("ListParkingPlace");
+        //    }
 
-            return View(parkingPlace);
-        }
+        //    return View(parkingPlace);
+        //}
 
         // GET: ParkingPlaces/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
-            if (parkingPlace == null)
-            {
-                return HttpNotFound();
-            }
-            return View(parkingPlace);
-        }
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
+        //    if (parkingPlace == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(parkingPlace);
+        //}
 
         // POST: ParkingPlaces/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
