@@ -130,11 +130,22 @@ namespace SmartParkingApplication.Controllers
             return Json(parking, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: ParkingPlaces/Create
-        public ActionResult Create()
+        public JsonResult Create(ParkingPlace parking)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                db.ParkingPlaces.Add(parking);
+                db.SaveChanges();
+            }
+
+            return Json(parking, JsonRequestBehavior.AllowGet);
         }
+
+        // GET: ParkingPlaces/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: ParkingPlaces/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

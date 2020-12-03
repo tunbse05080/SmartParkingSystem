@@ -152,4 +152,33 @@ function getPPByID(ParkingPlaceID) {
     });
     return false;
 }
+function AddCard() {
+    //var res = validate();
+    //if (res == false) {
+    //    return false;
+    //}
+    var empPPObj = {
+        NameOfParking: $('#NameOfParkingEdit').val(),
+        Location: $('#LocationEdit').val(),
+        NumberOfSlot: $('#NumberOfSlotEdit').val(),
+        NumberOfCar: $('#NumberOfCarEdit').val(),
+        NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
+        NumberCarBlank: $('#NumberCarBlankEdit').val(),
+        NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
+    };
+    $.ajax({
+        url: "/ManagePPlace/Create",
+        data: JSON.stringify(empPPObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataParkingPlace(true);
+            $('#myModalPP').modal('hide');
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
 
