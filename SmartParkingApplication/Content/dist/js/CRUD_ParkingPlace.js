@@ -24,7 +24,7 @@ function loadDataParkingPlace(changsizepp) {
                 html += '<td>' + item.NumberOfMotoBike + '</td>';
                 html += '<td>' + item.NumberCarBlank + '</td>';
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
-                html += '<td><button class="btn btn-success" onclick="return getParkingPlaceID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
+                html += '<td><button class="btn btn-success" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
 
 
                 html += '</tr>';
@@ -67,7 +67,66 @@ function loadDataParkingPlace(changsizepp) {
         });
     }
 }
-function getTicketByID(ParkingPlaceID) {
+//function getTicketByID(ParkingPlaceID) {
+//    $.ajax({
+//        url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
+//        type: "GET",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#ParkingPlaceIDEdit').val(result.ParkingPlaceID);
+//            $('#NameOfParkingEdit').val(result.NameOfParking);
+//            $('#LocationEdit').val(result.Location);
+//            $('#NumberOfSlotEdit').val(result.NumberOfSlot);
+//            $('#NumberOfCarEdit').val(result.NumberOfCar);
+//            $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
+//            $('#NumberCarBlankEdit').val(result.NumberCarBlank);
+//            $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
+            
+
+//            $('#myModalPPUpdate').modal('show');
+//            $('#btnUpdatePP').modal('show');
+
+//        },
+//        error: function (errormessage) {
+//            alert("Exception:" + ParkingPlaceID + errormessage.responseText);
+//        }
+//    });
+//    return false;
+//}
+function UpdatePP() {
+    //function UpdateCard() {
+    //    var res = validate();
+    //    if (res == false) {
+    //        return false;
+    //    }
+        var empPPObj = {
+            ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
+            NameOfParking: $('#NameOfParkingEdit').val(),
+            Location: $('#LocationEdit').val(),
+            NumberOfSlot: $('#NumberOfSlotEdit').val(),
+            NumberOfCar: $('#NumberOfCarEdit').val(),
+            NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
+            NumberCarBlank: $('#NumberCarBlankEdit').val(),
+            NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
+        };
+        $.ajax({
+            url: "/ManagePPlace/UpdatePP",
+            data: JSON.stringify(empPPObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                loadDataParkingPlace(true);
+                $('#myModalUpdatePP').modal('hide');
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+}
+function getPPByID(ParkingPlaceID) {
     $.ajax({
         url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
         type: "GET",
@@ -82,46 +141,15 @@ function getTicketByID(ParkingPlaceID) {
             $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
-            
 
-            $('#myModalPPUpdate').modal('show');
-            $('#btnUpdatePP').modal('show');
-
+            $('#myModalUpdatePP').modal('show');
+           
+            $('#btnUpdatePP').show();
         },
         error: function (errormessage) {
-            alert("Exception:" + ParkingPlaceID + errormessage.responseText);
+            alert("Exception:" + CardID + errormessage.responseText);
         }
     });
     return false;
 }
-function UpdatePP() {
-    //var res = validate();
-   ////// if (res == false) {
-       // return false;
-  //  }
-    var empppObj = {
-        ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
-        NameOfParking: $('#NameOfParkingEdit').val(),
-        Location: $('#LocationEdit').val(),
-        NumberOfSlot: $('#NumberOfSlotEdit').val(), 
-        NumberOfCar: $('#NumberOfCarEdit').val(),
-        NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
-        NumberCarBlank: $('#NumberCarBlankEdit').val(),
-        NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
-    };
-    $.ajax({
-        url: "/ManagePPlace/UpdatePP",
-        data: JSON.stringify(empppObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            loadDataParkingPlace(true);
-            $('#myModalPPUpdate').modal('hide');
-            
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
+
