@@ -21,7 +21,11 @@ function loadDataParkingPlace(changsizepp) {
                 html += '<td>' + item.NameOfParking + '</td>';
                 html += '<td>' + item.Location + '</td>';
                 html += '<td>' + item.NumberOfCar + '</td>';
-                html += '<td>' + item.NumberOfMotoBikeicket + '</td>';
+                html += '<td>' + item.NumberOfMotoBike + '</td>';
+                html += '<td>' + item.NumberCarBlank + '</td>';
+                html += '<td>' + item.NumberMotoBikeBlank + '</td>';
+                html += '<td><button class="btn btn-success" onclick="return getParkingPlaceID(' + item.MonthlyTicketID + ')" > Sửa</button></td>';
+
 
                 html += '</tr>';
             });
@@ -62,4 +66,31 @@ function loadDataParkingPlace(changsizepp) {
             }
         });
     }
+}
+function getTicketByID(MonthlyTicketID) {
+    $.ajax({
+        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#MonthlyTicketTK').val(result.MonthlyTicketID);
+            $('#CusNameTK').val(result.CusName);
+            $('#IdentityCardTK').val(result.IdentityCard);
+            $('#PhoneTK').val(result.Phone);
+            $('#EmailTK').val(result.Email);
+            $('#TypeOfVehicleTK').val(result.TypeOfVehicle);
+            $('#LicensePlatesTK').val(result.LicensePlates);
+            $('#RegisDateTK').val(result.RegisDate);
+            $('#ExpiryDateTk').val(result.ExpiryDate);
+
+            $('#myModalTicket1').modal('show');
+            $('#btnAddTicket').modal('show');
+
+        },
+        error: function (errormessage) {
+            alert("Exception:" + MonthlyTicketID + errormessage.responseText);
+        }
+    });
+    return false;
 }
