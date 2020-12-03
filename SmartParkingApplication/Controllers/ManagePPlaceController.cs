@@ -48,7 +48,18 @@ namespace SmartParkingApplication.Controllers
             {
                 var timeIn = item.TimeIn.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var timeOut = item.TimeOutv.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var tr = new { LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = item.TypeOfTicket, CardNumber = item.CardNumber };
+                string typeofTicket = string.Empty;
+                switch (item.TypeOfTicket)
+                {
+                    case 0: 
+                        typeofTicket = "Vé Lượt";
+                        break;
+                    case 1:
+                        typeofTicket = "Vé Tháng";
+                        break;
+                }
+                
+                var tr = new { LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber };
                 list.Add(tr);
             }
 

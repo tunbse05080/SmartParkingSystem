@@ -33,9 +33,9 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in ticket)
             {
-                var RegisDate = item.RegisDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var ExpiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, LicensePlates = item.LicensePlates, RegisDate, ExpiryDate };
+                //var RegisDate = item.RegisDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                //var ExpiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, LicensePlates = item.LicensePlates};
                 list.Add(tr);
             }
 
