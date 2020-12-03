@@ -39,7 +39,7 @@ namespace SmartParkingApplication.Controllers
                         StatusofCard = "Đã đăng kí";
                         break;
                     case 2:
-                        StatusofCard = "Đã đăng kí";
+                        StatusofCard = "Thẻ Hỏng";
                         break;
                     case 3:
                         StatusofCard = "Đã Khóa";
@@ -81,15 +81,19 @@ namespace SmartParkingApplication.Controllers
             var Status = "";
             if (card.Status == 0)
             {
-                Status = "Hỏng";
+                Status = "Chưa đăng kí";
             }
             if (card.Status == 1)
             {
-                Status = "Đang sử dụng";
+                Status = "Đã đăng kí";
             }
             if (card.Status == 2)
             {
-                Status = "Chưa sử dụng";
+                Status = "Thẻ Hỏng";
+            }
+            if (card.Status == 3)
+            {
+                Status = "Đã Khóa";
             }
             var result = new { card.CardID, card.CardNumber, card.Date, Status};
             return Json(result, JsonRequestBehavior.AllowGet);
