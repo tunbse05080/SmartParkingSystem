@@ -24,9 +24,7 @@ function loadDataTicket(changePageSizeTicket) {
                 html += '<td>' + item.Email + '</td>';
                 html += '<td>' + item.TypeOfVehicle + '</td>';
                 html += '<td>' + item.LicensePlates + '</td>';
-                html += '<td>' + item.RegisDate + '</td>';
-                html += '<td>' + item.ExpiryDate + '</td>';
-                html += '<td><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Sửa </button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getTicketByID(' + item.MonthlyTicketID + ')">Gia hạn</button></td>';
+                html += '<td><button class="btn btn-primary" onclick = "return getTicketByID(' + item.MonthlyTicketID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button> 
                 html += '</tr>';
             });
             $('#tbodyTicket').html(html);
@@ -74,7 +72,7 @@ function clearTextBoxTicket() {
     $('#TypeOfVehicle').val("");
     $('#LicensePlates').val("");
     $('#RegisDate').val("" + date);
-    $('#ExpiryDate').val("" + date);
+    $('#ExpiryDate').val("");
 
     $('#btnAdd').show();
     $('#btnUpdate').hide();
@@ -172,9 +170,7 @@ function getTicketByID(MonthlyTicketID) {
             $('#RegisDateEdit').val(result.RegisDate);
             $('#ExpiryDateEdit').val(result.ExpiryDate);
 
-            $('#myModalUpdateTicket').modal('show');
-            $('#btnAddTicket').hide();
-            $('#btnUpdateTicket').show();
+            $('#btnAddTicket').modal('show');
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);

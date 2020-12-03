@@ -528,4 +528,3 @@ D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.C
 D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.CopyComplete
 D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.dll
 D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.pdb
-E:\ki 9\test\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
