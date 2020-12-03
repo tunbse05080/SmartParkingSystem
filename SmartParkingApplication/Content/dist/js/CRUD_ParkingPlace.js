@@ -147,12 +147,12 @@ function getPPByID(ParkingPlaceID) {
             $('#btnUpdatePP').show();
         },
         error: function (errormessage) {
-            alert("Exception:" + CardID + errormessage.responseText);
+            alert("Exception:" + ParkingPlaceID + errormessage.responseText);
         }
     });
     return false;
 }
-function AddCard() {
+function AddPP() {
     //var res = validate();
     //if (res == false) {
     //    return false;
@@ -180,5 +180,20 @@ function AddCard() {
             alert(errormessage.responseText);
         }
     });
+}
+function clearTextBoxPP() {
+
+    $('#Id').val("");
+    $('#NameOfParking').val("");
+    $('#Location').val("");
+    $('#NumberOfSlot').val("");
+    $('#NumberOfCar').val("");
+    $('#NumberOfMotoBike').val("");
+    $('#NumberCarBlank').val("");
+    $('#NumberMotoBikeBlank').val("");
+
+
+    $('#btnAdd').show();
+    $('#btnUpdate').hide();
 }
 
