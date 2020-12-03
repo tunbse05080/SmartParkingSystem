@@ -83,6 +83,11 @@ namespace SmartParkingApplication.Controllers
         public JsonResult loadDataParkingPlace(int pagepp, string namepp, int pageSizepp = 5)
         {
             var parking = from p in db.ParkingPlaces select new {p.ParkingPlaceID, p.NameOfParking,p.Location,p.NumberOfSlot,p.NumberOfCar,p.NumberOfMotoBike,p.NumberCarBlank,p.NumberMotoBikeBlank};
+            if (!string.IsNullOrEmpty(namepp))
+            {
+                parking = parking.Where(x => x.NameOfParking.Contains(namepp));
+            }
+
             List<Object> list = new List<object>();
             foreach (var item in parking)
             {
@@ -97,19 +102,19 @@ namespace SmartParkingApplication.Controllers
         }
 
         // GET: ParkingPlaces/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
-            if (parkingPlace == null)
-            {
-                return HttpNotFound();
-            }
-            return View(parkingPlace);
-        }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
+        //    if (parkingPlace == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(parkingPlace);
+        //}
 
 
         public JsonResult ParkingPlaceDetails(int id)
