@@ -291,7 +291,7 @@ function validate() {
     var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
     var idcard = new RegExp('^[0-9]{9,}$');
     var phone = new RegExp('^(09|03|07|08|05){1}([0-9]{8})$');
-    if ($('#UserName').val().trim() == "" || $('#UserName').val().trim().length < 4) {
+    if ($('#UserName').val().trim($('#UserName').val()) == "" || $('#UserName').val().trim($('#UserName').val()).length < 4) {
         $('#UserName').prop("title", "Tên tài khoản > 4 ký tự.");
         $('#UserName').css('border-color', 'Red');
         isValid = false;
@@ -300,7 +300,7 @@ function validate() {
         $('#UserName').prop("title", "");
         $('#UserName').css('border-color', 'lightgrey');
     }
-    if ($('#PassWord').val().trim() == "" || !pwd.test($('#PassWord').val().trim())) {
+    if ($('#PassWord').val().trim($('#PassWord').val()) == "" || !pwd.test($('#PassWord').val($('#PassWord').val()).trim())) {
         $('#PassWord').prop("title", "Mật khấu >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)");
         $('#PassWord').css('border-color', 'Red');
         isValid = false;
@@ -309,7 +309,7 @@ function validate() {
         $('#PassWord').prop("title", "");
         $('#PassWord').css('border-color', 'lightgrey');
     }
-    if ($('#FullName').val().trim() == "" || $('#FullName').val().trim().length < 4) {
+    if ($('#FullName').val().trim($('#FullName').val()) == "" || $('#FullName').val().trim($('#FullName').val()).length < 4) {
         $('#FullName').prop("title", "Tên đầy đủ > 4 ký tự.");
         $('#FullName').css('border-color', 'Red');
         isValid = false;
@@ -318,28 +318,28 @@ function validate() {
         $('#FullName').prop("title", "");
         $('#FullName').css('border-color', 'lightgrey');
     }
-    if ($('#DateOfBirth').val().trim() == "") {
+    if ($('#DateOfBirth').val().trim($('#DateOfBirth').val()) == "") {
         $('#DateOfBirth').css('border-color', 'Red');
         isValid = false;
     }
     else {
         $('#DateOfBirth').css('border-color', 'lightgrey');
     }
-    if ($('#Gender').val().trim() == "") {
+    if ($('#Gender').val().trim($('#Gender').val()) == "") {
         $('#Gender').css('border-color', 'Red');
         isValid = false;
     }
     else {
         $('#Gender').css('border-color', 'lightgrey');
     }
-    if ($('#Address').val().trim() == "") {
+    if ($('#Address').val().trim($('#Address').val()) == "") {
         $('#Address').css('border-color', 'Red');
         isValid = false;
     }
     else {
         $('#Address').css('border-color', 'lightgrey');
     }
-    if ($('#PhoneNumber').val().trim() == "" || !phone.test($('#PhoneNumber').val().trim())) {
+    if ($('#PhoneNumber').val().trim($('#PhoneNumber').val()) == "" || !phone.test($('#PhoneNumber').val().trim($('#PhoneNumber').val()))) {
         $('#PhoneNumber').prop("title", "Số điện thoại trống hoặc định dạng sai.");
         $('#PhoneNumber').css('border-color', 'Red');
         isValid = false;
@@ -348,7 +348,7 @@ function validate() {
         $('#PhoneNumber').prop("title", "");
         $('#PhoneNumber').css('border-color', 'lightgrey');
     }
-    if ($('#Email').val().trim() == "" || !email.test($('#Email').val().trim())) {
+    if ($('#Email').val().trim($('#Email').val()) == "" || !email.test($('#Email').val().trim($('#Email').val()))) {
         $('#Email').prop("title", "Email trống hoặc không đúng định dạng.");
         $('#Email').css('border-color', 'Red');
         isValid = false;
@@ -357,7 +357,7 @@ function validate() {
         $('#Email').prop("title", "");
         $('#Email').css('border-color', 'lightgrey');
     }
-    if ($('#IdentityCard').val().trim() == "" || !idcard.test($('#IdentityCard').val().trim())) {
+    if ($('#IdentityCard').val().trim($('#IdentityCard').val()) == "" || !idcard.test($('#IdentityCard').val().trim($('#IdentityCard').val()))) {
         $('#IdentityCard').prop("title", "CMND/CCCD trống hoặc sai định dạng.");
         $('#IdentityCard').css('border-color', 'Red');
         isValid = false;
@@ -366,14 +366,14 @@ function validate() {
         $('#IdentityCard').prop("title", "")
         $('#IdentityCard').css('border-color', 'lightgrey');
     }
-    if ($('#ParkingPlace').val().trim() == "") {
+    if ($('#ParkingPlace').val().trim($('#ParkingPlace').val()) == "") {
         $('#ParkingPlace').css('border-color', 'Red');
         isValid = false;
     }
     else {
         $('#ParkingPlace').css('border-color', 'lightgrey');
     }
-    if ($('#RoleName').val().trim() == "") {
+    if ($('#RoleName').val().trim($('#RoleName').val()) == "") {
         $('#RoleName').css('border-color', 'Red');
         isValid = false;
     }
