@@ -82,12 +82,18 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult loadDataParkingPlace(int pagepp, string namepp, int pageSizepp = 5)
         {
-            var parking = from p in db.ParkingPlaces select new { p.NameOfParking,p.Location,p.NumberOfCar,p.NumberOfMotoBike};
-
-            var totalRow = parking.Count();
+            var parking = from p in db.ParkingPlaces select new { p.NameOfParking,p.Location,p.NumberOfSlot,p.NumberOfCar,p.NumberOfMotoBike,p.NumberCarBlank,p.NumberMotoBikeBlank};
+            List<Object> list = new List<object>();
+            foreach (var item in parking)
+            {
+                
+                var tr = new { NameOfParking = item.NameOfParking, Location = item.Location, NumberOfSlot = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank };
+                list.Add(tr);
+            }
+            var totalRowpp = parking.Count();
             parking = parking.Skip((pagepp - 1) * pageSizepp).Take(pageSizepp);
 
-            return Json(new { datapp = parking, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { datapp = list, total = totalRowpp }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ParkingPlaces/Details/5
