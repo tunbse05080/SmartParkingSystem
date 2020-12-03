@@ -24,7 +24,9 @@ function loadDataTicket(changePageSizeTicket) {
                 html += '<td>' + item.Email + '</td>';
                 html += '<td>' + item.TypeOfVehicle + '</td>';
                 html += '<td>' + item.LicensePlates + '</td>';
-                html += '<td><button class="btn btn-primary" onclick = "return getTicketByID(' + item.MonthlyTicketID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button> 
+                html += '<td>' + item.RegisDate + '</td>';
+                html += '<td>' + item.ExpiryDate + '</td>';
+                html += '<td><button class="btn btn-primary" onclick = "return getTicketByID(' + item.MonthlyTicketID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
             });
             $('#tbodyTicket').html(html);
@@ -72,7 +74,7 @@ function clearTextBoxTicket() {
     $('#TypeOfVehicle').val("");
     $('#LicensePlates').val("");
     $('#RegisDate').val("" + date);
-    $('#ExpiryDate').val("");
+    $('#ExpiryDate').val("" + date);
 
     $('#btnAdd').show();
     $('#btnUpdate').hide();
@@ -201,6 +203,33 @@ function getDetailByID(MonthlyTicketID) {
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+
+function getIdToDropContract() {
+    $.ajax({
+        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#MonthlyTicketIDEdit').val(result.MonthlyTicketID);
+            $('#CusNameEdit').val(result.CusName);
+            $('#IdentityCardEdit').val(result.IdentityCard);
+            $('#PhoneEdit').val(result.Phone);
+            $('#EmailEdit').val(result.Email);
+            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
+            $('#LicensePlatesEdit').val(result.LicensePlates);
+            $('#RegisDateEdit').val(result.RegisDate);
+            $('#ExpiryDateEdit').val(result.ExpiryDate);
+
+            $('#myModalTicket').modal('show');
+            $('#btnTicketDrop').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
         }
     });
     return false;

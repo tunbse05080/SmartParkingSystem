@@ -274,7 +274,7 @@ function clearTextBox() {
     $('#RoleName').val("");
     $('#ParkingPlace').val("");
     $('#ContractSigningDate').val("" + date);
-    $('#ContractExpirationDate').val("");
+    $('#ContractExpirationDate').val("" + date);
 
     $('#btnAdd').show();
     $('#btnUpdate').hide();
