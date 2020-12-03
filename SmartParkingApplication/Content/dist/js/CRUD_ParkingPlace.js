@@ -103,7 +103,7 @@ function UpdateCard() {
         CardID: $('#IdCardEdit').val(),
         CardNumber: $('#CardNumberEdit').val(),
         Date: $('#DateCardEdit').val(),
-        Status: $('#StatusCardEdit').val(),
+        Status: $('#StatusCardEdit').val(), 
     };
     $.ajax({
         url: "/ManageCard/UpdateCard",
@@ -114,7 +114,7 @@ function UpdateCard() {
         success: function (result) {
             loadDataCard(true);
             $('#myModalUpdate').modal('hide');
-
+            
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
