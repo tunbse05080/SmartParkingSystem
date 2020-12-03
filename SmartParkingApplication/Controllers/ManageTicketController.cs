@@ -24,7 +24,8 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadData(string nameT, int pageTicket, int pageSizeTicket = 5)
         {
-            var ticket = from t in db.MonthlyTickets select new {t.MonthlyTicketID, t.CusName , t.IdentityCard , t.Phone, t.Email , t.LicensePlates , t.RegisDate, t.ExpiryDate};
+
+            var ticket = from t in db.MonthlyTickets select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate };
             if (!string.IsNullOrEmpty(nameT))
             {
                 ticket = ticket.Where(x => x.CusName.Contains(nameT));
@@ -33,18 +34,18 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in ticket)
             {
-                //var RegisDate = item.RegisDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                //var ExpiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, LicensePlates = item.LicensePlates};
+                var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = item.TypeOfVehicle, LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate };
                 list.Add(tr);
             }
 
-            var totalRow = ticket.Count();
+            var totalRowTicket = ticket.Count();
+
             ticket = ticket.OrderByDescending(x => x.MonthlyTicketID).Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
 
-            return Json(new { dataTicket = list, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { dataTicket = list, total = totalRowTicket }, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult Create(MonthlyTicket ticket)
         {
             if (ModelState.IsValid)
