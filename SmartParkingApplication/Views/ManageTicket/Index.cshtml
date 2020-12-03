@@ -127,7 +127,7 @@
                             </table>
                             <div id="paginationTicket" class="pagination" style="margin-top:10px">
                             </div>
-                        </div>                     
+                        </div>
                         <!-- /.Ticket-body -->
                         <!-- The Modal create new Monthly Ticket -->
                         <div class="modal fade" id="myModalTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -185,6 +185,77 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" id="btnAddTicket" onclick="return AddTicket();">thêm</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The Modal details -->
+                        <div class="modal fade" id="myModalDetailTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row">
+                                            <div class="form-group col-sm-4">
+                                                <label for="Id">Id</label>
+                                                <input type="text" class="form-control" id="IdD" placeholder="Id" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="UserName">Tên tài khoản</label>
+                                                <input type="text" class="form-control" id="UserNameD" placeholder="Tên tài khoản" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="FullName">Tên đầy đủ</label>
+                                                <input type="text" class="form-control" id="FullNameD" placeholder="Tên đầy đủ" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="DateOfBirth">Ngày Sinh</label>
+                                                <input type="text" class="form-control" id="DateOfBirthD" placeholder="Ngày Sinh" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="Gender">Giới tính</label>
+                                                <input type="text" class="form-control" id="GenderD" placeholder="Giới tính" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="Address">Địa chỉ</label>
+                                                <input type="text" class="form-control" id="AddressD" placeholder="Địa chỉ" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="PhoneNumber">Số điện thoại</label>
+                                                <input type="text" class="form-control" id="PhoneNumberD" placeholder="Số điện thoại" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="Email">Email</label>
+                                                <input type="text" class="form-control" id="EmailD" placeholder="Email" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="IdentityCard">Số CMND</label>
+                                                <input type="text" class="form-control" id="IdentityCardD" placeholder="Số CMND" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ContractSigningDate">Ngày ký HĐ</label>
+                                                <input type="text" class="form-control" id="ContractSigningDateD" placeholder="Ngày ký HĐ" value="" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ContractExpirationDate">Ngày hết HĐ</label>
+                                                <input type="text" class="form-control" id="ContractExpirationDateD" placeholder="Ngày hết HĐ" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="RoleName">Chức vụ</label>
+                                                <input type="text" class="form-control" id="RoleNameD" placeholder="Chức vụ" disabled />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ParkingPlace">Bãi làm việc</label>
+                                                <input type="text" class="form-control" id="ParkingPlaceD" placeholder="Bãi làm việc" disabled />
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
