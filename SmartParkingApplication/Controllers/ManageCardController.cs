@@ -29,7 +29,24 @@ namespace SmartParkingApplication.Controllers
             foreach (var item in CardNumber)
             {
                 var date = item.Date.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var tr = new { CardID = item.CardID, CardNumber = item.CardNumber, Status = item.Status, Date = date};
+                string StatusofCard = string.Empty;
+                switch (item.Status)
+                {
+                    case 0:
+                        StatusofCard = "Chưa đăng kí";
+                        break;
+                    case 1:
+                        StatusofCard = "Đã đăng kí";
+                        break;
+                    case 2:
+                        StatusofCard = "Đã đăng kí";
+                        break;
+                    case 3:
+                        StatusofCard = "Đã Khóa";
+                        break;
+
+                }
+                var tr = new { CardID = item.CardID, CardNumber = item.CardNumber, Status = StatusofCard, Date = date};
                 list.Add(tr);
             }
 
