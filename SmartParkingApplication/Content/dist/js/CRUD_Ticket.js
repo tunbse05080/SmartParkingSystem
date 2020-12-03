@@ -26,7 +26,7 @@ function loadDataTicket(changePageSizeTicket) {
                 html += '<td>' + item.LicensePlates + '</td>';
                 html += '<td>' + item.RegisDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
-                html += '<td><button class="btn btn-primary" onclick = "return getTicketByID(' + item.MonthlyTicketID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
+                html += '<td><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
             });
             $('#tbodyTicket').html(html);
@@ -162,17 +162,19 @@ function getTicketByID(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#MonthlyTicketIDEdit').val(result.MonthlyTicketID);
-            $('#CusNameEdit').val(result.CusName);
-            $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneEdit').val(result.Phone);
-            $('#EmailEdit').val(result.Email);
-            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
-            $('#LicensePlatesEdit').val(result.LicensePlates);
-            $('#RegisDateEdit').val(result.RegisDate);
-            $('#ExpiryDateEdit').val(result.ExpiryDate);
+            $('#MonthlyTicketTK').val(result.MonthlyTicketID);
+            $('#CusNameTK').val(result.CusName);
+            $('#IdentityCardTK').val(result.IdentityCard);
+            $('#PhoneTK').val(result.Phone);
+            $('#EmailTK').val(result.Email);
+            $('#TypeOfVehicleTK').val(result.TypeOfVehicle);
+            $('#LicensePlatesTK').val(result.LicensePlates);
+            $('#RegisDateTK').val(result.RegisDate);
+            $('#ExpiryDateTk').val(result.ExpiryDate);
 
+            $('#myModalTicket1').modal('show');
             $('#btnAddTicket').modal('show');
+
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);

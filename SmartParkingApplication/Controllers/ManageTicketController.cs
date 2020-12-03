@@ -44,17 +44,32 @@ namespace SmartParkingApplication.Controllers
             {
                 var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                string typeOfVehicle = string.Empty;
+                switch (item.TypeOfVehicle)
+                {
+                    case 0:
+                        typeOfVehicle = "Xe máy";
+                        break;
+                    case 1:
+                        typeOfVehicle = "Ô tô";
+                        break;
+                    case 2:
+                        typeOfVehicle = "Máy bay";
+                        break;
+                    case 3:
+                        typeOfVehicle = "Tàu hỏa";
+                        break;
+                }
                 //var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = item.TypeOfVehicle,
                 //    LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate ,
                 //    CardNumber = item.CardNumber,
                 //    NameOfParking = item.NameOfParking
                 //};
-                var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = item.TypeOfVehicle, LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate };
+                var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = typeOfVehicle, LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate };
                 list.Add(tr);
             }
 
             var totalRowTicket = ticket.Count();
-
             //ticket = ticket.Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
             ticket = ticket.OrderByDescending(x => x.MonthlyTicketID).Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
 
@@ -92,6 +107,7 @@ namespace SmartParkingApplication.Controllers
             {
                 typeOfVehicle = "Ô tô";
             }
+
             var RegisDate = ticket.RegisDate.Value.ToString("dd/MM/yyyy");
             var ExpiryDate = ticket.ExpiryDate.Value.ToString("dd/MM/yyyy");
             var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate };
