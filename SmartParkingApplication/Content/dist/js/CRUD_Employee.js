@@ -148,7 +148,15 @@ function loadData(changePageSize) {
                 html += '<td>' + item.RoleName + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
                 html += '<td>' + item.StatusOfWork + '</td>';
-                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button> <button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                //html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                switch (item.StatusOfWork) {
+                    case "Hết hạn hợp đồng":
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td>';
+                        break;
+                    case "Đang làm việc":
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                        break;
+                }
                 html += '</tr>';
             });
             $('#tbodyUser').html(html);
