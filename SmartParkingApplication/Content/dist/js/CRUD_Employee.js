@@ -259,6 +259,22 @@ function Update() {
     });
 }
 
+function CloseAdd() {
+    $('#UserName').css('border-color', 'Grey');
+    $('#PassWord').css('border-color', 'Grey');
+    $('#FullName').css('border-color', 'Grey');
+    $('#DateOfBirth').css('border-color', 'Grey');
+    $('#Gender').css('border-color', 'Grey');
+    $('#Address').css('border-color', 'Grey');
+    $('#PhoneNumber').css('border-color', 'Grey');
+    $('#Email').css('border-color', 'Grey');
+    $('#IdentityCard').css('border-color', 'Grey');
+    $('#RoleName').css('border-color', 'Grey');
+    $('#ParkingPlace').css('border-color', 'Grey');
+    $('#ContractSigningDate').css('border-color', 'Grey');
+    $('#ContractExpirationDate').css('border-color', 'Grey');
+}
+
 //Function for clearing the textboxes
 function clearTextBox() {
     var date = loadDateNow();
