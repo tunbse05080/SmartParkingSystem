@@ -95,36 +95,35 @@ function loadDataParkingPlace(changsizepp) {
 //    return false;
 //}
 function UpdatePP() {
-    //function UpdateCard() {
-    //    var res = validate();
-    //    if (res == false) {
-    //        return false;
-    //    }
-        var empPPObj = {
-            ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
-            NameOfParking: $('#NameOfParkingEdit').val(),
-            Location: $('#LocationEdit').val(),
-            NumberOfSlot: $('#NumberOfSlotEdit').val(),
-            NumberOfCar: $('#NumberOfCarEdit').val(),
-            NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
-            NumberCarBlank: $('#NumberCarBlankEdit').val(),
-            NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
-        };
-        $.ajax({
-            url: "/ManagePPlace/UpdatePP",
-            data: JSON.stringify(empPPObj),
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                loadDataParkingPlace(true);
-                $('#myModalUpdatePP').modal('hide');
+    var res = validatePP();
+    if (res == false) {
+        return false;
+    }
+    var empPPObj = {
+        ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
+        NameOfParking: $('#NameOfParkingEdit').val(),
+        Location: $('#LocationEdit').val(),
+        NumberOfSlot: $('#NumberOfSlotEdit').val(),
+        NumberOfCar: $('#NumberOfCarEdit').val(),
+        NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
+        NumberCarBlank: $('#NumberCarBlankEdit').val(),
+        NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
+    };
+    $.ajax({
+        url: "/ManagePPlace/UpdatePP",
+        data: JSON.stringify(empPPObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataParkingPlace(true);
+            $('#myModalUpdatePP').modal('hide');
 
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }
 function getPPByID(ParkingPlaceID) {
     $.ajax({
@@ -154,10 +153,10 @@ function getPPByID(ParkingPlaceID) {
     return false;
 }
 function AddPP() {
-    //var res = validate();
-    //if (res == false) {
-    //    return false;
-    //}
+    var res = validatePP();
+    if (res == false) {
+        return false;
+    }
     var empPPObj = {
         NameOfParking: $('#NameOfParking').val(),
         Location: $('#Location').val(),
@@ -198,3 +197,63 @@ function clearTextBoxPP() {
     $('#btnUpdatePP').hide();
 }
 
+//validate using Jquery
+function validatePP() {
+    var isValid = true;
+    var numberSlot = new RegExp('^[0-9]{2,}$');
+    if ($.trim($('#NumberOfCar').val()) == "" || !numberSlot.test($.trim($('#NumberOfCar').val()))) {
+        $('#NumberOfCar').prop("title", "Sức chứa ô tô trống, sai định dạng(>2 số).");
+        $('#NumberOfCar').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#NumberOfCar').prop("title", "");
+        $('#NumberOfCar').css('border-color', 'lightgrey');
+    }
+    if ($.trim($('#NumberOfMotoBike').val()) == "" || !numberSlot.test($.trim($('#NumberOfMotoBike').val()))) {
+        $('#NumberOfMotoBike').prop("title", "Sức chứa xe máy trống hoặc sai định dạng(>2 số).");
+        $('#NumberOfMotoBike').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#NumberOfMotoBike').prop("title", "");
+        $('#NumberOfMotoBike').css('border-color', 'lightgrey');
+    }
+    if ($.trim($('#NumberOfCarEdit').val()) == "" || !numberSlot.test($.trim($('#NumberOfCarEdit').val()))) {
+        $('#NumberOfCarEdit').prop("title", "Sức chứa ô tô trống hoặc sai định dạng(>2 số).");
+        $('#NumberOfCarEdit').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#NumberOfCarEdit').prop("title", "");
+        $('#NumberOfCarEdit').css('border-color', 'lightgrey');
+    }
+    if ($.trim($('#NumberOfMotoBikeEdit').val()) == "" || !numberSlot.test($.trim($('#NumberOfMotoBikeEdit').val()))) {
+        $('#NumberOfMotoBikeEdit').prop("title", "Sức chứa xe máy trống hoặc sai định dạng(>2 số).");
+        $('#NumberOfMotoBikeEdit').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#NumberOfMotoBikeEdit').prop("title", "");
+        $('#NumberOfMotoBikeEdit').css('border-color', 'lightgrey');
+    }
+    if ($.trim($('#NumberCarBlankEdit').val()) == "" || !numberSlot.test($.trim($('#NumberCarBlankEdit').val())) || + $('#NumberCarBlankEdit').val() > + $('#NumberOfCarEdit').val()) {
+        $('#NumberCarBlankEdit').prop("title", "Chỗ trống ô tô trống, sai định dạng(>2 số) hoặc lớn hơn sức chứa.");
+        $('#NumberCarBlankEdit').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#NumberCarBlankEdit').prop("title", "");
+        $('#NumberCarBlankEdit').css('border-color', 'lightgrey');
+    }
+    if ($.trim($('#NumberMotoBikeBlankEdit').val()) == "" || !numberSlot.test($.trim($('#NumberMotoBikeBlankEdit').val())) || + $('#NumberMotoBikeBlankEdit').val() > + $('#NumberOfMotoBikeEdit').val()) {
+        $('#NumberMotoBikeBlankEdit').prop("title", "Chỗ trống xe máy trống, sai định dạng(>2 số) hoặc lớn hơn sức chứa.");
+        $('#NumberMotoBikeBlankEdit').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#NumberMotoBikeBlankEdit').prop("title", "");
+        $('#NumberMotoBikeBlankEdit').css('border-color', 'lightgrey');
+    }
+    return isValid;
+}
