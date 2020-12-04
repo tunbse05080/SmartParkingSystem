@@ -94,7 +94,7 @@ function loadDateCardNow() {
 }
 
 function AddCard() {
-    var res = validate();
+    var res = validateCard();
     if (res == false) {
         return false;
     }
@@ -120,7 +120,7 @@ function AddCard() {
 }
 
 function UpdateCard() {
-    var res = validate();
+    var res = validateCard();
     if (res == false) {
         return false;
     }
@@ -168,4 +168,29 @@ function getCardByID(CardID) {
         }
     });
     return false;
+}
+
+//Valdidation using jquery
+function validateCard() {
+    var isValid = true;
+    var rfidCard = new RegExp('^[0-9]{10,}$');
+    if ($.trim($('#CardNumber').val()) == "" || !rfidCard.test($.trim($('#CardNumber').val()))) {
+        $('#CardNumber').prop("title", "Số thẻ trống hoặc sai định dạng(>9 số).");
+        $('#CardNumber').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#CardNumber').prop("title", "");
+        $('#CardNumber').css('border-color', 'lightgrey');
+    }
+    if ($.trim($('#CardNumberEdit').val()) == "" || !rfidCard.test($.trim($('#CardNumberEdit').val()))) {
+        $('#CardNumberEdit').prop("title", "Số thẻ trống hoặc sai định dạng(>9 số).");
+        $('#CardNumberEdit').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#CardNumberEdit').prop("title", "");
+        $('#CardNumberEdit').css('border-color', 'lightgrey');
+    }
+    return isValid;
 }
