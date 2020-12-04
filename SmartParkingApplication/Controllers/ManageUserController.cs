@@ -32,7 +32,7 @@ namespace SmartParkingApplication.Controllers
                         join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
                         from p in table2.DefaultIfEmpty()
                         orderby u.UserID
-                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, p.NameOfParking, r.RoleName };
+                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate,u.StatusOfWork, p.NameOfParking, r.RoleName };
             if (!string.IsNullOrEmpty(name))
             {
                 users = users.Where(x => x.Name.Contains(name));
@@ -45,7 +45,27 @@ namespace SmartParkingApplication.Controllers
                 var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var renewdate = "";
                 var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = item.Gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractRenewalDate = renewdate, ContractExpirationDate = expdate, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
+                string gender = string.Empty;
+                switch(item.Gender)
+                {
+                    case 0:
+                        gender = "Nữ";
+                        break;
+                    case 1:
+                        gender = "Nam";
+                        break;
+                }
+                string statusOfwork = string.Empty;
+                switch (item.StatusOfWork)
+                {
+                    case 0:
+                        statusOfwork = "Hết hạn hợp đồng";
+                        break;
+                    case 1:
+                        statusOfwork = "Đang làm việc";
+                        break;
+                }
+                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractRenewalDate = renewdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
                 list.Add(tr);
             }
 
