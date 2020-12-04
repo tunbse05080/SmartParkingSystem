@@ -101,7 +101,7 @@ function AddCard() {
     var empCardObj = {
         CardNumber: $('#CardNumber').val(),
         Date: $('#Date').val(),
-        Status: $('#Stauts').val(),
+        Status: $('#Status').val(),
     };
     $.ajax({
         url: "/ManageCard/Create",
