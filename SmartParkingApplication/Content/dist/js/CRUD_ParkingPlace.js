@@ -159,13 +159,13 @@ function AddPP() {
     //    return false;
     //}
     var empPPObj = {
-        NameOfParking: $('#NameOfParkingEdit').val(),
-        Location: $('#LocationEdit').val(),
-        NumberOfSlot: $('#NumberOfSlotEdit').val(),
-        NumberOfCar: $('#NumberOfCarEdit').val(),
-        NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
-        NumberCarBlank: $('#NumberCarBlankEdit').val(),
-        NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
+        NameOfParking: $('#NameOfParking').val(),
+        Location: $('#Location').val(),
+        NumberOfSlot: $('#NumberOfSlot').val(),
+        NumberOfCar: $('#NumberOfCar').val(),
+        NumberOfMotoBike: $('#NumberOfMotoBike').val(),
+        NumberCarBlank: $('#NumberOfCar').val(),
+        NumberMotoBikeBlank: $('#NumberOfMotoBike').val(),
     };
     $.ajax({
         url: "/ManagePPlace/Create",
