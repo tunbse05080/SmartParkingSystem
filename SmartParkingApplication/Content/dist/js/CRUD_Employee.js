@@ -185,7 +185,7 @@ function paging(totalRow, callback, changePageSize) {
 
 //Add Data Function
 function Add() {
-    var res = validate();
+    var res = validateUser();
     if (res == false) {
         return false;
     }
@@ -222,7 +222,7 @@ function Add() {
 
 //function for updating employee's record
 function Update() {
-    var res = validate();
+    var res = validateUser();
     if (res == false) {
         return false;
     }
@@ -285,7 +285,7 @@ function clearTextBox() {
 }
 
 //Valdidation using jquery
-function validate() {
+function validateUser() {
     var isValid = true;
     var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
     var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');

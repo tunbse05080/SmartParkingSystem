@@ -94,7 +94,7 @@ function loadDateCardNow() {
 }
 
 function AddCard() {
-    var res = validate();
+    var res = validateCard();
     if (res == false) {
         return false;
     }
@@ -120,7 +120,7 @@ function AddCard() {
 }
 
 function UpdateCard() {
-    var res = validate();
+    var res = validateCard();
     if (res == false) {
         return false;
     }
@@ -170,7 +170,7 @@ function getCardByID(CardID) {
     return false;
 }
 
-function validate() {
+function validateCard() {
     var isValid = true;
     var rfidCard = new RegExp('^[0-9]{10,}$');
     if ($.trim($('#CardNumber').val()) == "" || !rfidCard.test($.trim($('#CardNumber').val()))) {
