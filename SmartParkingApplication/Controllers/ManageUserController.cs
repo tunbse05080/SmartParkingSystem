@@ -101,7 +101,18 @@ namespace SmartParkingApplication.Controllers
             dateOfBirth = employee.DateOfBirth.Value.ToString("dd/MM/yyyy");
             var contractSigningDate = employee.ContractSigningDate.Value.ToString("dd/MM/yyyy");
             var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
-            var result = new {  employee.UserID, employee.UserName, employee.Name, employee.UserAddress, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking,employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork };
+            var result = new {  employee.UserID, employee.UserName, employee.Name, employee.UserAddress,employee.PassWork, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking, employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DetailsGH(int id)
+        {
+            var employee = db.Users.Find(id);
+            var dateOfBirth = "";
+            dateOfBirth = employee.DateOfBirth.Value.ToString("MM/dd/yyyy");
+            var contractSigningDate = employee.ContractSigningDate.Value.ToString("dd/MM/yyyy");
+            var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
+            var result = new { employee.UserID, employee.UserName, employee.Name, employee.UserAddress, employee.PassWork, employee.Gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, ParkingPlaceID = employee.ParkingPlace.ParkingPlaceID, RoleID = employee.Role.RoleID, contractSigningDate, contractExpirationDate, employee.StatusOfWork };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

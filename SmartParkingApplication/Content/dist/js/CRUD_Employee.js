@@ -36,25 +36,55 @@ function getByID(EmployeeID) {
         type: "GET",
         contentType: "application/json",
         dataType: "json",
-        success: function (result) {
-            $('#Id').val(result.UserID);
-            $('#UserName').val(result.UserName);
-            $('#FullName').val(result.Name);
-            $('#DateOfBirth').val(result.dateOfBirth);
-            $('#Gender').val(result.gender);
-            $('#Address').val(result.UserAddress);
-            $('#IdentityCard').val(result.IdentityCard);
-            $('#PhoneNumber').val(result.Phone);
-            $('#Email').val(result.email);
-            $('#StatusOfWork').val(result.statusOfwork);
-            $('#RoleName').val(result.RoleName);
-            $('#ParkingPlace').val(result.NameOfParking);
-            $('#ContractSigningDate').val(result.contractSigningDate);
-            $('#ContractExpirationDate').val(result.contractExpirationDate);
+        success: function (result) {        
+                    $('#Id').val(result.UserID);
+                    $('#UserName').val(result.UserName);
+                    $('#FullName').val(result.Name);
+                    $('#PassWord').val(result.PassWork);
+                    $('#DateOfBirth').val(result.dateOfBirth);
+                    $('#Gender').val(result.gender);
+                    $('#Address').val(result.UserAddress);
+                    $('#IdentityCard').val(result.IdentityCard);
+                    $('#PhoneNumber').val(result.Phone);
+                    $('#Email').val(result.email);
+                    $('#StatusOfWork').val(result.statusOfwork);
+                    $('#RoleName').val(result.RoleName);
+                    $('#ParkingPlace').val(result.NameOfParking);
+                    $('#ContractSigningDate').val(result.contractSigningDate);
+                    $('#ContractExpirationDate').val(result.contractExpirationDate);
+                    $('#myModal').modal('show');
+                    $('#btnUpdate').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
+        }
+    });
+    return false;
+}
 
-            $('#myModal').modal('show');
-            $('#btnAdd').hide();
-            $('#btnUpdate').show();
+function getGHByID(EmployeeID) {
+    $.ajax({
+        url: "/ManageUser/DetailsGH/" + EmployeeID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+                    $('#UserIDGH').val(result.UserID);
+                    $('#UserNameGH').val(result.UserName);
+                    $('#FullNameGH').val(result.Name);
+                    $('#PassWordGH').val(result.PassWork);
+                    $('#DateOfBirthGH').val(result.dateOfBirth);
+                    $('#GenderGH').val(result.Gender);
+                    $('#AddressGH').val(result.UserAddress);
+                    $('#IdentityCardGH').val(result.IdentityCard);
+                    $('#PhoneNumberGH').val(result.Phone);
+                    $('#EmailGH').val(result.email);
+                    $('#StatusOfWorkGH').val(result.StatusOfWork);
+                    $('#RoleNameGH').val(result.RoleID);
+                    $('#ParkingPlaceGH').val(result.ParkingPlaceID);
+                    $('#ContractSigningDateGH').val(result.contractSigningDate);
+                    $('#ContractExpirationDateGH').val(result.contractExpirationDate);
+                    $('#myModalGH').modal('show');
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
@@ -73,6 +103,7 @@ function getDetailByID(EmployeeID) {
             $('#IdD').val(result.UserID);
             $('#UserNameD').val(result.UserName);
             $('#FullNameD').val(result.Name);
+            $('#PasswordD').val(result.PassWork);
             $('#DateOfBirthD').val(result.dateOfBirth);
             $('#GenderD').val(result.gender);
             $('#AddressD').val(result.UserAddress);
@@ -151,10 +182,10 @@ function loadData(changePageSize) {
                 //html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                 switch (item.StatusOfWork) {
                     case "Hết hạn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
                         break;
                     case "Đang trong HĐ":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
                         break;
                 }
                 html += '</tr>';
@@ -244,6 +275,7 @@ function Update() {
         UserID: $('#Id').val(),
         UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
+        PassWork: $('#PassWord').val(),
         DateOfBirth: $('#DateOfBirth').val(),
         Gender: $('#Gender').val(),
         UserAddress: $('#Address').val(),
@@ -415,4 +447,39 @@ function validate() {
         $('#RoleName').css('border-color', 'lightgrey');
     }
     return isValid;
+}
+
+// gia han HĐ
+function ContractGH() {
+    var emGHObj = {
+        UserID: $('#UserIDGH').val(),
+        UserName: $('#UserNameGH').val(),
+        Name: $('#FullNameGH').val(),
+        PassWork: $('#PassWordGH').val(),
+        DateOfBirth: $('#DateOfBirthGH').val(),
+        Gender: $('#GenderGH').val(),
+        UserAddress: $('#AddressGH').val(),
+        Phone: $('#PhoneNumberGH').val(),
+        email: $('#EmailGH').val(),
+        IdentityCard: $('#IdentityCardGH').val(),
+        ContractSigningDate: $('#ContractSigningDateGH').val(),
+        ContractExpirationDate: $('#ContractExpirationDateGH').val(),
+        StatusOfWork:1,
+        RoleID: $('#RoleNameGH').val(),
+        ParkingPlaceID: $('#ParkingPlaceGH').val(),
+    };
+    $.ajax({
+        url: "/ManageUser/Update",
+        data: JSON.stringify(emGHObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadData(true);
+            $('#myModalGH').modal('hide');
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }
