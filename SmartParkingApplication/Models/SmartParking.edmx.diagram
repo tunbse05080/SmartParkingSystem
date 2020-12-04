@@ -4,20 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5caeb145781b42e2a9562ff3145ea802" Name="Diagram1" ZoomLevel="93">
-        <EntityTypeShape EntityType="SmartParkingsModel.Card" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.Image" Width="1.5" PointX="8.25" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.MonthlyIncomeStatement" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.MonthlyTicket" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+      <Diagram DiagramId="e208bddb591a4ee1b1eff477081a90b9" Name="Diagram1">
+        <EntityTypeShape EntityType="SmartParkingsModel.Card" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.Image" Width="1.5" PointX="8.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.MonthlyIncomeStatement" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.MonthlyTicket" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartParkingsModel.Notification" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.ParkingPlace" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.Price" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.Role" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.Schedule" Width="1.5" PointX="3" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.ParkingPlace" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.Price" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.Role" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.Schedule" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartParkingsModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SmartParkingsModel.Transaction" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.User" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SmartParkingsModel.UserSchedule" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.User" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SmartParkingsModel.UserSchedule" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
         <AssociationConnector Association="SmartParkingsModel.FK__MonthlyTi__CardI__4E88ABD4" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__Transacti__CardI__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__Image__Transacti__4CA06362" ManuallyRouted="false" />

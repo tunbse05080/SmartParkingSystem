@@ -75,7 +75,7 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult loadDataParkingPlace(int pagepp, string namepp, int pageSizepp = 5)
         {
-            var parking = from p in db.ParkingPlaces select new {p.ParkingPlaceID, p.NameOfParking,p.Location,p.NumberOfSlot,p.NumberOfCar,p.NumberOfMotoBike,p.NumberCarBlank,p.NumberMotoBikeBlank};
+            var parking = from p in db.ParkingPlaces select new {p.ParkingPlaceID, p.NameOfParking,p.Location,p.NumberOfCar,p.NumberOfMotoBike,p.NumberCarBlank,p.NumberMotoBikeBlank};
             if (!string.IsNullOrEmpty(namepp))
             {
                 parking = parking.Where(x => x.NameOfParking.Contains(namepp));
@@ -84,7 +84,7 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in parking)
             {
-                var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfSlot = item.NumberOfSlot, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank };
+                var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank };
                 list.Add(tr);
             }
             var totalRowpp = list.Count();
@@ -97,7 +97,7 @@ namespace SmartParkingApplication.Controllers
         {
             var parking = db.ParkingPlaces.Find(id);
            
-            var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfSlot, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank };
+            var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

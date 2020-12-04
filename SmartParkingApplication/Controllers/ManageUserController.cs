@@ -32,7 +32,7 @@ namespace SmartParkingApplication.Controllers
                         join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
                         from p in table2.DefaultIfEmpty()
                         orderby u.UserID
-                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractRenewalDate, u.ContractExpirationDate, p.NameOfParking, r.RoleName };
+                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, p.NameOfParking, r.RoleName };
             if (!string.IsNullOrEmpty(name))
             {
                 users = users.Where(x => x.Name.Contains(name));
@@ -44,10 +44,6 @@ namespace SmartParkingApplication.Controllers
                 var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var renewdate = "";
-                if (item.ContractRenewalDate != null)
-                {
-                    renewdate = item.ContractRenewalDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                }
                 var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = item.Gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractRenewalDate = renewdate, ContractExpirationDate = expdate, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
                 list.Add(tr);
@@ -199,7 +195,6 @@ namespace SmartParkingApplication.Controllers
                 // newRow["Ngày hết HĐ"] = item.UserName;
                 newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
                 newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
-                newRow["Ngày Gia hạn"] = item.ContractRenewalDate;
                 newRow["Chức vụ"] = item.Role.RoleName;
                 newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
                // newRow["Số CMND"] = item.UserName;

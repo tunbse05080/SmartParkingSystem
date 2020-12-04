@@ -61,7 +61,6 @@
           <Property Name="ParkingPlaceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameOfParking" Type="nvarchar" MaxLength="50" />
           <Property Name="Location" Type="nvarchar" MaxLength="50" />
-          <Property Name="NumberOfSlot" Type="int" />
           <Property Name="NumberOfCar" Type="int" />
           <Property Name="NumberOfMotoBike" Type="int" />
           <Property Name="NumberCarBlank" Type="int" />
@@ -96,15 +95,6 @@
           <Property Name="Slot" Type="int" />
           <Property Name="TimeApply" Type="date" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SmartParkings.dbo.StaffPayMoney' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="StaffPayMoney">
-          <Property Name="isDone" Type="int" />
-          <Property Name="TransactionID" Type="int" />
-          <Property Name="UserScheduleID" Type="int" />
-          <Property Name="TotalPrice" Type="int" />
-          <Property Name="IsReceived" Type="int" />
-        </EntityType>-->
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -127,6 +117,7 @@ warning 6013: The table/view 'SmartParkings.dbo.StaffPayMoney' does not have a p
           <Property Name="TotalPrice" Type="int" />
           <Property Name="CardID" Type="int" />
           <Property Name="ParkingPlaceID" Type="int" />
+          <Property Name="TypeOfVerhicleTran" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -143,10 +134,10 @@ warning 6013: The table/view 'SmartParkings.dbo.StaffPayMoney' does not have a p
           <Property Name="Phone" Type="int" />
           <Property Name="email" Type="nvarchar" MaxLength="50" />
           <Property Name="ContractSigningDate" Type="date" />
-          <Property Name="ContractRenewalDate" Type="date" />
           <Property Name="ContractExpirationDate" Type="date" />
           <Property Name="RoleID" Type="int" />
           <Property Name="ParkingPlaceID" Type="int" />
+          <Property Name="StatusOfWork" Type="int" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -216,12 +207,6 @@ warning 6013: The table/view 'SmartParkings.dbo.StaffPayMoney' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__StaffPayM__Trans__5165187F" />-->
-        <!--Errors Found During Generation:
-error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__StaffPayM__UserS__52593CB8" />-->
         <Association Name="FK__Transacti__CardI__534D60F1">
           <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
@@ -421,7 +406,6 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
           <Property Name="ParkingPlaceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameOfParking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NumberOfSlot" Type="Int32" />
           <Property Name="NumberOfCar" Type="Int32" />
           <Property Name="NumberOfMotoBike" Type="Int32" />
           <Property Name="NumberCarBlank" Type="Int32" />
@@ -485,6 +469,7 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
           <Property Name="TotalPrice" Type="Int32" />
           <Property Name="CardID" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
+          <Property Name="TypeOfVerhicleTran" Type="Int32" />
           <NavigationProperty Name="Card" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Transaction" ToRole="Card" />
           <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__4CA06362" FromRole="Transaction" ToRole="Image" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="Transaction" ToRole="ParkingPlace" />
@@ -504,10 +489,10 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
           <Property Name="Phone" Type="Int32" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ContractSigningDate" Type="DateTime" Precision="0" />
-          <Property Name="ContractRenewalDate" Type="DateTime" Precision="0" />
           <Property Name="ContractExpirationDate" Type="DateTime" Precision="0" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
+          <Property Name="StatusOfWork" Type="Int32" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="User" ToRole="ParkingPlace" />
           <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="User" ToRole="UserSchedule" />
@@ -779,7 +764,6 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
                 <ScalarProperty Name="NameOfParking" ColumnName="NameOfParking" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="NumberOfSlot" ColumnName="NumberOfSlot" />
                 <ScalarProperty Name="NumberOfCar" ColumnName="NumberOfCar" />
                 <ScalarProperty Name="NumberOfMotoBike" ColumnName="NumberOfMotoBike" />
                 <ScalarProperty Name="NumberCarBlank" ColumnName="NumberCarBlank" />
@@ -841,6 +825,7 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="CardID" ColumnName="CardID" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+                <ScalarProperty Name="TypeOfVerhicleTran" ColumnName="TypeOfVerhicleTran" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -858,10 +843,10 @@ error 6004: The table 'SmartParkings.dbo.StaffPayMoney' is referenced by a relat
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="ContractSigningDate" ColumnName="ContractSigningDate" />
-                <ScalarProperty Name="ContractRenewalDate" ColumnName="ContractRenewalDate" />
                 <ScalarProperty Name="ContractExpirationDate" ColumnName="ContractExpirationDate" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+                <ScalarProperty Name="StatusOfWork" ColumnName="StatusOfWork" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

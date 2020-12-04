@@ -31,10 +31,10 @@ namespace SmartParkingApplication.Models
         public Nullable<int> Phone { get; set; }
         public string email { get; set; }
         public Nullable<System.DateTime> ContractSigningDate { get; set; }
-        public Nullable<System.DateTime> ContractRenewalDate { get; set; }
         public Nullable<System.DateTime> ContractExpirationDate { get; set; }
         public Nullable<int> RoleID { get; set; }
         public Nullable<int> ParkingPlaceID { get; set; }
+        public Nullable<int> StatusOfWork { get; set; }
     
         public virtual ParkingPlace ParkingPlace { get; set; }
         public virtual Role Role { get; set; }

@@ -26,7 +26,6 @@ namespace SmartParkingApplication.Models
         public int ParkingPlaceID { get; set; }
         public string NameOfParking { get; set; }
         public string Location { get; set; }
-        public Nullable<int> NumberOfSlot { get; set; }
         public Nullable<int> NumberOfCar { get; set; }
         public Nullable<int> NumberOfMotoBike { get; set; }
         public Nullable<int> NumberCarBlank { get; set; }

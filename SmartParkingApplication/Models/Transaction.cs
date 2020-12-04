@@ -28,6 +28,7 @@ namespace SmartParkingApplication.Models
         public Nullable<int> TotalPrice { get; set; }
         public Nullable<int> CardID { get; set; }
         public Nullable<int> ParkingPlaceID { get; set; }
+        public Nullable<int> TypeOfVerhicleTran { get; set; }
     
         public virtual Card Card { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
