@@ -45,7 +45,17 @@ namespace SmartParkingApplication.Controllers
                 var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var renewdate = "";
                 var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = item.Gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractRenewalDate = renewdate, ContractExpirationDate = expdate, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
+                string gender = string.Empty;
+                switch(item.Gender)
+                {
+                    case 0:
+                        gender = "Nữ";
+                        break;
+                    case 1:
+                        gender = "Nam";
+                        break;
+                }
+                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractRenewalDate = renewdate, ContractExpirationDate = expdate, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
                 list.Add(tr);
             }
 
