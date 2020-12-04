@@ -103,7 +103,6 @@ function UpdatePP() {
         ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
         NameOfParking: $('#NameOfParkingEdit').val(),
         Location: $('#LocationEdit').val(),
-        NumberOfSlot: $('#NumberOfSlotEdit').val(),
         NumberOfCar: $('#NumberOfCarEdit').val(),
         NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
         NumberCarBlank: $('#NumberCarBlankEdit').val(),
@@ -135,7 +134,6 @@ function getPPByID(ParkingPlaceID) {
             $('#ParkingPlaceIDEdit').val(result.ParkingPlaceID);
             $('#NameOfParkingEdit').val(result.NameOfParking);
             $('#LocationEdit').val(result.Location);
-            $('#NumberOfSlotEdit').val(result.NumberOfSlot);
             $('#NumberOfCarEdit').val(result.NumberOfCar);
             $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
@@ -160,7 +158,6 @@ function AddPP() {
     var empPPObj = {
         NameOfParking: $('#NameOfParking').val(),
         Location: $('#Location').val(),
-        NumberOfSlot: $('#NumberOfSlot').val(),
         NumberOfCar: $('#NumberOfCar').val(),
         NumberOfMotoBike: $('#NumberOfMotoBike').val(),
         NumberCarBlank: $('#NumberOfCar').val(),
@@ -186,7 +183,6 @@ function clearTextBoxPP() {
     $('#Id').val("");
     $('#NameOfParking').val("");
     $('#Location').val("");
-    $('#NumberOfSlot').val("");
     $('#NumberOfCar').val("");
     $('#NumberOfMotoBike').val("");
     $('#NumberCarBlank').val("");
