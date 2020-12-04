@@ -154,6 +154,7 @@
     <Content Include="Content\dist\js\CRUD_Ticket.js" />
     <Content Include="Content\dist\js\demo.js" />
     <Content Include="Content\dist\js\CRUD_ParkingPlace.js" />
+    <Content Include="Content\dist\js\Validation.js" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
