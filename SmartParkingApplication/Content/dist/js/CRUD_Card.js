@@ -24,16 +24,16 @@ function loadDataCard(changePageSizeCard) {
                 html += '<td>' + item.Status + '</td>';
                 switch (item.Status) {
                     case "Chưa đăng kí":
-                        html += '<td><button class="btn btn-success" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
+                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
                         break;
                     case "Đã đăng kí":
-                        html += '<td><button class="btn btn-success" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
+                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
                         break;
                     case "Đã Khóa":
-                        html += '<td><button class="btn btn-warning" onclick="return getCardByID(' + item.CardID + ')" >Mở Khóa</button></td>';
+                        html += '<td><button class="btn btn-warning" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Mở Khóa</button></td>';
                         break;
                     case "Thẻ Hỏng":
-                        html += '<td><button class= "btn btn-danger">Thẻ Hỏng</button></td>'
+                        html += '<td><button class= "btn btn-danger" disabled>Thẻ Hỏng</button></td>'
                         break;
                 }
                 html += '</tr>';
