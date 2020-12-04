@@ -26,7 +26,6 @@ function loadDataParkingPlace(changsizepp) {
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
                 html += '<td><button class="btn btn-success" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
 
-
                 html += '</tr>';
             });
             $('#tbodypp').html(html);
@@ -35,11 +34,7 @@ function loadDataParkingPlace(changsizepp) {
             }, changsizepp);
         },
         error: function (errormessage) {
-            if (timeFrom == null && timeTo == null) {
-                alert("Làm ơn nhập thời gian vào và ra!");
-            } else {
                 alert(errormessage.responseText);
-            }
         }
     });
 

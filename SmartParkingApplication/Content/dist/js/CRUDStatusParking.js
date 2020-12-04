@@ -38,7 +38,6 @@ function loadDataStatusParking(changePageSizeSPP) {
         },
         error: function (errormessage) {
             if (timeFrom == null && timeTo == null) {
-                alert("Làm ơn nhập thời gian vào và ra!");
             } else {
                 alert(errormessage.responseText);
             }
