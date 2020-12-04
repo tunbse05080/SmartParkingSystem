@@ -84,7 +84,6 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in parking)
             {
-                
                 var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfSlot = item.NumberOfSlot, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank };
                 list.Add(tr);
             }
