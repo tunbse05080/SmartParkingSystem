@@ -26,6 +26,7 @@ function loadDataParkingPlace(changsizepp) {
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
                 html += '<td><button class="btn btn-success" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
 
+
                 html += '</tr>';
             });
             $('#tbodypp').html(html);
@@ -34,7 +35,11 @@ function loadDataParkingPlace(changsizepp) {
             }, changsizepp);
         },
         error: function (errormessage) {
+            if (timeFrom == null && timeTo == null) {
+                alert("Làm ơn nhập thời gian vào và ra!");
+            } else {
                 alert(errormessage.responseText);
+            }
         }
     });
 
@@ -139,6 +144,7 @@ function getPPByID(ParkingPlaceID) {
 
             $('#myModalUpdatePP').modal('show');
            
+            $('#btnAddPP').hide();
             $('#btnUpdatePP').show();
         },
         error: function (errormessage) {
@@ -188,7 +194,7 @@ function clearTextBoxPP() {
     $('#NumberMotoBikeBlank').val("");
 
 
-    $('#btnAdd').show();
-    $('#btnUpdate').hide();
+    $('#btnAddPP').show();
+    $('#btnUpdatePP').hide();
 }
 
