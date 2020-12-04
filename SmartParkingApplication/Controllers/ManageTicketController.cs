@@ -26,14 +26,14 @@ namespace SmartParkingApplication.Controllers
         public JsonResult LoadData(string nameT, int pageTicket, int pageSizeTicket = 5)
         {
 
-            //var ticket = from t in db.MonthlyTickets
-            //             join c in db.Cards on t.CardID  equals c.CardID into table1
-            //             from c in table1.DefaultIfEmpty()
-            //             join p in db.ParkingPlaces on t.ParkingPlaceID equals p.ParkingPlaceID into table2
-            //             from p in table2.DefaultIfEmpty()   
-            //             orderby t.MonthlyTicketID
-            //             select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate, c.CardNumber , p.NameOfParking };
-            var ticket = from t in db.MonthlyTickets select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate };
+            var ticket = from t in db.MonthlyTickets
+                         join c in db.Cards on t.CardID equals c.CardID into table1
+                         from c in table1.DefaultIfEmpty()
+                         join p in db.ParkingPlaces on t.ParkingPlaceID equals p.ParkingPlaceID into table2
+                         from p in table2.DefaultIfEmpty()
+                         orderby t.MonthlyTicketID
+                         select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate, c.CardNumber, p.NameOfParking };
+            //var ticket = from t in db.MonthlyTickets select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate };
             if (!string.IsNullOrEmpty(nameT))
             {
                 ticket = ticket.Where(x => x.CusName.Contains(nameT));
@@ -60,12 +60,21 @@ namespace SmartParkingApplication.Controllers
                         typeOfVehicle = "Tàu hỏa";
                         break;
                 }
-                //var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = item.TypeOfVehicle,
-                //    LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate ,
-                //    CardNumber = item.CardNumber,
-                //    NameOfParking = item.NameOfParking
-                //};
-                var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = typeOfVehicle, LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate };
+                var tr = new
+                {
+                    MonthlyTicketID = item.MonthlyTicketID,
+                    CusName = item.CusName,
+                    IdentityCard = item.IdentityCard,
+                    Phone = item.Phone,
+                    Email = item.Email,
+                    TypeOfVehicle = item.TypeOfVehicle,
+                    LicensePlates = item.LicensePlates,
+                    RegisDate = regisDate,
+                    ExpiryDate = expiryDate,
+                    CardNumber = item.CardNumber,
+                    NameOfParking = item.NameOfParking
+                };
+                //var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = typeOfVehicle, LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate };
                 list.Add(tr);
             }
 

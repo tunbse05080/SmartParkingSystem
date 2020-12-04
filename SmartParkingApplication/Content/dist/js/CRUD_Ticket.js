@@ -26,6 +26,9 @@ function loadDataTicket(changePageSizeTicket) {
                 html += '<td>' + item.LicensePlates + '</td>';
                 html += '<td>' + item.RegisDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
+                html += '<td>' + item.CardNumber + '</td>';
+                html += '<td>' + item.NameOfParking + '</td>';
+
                 html += '<td><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
             });
