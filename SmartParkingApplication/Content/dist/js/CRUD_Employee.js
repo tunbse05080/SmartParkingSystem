@@ -83,7 +83,7 @@ function getDetailByID(EmployeeID) {
             $('#ContractSigningDateD').val(result.contractSigningDate);
             $('#ContractExpirationDateD').val(result.contractExpirationDate);
 
-            $('#myModalDetail').modal('show');
+            $('#myModalDetailUser').modal('show');
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
