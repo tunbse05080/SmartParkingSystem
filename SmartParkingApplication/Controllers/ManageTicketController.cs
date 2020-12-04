@@ -70,7 +70,6 @@ namespace SmartParkingApplication.Controllers
             }
 
             var totalRowTicket = list.Count();
-            //ticket = ticket.Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
             var result = list.Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
 
             return Json(new { dataTicket = result, total = totalRowTicket }, JsonRequestBehavior.AllowGet);
@@ -145,8 +144,6 @@ namespace SmartParkingApplication.Controllers
             dt.Columns.Add("Ngày hết hạn", typeof(String));
           
             // them ngay gia han
-           
-
 
             //Add in the datarow
 
@@ -159,12 +156,21 @@ namespace SmartParkingApplication.Controllers
                 //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
                 //newRow["Học vấn"] = item.Name;
                 //newRow["Chuyên ngành"] = item.UserAddress;
-
+                string typeVehicle = "";
+                switch (item.TypeOfVehicle)
+                {
+                    case 0:
+                        typeVehicle = "Xe Máy";
+                        break;
+                    case 1:
+                        typeVehicle = "Ô tô";
+                        break;
+                }
                 newRow["Tên chủ thẻ"] = item.CusName;
                 newRow["Số CMND"] = item.IdentityCard;
                 newRow["Số điện thoại"] = item.Phone;
                 newRow["Email"] = item.Email;
-                newRow["Loại xe"] = item.TypeOfVehicle;
+                newRow["Loại xe"] = typeVehicle;
                 newRow["Ngày đăng kí"] = item.RegisDate;
                 newRow["Ngày hết hạn"] = item.ExpiryDate;
                 //newRow["Số CMND"] = item.IdentityCard;

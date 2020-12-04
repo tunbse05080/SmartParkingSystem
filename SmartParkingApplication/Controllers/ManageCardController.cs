@@ -44,16 +44,15 @@ namespace SmartParkingApplication.Controllers
                     case 3:
                         StatusofCard = "Đã Khóa";
                         break;
-
                 }
                 var tr = new { CardID = item.CardID, CardNumber = item.CardNumber, Status = StatusofCard, Date = date};
                 list.Add(tr);
             }
 
-            var totalRow = CardNumber.Count();
-            CardNumber = CardNumber.OrderByDescending(x => x.CardID).Skip((pageCard - 1) * pageSizeCard).Take(pageSizeCard);
+            var totalRow = list.Count();
+            var result = list.Skip((pageCard - 1) * pageSizeCard).Take(pageSizeCard);
 
-            return Json(new { dataCard = list,total = totalRow}, JsonRequestBehavior.AllowGet);
+            return Json(new { dataCard = result, total = totalRow}, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Create(Card card)
         {
@@ -79,21 +78,20 @@ namespace SmartParkingApplication.Controllers
         {
             var card = db.Cards.Find(id);
             var Status = "";
-            if (card.Status == 0)
+            switch (card.Status)
             {
-                Status = "Chưa đăng kí";
-            }
-            if (card.Status == 1)
-            {
-                Status = "Đã đăng kí";
-            }
-            if (card.Status == 2)
-            {
-                Status = "Thẻ Hỏng";
-            }
-            if (card.Status == 3)
-            {
-                Status = "Đã Khóa";
+                case 0:
+                    Status = "Chưa đăng kí";
+                    break;
+                case 1:
+                    Status = "Đã đăng kí";
+                    break;
+                case 2:
+                    Status = "Thẻ Hỏng";
+                    break;
+                case 3:
+                    Status = "Đã Khóa";
+                    break;
             }
             var result = new { card.CardID, card.CardNumber, card.Date, Status};
             return Json(result, JsonRequestBehavior.AllowGet);
