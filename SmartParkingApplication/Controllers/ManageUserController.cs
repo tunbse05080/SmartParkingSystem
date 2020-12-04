@@ -81,6 +81,7 @@ namespace SmartParkingApplication.Controllers
             var employee = db.Users.Find(id);
             var gender = "";
             var dateOfBirth = "";
+            var statusOfwork = "";
             if (employee.Gender == 1)
             {
                 gender = "Nữ";
@@ -89,10 +90,18 @@ namespace SmartParkingApplication.Controllers
             {
                 gender = "Nam";
             }
+            if (employee.StatusOfWork == 1)
+            {
+                statusOfwork = "Đang làm việc";
+            }
+            else
+            {
+                statusOfwork = "Hết hạn hợp đồng";
+            }
             dateOfBirth = employee.DateOfBirth.Value.ToString("dd/MM/yyyy");
             var contractSigningDate = employee.ContractSigningDate.Value.ToString("dd/MM/yyyy");
             var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
-            var result = new {  employee.UserID, employee.UserName, employee.Name, employee.UserAddress, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking,employee.Role.RoleName, contractSigningDate, contractExpirationDate};
+            var result = new {  employee.UserID, employee.UserName, employee.Name, employee.UserAddress, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking,employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

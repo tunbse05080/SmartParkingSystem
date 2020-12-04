@@ -37,17 +37,18 @@ function getByID(EmployeeID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#Id').val(result.UserID)
-            $('#UserName').val(result.UserName)
-            $('#FullName').val(result.Name)
-            $('#DateOfBirth').val(result.dateOfBirth)
-            $('#Gender').val(result.gender)
-            $('#Address').val(result.UserAddress)
-            $('#IdentityCard').val(result.IdentityCard)
-            $('#PhoneNumber').val(result.Phone)
-            $('#Email').val(result.email)
-            $('#RoleName').val(result.RoleName)
-            $('#ParkingPlace').val(result.NameOfParking)
+            $('#Id').val(result.UserID);
+            $('#UserName').val(result.UserName);
+            $('#FullName').val(result.Name);
+            $('#DateOfBirth').val(result.dateOfBirth);
+            $('#Gender').val(result.gender);
+            $('#Address').val(result.UserAddress);
+            $('#IdentityCard').val(result.IdentityCard);
+            $('#PhoneNumber').val(result.Phone);
+            $('#Email').val(result.email);
+            $('#StatusOfWork').val(result.statusOfwork);
+            $('#RoleName').val(result.RoleName);
+            $('#ParkingPlace').val(result.NameOfParking);
             $('#ContractSigningDate').val(result.contractSigningDate);
             $('#ContractExpirationDate').val(result.contractExpirationDate);
 
@@ -69,17 +70,18 @@ function getDetailByID(EmployeeID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#IdD').val(result.UserID)
-            $('#UserNameD').val(result.UserName)
-            $('#FullNameD').val(result.Name)
-            $('#DateOfBirthD').val(result.dateOfBirth)
-            $('#GenderD').val(result.gender)
-            $('#AddressD').val(result.UserAddress)
-            $('#IdentityCardD').val(result.IdentityCard)
-            $('#PhoneNumberD').val(result.Phone)
-            $('#EmailD').val(result.email)
-            $('#RoleNameD').val(result.RoleName)
-            $('#ParkingPlaceD').val(result.NameOfParking)
+            $('#IdD').val(result.UserID);
+            $('#UserNameD').val(result.UserName);
+            $('#FullNameD').val(result.Name);
+            $('#DateOfBirthD').val(result.dateOfBirth);
+            $('#GenderD').val(result.gender);
+            $('#AddressD').val(result.UserAddress);
+            $('#IdentityCardD').val(result.IdentityCard);
+            $('#PhoneNumberD').val(result.Phone);
+            $('#EmailD').val(result.email);
+            $('#StatusOfWorkD').val(result.statusOfwork);
+            $('#RoleNameD').val(result.RoleName);
+            $('#ParkingPlaceD').val(result.NameOfParking);
             $('#ContractSigningDateD').val(result.contractSigningDate);
             $('#ContractExpirationDateD').val(result.contractExpirationDate);
 
@@ -99,17 +101,18 @@ function getIdToDropContract() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#Id').val(result.UserID)
-            $('#UserName').val(result.UserName)
-            $('#FullName').val(result.Name)
-            $('#DateOfBirth').val(result.dateOfBirth)
-            $('#Gender').val(result.gender)
-            $('#Address').val(result.UserAddress)
-            $('#IdentityCard').val(result.IdentityCard)
-            $('#PhoneNumber').val(result.Phone)
-            $('#Email').val(result.email)
-            $('#RoleName').val(result.RoleName)
-            $('#ParkingPlace').val(result.NameOfParking)
+            $('#Id').val(result.UserID);
+            $('#UserName').val(result.UserName);
+            $('#FullName').val(result.Name);
+            $('#DateOfBirth').val(result.dateOfBirth);
+            $('#Gender').val(result.gender);
+            $('#Address').val(result.UserAddress);
+            $('#IdentityCard').val(result.IdentityCard);
+            $('#PhoneNumber').val(result.Phone);
+            $('#Email').val(result.email);
+            $('#StatusOfWork').val(result.StatusOfWork);
+            $('#RoleName').val(result.RoleName);
+            $('#ParkingPlace').val(result.NameOfParking);
 
             $('#myModal').modal('show');
             $('#btnDrop').show();
@@ -202,6 +205,7 @@ function Add() {
         IdentityCard: $('#IdentityCard').val(),
         ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
+        StatusOfWork: $('#StatusOfWork').val(),
         RoleID: $('#RoleName').val(),
         ParkingPlaceID: $('#ParkingPlace').val(),
     };
@@ -239,6 +243,7 @@ function Update() {
         IdentityCard: $('#IdentityCard').val(),
         ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
+        StatusOfWork: $('#StatusOfWork').val(),
         RoleID: $('#RoleName').val(),
         ParkingPlaceID: $('#ParkingPlace').val(),
 
@@ -274,6 +279,7 @@ function CloseAdd() {
     $('#ParkingPlace').css('border-color', 'Grey');
     $('#ContractSigningDate').css('border-color', 'Grey');
     $('#ContractExpirationDate').css('border-color', 'Grey');
+    $('#StatusOfWork').css('border-color', 'Grey');
 }
 
 //Function for clearing the textboxes
@@ -292,6 +298,8 @@ function clearTextBox() {
     $('#ParkingPlace').val("");
     $('#ContractSigningDate').val("" + date);
     $('#ContractExpirationDate').val("" + date);
+    $('#StatusOfWork').val("");
+
 
     $('#btnAdd').show();
     $('#btnUpdate').hide();
