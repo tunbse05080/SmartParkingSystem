@@ -88,27 +88,11 @@ namespace SmartParkingApplication.Controllers
                 var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfSlot = item.NumberOfSlot, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank };
                 list.Add(tr);
             }
-            var totalRowpp = parking.Count();
-            parking = parking.Skip((pagepp - 1) * pageSizepp).Take(pageSizepp);
+            var totalRowpp = list.Count();
+            var result = list.Skip((pagepp - 1) * pageSizepp).Take(pageSizepp);
 
-            return Json(new { datapp = list, total = totalRowpp }, JsonRequestBehavior.AllowGet);
+            return Json(new { datapp = result, total = totalRowpp }, JsonRequestBehavior.AllowGet);
         }
-
-        // GET: ParkingPlaces/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
-        //    if (parkingPlace == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(parkingPlace);
-        //}
-
 
         public JsonResult ParkingPlaceDetails(int id)
         {
@@ -137,86 +121,6 @@ namespace SmartParkingApplication.Controllers
             }
 
             return Json(parking, JsonRequestBehavior.AllowGet);
-        }
-
-        // GET: ParkingPlaces/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        // POST: ParkingPlaces/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "ParkingPlaceID,NameOfParking,Location,NumberOfSlot,NumberOfCar,NumberOfMotoBike,NumberCarBlank,NumberMotoBikeBlank")] ParkingPlace parkingPlace)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.ParkingPlaces.Add(parkingPlace);
-        //        db.SaveChanges();
-        //        return RedirectToAction("ListParkingPlace");
-        //    }
-
-        //    return View(parkingPlace);
-        //}
-
-        // GET: ParkingPlaces/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
-        //    if (parkingPlace == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(parkingPlace);
-        //}
-
-        // POST: ParkingPlaces/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ParkingPlaceID,NameOfParking,Location,NumberOfSlot,NumberOfCar,NumberOfMotoBike,NumberCarBlank,NumberMotoBikeBlank")] ParkingPlace parkingPlace)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(parkingPlace).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ListParkingPlace");
-            }
-            return View(parkingPlace);
-        }
-
-        // GET: ParkingPlaces/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
-            if (parkingPlace == null)
-            {
-                return HttpNotFound();
-            }
-            return View(parkingPlace);
-        }
-
-        // POST: ParkingPlaces/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            ParkingPlace parkingPlace = db.ParkingPlaces.Find(id);
-            db.ParkingPlaces.Remove(parkingPlace);
-            db.SaveChanges();
-            return RedirectToAction("ListParkingPlace");
         }
 
         protected override void Dispose(bool disposing)
