@@ -78,6 +78,7 @@ namespace SmartParkingApplication.Controllers
         {
             var card = db.Cards.Find(id);
             var Status = "";
+
             switch (card.Status)
             {
                 case 0:
@@ -93,7 +94,8 @@ namespace SmartParkingApplication.Controllers
                     Status = "Đã Khóa";
                     break;
             }
-            var result = new { card.CardID, card.CardNumber, card.Date, Status};
+            var date = card.Date.Value.ToString("dd/MM/yyyy HH:mm:ss");
+            var result = new { card.CardID, card.CardNumber, date, Status};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

@@ -22,7 +22,20 @@ function loadDataCard(changePageSizeCard) {
                 html += '<td>' + item.CardNumber + '</td>';
                 html += '<td>' + item.Date + '</td>';
                 html += '<td>' + item.Status + '</td>';
-                html += '<td><button class="btn btn-success" onclick="return getCardByID(' + item.CardID + ')" > Sửa </button> <button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getCardByID(' + item.CardID + ')">Khóa thẻ</button></td>';
+                switch (item.Status) {
+                    case "Chưa đăng kí":
+                        html += '<td><button class="btn btn-success" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
+                        break;
+                    case "Đã đăng kí":
+                        html += '<td><button class="btn btn-success" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
+                        break;
+                    case "Đã Khóa":
+                        html += '<td><button class="btn btn-warning" onclick="return getCardByID(' + item.CardID + ')" >Mở Khóa</button></td>';
+                        break;
+                    case "Thẻ Hỏng":
+                        html += '<td><button class= "btn btn-danger">Thẻ Hỏng</button></td>'
+                        break;
+                }
                 html += '</tr>';
             });
             $('#tbodyCard').html(html);
@@ -36,6 +49,7 @@ function loadDataCard(changePageSizeCard) {
     });
 }
 
+// paging
 function pagingCard(totalRowCard, callback, changePageSizeCard) {
     var totalPageCard = Math.ceil(totalRowCard / 5);
 
@@ -59,6 +73,8 @@ function pagingCard(totalRowCard, callback, changePageSizeCard) {
         }
     });
 }
+
+// clear textbox
 function clearTextBoxCard() {
     var date = loadDateCardNow();
     $('#Id').val("");
@@ -147,6 +163,31 @@ function UpdateCard() {
     });
 }
 
+//lock card
+function LockCard() {
+    var empCardObj = {
+        CardID: $('#IdCardLock').val(),
+        CardNumber: $('#CardNumberLock').val(),
+        Date: $('#DateCardLock').val(),
+        Status: 0,
+    };
+    $.ajax({
+        url: "/ManageCard/UpdateCard",
+        data: JSON.stringify(empCardObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataCard(true);
+            $('#myModalLock').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 function getCardByID(CardID) {
     $.ajax({
         url: "/ManageCard/CardDetails/" + CardID,
@@ -154,14 +195,33 @@ function getCardByID(CardID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#IdCardEdit').val(result.CardID);
-            $('#CardNumberEdit').val(result.CardNumber);
-            $('#DateCardEdit').val(result.Date);
-            $('#StatusCardEdit').val(result.Status);
-
-            $('#myModalUpdate').modal('show');
-            //$('#btnAddCard').hide();
-            $('#btnUpdateCard').show();
+            switch (result.Status) {
+                case "Chưa đăng kí":
+                    $('#IdCardEdit').val(result.CardID);
+                    $('#CardNumberEdit').val(result.CardNumber);
+                    $('#DateCardEdit').val(result.date);
+                    $('#StatusCardEdit').val(result.Status);
+                    $('#myModalUpdate').modal('show');
+                    $('#btnUpdateCard').show();
+                    break;
+                case "Đã đăng kí":
+                    $('#IdCardEdit').val(result.CardID);
+                    $('#CardNumberEdit').val(result.CardNumber);
+                    $('#DateCardEdit').val(result.date);
+                    $('#StatusCardEdit').val(result.Status);
+                    $('#myModalUpdate').modal('show');
+                    $('#btnUpdateCard').show();
+                    break;
+                case "Đã Khóa":
+                    $('#IdCardLock').val(result.CardID);
+                    $('#CardNumberLock').val(result.CardNumber);
+                    $('#DateCardLock').val(result.date);
+                    $('#StatusCardLock').val(result.Status);
+                    $('#myModalLock').modal('show');
+                    break;
+                case "Thẻ Hỏng":
+                    break;
+            }
         },
         error: function (errormessage) {
             alert("Exception:" + CardID + errormessage.responseText);
@@ -180,6 +240,7 @@ function validateCard() {
         isValid = false;
     }
     else {
+        isValid = true;
         $('#CardNumber').prop("title", "");
         $('#CardNumber').css('border-color', 'lightgrey');
     }
@@ -189,6 +250,7 @@ function validateCard() {
         isValid = false;
     }
     else {
+        isValid = true;
         $('#CardNumberEdit').prop("title", "");
         $('#CardNumberEdit').css('border-color', 'lightgrey');
     }
