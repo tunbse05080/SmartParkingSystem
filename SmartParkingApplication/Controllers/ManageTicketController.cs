@@ -69,11 +69,11 @@ namespace SmartParkingApplication.Controllers
                 list.Add(tr);
             }
 
-            var totalRowTicket = ticket.Count();
+            var totalRowTicket = list.Count();
             //ticket = ticket.Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
-            ticket = ticket.OrderByDescending(x => x.MonthlyTicketID).Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
+            var result = list.Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
 
-            return Json(new { dataTicket = list, total = totalRowTicket }, JsonRequestBehavior.AllowGet);
+            return Json(new { dataTicket = result, total = totalRowTicket }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Create(MonthlyTicket ticket)
         {
