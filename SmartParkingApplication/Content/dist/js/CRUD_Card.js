@@ -164,7 +164,7 @@ function UpdateCard() {
 }
 
 //lock card
-function LockCard() {
+function UnlockCard() {
     var empCardObj = {
         CardID: $('#IdCardLock').val(),
         CardNumber: $('#CardNumberLock').val(),
