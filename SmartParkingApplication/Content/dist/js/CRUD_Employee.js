@@ -150,10 +150,10 @@ function loadData(changePageSize) {
                 html += '<td>' + item.StatusOfWork + '</td>';
                 //html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                 switch (item.StatusOfWork) {
-                    case "Hết hạn hợp đồng":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td>';
+                    case "Hết hạn HĐ":
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
                         break;
-                    case "Đang làm việc":
+                    case "Đang trong HĐ":
                         html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                         break;
                 }
@@ -198,6 +198,7 @@ function paging(totalRow, callback, changePageSize) {
 //Add Data Function
 function Add() {
     var res = validate();
+    var date = loadDateNow();
     if (res == false) {
         return false;
     }
@@ -211,7 +212,7 @@ function Add() {
         Phone: $('#PhoneNumber').val(),
         email: $('#Email').val(),
         IdentityCard: $('#IdentityCard').val(),
-        ContractSigningDate: $('#ContractSigningDate').val(),
+        ContractSigningDate: $('#ContractSigningDate').val("" + date),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
         StatusOfWork: $('#StatusOfWork').val(),
         RoleID: $('#RoleName').val(),

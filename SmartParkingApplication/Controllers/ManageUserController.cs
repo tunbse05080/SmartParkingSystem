@@ -59,10 +59,10 @@ namespace SmartParkingApplication.Controllers
                 switch (item.StatusOfWork)
                 {
                     case 0:
-                        statusOfwork = "Hết hạn hợp đồng";
+                        statusOfwork = "Hết hạn HĐ";
                         break;
                     case 1:
-                        statusOfwork = "Đang làm việc";
+                        statusOfwork = "Đang trong HĐ";
                         break;
                 }
                 var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractRenewalDate = renewdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
@@ -92,11 +92,11 @@ namespace SmartParkingApplication.Controllers
             }
             if (employee.StatusOfWork == 1)
             {
-                statusOfwork = "Đang làm việc";
+                statusOfwork = "Đang trong HĐ";
             }
             else
             {
-                statusOfwork = "Hết hạn hợp đồng";
+                statusOfwork = "Hết hạn HĐ";
             }
             dateOfBirth = employee.DateOfBirth.Value.ToString("dd/MM/yyyy");
             var contractSigningDate = employee.ContractSigningDate.Value.ToString("dd/MM/yyyy");
