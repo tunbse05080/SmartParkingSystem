@@ -103,7 +103,7 @@ namespace SmartParkingApplication.Controllers
         public JsonResult UpdateCardByNumber(string idCard)
         {
             int id = Int32.Parse(idCard);
-            Card result = db.Cards.Find(id);
+            Card result = db.Cards.AsNoTracking().Where(c => c.CardID == id).FirstOrDefault();
             Card card = new Card { CardID = result.CardID, CardNumber = result.CardNumber, Date = result.Date, Status = 1 };
             if (ModelState.IsValid)
             {
