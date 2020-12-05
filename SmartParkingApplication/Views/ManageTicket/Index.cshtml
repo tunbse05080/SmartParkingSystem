@@ -36,7 +36,6 @@
                                     <div class="small-box bg-warning">
                                         <div class="inner">
                                             <h3>50<sup style="font-size: 20px"></sup></h3>
-
                                             <p>Số vé tháng</p>
                                         </div>
                                     </div>
@@ -47,9 +46,6 @@
                                 <div class="col-md-4">
                                     <button type="button" data-toggle="modal" data-target="#myModalTicket" onclick="clearTextBoxTicket();" class="btn btn-success">Đăng kí vé tháng</button>
                                 </div>
-                                @*<div class="col-md-3">
-                    <button type="button" onclick="location.href='@Url.Action("ListExtendTicket", "ManageTicket")';return false;" class="btn btn-success">Gia hạn vé tháng</button>
-                </div>*@
                                 <div class="col-md-4">
                                     <button type="button" onclick="location.href='@Url.Action("XuatFileExel", "ManageTicket")';return false;" class="btn btn-success">Xuất báo cáo vé sắp hết hạn</button>
                                 </div>
@@ -75,7 +71,6 @@
                                         <th>Ngày đăng kí</th>
                                         <th>Ngày hết hạn</th>
                                         <th>Số thẻ</th>
-                                        <th>Bãi đỗ</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
@@ -91,7 +86,6 @@
                                         <th>Ngày đăng kí</th>
                                         <th>Ngày hết hạn</th>
                                         <th>Số thẻ</th>
-                                        <th>Bãi đỗ</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </tfoot>
@@ -111,47 +105,45 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="Id">Id</label>
-                                            <input type="text" class="form-control" id="Id" placeholder="Id" disabled />
+                                            <input type="text" class="form-control" id="IdTK" placeholder="Id" disabled />
                                         </div>
                                         <div class="form-group">
                                             <label for="CusName">Tên chủ xe</label>
-                                            <input type="text" class="form-control" id="CusName" placeholder="Tên chủ xe" />
+                                            <input type="text" class="form-control" id="CusNameTK" placeholder="Tên chủ xe" />
                                         </div>
                                         <div class="form-group">
                                             <label for="IdentityCard">Số CMND</label>
-                                            <input type="text" class="form-control" id="IdentityCard" placeholder="Số CMND" />
+                                            <input type="text" class="form-control" id="IdentityCardTK" placeholder="Số CMND" />
                                         </div>
                                         <div class="form-group">
                                             <label for="Email">Email</label>
-                                            <input type="text" class="form-control" id="Email" placeholder="Email" />
+                                            <input type="text" class="form-control" id="EmailTK" placeholder="Email" />
                                         </div>
                                         <div class="form-group">
                                             <label for="Phone">Số điện thoại</label>
-                                            <input type="text" class="form-control" id="Phone" placeholder="Số điện thoai" />
+                                            <input type="text" class="form-control" id="PhoneTK" placeholder="Số điện thoai" />
                                         </div>
                                         <div class="form-group">
                                             <label for="TypeOfVehicle">Loại xe</label>
-                                            <input type="text" class="form-control" id="TypeOfVehicle" placeholder="Loại xe" />
+                                            <select class="form-control" id="cbTypeOfVehicleTK">
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="LicensePlates">Biển số xe</label>
-                                            <input type="text" class="form-control" id="LicensePlates" placeholder="Biển số xe" />
+                                            <input type="text" class="form-control" id="LicensePlatesTK" placeholder="Biển số xe" />
                                         </div>
                                         <div class="form-group">
                                             <label for="RegisDate">Ngày đăng kí</label>
-                                            <input type="text" class="form-control" id="RegisDate" placeholder="Ngày đăng kí" />
+                                            <input type="text" class="form-control" id="RegisDateTK" placeholder="Ngày đăng kí" />
                                         </div>
                                         <div class="form-group">
                                             <label for="ExpiryDate">Ngày hết hạn</label>
-                                            <input type="text" class="form-control" id="ExpiryDate" placeholder="Ngày hết hạn" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="ParkingPlace">Bãi làm việc</label>
-                                            <input type="text" class="form-control" id="ParkingPlace" placeholder="Bãi làm việc" />
+                                            <input type="date" class="form-control" id="ExpiryDateTK" placeholder="Ngày hết hạn" />
                                         </div>
                                         <div class="form-group">
                                             <label for="ParkingPlace">Số thẻ</label>
-                                            <input type="text" class="form-control" id="ParkingPlace" placeholder="Số thẻ" />
+                                            <select class="form-control" id="cbCardNumberTK">
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -163,7 +155,7 @@
                         </div>
 
                         <!-- The Modal details -->
-                        <div class="modal fade" id="myModalTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <!--<div class="modal fade" id="myModalTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
                                     <div class="modal-header">
@@ -208,12 +200,8 @@
                                             <input type="text" class="form-control" id="ExpiryDateTk" placeholder="Ngày hết hạn" />
                                         </div>
                                         <div class="form-group col-sm-4">
-                                            <label for="ParkingPlace">Bãi làm việc</label>
-                                            <input type="text" class="form-control" id="ParkingPlace" placeholder="Bãi làm việc" />
-                                        </div>
-                                        <div class="form-group col-sm-4">
                                             <label for="ParkingPlace">Số thẻ</label>
-                                            <input type="text" class="form-control" id="ParkingPlace" placeholder="Bãi làm việc" />
+                                            <input type="text" class="form-control" id="CardNumberTK" placeholder="Số thẻ" />
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -222,7 +210,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- The Modal -->
                         <div class="modal" id="myModal">

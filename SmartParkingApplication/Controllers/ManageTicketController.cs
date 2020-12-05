@@ -53,12 +53,6 @@ namespace SmartParkingApplication.Controllers
                     case 1:
                         typeOfVehicle = "Ô tô";
                         break;
-                    case 2:
-                        typeOfVehicle = "Máy bay";
-                        break;
-                    case 3:
-                        typeOfVehicle = "Tàu hỏa";
-                        break;
                 }
                 var tr = new
                 {
@@ -218,5 +212,15 @@ namespace SmartParkingApplication.Controllers
             Response.End();
             return Redirect("/ManageTicket");
         }
+
+        public JsonResult ComboboxTicket()
+        {
+            var typeOfVehicles = new { motobike = "Xe máy", car = "Ô tô" };
+            var numberCards = from c in db.Cards
+                              where c.Status == 0
+                              select new { c.CardNumber };
+            return Json( new { numberCards , typeOfVehicles } , JsonRequestBehavior.AllowGet);
+        }
     }
+
 }

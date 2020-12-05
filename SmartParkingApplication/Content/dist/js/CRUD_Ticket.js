@@ -1,5 +1,34 @@
 ﻿var pageConfigTicket = 1;
 
+//Combobox Type of Vehicle
+function ComboboxTicket() {
+    $.ajax({
+        url: "/ManageTicket/ComboboxTicket",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result.typeOfVehicles, function (key, item) {
+                html += '<option value="' + i + '">' + item + '</option>';
+                i++;
+            });
+            $("#cbTypeOfVehicleTK").html(html);
+            html = '';
+            i = 0;
+            $.each(result.numberCards, function (key, item) {
+                html += '<option value="' + i + '">' + item.CardNumber + '</option>';
+                i++;
+            });
+            $("#cbCardNumberTK").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 //Load Data function
 function loadDataTicket(changePageSizeTicket) {
     var nameTicket = $('#txtSearchTicket').val();
@@ -27,7 +56,6 @@ function loadDataTicket(changePageSizeTicket) {
                 html += '<td>' + item.RegisDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
                 html += '<td>' + item.CardNumber + '</td>';
-                html += '<td>' + item.NameOfParking + '</td>';
 
                 html += '<td><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
@@ -68,7 +96,8 @@ function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
 }
 
 function clearTextBoxTicket() {
-    var date = loadDateTicketNow();
+    var date = loadDateNow();
+    ComboboxTicket();
     $('#Id').val("");
     $('#CusName').val("");
     $('#IdentityCard').val("");
@@ -82,25 +111,6 @@ function clearTextBoxTicket() {
     $('#btnAdd').show();
     $('#btnUpdate').hide();
 
-}
-
-function loadDateTicketNow() {
-    // body...
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-
-    today = mm + '/' + dd + '/' + yyyy;
-    today = today + " 12:00:00AM";
-    return today;
 }
 
 function AddTicket() {
