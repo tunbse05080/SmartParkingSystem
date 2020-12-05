@@ -85,7 +85,7 @@ function comboboxStatusCard() {
             var html = '';
             var i = 0;
             $.each(result, function (key, item) {
-                html += '<a class="dropdown-item" href="#" value="' + i + '">' + item + '</a>';
+                html += '<option value="' + i + '">' + item + '</option>';
                 i++;
             });
             $("#cbxStatusCard").html(html);
@@ -162,11 +162,12 @@ function UpdateCard() {
     if (res == false) {
         return false;
     }
+    var status = $('#cbxStatusCard').val();
     var empCardObj = {
         CardID: $('#IdCardEdit').val(),
         CardNumber: $('#CardNumberEdit').val(),
         Date: $('#DateCardEdit').val(),
-        Status: $('#StatusCardEdit').val(),
+        Status: status,
     };
     $.ajax({
         url: "/ManageCard/UpdateCard",
