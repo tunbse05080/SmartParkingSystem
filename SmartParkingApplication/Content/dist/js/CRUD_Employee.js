@@ -42,7 +42,7 @@ function getByID(EmployeeID) {
                     $('#FullName').val(result.Name);
                     $('#PassWord').val(result.PassWork);
                     $('#DateOfBirth').val(result.dateOfBirth);
-                    $('#Gender').val(result.gender);
+                    ComboboxGender();
                     $('#Address').val(result.UserAddress);
                     $('#IdentityCard').val(result.IdentityCard);
                     $('#PhoneNumber').val(result.Phone);
@@ -74,7 +74,7 @@ function getGHByID(EmployeeID) {
                     $('#FullNameGH').val(result.Name);
                     $('#PassWordGH').val(result.PassWork);
                     $('#DateOfBirthGH').val(result.dateOfBirth);
-                    $('#GenderGH').val(result.Gender);
+                    ComboboxGender();
                     $('#AddressGH').val(result.UserAddress);
                     $('#IdentityCardGH').val(result.IdentityCard);
                     $('#PhoneNumberGH').val(result.Phone);
@@ -477,6 +477,28 @@ function ContractGH() {
         success: function (result) {
             loadData(true);
             $('#myModalGH').modal('hide');
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//comboboxgender
+function ComboboxGender() {
+    $.ajax({
+        url: "/ManageUser/ComboboxGender",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result, function (key, item) {
+                html += '<a class="dropdown-item" href="#" value="' + i + '">' + item + '</a>';
+                i++;
+            });
+            $("#cbGender").html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

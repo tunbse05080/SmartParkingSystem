@@ -145,7 +145,7 @@ namespace SmartParkingApplication.Controllers
         //combobox Gender
         public JsonResult ComboboxGender()
         {
-            var list = db.Users.Select(c => c.Gender).Distinct().ToList();
+            var list = db.Users.Select(u => u.Gender).Distinct().ToList();
             List<string> result = new List<string>();
             foreach(var item in list)
             {
