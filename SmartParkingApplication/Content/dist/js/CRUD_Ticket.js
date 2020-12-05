@@ -98,15 +98,14 @@ function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
 function clearTextBoxTicket() {
     var date = loadDateNow();
     ComboboxTicket();
-    $('#Id').val("");
-    $('#CusName').val("");
-    $('#IdentityCard').val("");
-    $('#Phone').val("");
-    $('#Email').val("");
-    $('#TypeOfVehicle').val("");
-    $('#LicensePlates').val("");
-    $('#RegisDate').val("" + date);
-    $('#ExpiryDate').val("" + date);
+    $('#IdTK').val("");
+    $('#CusNameTK').val("");
+    $('#IdentityCardTK').val("");
+    $('#PhoneTK').val("");
+    $('#EmailTK').val("");
+    $('#LicensePlatesTK').val("");
+    $('#RegisDateTK').val("" + date);
+    $('#ExpiryDateTK').val("" + date);
 
     $('#btnAdd').show();
     $('#btnUpdate').hide();
