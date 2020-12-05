@@ -126,32 +126,16 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult ComboboxStatusCard()
         {
-            var list = db.Cards.Select(c => c.Status).Distinct().ToList();
             List<string> result = new List<string>();
-            foreach (var item in list)
-            {
-                var Status = "";
-                switch (item)
-                {
-                    case 0:
-                        Status = "Chưa đăng kí";
-                        result.Add(Status);
-                        break;
-                    case 1:
-                        Status = "Đã đăng kí";
-                        result.Add(Status);
-                        break;
-                    case 2:
-                        Status = "Thẻ Hỏng";
-                        result.Add(Status);
-                        break;
-                    case 3:
-                        Status = "Đã Khóa";
-                        result.Add(Status);
-                        break;
-                }
-                
-            }
+            var Status = "";
+            Status = "Chưa đăng kí";
+            result.Add(Status);
+            Status = "Đã đăng kí";
+            result.Add(Status);
+            Status = "Thẻ Hỏng";
+            result.Add(Status);
+            Status = "Đã Khóa";
+            result.Add(Status);
             return Json( result,JsonRequestBehavior.AllowGet);
         }
 
