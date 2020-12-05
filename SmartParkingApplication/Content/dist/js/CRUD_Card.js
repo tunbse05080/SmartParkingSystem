@@ -17,6 +17,7 @@ function loadDataCard(changePageSizeCard) {
         success: function (result) {
             var data = result.dataCard;
             var html = '';
+            var totalCard = '';
             $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.CardNumber + '</td>';
@@ -42,6 +43,9 @@ function loadDataCard(changePageSizeCard) {
             pagingCard(result.total, function () {
                 loadDataCard();
             }, changePageSizeCard);
+            totalCard += '<h3>' + result.totalCard + '<sup style="font-size: 20px"></sup></h3>';
+            totalCard += '<p>Tổng số thẻ</p>';
+            $('#totalCard').html(totalCard);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

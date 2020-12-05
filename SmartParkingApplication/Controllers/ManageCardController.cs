@@ -20,6 +20,7 @@ namespace SmartParkingApplication.Controllers
         public JsonResult LoadData(string nameC,int pageCard,int pageSizeCard = 5)
         {
             var CardNumber = from c in db.Cards select new { c.CardID,c.CardNumber,c.Status,c.Date };
+            var totalCard = CardNumber.Count();
             if (!string.IsNullOrEmpty(nameC))
             {
                 CardNumber = CardNumber.Where(x => x.CardNumber.Contains(nameC));
@@ -52,7 +53,7 @@ namespace SmartParkingApplication.Controllers
             var totalRow = list.Count();
             var result = list.Skip((pageCard - 1) * pageSizeCard).Take(pageSizeCard);
 
-            return Json(new { dataCard = result, total = totalRow}, JsonRequestBehavior.AllowGet);
+            return Json(new { dataCard = result, total = totalRow, totalCard }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Create(Card card)
         {
