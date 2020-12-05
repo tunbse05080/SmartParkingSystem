@@ -162,7 +162,7 @@ function UpdateTicket() {
         success: function (result) {
             loadDataTicket(true);
             $('#myModalUpdateTicket').modal('hide');
-
+             
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
