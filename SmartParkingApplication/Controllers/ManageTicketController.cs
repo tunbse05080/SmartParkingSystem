@@ -61,14 +61,14 @@ namespace SmartParkingApplication.Controllers
                     IdentityCard = item.IdentityCard,
                     Phone = item.Phone,
                     Email = item.Email,
-                    TypeOfVehicle = item.TypeOfVehicle,
+                    typeOfVehicle,
                     LicensePlates = item.LicensePlates,
                     RegisDate = regisDate,
                     ExpiryDate = expiryDate,
                     CardNumber = item.CardNumber,
                     NameOfParking = item.NameOfParking
                 };
-                //var tr = new { MonthlyTicketID = item.MonthlyTicketID, CusName = item.CusName, IdentityCard = item.IdentityCard, Phone = item.Phone, Email = item.Email, TypeOfVehicle = typeOfVehicle, LicensePlates = item.LicensePlates, RegisDate = regisDate, ExpiryDate = expiryDate };
+                
                 list.Add(tr);
             }
 

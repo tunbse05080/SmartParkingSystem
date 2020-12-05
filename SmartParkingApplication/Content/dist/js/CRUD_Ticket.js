@@ -43,13 +43,14 @@ function loadDataTicket(changePageSizeTicket) {
         success: function (result) {
             var data = result.dataTicket;
             var html = '';
+            var totalTicket = '';
             $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.CusName + '</td>';
                 html += '<td>' + item.IdentityCard + '</td>';
                 html += '<td>' + item.Phone + '</td>';
                 html += '<td>' + item.Email + '</td>';
-                html += '<td>' + item.TypeOfVehicle + '</td>';
+                html += '<td>' + item.typeOfVehicle + '</td>';
                 html += '<td>' + item.LicensePlates + '</td>';
                 html += '<td>' + item.RegisDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
@@ -62,6 +63,9 @@ function loadDataTicket(changePageSizeTicket) {
             pagingTicket(result.total, function () {
                 loadDataTicket();
             }, changePageSizeTicket);
+            totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
+            totalTicket += '<p>Số vé tháng</p>'
+            $('#totalTicket').html(totalTicket);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
