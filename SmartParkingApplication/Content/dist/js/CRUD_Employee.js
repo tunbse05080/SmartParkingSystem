@@ -5,10 +5,6 @@ $(document).ready(function () {
     loadDataStatusParking();
     loadDataTicket();
     loadDataParkingPlace();
-    ComboboxGender();
-    ComboboxStatusOfwork();
-    ComboboxRoleNameU();
-    ComboboxParkingPlaceU();
 });
 
 var pageConfig = 1;
@@ -228,32 +224,26 @@ function paging(totalRow, callback, changePageSize) {
 
 //Add Data Function
 function Add() {
-    var res = validate();
     var date = loadDateNow();
-    if (res == false) {
-        return false;
-    }
-    var gender = $('#cbGender').val();
-    var statusOfwork = $('#cbStatusOfwork').val();
-    var roleName = $('#cbRoleNameU').val();
-    var nameParking = $('#cbparkingPlaceU').val();
-
+    //var res = validate();
+    //if (res == false) {
+    //    return false;
+    //}
     var empObj = {
-        UserID: $('#Id').val(),
         UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
         PassWork: $('#PassWord').val(),
         DateOfBirth: $('#DateOfBirth').val(),
-        Gender: gender,
+        Gender: $('#cbGender').val(),
         UserAddress: $('#Address').val(),
         Phone: $('#PhoneNumber').val(),
         email: $('#Email').val(),
         IdentityCard: $('#IdentityCard').val(),
         ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
-        StatusOfWork: statusOfwork,
-        RoleID: roleName,
-        ParkingPlaceID: nameParking,
+        StatusOfWork: $('#cbStatusOfwork').val(),
+        RoleID: $('#cbRoleNameU').val(),
+        ParkingPlaceID: $('#cbparkingPlaceU').val(),
 
     };
     $.ajax({
@@ -338,6 +328,10 @@ function CloseAdd() {
 //Function for clearing the textboxes
 function clearTextBox() {
     var date = loadDateNow();
+    ComboboxGender();
+    ComboboxStatusOfwork();
+    ComboboxRoleNameU();
+    ComboboxParkingPlaceU();
     $('#Id').val("");
     $('#UserName').val("");
     $('#FullName').val("");
