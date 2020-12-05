@@ -550,7 +550,7 @@ function ComboboxParkingPlaceU() {
         dataType: "json",
         success: function (result) {
             var html = '';
-            var i = 0;
+            var i = 1;
             $.each(result, function (key, item) {
                 html += '<option value="' + i + '">' + item + '</option>';
                 i++;
@@ -571,7 +571,7 @@ function ComboboxRoleNameU() {
         dataType: "json",
         success: function (result) {
             var html = '';
-            var i = 0;
+            var i = 1;
             $.each(result, function (key, item) {
                 html += '<option value="' + i + '">' + item + '</option>';
                 i++;
