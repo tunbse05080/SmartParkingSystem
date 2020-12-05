@@ -42,8 +42,8 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in ticket)
             {
-                var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy");
+                var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
                 string typeOfVehicle = string.Empty;
                 switch (item.TypeOfVehicle)
                 {

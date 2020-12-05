@@ -29,7 +29,7 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in CardNumber)
             {
-                var date = item.Date.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var date = item.Date.Value.ToString("dd/MM/yyyy");
                 string StatusofCard = string.Empty;
                 switch (item.Status)
                 {
@@ -95,7 +95,7 @@ namespace SmartParkingApplication.Controllers
                     Status = "Đã Khóa";
                     break;
             }
-            var date = card.Date.Value.ToString("dd/MM/yyyy HH:mm:ss");
+            var date = card.Date.Value.ToString("dd/MM/yyyy");
             var result = new { card.CardID, card.CardNumber, date, Status};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
