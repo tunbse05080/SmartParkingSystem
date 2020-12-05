@@ -166,7 +166,7 @@ namespace SmartParkingApplication.Controllers
         }
 
 
-
+        // combobox status of work
         public JsonResult ComboboxStatusOfwork()
         {
             var list = db.Users.Select(u => u.StatusOfWork).Distinct().ToList();
@@ -187,6 +187,13 @@ namespace SmartParkingApplication.Controllers
                 }
             }
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        //combobox parking place user
+        public JsonResult ComboboxParkingPlace()
+        {
+            var list = db.ParkingPlaces.Select(u => u.NameOfParking).Distinct().ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
