@@ -50,11 +50,12 @@ function getByID(EmployeeID) {
                     $('#Email').val(result.email);
                     ComboboxStatusOfwork();
                     ComboboxRoleNameU();
-                     ComboboxParkingPlaceU();
+                    ComboboxParkingPlaceU();
                     $('#ContractSigningDate').val(result.contractSigningDate);
                     $('#ContractExpirationDate').val(result.contractExpirationDate);
                     $('#myModal').modal('show');
                     $('#btnUpdate').show();
+                    $('#btnAdd').hide();
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
