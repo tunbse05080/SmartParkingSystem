@@ -132,14 +132,14 @@ function loadDateCardNow() {
 }
 
 function AddCard() {
-    var res = validateCard();
-    if (res == false) {
-        return false;
-    }
+    //var res = validateCard();
+    //if (res == false) {
+    //    return false;
+    //}
     var empCardObj = {
         CardNumber: $('#CardNumber').val(),
         Date: $('#Date').val(),
-        Status: $('#Status').val(),
+        Status: 0,
     };
     $.ajax({
         url: "/ManageCard/Create",
