@@ -115,8 +115,8 @@
                                             <input type="text" class="form-control" id="Date" placeholder="Ngày nhập" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="Status">trạng thái thẻ</label>
-                                            <input type="text" class="form-control" id="Status" placeholder="trạng thái thẻ" />
+                                            <label for="Status">Trạng thái thẻ</label>
+                                            <input type="text" class="form-control" id="Status" value="Chưa sử dụng" placeholder="Chưa sử dụng" disabled/>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -145,11 +145,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="Date">Ngày nhập</label>
-                                            <input type="text" class="form-control" id="DateCardEdit" placeholder="Ngày nhập" />
+                                            <input type="text" class="form-control" id="DateCardEdit" placeholder="Ngày nhập"/>
                                         </div>
                                         <div class="form-group">
-                                            <label for="Status">trạng thái thẻ</label>
-                                            <input type="text" class="form-control" id="StatusCardEdit" placeholder="trạng thái thẻ" />
+                                            <label for="Status">Trạng thái thẻ</label>
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Chưa đăng kí
+                                                </button>
+                                                <div class="dropdown-menu" id="cbxStatusCard" aria-labelledby="dropdownMenuButton">
+                                                </div>
+                                            </div><br />
                                         </div>
                                     </div>
                                     <div class="modal-footer">

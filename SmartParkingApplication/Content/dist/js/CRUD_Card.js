@@ -74,6 +74,28 @@ function pagingCard(totalRowCard, callback, changePageSizeCard) {
     });
 }
 
+//ComboboxStatusCard
+function comboboxStatusCard() {
+    $.ajax({
+        url: "/ManageCard/ComboboxStatusCard",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result, function (key, item) {
+                html += '<a class="dropdown-item" href="#" value="' + i + '">' + item + '</a>';
+                i++;
+            });
+            $("#cbxStatusCard").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 // clear textbox
 function clearTextBoxCard() {
     var date = loadDateCardNow();
@@ -200,7 +222,7 @@ function getCardByID(CardID) {
                     $('#IdCardEdit').val(result.CardID);
                     $('#CardNumberEdit').val(result.CardNumber);
                     $('#DateCardEdit').val(result.date);
-                    $('#StatusCardEdit').val(result.Status);
+                    comboboxStatusCard();
                     $('#myModalUpdate').modal('show');
                     $('#btnUpdateCard').show();
                     break;
@@ -208,7 +230,7 @@ function getCardByID(CardID) {
                     $('#IdCardEdit').val(result.CardID);
                     $('#CardNumberEdit').val(result.CardNumber);
                     $('#DateCardEdit').val(result.date);
-                    $('#StatusCardEdit').val(result.Status);
+                    comboboxStatusCard();
                     $('#myModalUpdate').modal('show');
                     $('#btnUpdateCard').show();
                     break;
