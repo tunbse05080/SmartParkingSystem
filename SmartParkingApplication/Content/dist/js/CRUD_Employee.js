@@ -5,6 +5,7 @@ $(document).ready(function () {
     loadDataStatusParking();
     loadDataTicket();
     loadDataParkingPlace();
+    ComboboxGender();
 });
 
 var pageConfig = 1;
@@ -47,7 +48,7 @@ function getByID(EmployeeID) {
                     $('#IdentityCard').val(result.IdentityCard);
                     $('#PhoneNumber').val(result.Phone);
                     $('#Email').val(result.email);
-                    $('#StatusOfWork').val(result.statusOfwork);
+                     ComboboxStatusOfwork();
                     $('#RoleName').val(result.RoleName);
                     $('#ParkingPlace').val(result.NameOfParking);
                     $('#ContractSigningDate').val(result.contractSigningDate);
@@ -62,6 +63,7 @@ function getByID(EmployeeID) {
     return false;
 }
 
+//getID Contract
 function getGHByID(EmployeeID) {
     $.ajax({
         url: "/ManageUser/DetailsGH/" + EmployeeID,
@@ -74,12 +76,11 @@ function getGHByID(EmployeeID) {
                     $('#FullNameGH').val(result.Name);
                     $('#PassWordGH').val(result.PassWork);
                     $('#DateOfBirthGH').val(result.dateOfBirth);
-                    ComboboxGender();
+                    $('#GenderGH').val(result.Gender);
                     $('#AddressGH').val(result.UserAddress);
                     $('#IdentityCardGH').val(result.IdentityCard);
                     $('#PhoneNumberGH').val(result.Phone);
                     $('#EmailGH').val(result.email);
-                    $('#StatusOfWorkGH').val(result.StatusOfWork);
                     $('#RoleNameGH').val(result.RoleID);
                     $('#ParkingPlaceGH').val(result.ParkingPlaceID);
                     $('#ContractSigningDateGH').val(result.contractSigningDate);
@@ -272,6 +273,7 @@ function Update() {
         return false;
     }
     var gender = $('#cbGender').val();
+    var statusOfwork = $('#StatusOfWork').val();
     var empObj = {
         UserID: $('#Id').val(),
         UserName: $('#UserName').val(),
@@ -285,7 +287,7 @@ function Update() {
         IdentityCard: $('#IdentityCard').val(),
         ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
-        StatusOfWork: $('#StatusOfWork').val(),
+        StatusOfWork: statusOfwork,
         RoleID: $('#RoleName').val(),
         ParkingPlaceID: $('#ParkingPlace').val(),
 
@@ -452,14 +454,13 @@ function validate() {
 
 // gia han HĐ
 function ContractGH() {
-    var gender = $('#cbGender').val();
     var emGHObj = {
         UserID: $('#UserIDGH').val(),
         UserName: $('#UserNameGH').val(),
         Name: $('#FullNameGH').val(),
         PassWork: $('#PassWordGH').val(),
         DateOfBirth: $('#DateOfBirthGH').val(),
-        Gender: gender,
+        Gender: $('#GenderGH').val(),
         UserAddress: $('#AddressGH').val(),
         Phone: $('#PhoneNumberGH').val(),
         email: $('#EmailGH').val(),
@@ -497,10 +498,32 @@ function ComboboxGender() {
             var html = '';
             var i = 0;
             $.each(result, function (key, item) {
-                html += '<a class="dropdown-item" href="#" value="' + i + '">' + item + '</a>';
+                html += '<option value="' + i + '">' + item + '</option>';
                 i++;
             });
             $("#cbGender").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//comboboxStatusOfwork
+function ComboboxStatusOfwork() {
+    $.ajax({
+        url: "/ManageUser/ComboboxStatusOfwork",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result, function (key, item) {
+                html += '<a class="dropdown-item" href="#" value="' + i + '">' + item + '</a>';
+                i++;
+            });
+            $("#cbStatusOfwork").html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

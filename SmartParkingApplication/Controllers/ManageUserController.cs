@@ -165,7 +165,9 @@ namespace SmartParkingApplication.Controllers
             return Json(result,JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ComboboxUserStatus()
+
+
+        public JsonResult ComboboxStatusOfwork()
         {
             var list = db.Users.Select(u => u.StatusOfWork).Distinct().ToList();
             List<string> result = new List<string>();
