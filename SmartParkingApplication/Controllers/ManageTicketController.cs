@@ -218,7 +218,7 @@ namespace SmartParkingApplication.Controllers
             var typeOfVehicles = new { motobike = "Xe máy", car = "Ô tô" };
             var numberCards = from c in db.Cards
                               where c.Status == 0
-                              select new { c.CardNumber };
+                              select new { c.CardNumber,c.CardID };
             return Json( new { numberCards , typeOfVehicles } , JsonRequestBehavior.AllowGet);
         }
     }

@@ -16,10 +16,8 @@ function ComboboxTicket() {
             });
             $("#cbTypeOfVehicleTK").html(html);
             html = '';
-            i = 0;
             $.each(result.numberCards, function (key, item) {
-                html += '<option value="' + i + '">' + item.CardNumber + '</option>';
-                i++;
+                html += '<option value="' + item.CardID + '">' + item.CardNumber + '</option>';
             });
             $("#cbCardNumberTK").html(html);
         },
@@ -114,14 +112,15 @@ function clearTextBoxTicket() {
 
 function AddTicket() {
     var empTicketObj = {
-        CusName: $('#CusName').val(),
-        IdentityCard: $('#IdentityCard').val(),
-        Phone: $('#Phone').val(),
-        Email: $('#Email').val(),
-        TypeOfVehicle: $('#TypeOfVehicle').val(),
-        LicensePlates: $('#LicensePlates').val(),
-        RegisDate: $('#RegisDate').val(),
-        ExpiryDate: $('#ExpiryDate').val(),
+        CusName: $('#CusNameTK').val(),
+        IdentityCard: $('#IdentityCardTK').val(),
+        Phone: $('#PhoneTK').val(),
+        Email: $('#EmailTK').val(),
+        TypeOfVehicle: $('#cbTypeOfVehicleTK').val(),
+        LicensePlates: $('#LicensePlatesTK').val(),
+        RegisDate: $('#RegisDateTK').val(),
+        ExpiryDate: $('#ExpiryDateTK').val(),
+        CardID: $('#cbCardNumberTK').val()
     };
     $.ajax({
         url: "/ManageTicket/Create",
