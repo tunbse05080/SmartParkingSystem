@@ -165,6 +165,28 @@ namespace SmartParkingApplication.Controllers
             return Json(result,JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult ComboboxUserStatus()
+        {
+            var list = db.Users.Select(u => u.StatusOfWork).Distinct().ToList();
+            List<string> result = new List<string>();
+            foreach (var item in list)
+            {
+                var statusOfwork = "";
+                switch (item)
+                {
+                    case 0:
+                        statusOfwork = "Hết hạn HĐ";
+                        result.Add(statusOfwork);
+                        break;
+                    case 1:
+                        statusOfwork = "Đang trong HĐ";
+                        result.Add(statusOfwork);
+                        break;
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
