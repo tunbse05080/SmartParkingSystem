@@ -31,24 +31,13 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <div class="dropdown">
-                                <strong style="font-size:x-large">Bãi đỗ     </strong>
-                                <button class="btn btn-primary dropdown-toggle" style="margin-top:-10px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    FPT Place
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">FPT Place</a>
-                                    <a class="dropdown-item" href="#">Fsoft-1</a>
-                                    <a class="dropdown-item" href="#">Fsoft-2</a>
-                                </div>
-                            </div><br />
                             <div class="row invoice-info">
                                 <!-- ./col -->
                                 <div class="col-lg-3 col-6">
                                     <!-- small box -->
                                     <div class="small-box bg-success">
                                         <div class="inner">
-                                            <h3>100<sup style="font-size: 20px"></sup></h3>
+                                            <h3 id="totalCard">100<sup style="font-size: 20px"></sup></h3>
                                             <p>Tổng số thẻ</p>
                                         </div>
                                     </div>
@@ -112,7 +101,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="Date">Ngày nhập</label>
-                                            <input type="date" class="form-control" id="Date" placeholder="Ngày nhập" />
+                                            <input type="text" class="form-control" id="Date" placeholder="Ngày nhập" disabled/>
                                         </div>
                                         <div class="form-group">
                                             <label for="Status">Trạng thái thẻ</label>

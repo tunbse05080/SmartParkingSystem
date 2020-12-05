@@ -49,6 +49,7 @@ function loadDataCard(changePageSizeCard) {
     });
 }
 
+
 // paging
 function pagingCard(totalRowCard, callback, changePageSizeCard) {
     var totalPageCard = Math.ceil(totalRowCard / 5);
@@ -98,7 +99,7 @@ function comboboxStatusCard() {
 
 // clear textbox
 function clearTextBoxCard() {
-    var date = loadDateCardNow();
+    var date = loadDateNow();
     $('#Id').val("");
     $('#CardNumber').val("");
     $('#Date').val("" + date);
@@ -110,25 +111,6 @@ function clearTextBoxCard() {
     //$('#IdentityCard').css('border-color', 'lightgrey');
     //$('#State').css('border-color', 'lightgrey');
     //$('#Country').css('border-color', 'lightgrey');
-}
-
-function loadDateCardNow() {
-    // body...
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-
-    today = mm + '/' + dd + '/' + yyyy;
-    today = today + " 12:00:00AM";
-    return today;
 }
 
 function AddCard() {
