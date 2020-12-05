@@ -141,6 +141,30 @@ namespace SmartParkingApplication.Controllers
             return Json(user, JsonRequestBehavior.AllowGet);
         }
 
+
+        //combobox Gender
+        public JsonResult ComboboxGender()
+        {
+            var list = db.Users.Select(c => c.Gender).Distinct().ToList();
+            List<string> result = new List<string>();
+            foreach(var item in list)
+            {
+                var gender = "";
+                switch (item)
+                {
+                    case 0:
+                        gender = "Nam";
+                        result.Add(gender);
+                        break;
+                    case 1:
+                        gender = "Nữ";
+                        result.Add(gender);
+                        break;
+                }
+            }
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -266,4 +290,7 @@ namespace SmartParkingApplication.Controllers
             return Redirect("/ManageUser");
         }
         }
+
+     
+
 }
