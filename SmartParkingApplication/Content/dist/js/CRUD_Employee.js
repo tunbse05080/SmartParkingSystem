@@ -28,7 +28,6 @@ function loadDateNow() {
     }
 
     today = mm + '/' + dd + '/' + yyyy;
-    today = today + " 12:00:00AM";
     return today;
 }
 
