@@ -133,6 +133,7 @@ function AddTicket() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            UpdateCardByNumber($('#cbCardNumberTK').val());
             loadDataTicket(true);
             $('#myModalTicket').modal('hide');
         },

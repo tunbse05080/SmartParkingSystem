@@ -172,6 +172,24 @@ function UpdateCard() {
     });
 }
 
+//get detail card base on CardNumber
+function UpdateCardByNumber(CardID) {
+    var idC = CardID;
+    $.ajax({
+        url: "/ManageCard/UpdateCardByNumber",
+        data: "{ idCard :" + idC + "}",
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            alert("Success!");
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 //lock card
 function UnlockCard() {
     var empCardObj = {
