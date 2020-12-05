@@ -48,8 +48,8 @@ function getByID(EmployeeID) {
                     $('#IdentityCard').val(result.IdentityCard);
                     $('#PhoneNumber').val(result.Phone);
                     $('#Email').val(result.email);
-                     ComboboxStatusOfwork();
-                    $('#RoleName').val(result.RoleName);
+                    ComboboxStatusOfwork();
+                    ComboboxRoleNameU();
                      ComboboxParkingPlaceU();
                     $('#ContractSigningDate').val(result.contractSigningDate);
                     $('#ContractExpirationDate').val(result.contractExpirationDate);
@@ -545,6 +545,27 @@ function ComboboxParkingPlaceU() {
                 i++;
             });
             $("#cbparkingPlaceU").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+function ComboboxRoleNameU() {
+    $.ajax({
+        url: "/ManageUser/ComboboxRoleName",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result, function (key, item) {
+                html += '<option value="' + i + '">' + item + '</option>';
+                i++;
+            });
+            $("#cbRoleNameU").html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

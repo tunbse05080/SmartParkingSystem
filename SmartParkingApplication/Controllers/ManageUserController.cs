@@ -196,6 +196,13 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        //combobox Rolename user
+        public JsonResult ComboboxRoleName()
+        {
+            var list = db.Roles.Select(u => u.RoleName).Distinct().ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
