@@ -271,13 +271,14 @@ function Update() {
     if (res == false) {
         return false;
     }
+    var gender = $('#cbGender').val();
     var empObj = {
         UserID: $('#Id').val(),
         UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
         PassWork: $('#PassWord').val(),
         DateOfBirth: $('#DateOfBirth').val(),
-        Gender: $('#Gender').val(),
+        Gender: gender,
         UserAddress: $('#Address').val(),
         Phone: $('#PhoneNumber').val(),
         email: $('#Email').val(),
@@ -451,13 +452,14 @@ function validate() {
 
 // gia han HĐ
 function ContractGH() {
+    var gender = $('#cbGender').val();
     var emGHObj = {
         UserID: $('#UserIDGH').val(),
         UserName: $('#UserNameGH').val(),
         Name: $('#FullNameGH').val(),
         PassWork: $('#PassWordGH').val(),
         DateOfBirth: $('#DateOfBirthGH').val(),
-        Gender: $('#GenderGH').val(),
+        Gender: gender,
         UserAddress: $('#AddressGH').val(),
         Phone: $('#PhoneNumberGH').val(),
         email: $('#EmailGH').val(),
