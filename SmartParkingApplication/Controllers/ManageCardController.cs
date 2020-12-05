@@ -100,16 +100,15 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateCardByNumber(String idCard)
+        public JsonResult UpdateCardByNumber(string idCard)
         {
             int id = Int32.Parse(idCard);
-            Card result = (Card)(from c in db.Cards
-                          where c.CardID == id
-                          select new { c.CardID, c.CardNumber, c.Date, c.Status});
+            Card result = db.Cards.Find(id);
             Card card = new Card { CardID = result.CardID, CardNumber = result.CardNumber, Date = result.Date, Status = 1 };
             if (ModelState.IsValid)
             {
                 db.Entry(card).State = EntityState.Modified;
+
                 db.SaveChanges();
             }
             return Json(card, JsonRequestBehavior.AllowGet);
