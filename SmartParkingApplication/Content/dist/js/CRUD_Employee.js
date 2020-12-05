@@ -25,7 +25,7 @@ function loadDateNow() {
     }
 
     today = mm + '/' + dd + '/' + yyyy;
-    //today = today + " 12:00:00AM";
+    today = today + " 12:00:00AM";
     return today;
 }
 
@@ -235,21 +235,28 @@ function Add() {
     if (res == false) {
         return false;
     }
+    var gender = $('#cbGender').val();
+    var statusOfwork = $('#cbStatusOfwork').val();
+    var roleName = $('#cbRoleNameU').val();
+    var nameParking = $('#cbparkingPlaceU').val();
+
     var empObj = {
+        UserID: $('#Id').val(),
         UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
         PassWork: $('#PassWord').val(),
         DateOfBirth: $('#DateOfBirth').val(),
-        Gender: $('#Gender').val(),
+        Gender: gender,
         UserAddress: $('#Address').val(),
         Phone: $('#PhoneNumber').val(),
         email: $('#Email').val(),
         IdentityCard: $('#IdentityCard').val(),
-        ContractSigningDate: $('#ContractSigningDate').val("" + date),
+        ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
-        StatusOfWork: $('#StatusOfWork').val(),
-        RoleID: $('#RoleName').val(),
-        ParkingPlaceID: $('#ParkingPlace').val(),
+        StatusOfWork: statusOfwork,
+        RoleID: roleName,
+        ParkingPlaceID: nameParking,
+
     };
     $.ajax({
         url: "/ManageUser/Create",
@@ -269,12 +276,15 @@ function Add() {
 
 //function for updating employee's record
 function Update() {
-    var res = validate();
-    if (res == false) {
-        return false;
-    }
+    //var res = validate();
+    //if (res == false) {
+    //    return false;
+    //}
     var gender = $('#cbGender').val();
-    var statusOfwork = $('#StatusOfWork').val();
+    var statusOfwork = $('#cbStatusOfwork').val();
+    var roleName = $('#cbRoleNameU').val();
+    var nameParking = $('#cbparkingPlaceU').val();
+
     var empObj = {
         UserID: $('#Id').val(),
         UserName: $('#UserName').val(),
@@ -289,8 +299,8 @@ function Update() {
         ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
         StatusOfWork: statusOfwork,
-        RoleID: $('#RoleName').val(),
-        ParkingPlaceID: $('#ParkingPlace').val(),
+        RoleID: roleName,
+        ParkingPlaceID: nameParking,
 
     };
     $.ajax({
@@ -333,17 +343,18 @@ function clearTextBox() {
     $('#Id').val("");
     $('#UserName').val("");
     $('#FullName').val("");
+    $('#PassWord').val("");
     $('#DateOfBirth').val("");
-    $('#Gender').val("");
+    $('#cbGender').val("");
     $('#Address').val("");
     $('#PhoneNumber').val("");
     $('#Email').val("");
     $('#IdentityCard').val("");
-    $('#RoleName').val("");
-    $('#ParkingPlace').val("");
+    $('#cbRoleNameU').val("");
+    $('#cbparkingPlaceU').val("");
     $('#ContractSigningDate').val("" + date);
     $('#ContractExpirationDate').val("" + date);
-    $('#StatusOfWork').val("");
+    $('#cbStatusOfwork').val("");
 
 
     $('#btnAdd').show();
