@@ -41,10 +41,9 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in users)
             {
-                var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var renewdate = "";
-                var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy");
+                var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy");
+                var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
                 string gender = string.Empty;
                 switch(item.Gender)
                 {

@@ -1,4 +1,4 @@
-﻿
+﻿//load page
 $(document).ready(function () {
     loadData();
     loadDataCard();
@@ -6,6 +6,9 @@ $(document).ready(function () {
     loadDataTicket();
     loadDataParkingPlace();
     ComboboxGender();
+    ComboboxStatusOfwork();
+    ComboboxRoleNameU();
+    ComboboxParkingPlaceU();
 });
 
 var pageConfig = 1;
@@ -43,14 +46,10 @@ function getByID(EmployeeID) {
                     $('#FullName').val(result.Name);
                     $('#PassWord').val(result.PassWork);
                     $('#DateOfBirth').val(result.dateOfBirth);
-                    ComboboxGender();
                     $('#Address').val(result.UserAddress);
                     $('#IdentityCard').val(result.IdentityCard);
                     $('#PhoneNumber').val(result.Phone);
                     $('#Email').val(result.email);
-                    ComboboxStatusOfwork();
-                    ComboboxRoleNameU();
-                    ComboboxParkingPlaceU();
                     $('#ContractSigningDate').val(result.contractSigningDate);
                     $('#ContractExpirationDate').val(result.contractExpirationDate);
                     $('#myModal').modal('show');
