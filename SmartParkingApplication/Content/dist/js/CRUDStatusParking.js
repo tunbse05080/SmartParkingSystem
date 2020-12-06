@@ -79,7 +79,7 @@ function loadDataStatusParking(changePageSizeSPP) {
 //    });
 //}
 
-//paging
+//paging Status ParkingPlace
 function pagingSPP(totalRowSPP, callback, changePageSizeSPP) {
     var totalPageSPP = Math.ceil(totalRowSPP / 5);
 

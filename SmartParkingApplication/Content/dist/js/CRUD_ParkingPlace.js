@@ -67,6 +67,7 @@ function loadDataParkingPlace(changsizepp) {
         });
     }
 }
+
 //function getTicketByID(ParkingPlaceID) {
 //    $.ajax({
 //        url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
@@ -94,6 +95,7 @@ function loadDataParkingPlace(changsizepp) {
 //    });
 //    return false;
 //}
+
 function UpdatePP() {
     var res = validateUpdatePP();
     if (res == false) {
@@ -124,6 +126,8 @@ function UpdatePP() {
         }
     });
 }
+
+
 function getPPByID(ParkingPlaceID) {
     $.ajax({
         url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
@@ -150,6 +154,8 @@ function getPPByID(ParkingPlaceID) {
     });
     return false;
 }
+
+
 function AddPP() {
     var res = validateAddPP();
     if (res == false) {
@@ -178,6 +184,8 @@ function AddPP() {
         }
     });
 }
+
+
 function clearTextBoxPP() {
 
     $('#Id').val("");
