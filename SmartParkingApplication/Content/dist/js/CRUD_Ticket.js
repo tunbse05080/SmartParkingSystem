@@ -143,19 +143,22 @@ function AddTicket() {
     });
 }
 
-function UpdateTicket() {
+function UpdateExtendTK() {
     var empTicketObj = {
-        CusName: $('#CusName').val(),
-        IdentityCard: $('#IdentityCard').val(),
-        Phone: $('#Phone').val(),
-        Email: $('#Email').val(),
-        TypeOfVehicle: $('#TypeOfVehicle').val(),
-        LicensePlates: $('#LicensePlates').val(),
-        RegisDate: $('#RegisDate').val(),
-        ExpiryDate: $('#ExpiryDate').val(),
+        MonthlyTicketID: $('#MonthlyTicketETK'),
+        CusName: $('#CusNameETK').val(),
+        IdentityCard: $('#IdentityCardETK').val(),
+        Phone: $('#PhoneETK').val(),
+        Email: $('#EmailETK').val(),
+        TypeOfVehicle: $('#TypeOfVehicleETK').val(),
+        LicensePlates: $('#LicensePlatesETK').val(),
+        RegisDate: $('#RegisDateETK').val(),
+        ExpiryDate: $('#ExpiryDateETk').val(),
+        CardID: $('#CardIDETK').val(),
+       
     };
     $.ajax({
-        url: "/ManageTicket/Ticket",
+        url: "/ManageTicket/UpdateTicket",
         data: JSON.stringify(empTicketObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
