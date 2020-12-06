@@ -371,7 +371,6 @@ D:\New folder\SmartParkingApplication\bin\System.Web.Webpages.Razor.xml
 D:\New folder\SmartParkingApplication\bin\System.Web.Helpers.xml
 D:\New folder\SmartParkingApplication\bin\System.Web.Mvc.xml
 D:\New folder\SmartParkingApplication\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
 D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.CoreCompileInputs.cache
 D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.CopyComplete
 D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.dll
@@ -529,3 +528,4 @@ F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Deb
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.CopyComplete
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.dll
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.pdb
+D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache

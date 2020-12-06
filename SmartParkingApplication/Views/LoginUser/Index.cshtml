@@ -1,0 +1,97 @@
+﻿@model IEnumerable<SmartParkingApplication.Models.User>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css" />
+    
+</head>
+<body>
+
+
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6col-md-offset-3">
+                    <h2>Login to Your Account</h2>
+                    <div class="text-center">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphiconglyphicon-user"></i></span>
+                                        <input type="text" id="userid" class="form-control" placeholder="Username">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphiconglyphicon-lock"></i></span>
+                                        <input type="password" class="form-control" id="password" placeholder="Password">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button class="btn btn-warning form-control" type="submit" id="savedata"><i class="glyphiconglyphicon-log-in"></i>&nbsp;Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/dist/js/jsbootrap.js"></script>
+    <script src="~/Content/dist/js/JSLogin.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#savedata').click(function () {
+            var data = {
+                "userid": $("#userid").val(),
+                "password": $("#password").val()
+            };
+            $.ajax({
+                url: "/LoginUser/ValidateUser",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.Success) {
+                        $.get("@Url.Action("Index", "Home")", function (data) {
+                            $('.container').html(data);
+                        });
+                    }
+                    else {
+                        @*window.location.href = "@Url.Action("Index", "LoginUser")";*@
+                        console.log('Login Fail!!!');
+                    }
+                },
+                error: function () {
+                   
+                }
+            });
+        });
+    });
+    </script>
+    
+    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Content/plugins/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
