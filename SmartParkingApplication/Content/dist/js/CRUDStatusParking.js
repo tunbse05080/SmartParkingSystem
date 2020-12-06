@@ -1,6 +1,6 @@
 ﻿
 var pageConfigSPP = 1;
-
+ // pull
 //Load Data function
 function loadDataStatusParking(changePageSizeSPP) {
     var nameSPP = $('#txtNameSearchSPP').val();
