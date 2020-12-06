@@ -1,4 +1,23 @@
-﻿var pageConfigTicket = 1;
+﻿
+var pageConfigTicket = 1;
+
+function reloadModalETK() {
+    if ($("#cbETK").val() == "1") {
+        $('#ExpiryDateETk').val(DateETK(1));
+        $('#priceETK').val("500.000 VND");
+        $("#myModalExtendTicket").modal("show");
+    }
+    else if ($("#cbETK").val() == "2") {
+        $('#ExpiryDateETk').val(DateETK(2));
+        $('#priceETK').val("2.500.000 VND");
+        $("#myModalExtendTicket").modal("show");
+    }
+    else {
+        $('#ExpiryDateETk').val(DateETK(3));
+        $('#priceETK').val("4.000.000 VND");
+        $("#myModalExtendTicket").modal("show");
+    }
+}
 
 //DateETK
 function DateETK(dateExtend) {
