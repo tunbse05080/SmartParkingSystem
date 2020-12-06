@@ -15,6 +15,7 @@ namespace SmartParkingApplication.Controllers
         // GET: ManageParkingPlace
         public ActionResult ManageStatusParkingPlace()
         {
+            ViewBag.listParkingPlace = db.ParkingPlaces.ToList();
             return View();
         }
 

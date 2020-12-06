@@ -5,6 +5,15 @@
 }
 
 <!-- Content Wrapper. Contains page content -->
+<script src="~/Scripts/jquery-3.4.1.min.js" type=""></script>
+<script>
+    $(document).ready(function () {
+
+        $('#cbxListParking').on('change', function () {
+            alert('test');
+        });
+    });
+</script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -30,17 +39,23 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="dropdown">
-                                <strong style="font-size:x-large">Bãi đỗ</strong>
-                                <button class="btn btn-primary dropdown-toggle" style="margin-top:-10px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    FPT Place
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">FPT Place</a>
-                                    <a class="dropdown-item" href="#">Fsoft-1</a>
-                                    <a class="dropdown-item" href="#">Fsoft-2</a>
-                                </div>
-                            </div><br />
+                            <form method="post">
+                                <table>
+                                    <tr>
+                                        <td>Bãi Đỗ</td>
+                                        <td>
+                                            <select id="cbxListParking">
+                                                @foreach (var list in ViewBag.listParkingPlace)
+                                                {
+                                                    <option value="@list.ParkingPlaceID"> @list.NameOfParking </option>
+                                                }
+
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+
                             <div class="row invoice-info">
                                 <table class="table table-avatar">
                                     <thead>
@@ -78,8 +93,8 @@
                                 <div class="col-md-9">
                                     <form autocomplete="off">
                                         <div class="flex-row d-flex justify-content-center">
-                                            <a>Từ ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-01T07:30" id="txtTimeFromSPP"/>
-                                            <a style="margin-left:20px">Đến ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-31T07:30" id="txtTimeToSPP"/>
+                                            <a>Từ ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-01T07:30" id="txtTimeFromSPP" />
+                                            <a style="margin-left:20px">Đến ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-31T07:30" id="txtTimeToSPP" />
                                         </div>
                                     </form>
                                 </div>
@@ -121,14 +136,14 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+                    </div>
+                    <!-- /.col -->
                 </div>
-                <!-- /.col -->
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
         </div>
-            </div>
         <!-- /.container-fluid -->
-            
+
     </section>
     <!-- /.content -->
 </div>
