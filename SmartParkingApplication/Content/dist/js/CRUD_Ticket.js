@@ -188,8 +188,8 @@ function getTicketByID(MonthlyTicketID) {
             $('#EmailETK').val(result.Email);
             $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
             $('#LicensePlatesETK').val(result.LicensePlates);
-            $('#RegisDateETK').val(result.RegisDate);
-            $('#ExpiryDateETk').val(result.ExpiryDate);
+            $('#RegisDateETK').val(loadDateNow());
+            $('#ExpiryDateETk').val("");
             $('#CardIDETK').val(result.CardID);
 
             $('#myModalExtendTicket').modal('show');
