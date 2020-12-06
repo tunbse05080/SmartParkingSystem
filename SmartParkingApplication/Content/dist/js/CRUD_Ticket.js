@@ -178,15 +178,16 @@ function getTicketByID(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#MonthlyTicketTK').val(result.MonthlyTicketID);
-            $('#CusNameTK').val(result.CusName);
-            $('#IdentityCardTK').val(result.IdentityCard);
-            $('#PhoneTK').val(result.Phone);
-            $('#EmailTK').val(result.Email);
-            $('#TypeOfVehicleTK').val(result.TypeOfVehicle);
-            $('#LicensePlatesTK').val(result.LicensePlates);
-            $('#RegisDateTK').val(result.RegisDate);
-            $('#ExpiryDateTk').val(result.ExpiryDate);
+            $('#MonthlyTicketETK').val(result.MonthlyTicketID);
+            $('#CusNameETK').val(result.CusName);
+            $('#IdentityCardETK').val(result.IdentityCard);
+            $('#PhoneETK').val(result.Phone);
+            $('#EmailETK').val(result.Email);
+            $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
+            $('#LicensePlatesETK').val(result.LicensePlates);
+            $('#RegisDateETK').val(result.RegisDate);
+            $('#ExpiryDateETk').val(result.ExpiryDate);
+            $('#CardIDETK').val(result.CardID);
 
             $('#myModalExtendTicket').modal('show');
             $('#btnExtendTK').modal('show');
