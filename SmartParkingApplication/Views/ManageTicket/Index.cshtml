@@ -152,63 +152,104 @@
                             </div>
                         </div>
 
-                        <!-- The Modal details -->
-                        <!--<div class="modal fade" id="myModalTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <!-- The Modal Extend Ticket -->
+                        <div class="modal fade" id="myModalExtendTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Gia Hạn Vé Tháng</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="Id">Id</label>
-                                            <input type="text" class="form-control" id="MonthlyTicketTK" placeholder="Id" disabled />
+                                            <input type="text" class="form-control" id="MonthlyTicketETK" placeholder="Id" disabled />
                                         </div>
                                         <div class="form-group">
                                             <label for="CusName">Tên chủ xe</label>
-                                            <input type="text" class="form-control" id="CusNameTK" placeholder="Tên chủ xe" />
+                                            <input type="text" class="form-control" id="CusNameETK" placeholder="Tên chủ xe" />
                                         </div>
                                         <div class="form-group">
                                             <label for="IdentityCard">Số CMND</label>
-                                            <input type="text" class="form-control" id="IdentityCardTK" placeholder="Số CMND" />
+                                            <input type="text" class="form-control" id="IdentityCardETK" placeholder="Số CMND" />
                                         </div>
                                         <div class="form-group">
                                             <label for="Email">Email</label>
-                                            <input type="text" class="form-control" id="PhoneTK" placeholder="Email" />
+                                            <input type="text" class="form-control" id="PhoneETK" placeholder="Email" />
                                         </div>
                                         <div class="form-group">
                                             <label for="Phone">Số điện thoại</label>
-                                            <input type="text" class="form-control" id="EmailTK" placeholder="Số điện thoai" />
+                                            <input type="text" class="form-control" id="EmailETK" placeholder="Số điện thoai" />
                                         </div>
                                         <div class="form-group">
                                             <label for="TypeOfVehicle">Loại xe</label>
-                                            <input type="text" class="form-control" id="TypeOfVehicleTK" placeholder="Loại xe" />
+                                            <input type="text" class="form-control" id="TypeOfVehicleETK" placeholder="Loại xe" />
                                         </div>
                                         <div class="form-group">
                                             <label for="LicensePlates">Biển số xe</label>
-                                            <input type="text" class="form-control" id="LicensePlatesTK" placeholder="Biển số xe" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="RegisDate">Ngày đăng kí</label>
-                                            <input type="text" class="form-control" id="RegisDateTK" placeholder="Ngày đăng kí" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="ExpiryDate">Ngày hết hạn</label>
-                                            <input type="text" class="form-control" id="ExpiryDateTk" placeholder="Ngày hết hạn" />
+                                            <input type="text" class="form-control" id="LicensePlatesETK" placeholder="Biển số xe" />
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label for="ParkingPlace">Số thẻ</label>
-                                            <input type="text" class="form-control" id="CardNumberTK" placeholder="Số thẻ" />
+                                            <input type="text" class="form-control" id="CardNumberETK" placeholder="Số thẻ" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-5" style="padding-left:40px">
+                                                    Ngày đăng ký
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input type="date" class="form-control" id="RegisDateETK" placeholder="Ngày gia hạn" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-5" style="padding-left:40px">
+                                                    Ngày hết hạn
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input type="date" class="form-control" id="ExpiryDateETk" placeholder="Ngày hết hạn" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-5" style="padding-left:40px">
+                                                    Thời gian gia hạn
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="dropdown" style="width:100%">
+                                                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            1 tháng
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a class="dropdown-item" href="#">1 tháng</a>
+                                                            <a class="dropdown-item" href="#">6 tháng</a>
+                                                            <a class="dropdown-item" href="#">1 năm</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-5" style="padding-left:40px">
+                                                    Thành tiền
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input type="text" id="priceETK" value="500.000 VND" disabled />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="btnAddTicket" onclick="return Add();">Thêm</button>
+                                        <button type="button" class="btn btn-primary" id="btnExtendTK" onclick="return ExtendTK();">Gia Hạn</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
 
                         <!-- The Modal -->
                         <div class="modal" id="myModal">
@@ -222,55 +263,7 @@
                                     <!-- Modal body -->
                                     <div class="modal-body">
                                         <div class="form-horizontal">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px">
-                                                        Ngày đăng ký
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="date" value="2020-11-20" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px">
-                                                        Ngày hết hạn
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="date" value="2020-12-20" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px">
-                                                        Thời gian gia hạn
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <div class="dropdown" style="width:100%">
-                                                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                1 tháng
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="#">1 tháng</a>
-                                                                <a class="dropdown-item" href="#">6 tháng</a>
-                                                                <a class="dropdown-item" href="#">1 năm</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px">
-                                                        Thành tiền
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" value="500.000 VND" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <!-- Modal footer -->

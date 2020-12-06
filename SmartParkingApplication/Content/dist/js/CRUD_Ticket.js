@@ -162,7 +162,7 @@ function UpdateTicket() {
         dataType: "json",
         success: function (result) {
             loadDataTicket(true);
-            $('#myModalUpdateTicket').modal('hide');
+            $('#myModalExtendTicket').modal('hide');
              
         },
         error: function (errormessage) {
@@ -188,8 +188,8 @@ function getTicketByID(MonthlyTicketID) {
             $('#RegisDateTK').val(result.RegisDate);
             $('#ExpiryDateTk').val(result.ExpiryDate);
 
-            $('#myModalTicket1').modal('show');
-            $('#btnAddTicket').modal('show');
+            $('#myModalExtendTicket').modal('show');
+            $('#btnExtendTK').modal('show');
 
         },
         error: function (errormessage) {
