@@ -1,5 +1,33 @@
 ﻿var pageConfigTicket = 1;
 
+//DateETK
+function DateETK(dateExtend) {
+    // body...
+    if (dateExtend == 1) {
+        dateExtend = 30;
+    } else if (dateExtend == 2) {
+        dateExtend = 180;
+    } else {
+        dateExtend = 365;
+    } 
+    
+    var date = new Date();
+    date.setTime(date.getTime() + (dateExtend * 24 * 60 * 60 * 1000));
+    var dd = date.getDate();
+    var mm = date.getMonth() + 1; //January is 0!
+    var yyyy = date.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    date = mm + '/' + dd + '/' + yyyy;
+    return date;
+}
+
 //Combobox Type of Vehicle
 function ComboboxTicket() {
     $.ajax({
@@ -181,6 +209,7 @@ function getTicketByID(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+            var date = $('#cbETK').val();
             $('#MonthlyTicketETK').val(result.MonthlyTicketID);
             $('#CusNameETK').val(result.CusName);
             $('#IdentityCardETK').val(result.IdentityCard);
@@ -189,7 +218,7 @@ function getTicketByID(MonthlyTicketID) {
             $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
             $('#LicensePlatesETK').val(result.LicensePlates);
             $('#RegisDateETK').val(loadDateNow());
-            $('#ExpiryDateETk').val("");
+            $('#ExpiryDateETk').val(DateETK(date));
             $('#CardIDETK').val(result.CardID);
 
             $('#myModalExtendTicket').modal('show');
