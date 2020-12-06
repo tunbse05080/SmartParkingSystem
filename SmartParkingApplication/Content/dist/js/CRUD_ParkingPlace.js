@@ -95,7 +95,7 @@ function loadDataParkingPlace(changsizepp) {
 //    return false;
 //}
 function UpdatePP() {
-    var res = validatePP();
+    var res = validateUpdatePP();
     if (res == false) {
         return false;
     }
@@ -151,7 +151,7 @@ function getPPByID(ParkingPlaceID) {
     return false;
 }
 function AddPP() {
-    var res = validatePP();
+    var res = validateAddPP();
     if (res == false) {
         return false;
     }
@@ -194,7 +194,7 @@ function clearTextBoxPP() {
 }
 
 //validate using Jquery
-function validatePP() {
+function validateAddPP() {
     var isValid = true;
     var numberSlot = new RegExp('^[0-9]{2,}$');
     if ($.trim($('#NumberOfCar').val()) == "" || !numberSlot.test($.trim($('#NumberOfCar').val()))) {
@@ -215,6 +215,12 @@ function validatePP() {
         $('#NumberOfMotoBike').prop("title", "");
         $('#NumberOfMotoBike').css('border-color', 'lightgrey');
     }
+    return isValid;
+}
+
+function validateUpdatePP() {
+    var isValid = true;
+    var numberSlot = new RegExp('^[0-9]{2,}$');
     if ($.trim($('#NumberOfCarEdit').val()) == "" || !numberSlot.test($.trim($('#NumberOfCarEdit').val()))) {
         $('#NumberOfCarEdit').prop("title", "Sức chứa ô tô trống hoặc sai định dạng(>2 số).");
         $('#NumberOfCarEdit').css('border-color', 'Red');
