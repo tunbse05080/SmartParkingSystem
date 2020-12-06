@@ -10,7 +10,18 @@
     $(document).ready(function () {
 
         $('#cbxListParking').on('change', function () {
-            alert('test');
+            var ParkingPlaceID = $('#cbxListParking option: Select').val();
+            $.ajax({
+                type: 'GET',
+                data: { parkingId: parkingId },
+                url: ' @Url.Action("loadtTable","ManagePPlace")',
+                success: function (result) {
+
+                }
+
+
+            }
+            );
         });
     });
 </script>
@@ -49,14 +60,13 @@
                                                 {
                                                     <option value="@list.ParkingPlaceID"> @list.NameOfParking </option>
                                                 }
-                                                
 
                                             </select>
                                         </td>
                                     </tr>
                                 </table>
                             </form>
-                            <br />
+
                             <div class="row invoice-info">
                                 <table class="table table-avatar">
                                     <thead>

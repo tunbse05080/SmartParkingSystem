@@ -19,6 +19,18 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
+        public ActionResult loadtTable(int parkingId)
+        {
+            
+            return Json ( db.ParkingPlaces.Where(x => x.ParkingPlaceID == parkingId).Select(x => new
+            {
+                Id = x.ParkingPlaceID,
+                Name = x.NameOfParking
+            }).ToList(),JsonRequestBehavior.AllowGet);
+
+                
+        }
+
         public JsonResult LoadDataStatusPP(int pageSPP,DateTime timeFrom, DateTime timeTo , String nameSSP, int pageSizeSPP = 5)
         {
             var trans = from t in db.Transactions
