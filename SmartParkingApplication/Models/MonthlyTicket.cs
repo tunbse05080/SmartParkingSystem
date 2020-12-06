@@ -30,11 +30,9 @@ namespace SmartParkingApplication.Models
         public Nullable<System.DateTime> RegisDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<int> CardID { get; set; }
-        public Nullable<int> ParkingPlaceID { get; set; }
     
         public virtual Card Card { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MonthlyIncomeStatement> MonthlyIncomeStatements { get; set; }
-        public virtual ParkingPlace ParkingPlace { get; set; }
     }
 }

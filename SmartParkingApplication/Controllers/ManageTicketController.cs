@@ -29,10 +29,10 @@ namespace SmartParkingApplication.Controllers
             var ticket = from t in db.MonthlyTickets
                          join c in db.Cards on t.CardID equals c.CardID into table1
                          from c in table1.DefaultIfEmpty()
-                         join p in db.ParkingPlaces on t.ParkingPlaceID equals p.ParkingPlaceID into table2
-                         from p in table2.DefaultIfEmpty()
+                         //join p in db.ParkingPlaces on t.ParkingPlaceID equals p.ParkingPlaceID into table2
+                         //from p in table2.DefaultIfEmpty()
                          orderby t.MonthlyTicketID
-                         select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate, c.CardNumber, p.NameOfParking };
+                         select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate, c.CardNumber };
             //var ticket = from t in db.MonthlyTickets select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate };
             if (!string.IsNullOrEmpty(nameT))
             {
@@ -66,7 +66,6 @@ namespace SmartParkingApplication.Controllers
                     RegisDate = regisDate,
                     ExpiryDate = expiryDate,
                     CardNumber = item.CardNumber,
-                    NameOfParking = item.NameOfParking
                 };
                 
                 list.Add(tr);

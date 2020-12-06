@@ -193,7 +193,7 @@ function AddTicket() {
 
 function UpdateExtendTK() {
     var empTicketObj = {
-        MonthlyTicketID: $('#MonthlyTicketETK'),
+        MonthlyTicketID: $('#MonthlyTicketETK').val(),
         CusName: $('#CusNameETK').val(),
         IdentityCard: $('#IdentityCardETK').val(),
         Phone: $('#PhoneETK').val(),
