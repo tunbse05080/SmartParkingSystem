@@ -2076,6 +2076,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginUsersController.cs" />
     <Compile Include="Controllers\ManageCardController.cs" />
     <Compile Include="Controllers\ManageIncomeController.cs" />
     <Compile Include="Controllers\ManagePPlaceController.cs" />
@@ -2169,6 +2170,7 @@
     <Content Include="Views\ManageTicket\ListExtendTicket.cshtml" />
     <Content Include="Views\ManageStatistic\IncomeStatistic.cshtml" />
     <Content Include="Views\ManageStatistic\DensityStatistic.cshtml" />
+    <Content Include="Views\LoginUsers\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
