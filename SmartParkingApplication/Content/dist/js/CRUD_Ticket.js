@@ -190,7 +190,7 @@ function getTicketByID(MonthlyTicketID) {
             $('#CardIDETK').val(result.CardID);
 
             $('#myModalExtendTicket').modal('show');
-            $('#btnExtendTK').modal('show');
+            $('#btnExtendTK').show();
 
         },
         error: function (errormessage) {
@@ -225,6 +225,10 @@ function getTicketByID(MonthlyTicketID) {
 //        }
 //    });
 //    return false;
+//}
+
+//function closeETK() {
+//    $('#myModalExtendTicket').modal('hide');
 //}
 
 function getIdToDropContract() {
