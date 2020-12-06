@@ -23,7 +23,6 @@
         <AssociationConnector Association="SmartParkingsModel.FK__Image__Transacti__4CA06362" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__MonthlyIn__Month__4D94879B" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__MonthlyTi__Parki__4F7CD00D" ManuallyRouted="false" />
-        <AssociationConnector Association="SmartParkingsModel.FK__Price__ParkingPl__5070F446" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__Transacti__Parki__5441852A" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__User__ParkingPla__5535A963" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__User__RoleID__5629CD9C" ManuallyRouted="false" />

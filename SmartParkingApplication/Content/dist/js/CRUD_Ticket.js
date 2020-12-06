@@ -1,6 +1,7 @@
 ﻿
 var pageConfigTicket = 1;
 
+//reload modal when change combobox
 function reloadModalETK() {
     if ($("#cbETK").val() == "1") {
         $('#ExpiryDateETk').val(DateETK(1));
@@ -202,7 +203,6 @@ function UpdateExtendTK() {
         RegisDate: $('#RegisDateETK').val(),
         ExpiryDate: $('#ExpiryDateETk').val(),
         CardID: $('#CardIDETK').val(),
-       
     };
     $.ajax({
         url: "/ManageTicket/UpdateTicket",

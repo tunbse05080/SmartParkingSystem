@@ -20,8 +20,5 @@ namespace SmartParkingApplication.Models
         public Nullable<int> MonthPrice { get; set; }
         public Nullable<int> FirstBlock { get; set; }
         public Nullable<int> NextBlock { get; set; }
-        public Nullable<int> ParkingPlaceID { get; set; }
-    
-        public virtual ParkingPlace ParkingPlace { get; set; }
     }
 }
