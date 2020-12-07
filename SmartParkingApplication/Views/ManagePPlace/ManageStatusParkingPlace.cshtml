@@ -11,21 +11,32 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 <script>
-        $(document).ready(function () {
-            $('#cbxListParking').on('change', function () {
-                var ParkingPlaceID = $('#cbxListParking option: Select').val();
-                $.ajax({
-                    type: 'GET',
-                    data: { parkingId: parkingId },
-                    url: ' @Url.Action("loadtTable","ManagePPlace")',
-                    success: function (result) {
+    $(document).ready(function () {
 
+        $('#cbxListParking').on('change', function () {
+            var ParkingPlaceID = $('#cbxListParking').val();
+            alert(ParkingPlaceID);
+            $.ajax({
+                type: 'GET',
+                data: { ParkingPlaceID: ParkingPlaceID },
+                url: '@Url.Action("loadtTable","ManagePPlace")',
+                success: function (result) {
+
+                    var html = '';
+                    for (var i = 0; i < result.length; i++ ) {
+                        html += '<tr>';
+                        html += '<td>' + result[i].ParkingPlaceID + '</td>';
+                        html += '<td>' + result[i].NameOfParking + '</td>';
+                        html += '</tr>';
                     }
-                }
-                );
-            });
-        });
+                    $('#dataTable').html(html);
 
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+
+                } });
+    });
 </script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->

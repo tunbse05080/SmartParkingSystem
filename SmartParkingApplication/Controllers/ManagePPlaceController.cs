@@ -19,10 +19,10 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
-        public ActionResult loadtTable(int parkingId)
+        public ActionResult loadtTable(int ParkingPlaceID)
         {
             
-            return Json ( db.ParkingPlaces.Where(x => x.ParkingPlaceID == parkingId).Select(x => new
+            return Json ( db.ParkingPlaces.Where(x => x.ParkingPlaceID == ParkingPlaceID).Select(x => new
             {
                 Id = x.ParkingPlaceID,
                 Name = x.NameOfParking
