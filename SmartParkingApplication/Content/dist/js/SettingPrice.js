@@ -77,5 +77,33 @@ function loadDataPrice(changsizepr) {
             }
         });
     }
+    function UpdatePP() {
+        //var res = validateUpdatePP();
+        //if (res == false) {
+        //    return false;
+        //}
+        var empPRObj = {
+            
+            TypeOfvehicle: $('#TypeOfvehicleEdit').val(),
+            DayPrice: $('#DayPriceEdit').val(),
+            MonthPrice: $('#MonthPriceEdit').val(),
+            FirstBlock: $('#FirstBlockEdit').val(),
+            NextBlock: $('#NextBlockEdit').val(),
+        };
+        $.ajax({
+            url: "/SettingPrice/UpdatePR",
+            data: JSON.stringify(empPRObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                loadDataPrice(true);
+                $('#myModalUpdatePR').modal('hide');
 
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
 }

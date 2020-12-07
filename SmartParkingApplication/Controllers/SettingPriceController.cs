@@ -1,6 +1,7 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -38,6 +39,15 @@ namespace SmartParkingApplication.Controllers
         {
             var list = db.Prices.Select(u => u.TypeOfvehicle).Distinct().ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult UpdatePR(Price price)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(price).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(price, JsonRequestBehavior.AllowGet);
         }
     }
 }
