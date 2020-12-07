@@ -165,10 +165,10 @@ function loadData() {
                 //html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                 switch (item.StatusOfWork) {
                     case "Hết hạn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-warning" style="margin-left:2px" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
                         break;
                     case "Đang trong HĐ":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px;margin-left:2px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
                         break;
                 }
                 html += '</tr>';

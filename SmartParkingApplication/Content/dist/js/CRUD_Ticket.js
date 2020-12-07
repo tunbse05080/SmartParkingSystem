@@ -100,7 +100,7 @@ function loadDataTicket() {
                 html += '<td>' + item.ExpiryDate + '</td>';
                 html += '<td>' + item.CardNumber + '</td>';
 
-                html += '<td><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
+                html += '<td><button class="btn btn-warning" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
             });
 
