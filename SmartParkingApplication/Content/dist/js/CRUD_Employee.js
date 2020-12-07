@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     loadData();
 });
 
@@ -40,7 +41,7 @@ function getByID(EmployeeID) {
                     $('#Email').val(result.email);
                     $('#ContractSigningDate').val(result.contractSigningDate);
                     $('#ContractExpirationDate').val(result.contractExpirationDate);
-                    $('#myModal').modal('show');
+                    $('#myModalUser').modal('show');
                     $('#btnUpdate').show();
                     $('#btnAdd').hide();
         },
@@ -165,17 +166,18 @@ function loadData() {
                 //html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                 switch (item.StatusOfWork) {
                     case "Hết hạn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-warning" style="margin-left:2px" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-warning" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
                         break;
                     case "Đang trong HĐ":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px;margin-left:2px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
                         break;
                 }
                 html += '</tr>';
             });
             $('#tbodyUser').html(html);
-            var table = $("#tbUser").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true,
+
+            $("#tbUser").DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbUser_wrapper .col-md-6:eq(0)');
         },
@@ -241,8 +243,9 @@ function Add() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadData(true);
-            $('#myModal').modal('hide');
+            $('#myModalUser').modal('hide');
+            $('#tbUser').DataTable().clear().destroy();
+            loadData();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -286,8 +289,11 @@ function Update() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadData(true);
-            $('#myModal').modal('hide');
+            $('#myModalUser').modal('hide');
+            $('#tbUser').DataTable().clear().destroy();
+            loadData();
+            
+            
 
         },
         error: function (errormessage) {
@@ -470,8 +476,10 @@ function ContractGH() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadData(true);
             $('#myModalGH').modal('hide');
+            $('#tbUser').DataTable().clear().destroy();
+            loadData(true);
+            
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

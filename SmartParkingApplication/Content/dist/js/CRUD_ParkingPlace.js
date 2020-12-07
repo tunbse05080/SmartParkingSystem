@@ -115,7 +115,7 @@ function UpdatePP() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadDataParkingPlace(true);
+            loadDataParkingPlace();
             $('#myModalUpdatePP').modal('hide');
 
         },
@@ -174,7 +174,7 @@ function AddPP() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadDataParkingPlace(true);
+            loadDataParkingPlace();
             $('#myModalPP').modal('hide');
         },
         error: function (errormessage) {

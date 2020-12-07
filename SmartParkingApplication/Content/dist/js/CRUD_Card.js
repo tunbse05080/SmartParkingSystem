@@ -127,7 +127,7 @@ function AddCard() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadDataCard(true);
+            loadDataCard();
             $('#myModalCard').modal('hide');
         },
         error: function (errormessage) {
@@ -155,7 +155,7 @@ function UpdateCard() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadDataCard(true);
+            loadDataCard();
             $('#myModalUpdate').modal('hide');
 
         },
@@ -198,7 +198,7 @@ function UnlockCard() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadDataCard(true);
+            loadDataCard();
             $('#myModalLock').modal('hide');
 
         },

@@ -181,7 +181,7 @@ function AddTicket() {
         dataType: "json",
         success: function (result) {
             UpdateCardByNumber($('#cbCardNumberTK').val());
-            loadDataTicket(true);
+            loadDataTicket();
             $('#myModalTicket').modal('hide');
         },
         error: function (errormessage) {
@@ -210,7 +210,7 @@ function UpdateExtendTK() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            loadDataTicket(true);
+            loadDataTicket();
             $('#myModalExtendTicket').modal('hide');
              
         },
