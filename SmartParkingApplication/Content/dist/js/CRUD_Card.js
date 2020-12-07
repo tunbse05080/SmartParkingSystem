@@ -34,8 +34,9 @@ function loadDataCard() {
                 }
                 html += '</tr>';
             });
+
             $('#tbodyCard').html(html);
-            $('#tbCard').DataTable();
+            $('#tbCard').DataTable({ "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true });
             totalCard += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalCard += '<p>Tổng số thẻ</p>';
             $('#totalCard').html(totalCard);
@@ -127,6 +128,7 @@ function AddCard() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbCard').DataTable().clear().destroy();
             loadDataCard();
             $('#myModalCard').modal('hide');
         },
@@ -155,6 +157,7 @@ function UpdateCard() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbCard').DataTable().clear().destroy();
             loadDataCard();
             $('#myModalUpdate').modal('hide');
 
@@ -175,7 +178,6 @@ function UpdateCardByNumber(CardID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            alert("Success!");
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -198,6 +200,7 @@ function UnlockCard() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbCard').DataTable().clear().destroy();
             loadDataCard();
             $('#myModalLock').modal('hide');
 
