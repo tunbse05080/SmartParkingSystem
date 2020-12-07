@@ -57,5 +57,25 @@ function loadDataPrice(changsizepr) {
             }
         });
     }
+    function ComboboxTypeOfvehicle() {
+        $.ajax({
+            url: "/SettingPrice/ComboboxTypeOfVehicle",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+                var i = 1;
+                $.each(result, function (key, item) {
+                    html += '<option value="' + i + '">' + item + '</option>';
+                    i++;
+                });
+                $("#cbTypeOfvehicle").html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
 
 }

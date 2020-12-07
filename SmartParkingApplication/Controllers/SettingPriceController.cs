@@ -34,5 +34,10 @@ namespace SmartParkingApplication.Controllers
 
             return Json(new { datapr = result, total = totalRowpr }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ComboboxTypeOfVehicle()
+        {
+            var list = db.Prices.Select(u => u.TypeOfvehicle).Distinct().ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
     }
 }
