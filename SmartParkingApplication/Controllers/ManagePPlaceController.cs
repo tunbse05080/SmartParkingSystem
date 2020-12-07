@@ -28,27 +28,26 @@ namespace SmartParkingApplication.Controllers
                 Name = x.NameOfParking
             }).ToList(),JsonRequestBehavior.AllowGet);
 
-                
         }
 
-        public JsonResult LoadDataStatusPP(int pageSPP,DateTime timeFrom, DateTime timeTo , String nameSSP, int pageSizeSPP = 5)
+        public JsonResult LoadDataStatusPP()
         {
             var trans = from t in db.Transactions
                         join c in db.Cards on t.CardID equals c.CardID into table1
                         from c in table1.DefaultIfEmpty()
                         orderby t.CardID
                         select new { t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber };
-            if (!string.IsNullOrEmpty(nameSSP))
-            {
-                trans = trans.Where(x => x.LicensePlates.Contains(nameSSP));
-            }else if(!string.IsNullOrEmpty(timeFrom.ToString()) && !string.IsNullOrEmpty(timeTo.ToString()))
-            {
-                trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo);
-            }
-            else
-            {
-                trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo && x.LicensePlates.Contains(nameSSP));
-            }
+            //if (!string.IsNullOrEmpty(nameSSP))
+            //{
+            //    trans = trans.Where(x => x.LicensePlates.Contains(nameSSP));
+            //}else if(!string.IsNullOrEmpty(timeFrom.ToString()) && !string.IsNullOrEmpty(timeTo.ToString()))
+            //{
+            //    trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo);
+            //}
+            //else
+            //{
+            //    trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo && x.LicensePlates.Contains(nameSSP));
+            //}
             List<Object> list = new List<object>();
             foreach (var item in trans)
             {
@@ -68,10 +67,7 @@ namespace SmartParkingApplication.Controllers
                 var tr = new { LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber };
                 list.Add(tr);
             }
-
-            var totalRow = list.Count();
-            var result = list.Skip((pageSPP - 1) * pageSizeSPP).Take(pageSizeSPP);
-            return Json(new { dataSSP = result, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { dataSSP = list}, JsonRequestBehavior.AllowGet);
         }
 
         //public JsonResult LoadInfoPPlace()
@@ -86,13 +82,13 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
-        public JsonResult loadDataParkingPlace(int pagepp, string namepp, int pageSizepp = 5)
+        public JsonResult loadDataParkingPlace()
         {
             var parking = from p in db.ParkingPlaces select new {p.ParkingPlaceID, p.NameOfParking,p.Location,p.NumberOfCar,p.NumberOfMotoBike,p.NumberCarBlank,p.NumberMotoBikeBlank};
-            if (!string.IsNullOrEmpty(namepp))
-            {
-                parking = parking.Where(x => x.NameOfParking.Contains(namepp));
-            }
+            //if (!string.IsNullOrEmpty(namepp))
+            //{
+            //    parking = parking.Where(x => x.NameOfParking.Contains(namepp));
+            //}
 
             List<Object> list = new List<object>();
             foreach (var item in parking)
@@ -100,10 +96,8 @@ namespace SmartParkingApplication.Controllers
                 var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank };
                 list.Add(tr);
             }
-            var totalRowpp = list.Count();
-            var result = list.Skip((pagepp - 1) * pageSizepp).Take(pageSizepp);
 
-            return Json(new { datapp = result, total = totalRowpp }, JsonRequestBehavior.AllowGet);
+            return Json(new { datapp = list}, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ParkingPlaceDetails(int id)

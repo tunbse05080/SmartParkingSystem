@@ -3,7 +3,10 @@
     ViewBag.Title = "ListParkingPlace";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!-- DataTables -->
+<link rel="stylesheet" href="~/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -34,17 +37,11 @@
                                 <div class="col-md-9">
                                     <button type="button" data-toggle="modal" data-target="#myModalPP" onclick="clearTextBoxPP();" class="btn btn-success">Thêm Bãi Đỗ</button>
                                 </div>
-                                <div class="col-md-3">
-                                    <form class="form-inline active-purple-3 active-purple-4">
-                                        <i class="fas fa-search" aria-hidden="true" id="iconSearch" onclick="return loadDataParkingPlace(true)"></i>
-                                        <input class="form-control form-control-sm ml-3 w-75" id="txtNameSearchpp" type="text" placeholder="Search" aria-label="Search">
-                                    </form>
-                                </div>
                             </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="tbParkingPlace" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>Tên bãi đỗ</th>
@@ -70,8 +67,6 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                            <div id="paginationpp" class="pagination" style="margin-top:10px">
-                            </div>
                         </div>
 
                         <!-- /.card-body -->
@@ -104,7 +99,7 @@
                                             <label for="NumberOfMotoBike">Sức chứa xe máy</label>
                                             <input type="text" class="form-control" id="NumberOfMotoBike" placeholder="Sức chứa xe máy" />
                                         </div>
-                                      
+
 
                                     </div>
                                     <div class="modal-footer">
@@ -174,3 +169,27 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<!-- jQuery -->
+<script src="~/Content/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Content/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/plugins/jszip/jszip.min.js"></script>
+<script src="~/Content/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/Content/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/Content/dist/js/CRUD_ParkingPlace.js"></script>
+<script>
+    //load page
+    $(document).ready(function () {
+        loadDataParkingPlace();
+    });
+</script>

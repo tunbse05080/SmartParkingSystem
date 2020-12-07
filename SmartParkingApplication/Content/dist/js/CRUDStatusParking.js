@@ -2,21 +2,17 @@
 var pageConfigSPP = 1;
  // pull
 //Load Data function
-function loadDataStatusParking(changePageSizeSPP) {
-    var nameSPP = $('#txtNameSearchSPP').val();
-    var timeTo = $('#txtTimeToSPP').val();
-    var timeFrom = $('#txtTimeFromSPP').val();
+function loadDataStatusParking() {
+    //var timeTo = $('#txtTimeToSPP').val();
+    //var timeFrom = $('#txtTimeFromSPP').val();
     $.ajax({
         url: "/ManagePPlace/LoadDataStatusPP",
         type: "GET",
         contentType: "application/json;charset=utf-8",
-        data: {
-            nameSSP: nameSPP,
-            pageSPP: pageConfigSPP,
-            pageSizeSPP: 5,
-            timeFrom: timeFrom,
-            timeTo: timeTo
-        },
+        //data: {
+        //    timeFrom: timeFrom,
+        //    timeTo: timeTo
+        //},
         dataType: "json",
         success: function (result) {
             var data = result.dataSSP;
@@ -32,9 +28,10 @@ function loadDataStatusParking(changePageSizeSPP) {
                 html += '</tr>';
             });
             $('#tbodyStatusPP').html(html);
-            pagingSPP(result.total, function () {
-                loadDataStatusParking();
-            }, changePageSizeSPP);
+            var table = $('#tbStatusPP').DataTable();
+            //pagingSPP(result.total, function () {
+            //    loadDataStatusParking();
+            //}, changePageSizeSPP);
         },
         error: function (errormessage) {
             if (timeFrom == null && timeTo == null) {
@@ -80,27 +77,27 @@ function loadDataStatusParking(changePageSizeSPP) {
 //}
 
 //paging Status ParkingPlace
-function pagingSPP(totalRowSPP, callback, changePageSizeSPP) {
-    var totalPageSPP = Math.ceil(totalRowSPP / 5);
+//function pagingSPP(totalRowSPP, callback, changePageSizeSPP) {
+//    var totalPageSPP = Math.ceil(totalRowSPP / 5);
 
-    //Unbind pagination if it existed or click change pageSize
-    if ($('#paginationSPP').length === 0 || changePageSizeSPP === true) {
-        $('#paginationSPP').empty();
-        $('#paginationSPP').removeData("twbs-pagination");
-        $('#paginationSPP').unbind("page");
-    }
+//    //Unbind pagination if it existed or click change pageSize
+//    if ($('#paginationSPP').length === 0 || changePageSizeSPP === true) {
+//        $('#paginationSPP').empty();
+//        $('#paginationSPP').removeData("twbs-pagination");
+//        $('#paginationSPP').unbind("page");
+//    }
 
-    $('#paginationSPP').twbsPagination({
-        totalPages: totalPageSPP,
-        first: "Đầu", 
-        next: "Tiếp",
-        last: "Cuối",
-        prev: "Trước",
-        visiblePages: 10,
-        onPageClick: function (event, pageSPP) {
-            pageConfigSPP = pageSPP;
-            setTimeout(callback, 200);
-        }
-    });
-}
+//    $('#paginationSPP').twbsPagination({
+//        totalPages: totalPageSPP,
+//        first: "Đầu", 
+//        next: "Tiếp",
+//        last: "Cuối",
+//        prev: "Trước",
+//        visiblePages: 10,
+//        onPageClick: function (event, pageSPP) {
+//            pageConfigSPP = pageSPP;
+//            setTimeout(callback, 200);
+//        }
+//    });
+//}
 
