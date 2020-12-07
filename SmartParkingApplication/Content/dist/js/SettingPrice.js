@@ -1,4 +1,7 @@
-﻿var pageConfigpr = 1;
+﻿$(document).ready(function () {
+    loadDataPrice();
+});
+var pageConfigpr = 1;
 
 function loadDataPrice(changsizepr) {
     var namepr = $('#txtNameSearchpr').val();
@@ -97,7 +100,7 @@ function loadDataPrice(changsizepr) {
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                loadDataPrice();
+                loadDataPrice(true);
                 $('#myModalUpdatePR').modal('hide');
 
             },
