@@ -105,9 +105,9 @@ function loadDataTicket() {
             });
 
             $('#tbodyTicket').html(html);
-            //var table = $('#tbTicket').DataTable();
-            var table = $("#tbTicket").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true,
+
+            $("#tbTicket").DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true, retrieve:true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbTicket_wrapper .col-md-6:eq(0)');
             totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
@@ -180,6 +180,7 @@ function AddTicket() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbTicket').DataTable().clear().destroy();
             UpdateCardByNumber($('#cbCardNumberTK').val());
             loadDataTicket();
             $('#myModalTicket').modal('hide');
@@ -210,6 +211,7 @@ function UpdateExtendTK() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbTicket').DataTable().clear().destroy();
             loadDataTicket();
             $('#myModalExtendTicket').modal('hide');
              
@@ -249,37 +251,6 @@ function getTicketByID(MonthlyTicketID) {
     });
     return false;
 }
-
-//Function for getting detail data base on MonthtlyTicketID
-//function getDetailTicketByID(MonthlyTicketID) {
-//    $.ajax({
-//        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#MonthlyTicketIDEdit').val(result.MonthlyTicketID);
-//            $('#CusNameEdit').val(result.CusName);
-//            $('#IdentityCardEdit').val(result.IdentityCard);
-//            $('#PhoneEdit').val(result.Phone);
-//            $('#EmailEdit').val(result.Email);
-//            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
-//            $('#LicensePlatesEdit').val(result.LicensePlates);
-//            $('#RegisDateEdit').val(result.RegisDate);
-//            $('#ExpiryDateEdit').val(result.ExpiryDate);
-
-//            $('#myModalDetailTicket').modal('show');
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + MonthlyTicketID + errormessage.responseText);
-//        }
-//    });
-//    return false;
-//}
-
-//function closeETK() {
-//    $('#myModalExtendTicket').modal('hide');
-//}
 
 function getIdToDropContract() {
     $.ajax({

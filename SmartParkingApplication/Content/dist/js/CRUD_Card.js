@@ -47,7 +47,6 @@ function loadDataCard() {
     });
 }
 
-
 // paging
 //function pagingCard(totalRowCard, callback, changePageSizeCard) {
 //    var totalPageCard = Math.ceil(totalRowCard / 5);
