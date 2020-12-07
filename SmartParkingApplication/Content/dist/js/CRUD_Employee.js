@@ -292,9 +292,6 @@ function Update() {
             $('#myModalUser').modal('hide');
             $('#tbUser').DataTable().clear().destroy();
             loadData();
-            
-            
-
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

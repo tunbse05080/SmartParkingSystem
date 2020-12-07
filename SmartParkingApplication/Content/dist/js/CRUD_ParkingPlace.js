@@ -25,7 +25,7 @@ function loadDataParkingPlace() {
                 html += '</tr>';
             });
             $('#tbodypp').html(html);
-            var table = $('#tbPPlace').DataTable();
+            $('#tbPPlace').DataTable({ "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true});
             totalPlace += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalPlace += '<p>Tổng số thẻ</p>';
             $('#totalParkingPlace').html(totalPlace);
@@ -115,6 +115,7 @@ function UpdatePP() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbPPlace').DataTable().clear().destroy();
             loadDataParkingPlace();
             $('#myModalUpdatePP').modal('hide');
 
@@ -174,6 +175,7 @@ function AddPP() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbPPlace').DataTable().clear().destroy();
             loadDataParkingPlace();
             $('#myModalPP').modal('hide');
         },

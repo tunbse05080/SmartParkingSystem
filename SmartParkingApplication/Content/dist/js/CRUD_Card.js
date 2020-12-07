@@ -35,7 +35,7 @@ function loadDataCard() {
                 html += '</tr>';
             });
             $('#tbodyCard').html(html);
-            var table = $('#tbCard').DataTable();
+            $('#tbCard').DataTable();
             totalCard += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalCard += '<p>Tổng số thẻ</p>';
             $('#totalCard').html(totalCard);

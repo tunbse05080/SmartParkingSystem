@@ -47,6 +47,7 @@ namespace SmartParkingApplication.Controllers
             var total = list.Count();
             return Json(new { dataCard = list, total}, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult Create(Card card)
         {
             if (ModelState.IsValid)
