@@ -1,6 +1,6 @@
-﻿
-
-var pageConfig = 1;
+﻿$(document).ready(function () {
+    loadData();
+});
 
 function loadDateNow() {
     // body...

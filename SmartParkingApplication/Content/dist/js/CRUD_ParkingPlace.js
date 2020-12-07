@@ -1,4 +1,7 @@
-﻿var pageConfigpp = 1;
+﻿//load page
+$(document).ready(function () {
+    loadDataParkingPlace();
+});
 
 function loadDataParkingPlace() {
     $.ajax({
@@ -21,7 +24,7 @@ function loadDataParkingPlace() {
                 html += '</tr>';
             });
             $('#tbodypp').html(html);
-            var table = $('#tbParkingPlace').DataTable();
+            var table = $('#tbPPlace').DataTable();
             //pagingpp(result.total, function () {
             //    loadDataParkingPlace();
             //}, changsizepp);

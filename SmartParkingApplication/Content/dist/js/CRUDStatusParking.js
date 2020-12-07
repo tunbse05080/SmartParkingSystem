@@ -1,6 +1,8 @@
-﻿
-var pageConfigSPP = 1;
- // pull
+﻿//load page
+$(document).ready(function () {
+    loadDataStatusParking();
+});
+
 //Load Data function
 function loadDataStatusParking() {
     //var timeTo = $('#txtTimeToSPP').val();
