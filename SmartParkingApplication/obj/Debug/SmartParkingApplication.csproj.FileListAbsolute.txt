@@ -524,6 +524,7 @@ F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\bin\Sys
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\bin\System.Web.Helpers.xml
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\bin\System.Web.Mvc.xml
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.CoreCompileInputs.cache
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.CopyComplete
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.dll
