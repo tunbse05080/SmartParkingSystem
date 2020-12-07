@@ -103,8 +103,13 @@ function loadDataTicket() {
                 html += '<td><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
             });
+
             $('#tbodyTicket').html(html);
-            var table = $('#tbTicket').DataTable();
+            //var table = $('#tbTicket').DataTable();
+            var table = $("#tbTicket").DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#tbTicket_wrapper .col-md-6:eq(0)');
             totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalTicket += '<p>Tổng số vé tháng</p>';
             $('#totalTicket').html(totalTicket);

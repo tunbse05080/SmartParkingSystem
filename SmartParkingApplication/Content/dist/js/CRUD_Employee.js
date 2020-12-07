@@ -174,12 +174,10 @@ function loadData() {
                 html += '</tr>';
             });
             $('#tbodyUser').html(html);
-            
-            var table = $('#tbUser').DataTable();
-            //paging(result.total, function () {
-            //    loadData();
-            //}, changePageSize);
-
+            var table = $("#tbUser").DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#tbUser_wrapper .col-md-6:eq(0)');
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
