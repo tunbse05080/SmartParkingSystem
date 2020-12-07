@@ -23,7 +23,7 @@ namespace SmartParkingApplication.Controllers
         }
 
         //load list monthly ticket
-        public JsonResult LoadData(string nameT, int pageTicket, int pageSizeTicket = 5)
+        public JsonResult LoadData()
         {
 
             var ticket = from t in db.MonthlyTickets
@@ -34,10 +34,10 @@ namespace SmartParkingApplication.Controllers
                          orderby t.MonthlyTicketID
                          select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate, c.CardNumber };
             //var ticket = from t in db.MonthlyTickets select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate };
-            if (!string.IsNullOrEmpty(nameT))
-            {
-                ticket = ticket.Where(x => x.CusName.Contains(nameT));
-            }
+            //if (!string.IsNullOrEmpty(nameT))
+            //{
+            //    ticket = ticket.Where(x => x.CusName.Contains(nameT));
+            //}
 
             List<Object> list = new List<object>();
             foreach (var item in ticket)
@@ -70,11 +70,8 @@ namespace SmartParkingApplication.Controllers
                 
                 list.Add(tr);
             }
-
-            var totalRowTicket = list.Count();
-            var result = list.Skip((pageTicket - 1) * pageSizeTicket).Take(pageSizeTicket);
-
-            return Json(new { dataTicket = result, total = totalRowTicket }, JsonRequestBehavior.AllowGet);
+            var total = list.Count();
+            return Json(new { dataTicket = list, total }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Create(MonthlyTicket ticket)
         {

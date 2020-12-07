@@ -1,18 +1,13 @@
-﻿
-var pageConfigCard = 1;
+﻿$(document).ready(function () {
+    loadDataCard();
+});
 
 //Load Data function
-function loadDataCard(changePageSizeCard) {
-    var nameCard = $('#txtSearchCard').val();
+function loadDataCard() {
     $.ajax({
         url: "/ManageCard/LoadData",
         type: "GET",
         contentType: "application/json;charset=utf-8",
-        data: {
-            nameC: nameCard,
-            pageCard: pageConfigCard,
-            pageSizeCard: 5
-        },
         dataType: "json",
         success: function (result) {
             var data = result.dataCard;
@@ -40,10 +35,8 @@ function loadDataCard(changePageSizeCard) {
                 html += '</tr>';
             });
             $('#tbodyCard').html(html);
-            pagingCard(result.total, function () {
-                loadDataCard();
-            }, changePageSizeCard);
-            totalCard += '<h3>' + result.totalCard + '<sup style="font-size: 20px"></sup></h3>';
+            var table = $('#tbCard').DataTable();
+            totalCard += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalCard += '<p>Tổng số thẻ</p>';
             $('#totalCard').html(totalCard);
         },
@@ -55,29 +48,29 @@ function loadDataCard(changePageSizeCard) {
 
 
 // paging
-function pagingCard(totalRowCard, callback, changePageSizeCard) {
-    var totalPageCard = Math.ceil(totalRowCard / 5);
+//function pagingCard(totalRowCard, callback, changePageSizeCard) {
+//    var totalPageCard = Math.ceil(totalRowCard / 5);
 
-    //Unbind pagination if it existed or click change pageSize
-    if ($('#paginationCard').length === 0 || changePageSizeCard === true) {
-        $('#paginationCard').empty();
-        $('#paginationCard').removeData("twbs-pagination");
-        $('#paginationCard').unbind("page");
-    }
+//    //Unbind pagination if it existed or click change pageSize
+//    if ($('#paginationCard').length === 0 || changePageSizeCard === true) {
+//        $('#paginationCard').empty();
+//        $('#paginationCard').removeData("twbs-pagination");
+//        $('#paginationCard').unbind("page");
+//    }
 
-    $('#paginationCard').twbsPagination({
-        totalPages: totalPageCard,
-        first: "Đầu",
-        next: "Tiếp",
-        last: "Cuối",
-        prev: "Trước",
-        visiblePages:   10 ,
-        onPageClick: function (event, pageCard) {
-            pageConfigCard = pageCard;
-            setTimeout(callback, 200);
-        }
-    });
-}
+//    $('#paginationCard').twbsPagination({
+//        totalPages: totalPageCard,
+//        first: "Đầu",
+//        next: "Tiếp",
+//        last: "Cuối",
+//        prev: "Trước",
+//        visiblePages:   10 ,
+//        onPageClick: function (event, pageCard) {
+//            pageConfigCard = pageCard;
+//            setTimeout(callback, 200);
+//        }
+//    });
+//}
 
 //ComboboxStatusCard
 function comboboxStatusCard() {

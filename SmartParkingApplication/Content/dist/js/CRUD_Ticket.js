@@ -1,5 +1,6 @@
-﻿
-var pageConfigTicket = 1;
+﻿$(document).ready(function () {
+    loadDataTicket();
+});
 
 //reload modal when change combobox
 function reloadModalETK() {
@@ -76,17 +77,12 @@ function ComboboxTicket() {
 }
 
 //Load Data function
-function loadDataTicket(changePageSizeTicket) {
-    var nameTicket = $('#txtSearchTicket').val();
+function loadDataTicket() {
+
     $.ajax({
         url: "/ManageTicket/LoadData",
         type: "GET",
         contentType: "application/json;charset=utf-8",
-        data: {
-            nameT: nameTicket,
-            pageTicket: pageConfigTicket,
-            pageSizeTicket: 5
-        },
         dataType: "json",
         success: function (result) {
             var data = result.dataTicket;
@@ -108,11 +104,9 @@ function loadDataTicket(changePageSizeTicket) {
                 html += '</tr>';
             });
             $('#tbodyTicket').html(html);
-            pagingTicket(result.total, function () {
-                loadDataTicket();
-            }, changePageSizeTicket);
+            var table = $('#tbTicket').DataTable();
             totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
-            totalTicket += '<p>Số vé tháng</p>'
+            totalTicket += '<p>Tổng số vé tháng</p>';
             $('#totalTicket').html(totalTicket);
         },
         error: function (errormessage) {
@@ -121,29 +115,29 @@ function loadDataTicket(changePageSizeTicket) {
     });
 }
 
-function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
-    var totalPageTicket = Math.ceil(totalRowTicket / 5);
+//function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
+//    var totalPageTicket = Math.ceil(totalRowTicket / 5);
 
-    //Unbind pagination if it existed or click change pageSize
-    if ($('#paginationTicket').length === 0 || changePageSizeTicket === true) {
-        $('#paginationTicket').empty();
-        $('#paginationTicket').removeData("twbs-pagination");
-        $('#paginationTicket').unbind("page");
-    }
+//    //Unbind pagination if it existed or click change pageSize
+//    if ($('#paginationTicket').length === 0 || changePageSizeTicket === true) {
+//        $('#paginationTicket').empty();
+//        $('#paginationTicket').removeData("twbs-pagination");
+//        $('#paginationTicket').unbind("page");
+//    }
 
-    $('#paginationTicket').twbsPagination({
-        totalPages: totalPageTicket,
-        first: "Đầu",
-        next: "Tiếp",
-        last: "Cuối",
-        prev: "Trước",
-        visiblePages: 10,
-        onPageClick: function (event, pageTicket) {
-            pageConfigTicket = pageTicket;
-            setTimeout(callback, 200);
-        }
-    });
-}
+//    $('#paginationTicket').twbsPagination({
+//        totalPages: totalPageTicket,
+//        first: "Đầu",
+//        next: "Tiếp",
+//        last: "Cuối",
+//        prev: "Trước",
+//        visiblePages: 10,
+//        onPageClick: function (event, pageTicket) {
+//            pageConfigTicket = pageTicket;
+//            setTimeout(callback, 200);
+//        }
+//    });
+//}
 
 function clearTextBoxTicket() {
     var date = loadDateNow();

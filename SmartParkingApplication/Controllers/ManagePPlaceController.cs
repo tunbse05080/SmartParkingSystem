@@ -37,17 +37,7 @@ namespace SmartParkingApplication.Controllers
                         from c in table1.DefaultIfEmpty()
                         orderby t.CardID
                         select new { t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber };
-            //if (!string.IsNullOrEmpty(nameSSP))
-            //{
-            //    trans = trans.Where(x => x.LicensePlates.Contains(nameSSP));
-            //}else if(!string.IsNullOrEmpty(timeFrom.ToString()) && !string.IsNullOrEmpty(timeTo.ToString()))
-            //{
-            //    trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo);
-            //}
-            //else
-            //{
-            //    trans = trans.Where(x => x.TimeIn >= timeFrom && x.TimeOutv <= timeTo && x.LicensePlates.Contains(nameSSP));
-            //}
+
             List<Object> list = new List<object>();
             foreach (var item in trans)
             {
@@ -63,6 +53,7 @@ namespace SmartParkingApplication.Controllers
                         typeofTicket = "Vé Tháng";
                         break;
                 }
+
                 
                 var tr = new { LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber };
                 list.Add(tr);
@@ -96,8 +87,8 @@ namespace SmartParkingApplication.Controllers
                 var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank };
                 list.Add(tr);
             }
-
-            return Json(new { datapp = list}, JsonRequestBehavior.AllowGet);
+            var total = list.Count();
+            return Json(new { datapp = list, total }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ParkingPlaceDetails(int id)

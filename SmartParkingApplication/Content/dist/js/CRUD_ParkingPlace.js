@@ -12,6 +12,7 @@ function loadDataParkingPlace() {
         success: function (result) {
             var data = result.datapp;
             var html = '';
+            var totalPlace = '';
             $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.NameOfParking + '</td>';
@@ -25,9 +26,9 @@ function loadDataParkingPlace() {
             });
             $('#tbodypp').html(html);
             var table = $('#tbPPlace').DataTable();
-            //pagingpp(result.total, function () {
-            //    loadDataParkingPlace();
-            //}, changsizepp);
+            totalPlace += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
+            totalPlace += '<p>Tổng số thẻ</p>';
+            $('#totalParkingPlace').html(totalPlace);
         },
         error: function (errormessage) {
             if (timeFrom == null && timeTo == null) {
