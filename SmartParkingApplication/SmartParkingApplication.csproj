@@ -149,6 +149,7 @@
     <Content Include="Content\dist\js\adminlte.js" />
     <Content Include="Content\dist\js\adminlte.min.js" />
     <Content Include="Content\dist\js\CRUDStatusParking.js" />
+    <Content Include="Content\dist\js\SettingPrice.js" />
     <Content Include="Content\dist\js\CRUD_Card.js" />
     <Content Include="Content\dist\js\CRUD_Employee.js" />
     <Content Include="Content\dist\js\CRUD_Ticket.js" />
