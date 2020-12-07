@@ -1,11 +1,4 @@
-﻿//load page
-$(document).ready(function () {
-    loadData();
-    loadDataCard();
-    loadDataStatusParking();
-    loadDataTicket();
-    loadDataParkingPlace();
-});
+﻿
 
 var pageConfig = 1;
 
@@ -152,17 +145,11 @@ function getIdToDropContract() {
 }
 
 //Load Data function
-function loadData(changePageSize) {
-    var name = $('#txtNameSearch').val();
+function loadData() {
     $.ajax({
         url: "/ManageUser/LoadData",
         type: "GET",
         contentType: "application/json;charset=utf-8",
-        data: {
-            name: name,
-            page: pageConfig,
-            pageSize: 5
-        },
         dataType: "json",
         success: function (result) {
             var data = result.data;
@@ -187,9 +174,12 @@ function loadData(changePageSize) {
                 html += '</tr>';
             });
             $('#tbodyUser').html(html);
-            paging(result.total, function () {
-                loadData();
-            }, changePageSize);
+            
+            var table = $('#tbUser').DataTable();
+            //paging(result.total, function () {
+            //    loadData();
+            //}, changePageSize);
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -198,29 +188,29 @@ function loadData(changePageSize) {
 }
 
 //paging
-function paging(totalRow, callback, changePageSize) {
-    var totalPage = Math.ceil(totalRow / 5);
+//function paging(totalRow, callback, changePageSize) {
+//    var totalPage = Math.ceil(totalRow / 5);
 
-    //Unbind pagination if it existed or click change pageSize
-    if ($('#pagination').length === 0 || changePageSize === true) {
-        $('#pagination').empty();
-        $('#pagination').removeData("twbs-pagination");
-        $('#pagination').unbind("page");
-    }
+//    //Unbind pagination if it existed or click change pageSize
+//    if ($('#pagination').length === 0 || changePageSize === true) {
+//        $('#pagination').empty();
+//        $('#pagination').removeData("twbs-pagination");
+//        $('#pagination').unbind("page");
+//    }
 
-    $('#pagination').twbsPagination({
-        totalPages: totalPage,
-        first: "Đầu",
-        next: "Tiếp",
-        last: "Cuối",
-        prev: "Trước",
-        visiblePages: 10,
-        onPageClick: function (event, page) {
-            pageConfig = page;
-            setTimeout(callback, 200);
-        }
-    });
-}
+//    $('#pagination').twbsPagination({
+//        totalPages: totalPage,
+//        first: "Đầu",
+//        next: "Tiếp",
+//        last: "Cuối",
+//        prev: "Trước",
+//        visiblePages: 10,
+//        onPageClick: function (event, page) {
+//            pageConfig = page;
+//            setTimeout(callback, 200);
+//        }
+//    });
+//}
 
 //Add Data Function
 function Add() {

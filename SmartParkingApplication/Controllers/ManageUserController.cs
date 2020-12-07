@@ -24,7 +24,7 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
-        public JsonResult LoadData(int page, String name,int pageSize = 5)
+        public JsonResult LoadData()
         {
             var users = from r in db.Roles
                         join u in db.Users on r.RoleID equals u.RoleID into table1
@@ -33,10 +33,6 @@ namespace SmartParkingApplication.Controllers
                         from p in table2.DefaultIfEmpty()
                         orderby u.UserID
                         select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate,u.StatusOfWork, p.NameOfParking, r.RoleName };
-            if (!string.IsNullOrEmpty(name))
-            {
-                users = users.Where(x => x.Name.Contains(name));
-            }
 
             List<Object> list = new List<object>();
             foreach (var item in users)
@@ -67,11 +63,8 @@ namespace SmartParkingApplication.Controllers
                 var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
                 list.Add(tr);
             }
-
-            var totalRow = list.Count();
-            var result = list.Skip((page - 1) * pageSize).Take(pageSize);
             
-            return Json(new { data = result, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = list}, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Details/5

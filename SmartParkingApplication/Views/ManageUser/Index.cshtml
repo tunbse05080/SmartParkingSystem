@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- DataTables -->
+<link rel="stylesheet" href="~/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -41,17 +45,11 @@
                                 <div class="col-md-3">
                                     <button type="button" onclick="location.href='@Url.Action("XuatFileExel", "ManageUser")';return false;" class="btn btn-success">Xuất danh sách nhân viên</button>
                                 </div>
-                                <div class="col-md-3">
-                                    <form class="form-inline active-purple-3 active-purple-4">
-                                        <i class="fas fa-search" aria-hidden="true" id="iconSearch" onclick="return loadData(true)"></i>
-                                        <input class="form-control form-control-sm ml-3 w-75" id="txtNameSearch" type="text" placeholder="Search" aria-label="Search">
-                                    </form>
-                                </div>
                             </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="tbUser" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>Tên</th>
@@ -77,9 +75,6 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                            <div id="pagination" class="pagination" style="margin-top:10px">
-
-                            </div>
                         </div>
                         <!-- /.card-body -->
                         <!-- The Modal -->
@@ -181,15 +176,15 @@
                                                 <label for="Id">Id</label>
                                                 <input type="text" class="form-control" id="UserIDGH" placeholder="Id" disabled />
                                             </div>
-                                            <div class="form-group col-sm-4" hidden >
+                                            <div class="form-group col-sm-4" hidden>
                                                 <label for="UserName">Tên tài khoản</label>
                                                 <input type="text" class="form-control" id="UserNameGH" placeholder="Tên tài khoản" disabled />
                                             </div>
-                                            <div class="form-group col-sm-4" hidden >
+                                            <div class="form-group col-sm-4" hidden>
                                                 <label for="PassWork">Mật khẩu</label>
                                                 <input type="text" class="form-control" id="PassWordGH" placeholder="Mật khẩu" disabled />
                                             </div>
-                                            <div class="form-group col-sm-4"  hidden>
+                                            <div class="form-group col-sm-4" hidden>
                                                 <label for="FullName">Tên đầy đủ</label>
                                                 <input type="text" class="form-control" id="FullNameGH" placeholder="Tên đầy đủ" disabled />
                                             </div>
@@ -197,11 +192,11 @@
                                                 <label for="DateOfBirth">Ngày Sinh</label>
                                                 <input type="text" class="form-control" id="DateOfBirthGH" placeholder="Ngày Sinh" disabled />
                                             </div>
-                                            <div class="form-group col-sm-4" hidden >
+                                            <div class="form-group col-sm-4" hidden>
                                                 <label for="Gender">Giới tính</label>
                                                 <input type="text" class="form-control" id="GenderGH" placeholder="Giới tính" disabled />
                                             </div>
-                                            <div class="form-group col-sm-4" hidden >
+                                            <div class="form-group col-sm-4" hidden>
                                                 <label for="Address">Địa chỉ</label>
                                                 <input type="text" class="form-control" id="AddressGH" placeholder="Địa chỉ" disabled />
                                             </div>
@@ -213,13 +208,13 @@
                                                 <label for="Email">Email</label>
                                                 <input type="text" class="form-control" id="EmailGH" placeholder="Email" disabled />
                                             </div>
-                                            <div class="form-group col-sm-4" hidden >
+                                            <div class="form-group col-sm-4" hidden>
                                                 <label for="IdentityCard">Số CMND</label>
                                                 <input type="text" class="form-control" id="IdentityCardGH" placeholder="Số CMND" disabled />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="ContractSigningDate">Ngày ký HĐ</label>
-                                                <input type="text" class="form-control" id="ContractSigningDateGH" placeholder="Ngày ký HĐ"/>
+                                                <input type="text" class="form-control" id="ContractSigningDateGH" placeholder="Ngày ký HĐ" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="ContractExpirationDate">Ngày hết HĐ</label>
@@ -335,3 +330,27 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<!-- jQuery -->
+<script src="~/Content/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Content/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/plugins/jszip/jszip.min.js"></script>
+<script src="~/Content/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/Content/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/Content/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/Content/dist/js/CRUD_Employee.js"></script>
+<script>
+    //load page
+    $(document).ready(function () {
+        loadData();
+    });
+</script>
