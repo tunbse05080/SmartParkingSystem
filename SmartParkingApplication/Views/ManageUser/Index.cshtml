@@ -38,9 +38,9 @@
                                 <div class="col-md-3">
                                     <button type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success">Lịch làm việc</button>
                                 </div>
-                                <div class="col-md-3">
-                                    <button type="button" onclick="location.href='@Url.Action("XuatFileExel", "ManageUser")';return false;" class="btn btn-success">Xuất danh sách nhân viên</button>
-                                </div>
+                                @*<div class="col-md-3">
+                                    <button type="button" onclick="location.href='@Url.Action("ExportListAlmostExpired", "ManageUser")';return false;" class="btn btn-success">Xuất d/s sắp hết hạn HĐ</button>
+                                </div>*@
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -49,9 +49,10 @@
                                 <thead>
                                     <tr>
                                         <th>Tên</th>
-                                        <th>Ngày Sinh</th>
+                                        @*<th>Ngày Sinh</th>*@
                                         <th>Số điện thoại</th>
                                         <th>Chức vụ</th>
+                                        <th>Ngày hết HĐ</th>
                                         <th>Bãi đỗ</th>
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>
@@ -62,9 +63,10 @@
                                 <tfoot>
                                     <tr>
                                         <th>Tên</th>
-                                        <th>Ngày Sinh</th>
+                                        @*<th>Ngày Sinh</th>*@
                                         <th>Số điện thoại</th>
                                         <th>Chức vụ</th>
+                                        <th>Ngày hết HĐ</th>
                                         <th>Bãi đỗ</th>
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>

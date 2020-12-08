@@ -30,7 +30,7 @@ function DateETK(dateExtend) {
         dateExtend = 180;
     } else {
         dateExtend = 365;
-    } 
+    }
     
     var date = new Date();
     date.setTime(date.getTime() + (dateExtend * 24 * 60 * 60 * 1000));
@@ -91,13 +91,13 @@ function loadDataTicket() {
             $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.CusName + '</td>';
-                html += '<td>' + item.IdentityCard + '</td>';
                 html += '<td>' + item.Phone + '</td>';
                 html += '<td>' + item.Email + '</td>';
                 html += '<td>' + item.typeOfVehicle + '</td>';
                 html += '<td>' + item.LicensePlates + '</td>';
                 html += '<td>' + item.RegisDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
+                if()
                 html += '<td>' + item.CardNumber + '</td>';
 
                 html += '<td><button class="btn btn-warning" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
@@ -252,29 +252,29 @@ function getTicketByID(MonthlyTicketID) {
     return false;
 }
 
-function getIdToDropContract() {
-    $.ajax({
-        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#MonthlyTicketIDEdit').val(result.MonthlyTicketID);
-            $('#CusNameEdit').val(result.CusName);
-            $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneEdit').val(result.Phone);
-            $('#EmailEdit').val(result.Email);
-            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
-            $('#LicensePlatesEdit').val(result.LicensePlates);
-            $('#RegisDateEdit').val(result.RegisDate);
-            $('#ExpiryDateEdit').val(result.ExpiryDate);
+//function getIdToDropContract() {
+//    $.ajax({
+//        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
+//        type: "GET",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#MonthlyTicketIDEdit').val(result.MonthlyTicketID);
+//            $('#CusNameEdit').val(result.CusName);
+//            $('#IdentityCardEdit').val(result.IdentityCard);
+//            $('#PhoneEdit').val(result.Phone);
+//            $('#EmailEdit').val(result.Email);
+//            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
+//            $('#LicensePlatesEdit').val(result.LicensePlates);
+//            $('#RegisDateEdit').val(result.RegisDate);
+//            $('#ExpiryDateEdit').val(result.ExpiryDate);
 
-            $('#myModalTicket').modal('show');
-            $('#btnTicketDrop').show();
-        },
-        error: function (errormessage) {
-            alert("Exception:" + EmployeeID + errormessage.responseText);
-        }
-    });
-    return false;
-}
+//            $('#myModalTicket').modal('show');
+//            $('#btnTicketDrop').show();
+//        },
+//        error: function (errormessage) {
+//            alert("Exception:" + EmployeeID + errormessage.responseText);
+//        }
+//    });
+//    return false;
+//}

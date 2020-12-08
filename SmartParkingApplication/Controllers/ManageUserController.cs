@@ -20,7 +20,7 @@ namespace SmartParkingApplication.Controllers
         public ActionResult Index()
         {
             //List<User> list = db.Users.ToList();
-            
+
             return View();
         }
 
@@ -32,7 +32,7 @@ namespace SmartParkingApplication.Controllers
                         join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
                         from p in table2.DefaultIfEmpty()
                         orderby u.UserID
-                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate,u.StatusOfWork, p.NameOfParking, r.RoleName };
+                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
 
             List<Object> list = new List<object>();
             foreach (var item in users)
@@ -40,8 +40,9 @@ namespace SmartParkingApplication.Controllers
                 var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy");
                 var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy");
                 var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
+                var expdateFormES = item.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
                 string gender = string.Empty;
-                switch(item.Gender)
+                switch (item.Gender)
                 {
                     case 0:
                         gender = "Nữ";
@@ -60,11 +61,11 @@ namespace SmartParkingApplication.Controllers
                         statusOfwork = "Đang trong HĐ";
                         break;
                 }
-                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName };
+                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName, expdateFormES };
                 list.Add(tr);
             }
-            
-            return Json(new { data = list}, JsonRequestBehavior.AllowGet);
+
+            return Json(new { data = list }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Details/5
@@ -93,7 +94,7 @@ namespace SmartParkingApplication.Controllers
             dateOfBirth = employee.DateOfBirth.Value.ToString("MM/dd/yyyy");
             var contractSigningDate = employee.ContractSigningDate.Value.ToString("MM/dd/yyyy");
             var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new {  employee.UserID, employee.UserName, employee.Name, employee.UserAddress,employee.PassWork, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking, employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork };
+            var result = new { employee.UserID, employee.UserName, employee.Name, employee.UserAddress, employee.PassWork, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking, employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -119,7 +120,7 @@ namespace SmartParkingApplication.Controllers
                 db.SaveChanges();
             }
 
-            return Json(user,JsonRequestBehavior.AllowGet);
+            return Json(user, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Update(User user)
@@ -139,7 +140,7 @@ namespace SmartParkingApplication.Controllers
         {
             var list = db.Users.Select(u => u.Gender).Distinct().ToList();
             List<string> result = new List<string>();
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 var gender = "";
                 switch (item)
@@ -154,7 +155,7 @@ namespace SmartParkingApplication.Controllers
                         break;
                 }
             }
-            return Json(result,JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -235,92 +236,90 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Xuat file Exel User
-        public ActionResult XuatFileExel()
-        {
+        //public ActionResult ExportListAlmostExpired()
+        //{
+        //    var dateNow = DateTime.Now.AddDays(+7);
+        //    List<User> user = db.Users.Where(x => x.ContractExpirationDate <= dateNow && x.ContractExpirationDate >= DateTime.Now).ToList();
+        //    var alluser = new GridView();
+        //    //===================================================
+        //    DataTable dt = new DataTable();
+        //    //Add Datacolumn
+        //    DataColumn workCol = dt.Columns.Add("Họ và tên", typeof(String));
 
-            var user = db.Users.ToList();
-            var parking  = db.ParkingPlaces.ToList();
-            var role = db.Roles.ToList();
-            var alluser = new GridView();
-            //===================================================
-            DataTable dt = new DataTable();
-            //Add Datacolumn
-            DataColumn workCol = dt.Columns.Add("Họ và tên", typeof(String));
-
-            dt.Columns.Add("Tên Tài Khoản", typeof(String));
-            dt.Columns.Add("Ngày Sinh", typeof(String));
-            dt.Columns.Add("Giới tính", typeof(String));
-            dt.Columns.Add("Địa chỉ", typeof(String));
-            dt.Columns.Add("Số điện thoại", typeof(int));
-            dt.Columns.Add("Email", typeof(String));
-            dt.Columns.Add("Số CMND", typeof(int));
-            dt.Columns.Add("Ngày Ký HĐ", typeof(String));
-            dt.Columns.Add("Ngày Hết HĐ", typeof(String));
-            // them ngay gia han
-            dt.Columns.Add("Ngày Gia hạn", typeof(String));
+        //    dt.Columns.Add("Tên Tài Khoản", typeof(String));
+        //    dt.Columns.Add("Ngày Sinh", typeof(String));
+        //    dt.Columns.Add("Giới tính", typeof(String));
+        //    dt.Columns.Add("Địa chỉ", typeof(String));
+        //    dt.Columns.Add("Số điện thoại", typeof(int));
+        //    dt.Columns.Add("Email", typeof(String));
+        //    dt.Columns.Add("Số CMND", typeof(int));
+        //    dt.Columns.Add("Ngày Ký HĐ", typeof(String));
+        //    dt.Columns.Add("Ngày Hết HĐ", typeof(String));
+        //    // them ngay gia han
+        //    dt.Columns.Add("Ngày Gia hạn", typeof(String));
 
 
-           
-            dt.Columns.Add("Chức vụ", typeof(String));
-            dt.Columns.Add("Bãi làm việc", typeof(String));
+
+        //    dt.Columns.Add("Chức vụ", typeof(String));
+        //    dt.Columns.Add("Bãi làm việc", typeof(String));
 
 
-            //Add in the datarow
+        //    //Add in the datarow
 
 
-            foreach (var item in user)
-            {
-                DataRow newRow = dt.NewRow();
-                // newRow["Họ tên"] = item.UserName;
-                //newRow["Phòng ban"] = item.email;
-                //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
-                //newRow["Học vấn"] = item.Name;
-                //newRow["Chuyên ngành"] = item.UserAddress;
+        //    foreach (var item in user)
+        //    {
+        //        DataRow newRow = dt.NewRow();
+        //        // newRow["Họ tên"] = item.UserName;
+        //        //newRow["Phòng ban"] = item.email;
+        //        //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
+        //        //newRow["Học vấn"] = item.Name;
+        //        //newRow["Chuyên ngành"] = item.UserAddress;
 
-                newRow["Họ và tên"] = item.Name;
-                newRow["Ngày Sinh"] = item.DateOfBirth;
-                newRow["Tên Tài Khoản"] = item.UserName;
-                newRow["Giới tính"] = item.Gender;
-                newRow["Địa chỉ"] = item.UserAddress;
-                newRow["Số điện thoại"] = item.Phone;
-                newRow["Email"] = item.email;
-                newRow["Số CMND"] = item.IdentityCard;
-                // newRow["Ngày ký HĐ"] = item.UserName;
-                // newRow["Ngày hết HĐ"] = item.UserName;
-                newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
-                newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
-                newRow["Chức vụ"] = item.Role.RoleName;
-                newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
-               // newRow["Số CMND"] = item.UserName;
-               //full fesh
+        //        newRow["Họ và tên"] = item.Name;
+        //        newRow["Ngày Sinh"] = item.DateOfBirth;
+        //        newRow["Tên Tài Khoản"] = item.UserName;
+        //        newRow["Giới tính"] = item.Gender;
+        //        newRow["Địa chỉ"] = item.UserAddress;
+        //        newRow["Số điện thoại"] = item.Phone;
+        //        newRow["Email"] = item.email;
+        //        newRow["Số CMND"] = item.IdentityCard;
+        //        // newRow["Ngày ký HĐ"] = item.UserName;
+        //        // newRow["Ngày hết HĐ"] = item.UserName;
+        //        newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
+        //        newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
+        //        newRow["Chức vụ"] = item.Role.RoleName;
+        //        newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
+        //        // newRow["Số CMND"] = item.UserName;
+        //        //full fesh
 
-                dt.Rows.Add(newRow);
-            }
+        //        dt.Rows.Add(newRow);
+        //    }
 
-            //====================================================
-            alluser.DataSource = dt;
-            // gv.DataSource = ds;
-            alluser.DataBind();
+        //    //====================================================
+        //    alluser.DataSource = dt;
+        //    // gv.DataSource = ds;
+        //    alluser.DataBind();
 
-            Response.ClearContent();
-            Response.Buffer = true;
+        //    Response.ClearContent();
+        //    Response.Buffer = true;
 
-            Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
-            Response.ContentType = "application/ms-excel";
+        //    Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
+        //    Response.ContentType = "application/ms-excel";
 
-            Response.Charset = "";
-            StringWriter objStringWriter = new StringWriter();
-            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+        //    Response.Charset = "";
+        //    StringWriter objStringWriter = new StringWriter();
+        //    HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
 
-            alluser.RenderControl(objHtmlTextWriter);
+        //    alluser.RenderControl(objHtmlTextWriter);
 
-            Response.Output.Write(objStringWriter.ToString());
-            Response.Flush();
-            Response.End();
-            return Redirect("/ManageUser");
-        }
-        }
+        //    Response.Output.Write(objStringWriter.ToString());
+        //    Response.Flush();
+        //    Response.End();
+        //    return Redirect("/ManageUser");
+        //}
+    }
 
-     
+
 
 }
