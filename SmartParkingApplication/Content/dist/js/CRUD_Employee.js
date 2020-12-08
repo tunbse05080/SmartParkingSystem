@@ -201,24 +201,24 @@ function loadData() {
                 html += '<td>' + item.RoleName + '</td>';
                 html += '<td>' + item.ContractExpirationDate + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
-
-                if (item.expdateFormES <= DatePlus(7) && item.expdateFormES >= loadDateNowToCompare()) {
-                    item.StatusOfWork = "Sắp hết HĐ"
-                    html += '<td>' + item.StatusOfWork + '</td>';
-                } else {
-                    html += '<td>' + item.StatusOfWork + '</td>';
-                }
+                html += '<td>' + item.StatusOfWork + '</td>';
+                //if (item.expdateFormES <= DatePlus(7) && item.expdateFormES >= loadDateNowToCompare()) {
+                //    item.StatusOfWork = "Sắp hết HĐ"
+                //    html += '<td>' + item.StatusOfWork + '</td>';
+                //} else {
+                //    html += '<td>' + item.StatusOfWork + '</td>';
+                //}
                 //html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
                 switch (item.StatusOfWork) {
                     case "Hết hạn HĐ":
                         html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-warning" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
                         break;
-                    case "Đang trong HĐ":
+                    case "Còn hợp đồng":
                         html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
                         break;
-                    case "Sắp hết HĐ":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
-                        break;
+                    //case "Sắp hết HĐ":
+                    //    html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
+                    //    break;
                 }
                 html += '</tr>';
             });

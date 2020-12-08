@@ -40,7 +40,7 @@ namespace SmartParkingApplication.Controllers
                 var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy");
                 var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy");
                 var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
-                var expdateFormES = item.ContractExpirationDate.Value.ToString("yyyy/MM/dd");
+                //var expdateFormES = item.ContractExpirationDate.Value.ToString("yyyy/MM/dd");
                 string gender = string.Empty;
                 switch (item.Gender)
                 {
@@ -58,10 +58,10 @@ namespace SmartParkingApplication.Controllers
                         statusOfwork = "Hết hạn HĐ";
                         break;
                     case 1:
-                        statusOfwork = "Đang trong HĐ";
+                        statusOfwork = "Còn hợp đồng";
                         break;
                 }
-                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName, expdateFormES };
+                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName};
                 list.Add(tr);
             }
 
@@ -236,88 +236,88 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Xuat file Exel User
-        //public ActionResult ExportListAlmostExpired()
-        //{
-        //    var dateNow = DateTime.Now.AddDays(+7);
-        //    List<User> user = db.Users.Where(x => x.ContractExpirationDate <= dateNow && x.ContractExpirationDate >= DateTime.Now).ToList();
-        //    var alluser = new GridView();
-        //    //===================================================
-        //    DataTable dt = new DataTable();
-        //    //Add Datacolumn
-        //    DataColumn workCol = dt.Columns.Add("Họ và tên", typeof(String));
+        public ActionResult ExportListAlmostExpired()
+        {
+            var dateNow = DateTime.Now.AddDays(+7);
+            List<User> user = db.Users.Where(x => x.ContractExpirationDate <= dateNow && x.ContractExpirationDate >= DateTime.Now).ToList();
+            var alluser = new GridView();
+            //===================================================
+            DataTable dt = new DataTable();
+            //Add Datacolumn
+            DataColumn workCol = dt.Columns.Add("Họ và tên", typeof(String));
 
-        //    dt.Columns.Add("Tên Tài Khoản", typeof(String));
-        //    dt.Columns.Add("Ngày Sinh", typeof(String));
-        //    dt.Columns.Add("Giới tính", typeof(String));
-        //    dt.Columns.Add("Địa chỉ", typeof(String));
-        //    dt.Columns.Add("Số điện thoại", typeof(int));
-        //    dt.Columns.Add("Email", typeof(String));
-        //    dt.Columns.Add("Số CMND", typeof(int));
-        //    dt.Columns.Add("Ngày Ký HĐ", typeof(String));
-        //    dt.Columns.Add("Ngày Hết HĐ", typeof(String));
-        //    // them ngay gia han
-        //    dt.Columns.Add("Ngày Gia hạn", typeof(String));
-
-
-
-        //    dt.Columns.Add("Chức vụ", typeof(String));
-        //    dt.Columns.Add("Bãi làm việc", typeof(String));
+            dt.Columns.Add("Tên Tài Khoản", typeof(String));
+            dt.Columns.Add("Ngày Sinh", typeof(String));
+            dt.Columns.Add("Giới tính", typeof(String));
+            dt.Columns.Add("Địa chỉ", typeof(String));
+            dt.Columns.Add("Số điện thoại", typeof(int));
+            dt.Columns.Add("Email", typeof(String));
+            dt.Columns.Add("Số CMND", typeof(int));
+            dt.Columns.Add("Ngày Ký HĐ", typeof(String));
+            dt.Columns.Add("Ngày Hết HĐ", typeof(String));
+            // them ngay gia han
+            dt.Columns.Add("Ngày Gia hạn", typeof(String));
 
 
-        //    //Add in the datarow
+
+            dt.Columns.Add("Chức vụ", typeof(String));
+            dt.Columns.Add("Bãi làm việc", typeof(String));
 
 
-        //    foreach (var item in user)
-        //    {
-        //        DataRow newRow = dt.NewRow();
-        //        // newRow["Họ tên"] = item.UserName;
-        //        //newRow["Phòng ban"] = item.email;
-        //        //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
-        //        //newRow["Học vấn"] = item.Name;
-        //        //newRow["Chuyên ngành"] = item.UserAddress;
+            //Add in the datarow
 
-        //        newRow["Họ và tên"] = item.Name;
-        //        newRow["Ngày Sinh"] = item.DateOfBirth;
-        //        newRow["Tên Tài Khoản"] = item.UserName;
-        //        newRow["Giới tính"] = item.Gender;
-        //        newRow["Địa chỉ"] = item.UserAddress;
-        //        newRow["Số điện thoại"] = item.Phone;
-        //        newRow["Email"] = item.email;
-        //        newRow["Số CMND"] = item.IdentityCard;
-        //        // newRow["Ngày ký HĐ"] = item.UserName;
-        //        // newRow["Ngày hết HĐ"] = item.UserName;
-        //        newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
-        //        newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
-        //        newRow["Chức vụ"] = item.Role.RoleName;
-        //        newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
-        //        // newRow["Số CMND"] = item.UserName;
-        //        //full fesh
 
-        //        dt.Rows.Add(newRow);
-        //    }
+            foreach (var item in user)
+            {
+                DataRow newRow = dt.NewRow();
+                // newRow["Họ tên"] = item.UserName;
+                //newRow["Phòng ban"] = item.email;
+                //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
+                //newRow["Học vấn"] = item.Name;
+                //newRow["Chuyên ngành"] = item.UserAddress;
 
-        //    //====================================================
-        //    alluser.DataSource = dt;
-        //    // gv.DataSource = ds;
-        //    alluser.DataBind();
+                newRow["Họ và tên"] = item.Name;
+                newRow["Ngày Sinh"] = item.DateOfBirth;
+                newRow["Tên Tài Khoản"] = item.UserName;
+                newRow["Giới tính"] = item.Gender;
+                newRow["Địa chỉ"] = item.UserAddress;
+                newRow["Số điện thoại"] = item.Phone;
+                newRow["Email"] = item.email;
+                newRow["Số CMND"] = item.IdentityCard;
+                // newRow["Ngày ký HĐ"] = item.UserName;
+                // newRow["Ngày hết HĐ"] = item.UserName;
+                newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
+                newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
+                newRow["Chức vụ"] = item.Role.RoleName;
+                newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
+                // newRow["Số CMND"] = item.UserName;
+                //full fesh
 
-        //    Response.ClearContent();
-        //    Response.Buffer = true;
+                dt.Rows.Add(newRow);
+            }
 
-        //    Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
-        //    Response.ContentType = "application/ms-excel";
+            //====================================================
+            alluser.DataSource = dt;
+            // gv.DataSource = ds;
+            alluser.DataBind();
 
-        //    Response.Charset = "";
-        //    StringWriter objStringWriter = new StringWriter();
-        //    HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+            Response.ClearContent();
+            Response.Buffer = true;
 
-        //    alluser.RenderControl(objHtmlTextWriter);
+            Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
+            Response.ContentType = "application/ms-excel";
 
-        //    Response.Output.Write(objStringWriter.ToString());
-        //    Response.Flush();
-        //    Response.End();
-        //    return Redirect("/ManageUser");
-        //}
+            Response.Charset = "";
+            StringWriter objStringWriter = new StringWriter();
+            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+
+            alluser.RenderControl(objHtmlTextWriter);
+
+            Response.Output.Write(objStringWriter.ToString());
+            Response.Flush();
+            Response.End();
+            return Redirect("/ManageUser");
+        }
     }
 
 
