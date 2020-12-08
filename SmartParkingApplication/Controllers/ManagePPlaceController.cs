@@ -83,7 +83,17 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in parking)
             {
-                var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank, StatusOfParkingPlace =item.StatusOfParkingPlace };
+                string statusOfParking = string.Empty;
+                switch (item.StatusOfParkingPlace)
+                {
+                    case 0:
+                        statusOfParking = "Dừng hoạt động";
+                        break;
+                    case 1:
+                        statusOfParking = "Đang hoạt động";
+                        break;
+                }
+                var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank, StatusOfParkingPlace = statusOfParking };
                 list.Add(tr);
             }
             var total = list.Count();
@@ -93,8 +103,17 @@ namespace SmartParkingApplication.Controllers
         public JsonResult ParkingPlaceDetails(int id)
         {
             var parking = db.ParkingPlaces.Find(id);
-           
-            var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, parking.StatusOfParkingPlace};
+            var statusOfParking = "";
+            if (parking.StatusOfParkingPlace == 1)
+            {
+                statusOfParking = "Dừng hoạt động";
+            }
+            else
+            {
+                statusOfParking = "Đang hoạt động";
+            }
+
+                var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

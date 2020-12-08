@@ -22,7 +22,7 @@ function loadDataParkingPlace() {
                 html += '<td>' + item.NumberCarBlank + '</td>';
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
                 html += '<td>' + item.StatusOfParkingPlace+ '</td>';
-                html += '<td><button class="btn btn-primary" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
+                html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
                 
                 
                 html += '</tr>';
@@ -141,7 +141,7 @@ function getPPByID(ParkingPlaceID) {
             $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
-            $('#StatusOfParkingPlaceEdit').val(result.StatusOfParkingPlace);
+            $('#StatusOfParkingPlaceEdit').val(result.statusOfParking);
 
             $('#myModalUpdatePP').modal('show');
            
@@ -168,7 +168,7 @@ function getPPDetailByID(ParkingPlaceID) {
             $('#NumberOfMotoBiked').val(result.NumberOfMotoBike);
             $('#NumberCarBlankd').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankd').val(result.NumberMotoBikeBlank);
-            $('#StatusOfParkingPlaced').val(result.StatusOfParkingPlace);
+            $('#StatusOfParkingPlaced').val(result.statusOfParking);
 
 
 
