@@ -27,7 +27,6 @@ namespace SmartParkingApplication.Controllers
                 Id = x.ParkingPlaceID,
                 Name = x.NameOfParking
             }).ToList(),JsonRequestBehavior.AllowGet);
-
         }
 
         public JsonResult LoadDataStatusPP()
