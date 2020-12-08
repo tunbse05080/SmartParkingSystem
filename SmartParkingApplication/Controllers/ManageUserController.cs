@@ -40,7 +40,7 @@ namespace SmartParkingApplication.Controllers
                 var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy");
                 var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy");
                 var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
-                var expdateFormES = item.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
+                var expdateFormES = item.ContractExpirationDate.Value.ToString("yyyy/MM/dd");
                 string gender = string.Empty;
                 switch (item.Gender)
                 {

@@ -44,6 +44,7 @@ namespace SmartParkingApplication.Controllers
             {
                 var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy");
                 var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
+                var expiryFormEs = item.ExpiryDate.Value.ToString("yyyy/MM/dd");
                 string typeOfVehicle = string.Empty;
                 switch (item.TypeOfVehicle)
                 {
@@ -66,6 +67,7 @@ namespace SmartParkingApplication.Controllers
                     RegisDate = regisDate,
                     ExpiryDate = expiryDate,
                     CardNumber = item.CardNumber,
+                    expiryFormEs
                 };
                 
                 list.Add(tr);

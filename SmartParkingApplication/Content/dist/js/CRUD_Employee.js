@@ -20,6 +20,25 @@ function loadDateNow() {
     today = mm + '/' + dd + '/' + yyyy;
     return today;
 }
+
+function loadDateNowToCompare() {
+    // body...
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = yyyy + '/' + mm + '/' + dd;
+    return today;
+}
+
 //DateETK
 function DatePlus(datePlus) {
     // body...
@@ -37,7 +56,7 @@ function DatePlus(datePlus) {
         mm = '0' + mm;
     }
 
-    date = mm + '/' + dd + '/' + yyyy;
+    date = yyyy + '/' + mm + '/' + dd;
     return date;
 }
 
@@ -183,7 +202,7 @@ function loadData() {
                 html += '<td>' + item.ContractExpirationDate + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
 
-                if (item.expdateFormES <= DatePlus(7) && item.expdateFormES >= loadDateNow()) {
+                if (item.expdateFormES <= DatePlus(7) && item.expdateFormES >= loadDateNowToCompare()) {
                     item.StatusOfWork = "Sắp hết HĐ"
                     html += '<td>' + item.StatusOfWork + '</td>';
                 } else {
