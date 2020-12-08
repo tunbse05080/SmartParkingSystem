@@ -39,10 +39,10 @@
                                     <thead>
                                         <tr class="bg-green">
                                             <th>Loại xe</th>
-                                            <th>Giá ngày</th>
-                                            <th>Giá tháng</th>
-                                            <th>Giá block đầu</th>
-                                            <th>Giá block tiếp theo</th>
+                                            <th>Giá ngày(vnd)</th>
+                                            <th>Giá tháng(vnd)</th>
+                                            <th>Giá block đầu(vnd)</th>
+                                            <th>Giá block tiếp theo(vnd)</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodypr">
@@ -67,7 +67,7 @@
                                                     Loại xe
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <select class="form-control" id="cbETK" onchange="reloadModalETK()">
+                                                    <select class="form-control" id="cbTypeOfvehicle" onchange="reloadModalPR()">
                                                         <option value="0">Xe máy</option>
                                                         <option value="1">Ô tô</option>
                                                     </select>
@@ -80,7 +80,7 @@
                                                     Giá theo ngày
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="DayPrice" placeholder="Giá theo ngày" value="500.000 VND" />
+                                                    <input type="text" class="form-control" id="DayPrice" placeholder="Giá theo ngày"  />
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +90,7 @@
                                                     Giá vé tháng
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="MonthPrice" placeholder="Giá vé tháng" value="500.000 VND" />
+                                                    <input type="text" class="form-control" id="MonthPrice" placeholder="Giá vé tháng"  />
                                                 </div>
                                             </div>
                                         </div>
@@ -100,7 +100,7 @@
                                                     Giá block đầu
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="FirstBlockPrice" placeholder="Giá block đầu" value="500.000 VND" />
+                                                    <input type="text" class="form-control" id="FirstBlockPrice" placeholder="Giá block đầu"  />
                                                 </div>
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@
                                                     Giá block tiếp theo
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="NextBlockPrice" placeholder="Giá block tiếp theo" value="500.000 VND" disabled/>
+                                                    <input type="text" class="form-control" id="NextBlockPrice" placeholder="Giá block tiếp theo"  disabled/>
                                                 </div>
                                             </div>
                                         </div>

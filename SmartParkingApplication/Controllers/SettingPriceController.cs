@@ -26,7 +26,7 @@ namespace SmartParkingApplication.Controllers
             {
 
 
-                var s = new { PriceID = item.PriceID, TypeOfvehicle = item.TypeOfvehicle, MonthPrice = item.MonthPrice, FirstBlock = item.FirstBlock, NextBlock = item.NextBlock };
+                var s = new { PriceID = item.PriceID, TypeOfvehicle = item.TypeOfvehicle, DayPrice= item.DayPrice, MonthPrice = item.MonthPrice, FirstBlock = item.FirstBlock, NextBlock = item.NextBlock };
                 list.Add(s);
             }
 
@@ -40,14 +40,21 @@ namespace SmartParkingApplication.Controllers
             var list = db.Prices.Select(u => u.TypeOfvehicle).Distinct().ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult UpdatePR(Price price)
+        public JsonResult UpdatePR(Price id)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(price).State = EntityState.Modified;
+                db.Entry(id).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return Json(price, JsonRequestBehavior.AllowGet);
+            return Json(id, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Details(string typeOfvehicle)
+        {
+            var set = db.Prices.Find(typeOfvehicle);
+           
+            var result = new { set.PriceID, set.TypeOfvehicle, set.DayPrice, set.MonthPrice, set.FirstBlock, set.NextBlock };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -80,14 +80,15 @@ function loadDataPrice(changsizepr) {
             }
         });
     }
-    function UpdatePP() {
+    function UpdatePR() {
         //var res = validateUpdatePP();
         //if (res == false) {
         //    return false;
         //}
+        var TypeOfvehicle  = $('#cbTypeOfvehicle').val();
         var empPRObj = {
             
-            TypeOfvehicle: $('#TypeOfvehicleEdit').val(),
+            TypeOfvehicle: TypeOfvehicle,
             DayPrice: $('#DayPriceEdit').val(),
             MonthPrice: $('#MonthPriceEdit').val(),
             FirstBlock: $('#FirstBlockEdit').val(),
@@ -108,5 +109,43 @@ function loadDataPrice(changsizepr) {
                 alert(errormessage.responseText);
             }
         });
+    }
+    function getByTypeOfVehicle(PriceID) {
+        $.ajax({
+            url: "/SettingPrice/Details/" + PriceID,
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                var TypeOfvehicle = $('#cbTypeOfvehicle').val();
+                $('#Id').val(result.PriceID);
+                $('#TypeOfvehicle').val(result.TypeOfvehicle);
+                $('#DayPrice').val(result.DayPrice);
+                $('#MonthPrice').val(result.MonthPrice);
+                $('#DateOfBirth').val(result.FirstBlock);
+                $('#FirstBlock').val(result.NextBlock);
+               
+
+                $('#myModalSettingPrice').modal('show');
+                $('#btnUpdate').show();
+            
+            },
+            error: function (errormessage) {
+                alert("Exception:" + PriceID + errormessage.responseText);
+            }
+        });
+        return false;
+    }
+    function reloadModalPR() {
+        if ($("#cbTypeOfvehicle").val() == "0") {
+            
+            $("#myModalSettingPrice").modal("show");
+        }
+        else ($("#cbTypeOfvehicle").val() == "1")
+        {
+           
+            $("#myModalSettingPrice").modal("show");
+        }
+      
     }
 }
