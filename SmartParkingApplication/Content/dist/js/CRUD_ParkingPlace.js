@@ -98,15 +98,16 @@ function UpdatePP() {
     if (res == false) {
         return false;
     }
+    
     var empPPObj = {
-        ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
-        NameOfParking: $('#NameOfParkingEdit').val(),
-        Location: $('#LocationEdit').val(),
-        NumberOfCar: $('#NumberOfCarEdit').val(),
-        NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
-        NumberCarBlank: $('#NumberCarBlankEdit').val(),
-        NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
-        StatusOfParkingPlace: $('#StatusOfParkingPlaceEdit').val(),
+        ParkingPlaceID: $('#ParkingPlaceID').val(),
+        NameOfParking: $('#NameOfParking').val(),
+        Location: $('#Location').val(),
+        NumberOfCar: $('#NumberOfCar').val(),
+        NumberOfMotoBike: $('#NumberOfMotoBike').val(),
+        NumberCarBlank: $('#NumberCarBlank').val(),
+        NumberMotoBikeBlank: $('#NumberMotoBikeBlank').val(),
+        StatusOfParkingPlace: $('#cbStatusOfParking').val() ,
     };
     $.ajax({
         url: "/ManagePPlace/UpdatePP",
@@ -117,7 +118,7 @@ function UpdatePP() {
         success: function (result) {
             $('#tbPPlace').DataTable().clear().destroy();
             loadDataParkingPlace();
-            $('#myModalUpdatePP').modal('hide');
+            $('#myModalPP').modal('hide');
 
         },
         error: function (errormessage) {
@@ -143,7 +144,7 @@ function getPPByID(ParkingPlaceID) {
             $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
             $('#StatusOfParkingPlaceEdit').val(result.statusOfParking);
 
-            $('#myModalUpdatePP').modal('show');
+            $('#myModalPP').modal('show');
            
             $('#btnAddPP').hide();
             $('#btnUpdatePP').show();
@@ -196,7 +197,7 @@ function AddPP() {
         NumberOfMotoBike: $('#NumberOfMotoBike').val(),
         NumberCarBlank: $('#NumberOfCar').val(),
         NumberMotoBikeBlank: $('#NumberOfMotoBike').val(),
-        StatusOfParkingPlace: $('#StatusOfParkingPlace').val(),
+        StatusOfParkingPlace: $('#cbStatusOfParking').val(),
     };
     $.ajax({
         url: "/ManagePPlace/Create",
@@ -217,7 +218,7 @@ function AddPP() {
 
 
 function clearTextBoxPP() {
-
+    ComboboxStatusOfParking();
     $('#Id').val("");
     $('#NameOfParking').val("");
     $('#Location').val("");
@@ -225,7 +226,7 @@ function clearTextBoxPP() {
     $('#NumberOfMotoBike').val("");
     $('#NumberCarBlank').val("");
     $('#NumberMotoBikeBlank').val("");
-    $('#StatusOfParkingPlace').val("");
+    $('#cbStatusOfParking').val("");
 
 
 
@@ -298,4 +299,25 @@ function validateUpdatePP() {
         $('#NumberMotoBikeBlankEdit').css('border-color', 'lightgrey');
     }
     return isValid;
+}
+//comboboxStatusOfParking
+function ComboboxStatusOfParking() {
+    $.ajax({
+        url: "/ManagePPlace/ComboboxStatusOfParking",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result, function (key, item) {
+                html += '<option value="' + i + '">' + item + '</option>';
+                i++;
+            });
+            $("#cbStatusOfParking").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }

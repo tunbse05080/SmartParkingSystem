@@ -146,5 +146,26 @@ namespace SmartParkingApplication.Controllers
             }
             base.Dispose(disposing);
         }
+        public JsonResult ComboboxStatusOfParking()
+        {
+            var list = db.ParkingPlaces.Select(u => u.StatusOfParkingPlace).Distinct().ToList();
+            List<string> result = new List<string>();
+            foreach (var item in list)
+            {
+                var statusOfParking = "";
+                switch (item)
+                {
+                    case 0:
+                        statusOfParking = "Dừng hoạt động";
+                        result.Add(statusOfParking);
+                        break;
+                    case 1:
+                        statusOfParking = "Đang hoạt động";
+                        result.Add(statusOfParking);
+                        break;
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
