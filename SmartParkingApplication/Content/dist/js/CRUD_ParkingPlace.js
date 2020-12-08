@@ -21,6 +21,7 @@ function loadDataParkingPlace() {
                 html += '<td>' + item.NumberOfMotoBike + '</td>';
                 html += '<td>' + item.NumberCarBlank + '</td>';
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
+                html += '<td>' + item.StatusOfParkingPlace+ '</td>';
                 html += '<td><button class="btn btn-primary" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
                 
                 
@@ -32,12 +33,8 @@ function loadDataParkingPlace() {
             totalPlace += '<p>Tổng số thẻ</p>';
             $('#totalParkingPlace').html(totalPlace);
         },
-        error: function (errormessage) {
-            if (timeFrom == null && timeTo == null) {
-                alert("Làm ơn nhập thời gian vào và ra!");
-            } else {
-                alert(errormessage.responseText);
-            }
+        error: function () {
+            
         }
     });
 
@@ -109,6 +106,7 @@ function UpdatePP() {
         NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
         NumberCarBlank: $('#NumberCarBlankEdit').val(),
         NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
+        StatusOfParkingPlace: $('#StatusOfParkingPlaceEdit').val(),
     };
     $.ajax({
         url: "/ManagePPlace/UpdatePP",
@@ -143,6 +141,7 @@ function getPPByID(ParkingPlaceID) {
             $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
+            $('#StatusOfParkingPlaceEdit').val(result.StatusOfParkingPlace);
 
             $('#myModalUpdatePP').modal('show');
            
@@ -169,6 +168,9 @@ function getPPDetailByID(ParkingPlaceID) {
             $('#NumberOfMotoBiked').val(result.NumberOfMotoBike);
             $('#NumberCarBlankd').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankd').val(result.NumberMotoBikeBlank);
+            $('#StatusOfParkingPlaced').val(result.StatusOfParkingPlace);
+
+
 
 
             $('#myModalDetailPP').modal('show');
@@ -194,6 +196,7 @@ function AddPP() {
         NumberOfMotoBike: $('#NumberOfMotoBike').val(),
         NumberCarBlank: $('#NumberOfCar').val(),
         NumberMotoBikeBlank: $('#NumberOfMotoBike').val(),
+        StatusOfParkingPlace: $('#StatusOfParkingPlace').val(),
     };
     $.ajax({
         url: "/ManagePPlace/Create",
@@ -222,6 +225,8 @@ function clearTextBoxPP() {
     $('#NumberOfMotoBike').val("");
     $('#NumberCarBlank').val("");
     $('#NumberMotoBikeBlank').val("");
+    $('#StatusOfParkingPlace').val("");
+
 
 
     $('#btnAddPP').show();
