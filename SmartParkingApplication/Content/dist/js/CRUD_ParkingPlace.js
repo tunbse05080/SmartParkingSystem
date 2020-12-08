@@ -21,7 +21,9 @@ function loadDataParkingPlace() {
                 html += '<td>' + item.NumberOfMotoBike + '</td>';
                 html += '<td>' + item.NumberCarBlank + '</td>';
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
-                html += '<td><button class="btn btn-success" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
+                html += '<td><button class="btn btn-primary" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
+                
+                
                 html += '</tr>';
             });
             $('#tbodypp').html(html);
@@ -146,6 +148,31 @@ function getPPByID(ParkingPlaceID) {
            
             $('#btnAddPP').hide();
             $('#btnUpdatePP').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + ParkingPlaceID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+function getPPDetailByID(ParkingPlaceID) {
+    $.ajax({
+        url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#ParkingPlaceIDd').val(result.ParkingPlaceID);
+            $('#NameOfParkingd').val(result.NameOfParking);
+            $('#Locationd').val(result.Location);
+            $('#NumberOfCardd').val(result.NumberOfCar);
+            $('#NumberOfMotoBiked').val(result.NumberOfMotoBike);
+            $('#NumberCarBlankd').val(result.NumberCarBlank);
+            $('#NumberMotoBikeBlankd').val(result.NumberMotoBikeBlank);
+
+
+            $('#myModalDetailPP').modal('show');
+
         },
         error: function (errormessage) {
             alert("Exception:" + ParkingPlaceID + errormessage.responseText);
