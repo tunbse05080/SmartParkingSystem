@@ -22,15 +22,23 @@ function loadDataParkingPlace() {
                 html += '<td>' + item.NumberCarBlank + '</td>';
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
                 html += '<td>' + item.StatusOfParkingPlace+ '</td>';
-                html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
                 
+                switch (item.StatusOfParkingPlace) {
+                    case "Dừng hoạt động":
+                        html += '<td><button class= "btn btn-danger" disabled>Tạm dừng hoạt động</button></td>'
+                        break;
+                    case "Đang hoạt động":
+                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
+                        break;
+                   
+                }
                 
                 html += '</tr>';
             });
             $('#tbodypp').html(html);
             $('#tbPPlace').DataTable({ "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true});
             totalPlace += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
-            totalPlace += '<p>Tổng số thẻ</p>';
+            totalPlace += '<p>Tổng Số Bãi Đỗ</p>';
             $('#totalParkingPlace').html(totalPlace);
         },
         error: function () {
@@ -100,14 +108,14 @@ function UpdatePP() {
     }
     
     var empPPObj = {
-        ParkingPlaceID: $('#ParkingPlaceID').val(),
-        NameOfParking: $('#NameOfParking').val(),
-        Location: $('#Location').val(),
-        NumberOfCar: $('#NumberOfCar').val(),
-        NumberOfMotoBike: $('#NumberOfMotoBike').val(),
-        NumberCarBlank: $('#NumberCarBlank').val(),
-        NumberMotoBikeBlank: $('#NumberMotoBikeBlank').val(),
-        StatusOfParkingPlace: $('#cbStatusOfParking').val() ,
+        ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
+        NameOfParking: $('#NameOfParkingEdit').val(),
+        Location: $('#LocationEdit').val(),
+        NumberOfCar: $('#NumberOfCarEdit').val(),
+        NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
+        NumberCarBlank: $('#NumberCarBlankEdit').val(),
+        NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
+        StatusOfParkingPlace: $('#cbStatusOfParkingEdit').val() ,
     };
     $.ajax({
         url: "/ManagePPlace/UpdatePP",
@@ -118,7 +126,7 @@ function UpdatePP() {
         success: function (result) {
             $('#tbPPlace').DataTable().clear().destroy();
             loadDataParkingPlace();
-            $('#myModalPP').modal('hide');
+            $('#myModalUpdatePP').modal('hide');
 
         },
         error: function (errormessage) {
@@ -135,14 +143,14 @@ function getPPByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#ParkingPlaceIDEdit').val(result.ParkingPlaceID);
-            $('#NameOfParkingEdit').val(result.NameOfParking);
-            $('#LocationEdit').val(result.Location);
+            $('#ParkingPlaceID').val(result.ParkingPlaceID);
+            $('#NameOfParking').val(result.NameOfParking);
+            $('#Location').val(result.Location);
             $('#NumberOfCarEdit').val(result.NumberOfCar);
             $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
-            $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
-            $('#StatusOfParkingPlaceEdit').val(result.statusOfParking);
+            $('#NumberMotoBikeBlank').val(result.NumberMotoBikeBlank);
+            $('#StatusOfParkingPlace').val(result.statusOfParking);
 
             $('#myModalPP').modal('show');
            

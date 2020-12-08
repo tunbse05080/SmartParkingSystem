@@ -104,7 +104,7 @@ namespace SmartParkingApplication.Controllers
         {
             var parking = db.ParkingPlaces.Find(id);
             var statusOfParking = "";
-            if (parking.StatusOfParkingPlace == 1)
+            if (parking.StatusOfParkingPlace == 0)
             {
                 statusOfParking = "Dừng hoạt động";
             }
