@@ -91,10 +91,11 @@ namespace SmartParkingApplication.Controllers
             {
                 statusOfwork = "Hết hạn HĐ";
             }
+            var status = employee.StatusOfWork;
             dateOfBirth = employee.DateOfBirth.Value.ToString("MM/dd/yyyy");
             var contractSigningDate = employee.ContractSigningDate.Value.ToString("MM/dd/yyyy");
             var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { employee.UserID, employee.UserName, employee.Name, employee.UserAddress, employee.PassWork, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking, employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork };
+            var result = new { employee.UserID, employee.UserName, employee.Name, employee.UserAddress, employee.PassWork, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking, employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork , status};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

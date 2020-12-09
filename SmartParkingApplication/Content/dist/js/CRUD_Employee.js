@@ -1,6 +1,10 @@
 ﻿
 $(document).ready(function () {
     loadData();
+    ComboboxGender();
+    ComboboxStatusOfwork();
+    ComboboxRoleNameU();
+    ComboboxParkingPlaceU();
 });
 
 function loadDateNow() {
@@ -61,27 +65,27 @@ function DatePlus(datePlus) {
 }
 
 //Function for getting data base on EmployeeID
-function getByID(EmployeeID) {
+function getEditByID(EmployeeID) {
     $.ajax({
         url: "/ManageUser/Details/" + EmployeeID,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
-        success: function (result) {        
-                    $('#Id').val(result.UserID);
-                    $('#UserName').val(result.UserName);
-                    $('#FullName').val(result.Name);
-                    $('#PassWord').val(result.PassWork);
-                    $('#DateOfBirth').val(result.dateOfBirth);
-                    $('#Address').val(result.UserAddress);
-                    $('#IdentityCard').val(result.IdentityCard);
-                    $('#PhoneNumber').val(result.Phone);
-                    $('#Email').val(result.email);
-                    $('#ContractSigningDate').val(result.contractSigningDate);
-                    $('#ContractExpirationDate').val(result.contractExpirationDate);
-                    $('#myModalUser').modal('show');
-                    $('#btnUpdate').show();
-                    $('#btnAdd').hide();
+        success: function (result) {
+            $('#IdEdit').val(result.UserID);
+            $('#UserNameEdit').val(result.UserName);
+            $('#FullNameEdit').val(result.Name);
+            $('#PassWordEdit').val(result.PassWork);
+            $('#DateOfBirthEdit').val(result.dateOfBirth);
+            $('#AddressEdit').val(result.UserAddress);
+            $('#IdentityCardEdit').val(result.IdentityCard);
+            $('#PhoneNumberEdit').val(result.Phone);
+            $('#EmailEdit').val(result.email);
+            $('#StatusOfWorkingEdit').val(result.status);
+            $('#ContractSigningDateEdit').val(result.contractSigningDate);
+            $('#ContractExpirationDateEdit').val(result.contractExpirationDate);
+            $('#myModalUserEdit').modal('show');
+            $('#btnUpdate').show();
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
@@ -110,7 +114,7 @@ function getGHByID(EmployeeID) {
                     $('#EmailGH').val(result.email);
                     $('#RoleNameGH').val(result.RoleID);
                     $('#ParkingPlaceGH').val(result.ParkingPlaceID);
-                    $('#ContractSigningDateGH').val(result.contractSigningDate);
+                    $('#ContractSigningDateGH').val(loadDateNow());
                     $('#ContractExpirationDateGH').val(result.contractExpirationDate);
                     $('#myModalGH').modal('show');
         },
@@ -198,30 +202,18 @@ function loadData() {
             $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.Name + '</td>';
-                //html += '<td>' + item.DateOfBirth + '</td>';
-                //html += '<td>' + item.Phone + '</td>';
                 html += '<td>' + item.RoleName + '</td>';
                 html += '<td>' + item.ContractExpirationDate + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
-                html += '<td>' + item.StatusOfWork + '</td>';
-                //if (item.expdateFormES <= DatePlus(7) && item.expdateFormES >= loadDateNowToCompare()) {
-                //    item.StatusOfWork = "Sắp hết HĐ"
-                //    html += '<td>' + item.StatusOfWork + '</td>';
-                //} else {
-                //    html += '<td>' + item.StatusOfWork + '</td>';
-                //}
-                //html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-danger" data-toggle="modal" data-target="#myModalDropContract" onclick="return getByID(' + item.UserID + ')">Chấm dứt HĐ</button></td>';
+                html += '<td>' + item.StatusOfWork + '</td>';     
                 switch (item.StatusOfWork) {
                     case "Hết hạn HĐ":
                         html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-warning" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
                         break;
                     case "Còn hợp đồng":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button><button class="btn btn-danger" onclick="return getDropContractByID(' + item.UserID + ')" >Chấm dứt HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getEditByID(' + item.UserID + ')" > Sửa</button><button class="btn btn-danger" onclick="return getDropContractByID(' + item.UserID + ')" >Chấm dứt HĐ</button></td>';
 
                         break;
-                    //case "Sắp hết HĐ":
-                    //    html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
-                    //    break;
                 }
                 html += '</tr>';
             });
@@ -310,25 +302,23 @@ function Update() {
     //if (res == false) {
     //    return false;
     //}
-    var gender = $('#cbGender').val();
-    var statusOfwork = $('#cbStatusOfwork').val();
-    var roleName = $('#cbRoleNameU').val();
-    var nameParking = $('#cbparkingPlaceU').val();
-
+    var gender = $('#cbGenderEdit').val();
+    var roleName = $('#cbRoleNameUEdit').val();
+    var nameParking = $('#cbparkingPlaceUEdit').val();
     var empObj = {
-        UserID: $('#Id').val(),
-        UserName: $('#UserName').val(),
-        Name: $('#FullName').val(),
-        PassWork: $('#PassWord').val(),
-        DateOfBirth: $('#DateOfBirth').val(),
+        UserID: $('#IdEdit').val(),
+        UserName: $('#UserNameEdit').val(),
+        Name: $('#FullNameEdit').val(),
+        PassWork: $('#PassWordEdit').val(),
+        DateOfBirth: $('#DateOfBirthEdit').val(),
         Gender: gender,
-        UserAddress: $('#Address').val(),
-        Phone: $('#PhoneNumber').val(),
-        email: $('#Email').val(),
-        IdentityCard: $('#IdentityCard').val(),
-        ContractSigningDate: $('#ContractSigningDate').val(),
-        ContractExpirationDate: $('#ContractExpirationDate').val(),
-        StatusOfWork: statusOfwork,
+        UserAddress: $('#AddressEdit').val(),
+        Phone: $('#PhoneNumberEdit').val(),
+        email: $('#EmailEdit').val(),
+        IdentityCard: $('#IdentityCardEdit').val(),
+        ContractSigningDate: $('#ContractSigningDateEdit').val(),
+        ContractExpirationDate: $('#ContractExpirationDateEdit').val(),
+        StatusOfWork: $('#StatusOfWorkingEdit').val(),
         RoleID: roleName,
         ParkingPlaceID: nameParking,
 
@@ -340,7 +330,7 @@ function Update() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#myModalUser').modal('hide');
+            $('#myModalUserEdit').modal('hide');
             $('#tbUser').DataTable().clear().destroy();
             loadData();
         },
@@ -370,10 +360,6 @@ function CloseAdd() {
 //Function for clearing the textboxes
 function clearTextBox() {
     var date = loadDateNow();
-    ComboboxGender();
-    ComboboxStatusOfwork();
-    ComboboxRoleNameU();
-    ComboboxParkingPlaceU();
     $('#Id').val("");
     $('#UserName').val("");
     $('#FullName').val("");
@@ -587,6 +573,7 @@ function ComboboxGender() {
                 i++;
             });
             $("#cbGender").html(html);
+            $("#cbGenderEdit").html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -630,6 +617,7 @@ function ComboboxParkingPlaceU() {
                 i++;
             });
             $("#cbparkingPlaceU").html(html);
+            $("#cbparkingPlaceUEdit").html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -651,6 +639,8 @@ function ComboboxRoleNameU() {
                 i++;
             });
             $("#cbRoleNameU").html(html);
+            $("#cbRoleNameUEdit").html(html);
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
