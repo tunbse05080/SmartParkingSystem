@@ -62,9 +62,23 @@ namespace SmartParkingApplication.Controllers
         public JsonResult ParkingSSDetails(int id)
         {
             var tran = db.Transactions.Find(id);
+            var typeTicket = "";
+            
+            if (tran.TypeOfTicket == 1)
+            {
+                typeTicket = "Vé Tháng";
+            }
+            else
+            {
+                typeTicket = "Vé Lượt";
+            }
            
+           
+            
+            var TimeIn = tran.TimeIn.Value.ToString("MM/dd/yyyy hh:mm:ss");
+            var TimeOut = tran.TimeOutv.Value.ToString("MM/dd/yyyy hh:mm:ss");
 
-            var result = new {tran.TransactionID,tran.LicensePlates,tran.TimeIn,tran.TimeOutv,tran.TypeOfTicket,tran.Card.CardNumber };
+            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn,TimeOut, typeTicket, tran.Card.CardNumber };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

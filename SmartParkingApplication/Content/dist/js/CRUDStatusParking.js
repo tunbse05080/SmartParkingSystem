@@ -57,8 +57,8 @@ function getDetailTranByID(TransactionID) {
             $('#Idd').val(result.TransactionID);
             $('#LicensePlatesd').val(result.LicensePlates);
             $('#TimeInd').val(result.TimeIn);
-            $('#TimeOutvd').val(result.TimeOutv);
-            $('#TypeOfTicketd').val(result.TypeOfTicket);
+            $('#TimeOutvd').val(result.TimeOut);
+            $('#TypeOfTicketd').val(result.typeTicket);
             $('#CardNumber').val(result.CardNumber);
           
 
