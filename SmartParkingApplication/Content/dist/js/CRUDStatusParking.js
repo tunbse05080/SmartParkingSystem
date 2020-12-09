@@ -27,6 +27,7 @@ function loadDataStatusParking() {
                 html += '<td>' + item.TypeOfTicket + '</td>';
                 html += '<td>' + item.CardNumber + '</td>';
                 html += '<td>' + 'Xe máy' + '</td>';
+                html += '<td><button class="btn btn-primary" onclick = "return getDetailTranByID(' + item.TransactionID + ')"> Chi tiết</button></td>';
                 html += '</tr>';
             });
             $('#tbodyStatusPP').html(html);
@@ -46,7 +47,29 @@ function loadDataStatusParking() {
         }
     });
 }
+function getDetailTranByID(TransactionID) {
+    $.ajax({
+        url: "/ManagePPlace/ParkingSSDetails/" + TransactionID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#Idd').val(result.TransactionID);
+            $('#LicensePlatesd').val(result.LicensePlates);
+            $('#TimeInd').val(result.TimeIn);
+            $('#TimeOutvd').val(result.TimeOutv);
+            $('#TypeOfTicketd').val(result.TypeOfTicket);
+            $('#CardNumber').val(result.CardNumber);
+          
 
+            $('#myModalTranDetail').modal('show');
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
+        }
+    });
+    return false;
+}
 //load information follow PPlaceName
 //function loadInfoPPlace() {
 //    $.ajax({
