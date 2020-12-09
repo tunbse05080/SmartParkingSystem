@@ -20,10 +20,10 @@ function loadDataCard() {
                 html += '<td>' + item.Status + '</td>';
                 switch (item.Status) {
                     case "Chưa đăng kí":
-                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button></td>';
+                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getReportCardBreakByID(' + item.CardID + ')">Báo hỏng thẻ</button></td>';
                         break;
                     case "Đã đăng kí":
-                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button></td>';
+                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getReportCardBreakByID(' + item.CardID + ')">Báo hỏng thẻ</button></td>';
                         break;
                     case "Đã Khóa":
                         html += '<td><button class="btn btn-warning" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Mở Khóa</button></td>';
@@ -37,7 +37,7 @@ function loadDataCard() {
 
             $('#tbodyCard').html(html);
             $('#tbCard').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbCard_wrapper .col-md-6:eq(0)');
             totalCard += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
@@ -188,6 +188,32 @@ function LockCard() {
     });
 }
 
+//update status cardBreak
+function ReportCardBreak() {
+    var empCardObj = {
+        CardID: $('#IdCardBreak').val(),
+        CardNumber: $('#CardNumberBreak').val(),
+        Date: $('#DateCardBreak').val(),
+        Status: 2,
+    };
+    $.ajax({
+        url: "/ManageCard/UpdateCard",
+        data: JSON.stringify(empCardObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#tbCard').DataTable().clear().destroy();
+            loadDataCard();
+            $('#myModalCardBreak').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 function getCardByID(CardID) {
     $.ajax({
         url: "/ManageCard/CardDetails/" + CardID,
@@ -240,6 +266,27 @@ function getLockCardByID(CardID) {
             $('#DateCardLock').val(result.date);
             $('#myModalLock').modal('show');
             $('#btnLockCard').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + CardID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+
+//Get card follow ID to report CardBreak
+function getReportCardBreakByID(CardID) {
+    $.ajax({
+        url: "/ManageCard/CardDetails/" + CardID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#IdCardBreak').val(result.CardID);
+            $('#CardNumberBreak').val(result.CardNumber);
+            $('#DateCardBreak').val(result.date);
+            $('#myModalCardBreak').modal('show');
+            $('#btnReportCardBreak').show();
         },
         error: function (errormessage) {
             alert("Exception:" + CardID + errormessage.responseText);
