@@ -130,10 +130,11 @@ namespace SmartParkingApplication.Controllers
             {
                 statusOfParking = "Dừng hoạt động";
             }
-            else
+            else 
             {
                 statusOfParking = "Đang hoạt động";
             }
+           
 
                 var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking};
             return Json(result, JsonRequestBehavior.AllowGet);

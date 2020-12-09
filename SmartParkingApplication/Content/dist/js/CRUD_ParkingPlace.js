@@ -25,10 +25,10 @@ function loadDataParkingPlace() {
                 
                 switch (item.StatusOfParkingPlace) {
                     case "Dừng hoạt động":
-                        html += '<td><button class= "btn btn-danger" disabled>Tạm dừng hoạt động</button></td>'
+                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-warning" style="width:150px" onclick="return getPPDetailByID(' + item.ParkingPlaceID + ')" >Mở Khóa Bãi Đỗ</button></td>';
                         break;
                     case "Đang hoạt động":
-                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button></td>';
+                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button><button class="btn btn-danger" style="width:218px" onclick="return getLockParkingByID(' + item.ParkingPlaceID + ')" > Tạm Dừng Hoạt Động</button></td>';
                         break;
                    
                 }
@@ -332,4 +332,29 @@ function ComboboxStatusOfParking() {
             alert(errormessage.responseText);
         }
     });
+}
+function getLockParkingByID(ParkingPlaceID) {
+    $.ajax({
+        url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#ParkingPlaceIDlock').val(result.ParkingPlaceID);
+            $('#NameOfParkinglock').val(result.NameOfParking);
+            $('#NumberOfMotoBikelock').val(result.NumberOfMotoBike);
+            $('#NumberCarBlanklock').val(result.NumberCarBlank);
+            $('#NumberMotoBikeBlanklock').val(result.NumberMotoBikeBlank);
+            $('#StatusOfParkinglock').val(result.statusOfParking);
+
+
+
+            $('#myModalParkingLock').modal('show');
+            $('#btnLockParking').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + ParkingPlaceID + errormessage.responseText);
+        }
+    });
+    return false;
 }
