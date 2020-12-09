@@ -93,11 +93,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="Date">Ngày nhập</label>
-                                            <input type="text" class="form-control" id="Date" placeholder="Ngày nhập" disabled/>
+                                            <input type="text" class="form-control" id="Date" placeholder="Ngày nhập" disabled />
                                         </div>
                                         <div class="form-group">
                                             <label for="Status">Trạng thái thẻ</label>
-                                            <input type="text" class="form-control" id="Status" placeholder="Chưa sử dụng" disabled/>
+                                            <input type="text" class="form-control" id="Status" placeholder="Chưa sử dụng" disabled />
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -126,12 +126,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="Date">Ngày nhập</label>
-                                            <input type="text" class="form-control" id="DateCardEdit" placeholder="Ngày nhập" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Status">Trạng thái thẻ</label>
-                                            <select class="form-control" id="cbxStatusCard">
-                                            </select>
+                                            <input type="text" class="form-control" id="DateCardEdit" placeholder="Ngày nhập" disabled />
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -141,8 +136,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- The Modal Lock card -->
-                        <div class="modal fade" id="myModalLock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <!-- The Modal UnLock card -->
+                        <div class="modal fade" id="myModalUnLock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
                                     <div class="modal-header">
@@ -152,26 +147,64 @@
                                     <div class="modal-body">
                                         <div class="form-group" hidden>
                                             <label for="Id">Id</label>
-                                            <input type="text" class="form-control" id="IdCardLock" placeholder="Id" disabled/>
+                                            <input type="text" class="form-control" id="IdCardUnLock" placeholder="Id" disabled />
                                         </div>
                                         <div class="form-group" hidden>
                                             <label for="CardNumber">Số thẻ</label>
-                                            <input type="text" class="form-control" id="CardNumberLock" placeholder="Số thẻ" />
+                                            <input type="text" class="form-control" id="CardNumberUnLock" placeholder="Số thẻ" />
                                         </div>
                                         <div class="form-group" hidden>
                                             <label for="Date">Ngày nhập</label>
-                                            <input type="text" class="form-control" id="DateCardLock" placeholder="Ngày nhập" />
+                                            <input type="text" class="form-control" id="DateCardUnLock" placeholder="Ngày nhập" />
                                         </div>
                                         <div class="form-group" hidden>
                                             <label for="Status">trạng thái thẻ</label>
-                                            <input type="text" class="form-control" id="StatusCardLock" placeholder="trạng thái thẻ" />
+                                            <input type="text" class="form-control" id="StatusCardUnLock" placeholder="trạng thái thẻ" />
                                         </div>
                                         <div class="form-group">
                                             <label for="Status">Bạn có muốn mở khóa thẻ không?</label>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-success" id="btnLockCard" onclick="return UnlockCard();">Đồng ý</button>
+                                        <button type="button" class="btn btn-success" id="btnUnLockCard" onclick="return UnlockCard();">Đồng ý</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- The Modal Lock card -->
+                        <div class="modal fade" id="myModalLock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Thông tin thẻ</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div hidden>
+                                            <div class="form-group">
+                                                <label for="Id">Id</label>
+                                                <input type="text" class="form-control" id="IdCardLock" placeholder="Id" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="CardNumber">Số thẻ</label>
+                                                <input type="text" class="form-control" id="CardNumberLock" placeholder="Số thẻ" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Date">Ngày nhập</label>
+                                                <input type="text" class="form-control" id="DateCardLock" placeholder="Ngày nhập" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Status">trạng thái thẻ</label>
+                                                <input type="text" class="form-control" id="StatusCardLock" placeholder="trạng thái thẻ" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Status">Bạn có muốn khóa thẻ không?</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success" id="btnLockCard" onclick="return LockCard();">Đồng ý</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>

@@ -117,21 +117,6 @@ namespace SmartParkingApplication.Controllers
             return Json(card, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ComboboxStatusCard()
-        {
-            List<string> result = new List<string>();
-            var Status = "";
-            Status = "Chưa đăng kí";
-            result.Add(Status);
-            Status = "Đã đăng kí";
-            result.Add(Status);
-            Status = "Thẻ Hỏng";
-            result.Add(Status);
-            Status = "Đã Khóa";
-            result.Add(Status);
-            return Json( result,JsonRequestBehavior.AllowGet);
-        }
-
 
     }
 

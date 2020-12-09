@@ -20,16 +20,16 @@ function loadDataCard() {
                 html += '<td>' + item.Status + '</td>';
                 switch (item.Status) {
                     case "Chưa đăng kí":
-                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
+                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button></td>';
                         break;
                     case "Đã đăng kí":
-                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button></td>';
+                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button></td>';
                         break;
                     case "Đã Khóa":
                         html += '<td><button class="btn btn-warning" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Mở Khóa</button></td>';
                         break;
                     case "Thẻ Hỏng":
-                        html += '<td><button class= "btn btn-danger" disabled>Thẻ Hỏng</button></td>'
+                        html += '<td></td>'
                         break;
                 }
                 html += '</tr>';
@@ -37,59 +37,12 @@ function loadDataCard() {
 
             $('#tbodyCard').html(html);
             $('#tbCard').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbCard_wrapper .col-md-6:eq(0)');
             totalCard += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalCard += '<p>Tổng số thẻ</p>';
             $('#totalCard').html(totalCard);
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-// paging
-//function pagingCard(totalRowCard, callback, changePageSizeCard) {
-//    var totalPageCard = Math.ceil(totalRowCard / 5);
-
-//    //Unbind pagination if it existed or click change pageSize
-//    if ($('#paginationCard').length === 0 || changePageSizeCard === true) {
-//        $('#paginationCard').empty();
-//        $('#paginationCard').removeData("twbs-pagination");
-//        $('#paginationCard').unbind("page");
-//    }
-
-//    $('#paginationCard').twbsPagination({
-//        totalPages: totalPageCard,
-//        first: "Đầu",
-//        next: "Tiếp",
-//        last: "Cuối",
-//        prev: "Trước",
-//        visiblePages:   10 ,
-//        onPageClick: function (event, pageCard) {
-//            pageConfigCard = pageCard;
-//            setTimeout(callback, 200);
-//        }
-//    });
-//}
-
-//ComboboxStatusCard
-function comboboxStatusCard() {
-    $.ajax({
-        url: "/ManageCard/ComboboxStatusCard",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            var html = '';
-            var i = 0;
-            $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
-            });
-            $("#cbxStatusCard").html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -107,10 +60,6 @@ function clearTextBoxCard() {
 
     $('#btnAdd').show();
     $('#btnUpdate').hide();
-    //$('#Email').css('border-color', 'lightgrey');
-    //$('#IdentityCard').css('border-color', 'lightgrey');
-    //$('#State').css('border-color', 'lightgrey');
-    //$('#Country').css('border-color', 'lightgrey');
 }
 
 function AddCard() {
@@ -187,13 +136,39 @@ function UpdateCardByNumber(CardID) {
     });
 }
 
-//lock card
+//Unlock card
 function UnlockCard() {
+    var empCardObj = {
+        CardID: $('#IdCardUnLock').val(),
+        CardNumber: $('#CardNumberUnLock').val(),
+        Date: $('#DateCardUnLock').val(),
+        Status: 0,
+    };
+    $.ajax({
+        url: "/ManageCard/UpdateCard",
+        data: JSON.stringify(empCardObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#tbCard').DataTable().clear().destroy();
+            loadDataCard();
+            $('#myModalUnLock').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//lock card
+function LockCard() {
     var empCardObj = {
         CardID: $('#IdCardLock').val(),
         CardNumber: $('#CardNumberLock').val(),
         Date: $('#DateCardLock').val(),
-        Status: 0,
+        Status: 3,
     };
     $.ajax({
         url: "/ManageCard/UpdateCard",
@@ -225,7 +200,6 @@ function getCardByID(CardID) {
                     $('#IdCardEdit').val(result.CardID);
                     $('#CardNumberEdit').val(result.CardNumber);
                     $('#DateCardEdit').val(result.date);
-                    comboboxStatusCard();
                     $('#myModalUpdate').modal('show');
                     $('#btnUpdateCard').show();
                     break;
@@ -233,20 +207,39 @@ function getCardByID(CardID) {
                     $('#IdCardEdit').val(result.CardID);
                     $('#CardNumberEdit').val(result.CardNumber);
                     $('#DateCardEdit').val(result.date);
-                    comboboxStatusCard();
                     $('#myModalUpdate').modal('show');
                     $('#btnUpdateCard').show();
                     break;
                 case "Đã Khóa":
-                    $('#IdCardLock').val(result.CardID);
-                    $('#CardNumberLock').val(result.CardNumber);
-                    $('#DateCardLock').val(result.date);
-                    $('#StatusCardLock').val(result.Status);
-                    $('#myModalLock').modal('show');
+                    $('#IdCardUnLock').val(result.CardID);
+                    $('#CardNumberUnLock').val(result.CardNumber);
+                    $('#DateCardUnLock').val(result.date);
+                    $('#StatusCardUnLock').val(result.Status);
+                    $('#myModalUnLock').modal('show');
                     break;
                 case "Thẻ Hỏng":
                     break;
             }
+        },
+        error: function (errormessage) {
+            alert("Exception:" + CardID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+//Get card follow ID to lock
+function getLockCardByID(CardID) {
+    $.ajax({
+        url: "/ManageCard/CardDetails/" + CardID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#IdCardLock').val(result.CardID);
+            $('#CardNumberLock').val(result.CardNumber);
+            $('#DateCardLock').val(result.date);
+            $('#myModalLock').modal('show');
+            $('#btnLockCard').show();
         },
         error: function (errormessage) {
             alert("Exception:" + CardID + errormessage.responseText);
