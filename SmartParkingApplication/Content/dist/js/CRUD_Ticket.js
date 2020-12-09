@@ -91,19 +91,11 @@ function loadDataTicket() {
             $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.CusName + '</td>';
-                html += '<td>' + item.Phone + '</td>';
-                html += '<td>' + item.Email + '</td>';
-                html += '<td>' + item.typeOfVehicle + '</td>';
                 html += '<td>' + item.LicensePlates + '</td>';
                 html += '<td>' + item.RegisDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
-                if (item.expiryFormEs <= DatePlus(7) && item.expiryFormEs >= loadDateNowToCompare() ) {
-                    html += '<td>Sắp hết HĐ</td>';
-                } else if (item.expiryFormEs > DatePlus(7)) {
-                    html += '<td>Còn hợp đồng</td>';
-                } else {
-                    html += '<td>Hết Hợp đồng</td>'
-                }
+                html += '<td>' + item.ExpiryDate + '</td>';
+
                 html += '<td>' + item.CardNumber + '</td>';
 
                 html += '<td><button class="btn btn-warning" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
