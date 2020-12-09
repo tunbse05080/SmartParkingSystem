@@ -2,7 +2,7 @@
 $(document).ready(function () {
     loadData();
     ComboboxGender();
-    ComboboxStatusOfwork();
+    //ComboboxStatusOfwork();
     ComboboxRoleNameU();
     ComboboxParkingPlaceU();
 });
@@ -257,7 +257,6 @@ function loadData() {
 
 //Add Data Function
 function Add() {
-    var date = loadDateNow();
     //var res = validate();
     //if (res == false) {
     //    return false;
@@ -274,7 +273,7 @@ function Add() {
         IdentityCard: $('#IdentityCard').val(),
         ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
-        StatusOfWork: $('#cbStatusOfwork').val(),
+        StatusOfWork: 1,
         RoleID: $('#cbRoleNameU').val(),
         ParkingPlaceID: $('#cbparkingPlaceU').val(),
 
@@ -582,26 +581,26 @@ function ComboboxGender() {
 }
 
 //comboboxStatusOfwork
-function ComboboxStatusOfwork() {
-    $.ajax({
-        url: "/ManageUser/ComboboxStatusOfwork",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            var html = '';
-            var i = 0;
-            $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
-            });
-            $("#cbStatusOfwork").html(html);
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
+//function ComboboxStatusOfwork() {
+//    $.ajax({
+//        url: "/ManageUser/ComboboxStatusOfwork",
+//        type: "GET",
+//        contentType: "application/json;charset=utf-8",
+//        dataType: "json",
+//        success: function (result) {
+//            var html = '';
+//            var i = 0;
+//            $.each(result, function (key, item) {
+//                html += '<option value="' + i + '">' + item + '</option>';
+//                i++;
+//            });
+//            $("#cbStatusOfwork").html(html);
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
 
 function ComboboxParkingPlaceU() {
     $.ajax({
