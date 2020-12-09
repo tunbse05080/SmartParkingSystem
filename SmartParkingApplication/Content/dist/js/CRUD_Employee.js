@@ -153,27 +153,29 @@ function getDetailByID(EmployeeID) {
     return false;
 }
 //Function for getting detail data base on EmployeeID
-function getIdToDropContract() {
+function getDropContractByID(EmployeeID) {
     $.ajax({
-        url: "/ManageUser/Details/" + EmployeeID,
+        url: "/ManageUser/DetailsGH/" + EmployeeID,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#Id').val(result.UserID);
-            $('#UserName').val(result.UserName);
-            $('#FullName').val(result.Name);
-            $('#DateOfBirth').val(result.dateOfBirth);
-            $('#Gender').val(result.gender);
-            $('#Address').val(result.UserAddress);
-            $('#IdentityCard').val(result.IdentityCard);
-            $('#PhoneNumber').val(result.Phone);
-            $('#Email').val(result.email);
-            $('#StatusOfWork').val(result.StatusOfWork);
-            $('#RoleName').val(result.RoleName);
-            $('#ParkingPlace').val(result.NameOfParking);
+            $('#UserIDDrop').val(result.UserID);
+            $('#UserNameDrop').val(result.UserName);
+            $('#FullNameDrop').val(result.Name);
+            $('#PassWordDrop').val(result.PassWork);
+            $('#DateOfBirthDrop').val(result.dateOfBirth);
+            $('#GenderDrop').val(result.Gender);
+            $('#AddressDrop').val(result.UserAddress);
+            $('#IdentityCardDrop').val(result.IdentityCard);
+            $('#PhoneNumberDrop').val(result.Phone);
+            $('#EmailDrop').val(result.email);
+            $('#RoleNameDrop').val(result.RoleID);
+            $('#ParkingPlaceDrop').val(result.ParkingPlaceID);
+            $('#ContractSigningDateDrop').val(result.contractSigningDate);
+            $('#ContractExpirationDateDrop').val(result.contractExpirationDate);
 
-            $('#myModal').modal('show');
+            $('#myModalDropContract').modal('show');
             $('#btnDrop').show();
         },
         error: function (errormessage) {
@@ -197,7 +199,7 @@ function loadData() {
                 html += '<tr>';
                 html += '<td>' + item.Name + '</td>';
                 //html += '<td>' + item.DateOfBirth + '</td>';
-                html += '<td>' + item.Phone + '</td>';
+                //html += '<td>' + item.Phone + '</td>';
                 html += '<td>' + item.RoleName + '</td>';
                 html += '<td>' + item.ContractExpirationDate + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
@@ -214,7 +216,8 @@ function loadData() {
                         html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-warning" onclick="return getGHByID(' + item.UserID + ')" > Gia Hạn HĐ</button></td>';
                         break;
                     case "Còn hợp đồng":
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button><button class="btn btn-danger" onclick="return getDropContractByID(' + item.UserID + ')" >Chấm dứt HĐ</button></td>';
+
                         break;
                     //case "Sắp hết HĐ":
                     //    html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getByID(' + item.UserID + ')" > Sửa</button></td></td>';
@@ -531,6 +534,43 @@ function ContractGH() {
         }
     });
 }
+
+function dropContract() {
+    var emGHObj = {
+        UserID: $('#UserIDDrop').val(),
+        UserName: $('#UserNameDrop').val(),
+        Name: $('#FullNameDrop').val(),
+        PassWork: $('#PassWordGH').val(),
+        DateOfBirth: $('#DateOfBirthDrop').val(),
+        Gender: $('#GenderDrop').val(),
+        UserAddress: $('#AddressDrop').val(),
+        Phone: $('#PhoneNumberDrop').val(),
+        email: $('#EmailDrop').val(),
+        IdentityCard: $('#IdentityCardDrop').val(),
+        ContractSigningDate: $('#ContractSigningDateDrop').val(),
+        ContractExpirationDate: loadDateNow(),
+        StatusOfWork: 0,
+        RoleID: $('#RoleNameDrop').val(),
+        ParkingPlaceID: $('#ParkingPlaceDrop').val(),
+    };
+    $.ajax({
+        url: "/ManageUser/Update",
+        data: JSON.stringify(emGHObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#myModalDropContract').modal('hide');
+            $('#tbUser').DataTable().clear().destroy();
+            loadData(true);
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 
 //comboboxgender
 function ComboboxGender() {

@@ -50,7 +50,7 @@
                                     <tr>
                                         <th>Tên</th>
                                         @*<th>Ngày Sinh</th>*@
-                                        <th>Số điện thoại</th>
+                                        @*<th>Số điện thoại</th>*@
                                         <th>Chức vụ</th>
                                         <th>Ngày hết HĐ</th>
                                         <th>Bãi đỗ</th>
@@ -64,7 +64,7 @@
                                     <tr>
                                         <th>Tên</th>
                                         @*<th>Ngày Sinh</th>*@
-                                        <th>Số điện thoại</th>
+                                        @*<th>Số điện thoại</th>*@
                                         <th>Chức vụ</th>
                                         <th>Ngày hết HĐ</th>
                                         <th>Bãi đỗ</th>
@@ -234,6 +234,89 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-success" id="btnLockCard" onclick="return ContractGH();">Đồng ý</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return CloseAdd()">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--The Modal Drop Contract -->
+                        <div class="modal fade" id="myModalDropContract" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row">
+                                            <div hidden>
+
+
+                                                <div class="form-group col-sm-4">
+                                                    <label for="Id">Id</label>
+                                                    <input type="text" class="form-control" id="UserIDDrop" placeholder="Id" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="UserName">Tên tài khoản</label>
+                                                    <input type="text" class="form-control" id="UserNameDrop" placeholder="Tên tài khoản" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="PassWork">Mật khẩu</label>
+                                                    <input type="text" class="form-control" id="PassWordDrop" placeholder="Mật khẩu" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="FullName">Tên đầy đủ</label>
+                                                    <input type="text" class="form-control" id="FullNameDrop" placeholder="Tên đầy đủ" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="DateOfBirth">Ngày Sinh</label>
+                                                    <input type="text" class="form-control" id="DateOfBirthDrop" placeholder="Ngày Sinh" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="Gender">Giới tính</label>
+                                                    <input type="text" class="form-control" id="GenderDrop" placeholder="Giới tính" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="Address">Địa chỉ</label>
+                                                    <input type="text" class="form-control" id="AddressDrop" placeholder="Địa chỉ" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="PhoneNumber">Số điện thoại</label>
+                                                    <input type="text" class="form-control" id="PhoneNumberDrop" placeholder="Số điện thoại" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="Email">Email</label>
+                                                    <input type="text" class="form-control" id="EmailDrop" placeholder="Email" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="IdentityCard">Số CMND</label>
+                                                    <input type="text" class="form-control" id="IdentityCardDrop" placeholder="Số CMND" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="ContractSigningDate">Ngày ký HĐ</label>
+                                                    <input type="text" class="form-control" id="ContractSigningDateDrop" placeholder="Ngày ký HĐ" />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="ContractExpirationDate">Ngày hết HĐ</label>
+                                                    <input type="text" class="form-control" id="ContractExpirationDateDrop" placeholder="Ngày hết HĐ" />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="RoleName">Chức vụ</label>
+                                                    <input type="text" class="form-control" id="RoleNameDrop" placeholder="Chức vụ" disabled />
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label for="ParkingPlace">Bãi làm việc</label>
+                                                    <input type="text" class="form-control" id="ParkingPlaceDrop" placeholder="Bãi làm việc" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-10">
+                                                <label for="Status">Bạn có muốn chấm dứt hợp đồng không?</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success" id="btnDrop" onclick="return dropContract();">Đồng ý</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
