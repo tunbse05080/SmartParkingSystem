@@ -36,7 +36,10 @@ function loadDataCard() {
             });
 
             $('#tbodyCard').html(html);
-            $('#tbCard').DataTable({ "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true });
+            $('#tbCard').DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#tbCard_wrapper .col-md-6:eq(0)');
             totalCard += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalCard += '<p>Tổng số thẻ</p>';
             $('#totalCard').html(totalCard);

@@ -29,6 +29,11 @@ function loadDataPrice(changsizepr) {
                 html += '</tr>';
             });
             $('#tbodypr').html(html);
+
+            $("#tbPrice").DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            }).buttons().container().appendTo('#tbPrice_wrapper .col-md-6:eq(0)');
             pagingpr(result.total, function () {
                 loadDataPrice();
             }, changsizepr);
