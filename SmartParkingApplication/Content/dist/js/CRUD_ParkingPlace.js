@@ -109,6 +109,7 @@ function UpdatePP() {
     if (res == false) {
         return false;
     }
+    var statuspp = $('#cbStatusOfParking').val();
     
     var empPPObj = {
         ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
@@ -118,7 +119,7 @@ function UpdatePP() {
         NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
         NumberCarBlank: $('#NumberCarBlankEdit').val(),
         NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
-        StatusOfParkingPlace: $('#cbStatusOfParking').val() ,
+        StatusOfParkingPlace: statuspp,
     };
     $.ajax({
         url: "/ManagePPlace/UpdatePP",
@@ -146,16 +147,16 @@ function getPPByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#ParkingPlaceID').val(result.ParkingPlaceID);
-            $('#NameOfParking').val(result.NameOfParking);
-            $('#Location').val(result.Location);
+            $('#ParkingPlaceIDEdit').val(result.ParkingPlaceID);
+            $('#NameOfParkingEdit').val(result.NameOfParking);
+            $('#LocationEdit').val(result.Location);
             $('#NumberOfCarEdit').val(result.NumberOfCar);
             $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
-            $('#NumberMotoBikeBlank').val(result.NumberMotoBikeBlank);
-            $('#StatusOfParkingPlace').val(result.statusOfParking);
+            $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
+            ComboboxStatusOfParking();
 
-            $('#myModalPP').modal('show');
+            $('#myModalUpdatePP').modal('show');
            
             $('#btnAddPP').hide();
             $('#btnUpdatePP').show();
@@ -208,7 +209,7 @@ function AddPP() {
         NumberOfMotoBike: $('#NumberOfMotoBike').val(),
         NumberCarBlank: $('#NumberOfCar').val(),
         NumberMotoBikeBlank: $('#NumberOfMotoBike').val(),
-        StatusOfParkingPlace: $('#cbStatusOfParking').val(),
+        StatusOfParkingPlace: 1,
     };
     $.ajax({
         url: "/ManagePPlace/Create",
@@ -237,7 +238,7 @@ function clearTextBoxPP() {
     $('#NumberOfMotoBike').val("");
     $('#NumberCarBlank').val("");
     $('#NumberMotoBikeBlank').val("");
-    $('#cbStatusOfParking').val("");
+    $('#StatusOfParking').val("");
 
 
 
