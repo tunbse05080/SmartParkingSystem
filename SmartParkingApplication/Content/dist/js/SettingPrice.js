@@ -26,7 +26,9 @@ function loadDataPrice(changsizepr) {
                 html += '<td>' + item.MonthPrice + '</td>';
                 html += '<td>' + item.FirstBlock + '</td>';
                 html += '<td>' + item.NextBlock + '</td>';
+                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getEditByID(' + item.PriceID + ')" > Sửa</button></td>';
                 html += '</tr>';
+
             });
             $('#tbodypr').html(html);
 
@@ -42,29 +44,29 @@ function loadDataPrice(changsizepr) {
 
         }
     });
-    function pagingpr(totalRowpr, callback, changePageSizepr) {
-        var totalPagepr = Math.ceil(totalRowpr / 5);
+    //function pagingpr(totalRowpr, callback, changePageSizepr) {
+    //    var totalPagepr = Math.ceil(totalRowpr / 5);
 
-        //Unbind pagination if it existed or click change pageSize
-        if ($('#paginationpr').length === 0 || changePageSizepr === true) {
-            $('#paginationpr').empty();
-            $('#paginationpr').removeData("twbs-pagination");
-            $('#paginationpr').unbind("page");
-        }
+    //    //Unbind pagination if it existed or click change pageSize
+    //    if ($('#paginationpr').length === 0 || changePageSizepr === true) {
+    //        $('#paginationpr').empty();
+    //        $('#paginationpr').removeData("twbs-pagination");
+    //        $('#paginationpr').unbind("page");
+    //    }
 
-        $('#paginationpr').twbsPagination({
-            totalPages: totalPagepr,
-            first: "Đầu",
-            next: "Tiếp",
-            last: "Cuối",
-            prev: "Trước",
-            visiblePages: 10,
-            onPageClick: function (event, pagepr) {
-                pageConfigpr = pagepr;
-                setTimeout(callback, 200);
-            }
-        });
-    }
+    //    $('#paginationpr').twbsPagination({
+    //        totalPages: totalPagepr,
+    //        first: "Đầu",
+    //        next: "Tiếp",
+    //        last: "Cuối",
+    //        prev: "Trước",
+    //        visiblePages: 10,
+    //        onPageClick: function (event, pagepr) {
+    //            pageConfigpr = pagepr;
+    //            setTimeout(callback, 200);
+    //        }
+    //    });
+    //}
     function ComboboxTypeOfvehicle() {
         $.ajax({
             url: "/SettingPrice/ComboboxTypeOfVehicle",
@@ -90,10 +92,10 @@ function loadDataPrice(changsizepr) {
         //if (res == false) {
         //    return false;
         //}
-        var TypeOfvehicle  = $('#cbTypeOfvehicle').val();
+        var typeofVehicle = $('#cbTypeOfvehicle').val();
         var empPRObj = {
             
-            TypeOfvehicle: TypeOfvehicle,
+            TypeOfvehicle: typeofVehicle ,
             DayPrice: $('#DayPriceEdit').val(),
             MonthPrice: $('#MonthPriceEdit').val(),
             FirstBlock: $('#FirstBlockEdit').val(),
@@ -122,13 +124,13 @@ function loadDataPrice(changsizepr) {
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
-                var TypeOfvehicle = $('#cbTypeOfvehicle').val();
-                $('#Id').val(result.PriceID);
-                $('#TypeOfvehicle').val(result.TypeOfvehicle);
-                $('#DayPrice').val(result.DayPrice);
-                $('#MonthPrice').val(result.MonthPrice);
-                $('#DateOfBirth').val(result.FirstBlock);
-                $('#FirstBlock').val(result.NextBlock);
+                
+                $('#Idd').val(result.PriceID);
+                $('#TypeOfvehicled').val(result.TypeOfvehicle);
+                $('#DayPriced').val(result.DayPrice);
+                $('#MonthPriced').val(result.MonthPrice);
+                $('#DateOfBirthd').val(result.FirstBlock);
+                $('#FirstBlockd').val(result.NextBlock);
                
 
                 $('#myModalSettingPrice').modal('show');
@@ -152,5 +154,28 @@ function loadDataPrice(changsizepr) {
             $("#myModalSettingPrice").modal("show");
         }
       
+    }
+    function getEditPriceByID(PriceID) {
+        $.ajax({
+            url: "/SettingPrice/PriceDetails/" + PriceID,
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                $('#PriceIDed').val(result.PriceID);
+                $('#TypeOfvehicled').val(result.TypeOfvehicle);
+                $('#DayPriced').val(result.DayPrice);
+                $('#MonthPriced').val(result.MonthPrice);
+                $('#FirstBlockd').val(result.FirstBlock);
+                $('#NextBlockd').val(result.NextBlock);
+               
+                $('#myModalPREdit').modal('show');
+                $('#btnUpdate').show();
+            },
+            error: function (errormessage) {
+                alert("Exception:" + EmployeeID + errormessage.responseText);
+            }
+        });
+        return false;
     }
 }

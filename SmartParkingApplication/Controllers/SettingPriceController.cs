@@ -56,5 +56,13 @@ namespace SmartParkingApplication.Controllers
             var result = new { set.PriceID, set.TypeOfvehicle, set.DayPrice, set.MonthPrice, set.FirstBlock, set.NextBlock };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult PriceDetails(int id)
+        {
+            var pr = db.Prices.Find(id);
+          
+
+            var result = new { pr.PriceID, pr.TypeOfvehicle, pr.DayPrice, pr.MonthPrice, pr.FirstBlock, pr.NextBlock};
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
