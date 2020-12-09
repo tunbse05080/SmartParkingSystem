@@ -30,7 +30,10 @@ function loadDataStatusParking() {
                 html += '</tr>';
             });
             $('#tbodyStatusPP').html(html);
-            var table = $('#tbStatusPP').DataTable();
+            var table = $('#tbStatusPP').DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#tbStatusPP_wrapper .col-md-6:eq(0)');
             //pagingSPP(result.total, function () {
             //    loadDataStatusParking();
             //}, changePageSizeSPP);

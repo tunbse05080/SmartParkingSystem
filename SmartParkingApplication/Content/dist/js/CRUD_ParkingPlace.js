@@ -36,7 +36,10 @@ function loadDataParkingPlace() {
                 html += '</tr>';
             });
             $('#tbodypp').html(html);
-            $('#tbPPlace').DataTable({ "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true});
+            $('#tbPPlace').DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#tbPPlace_wrapper .col-md-6:eq(0)');
             totalPlace += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
             totalPlace += '<p>Tổng Số Bãi Đỗ</p>';
             $('#totalParkingPlace').html(totalPlace);
@@ -115,7 +118,7 @@ function UpdatePP() {
         NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
         NumberCarBlank: $('#NumberCarBlankEdit').val(),
         NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
-        StatusOfParkingPlace: $('#cbStatusOfParkingEdit').val() ,
+        StatusOfParkingPlace: $('#cbStatusOfParking').val() ,
     };
     $.ajax({
         url: "/ManagePPlace/UpdatePP",
