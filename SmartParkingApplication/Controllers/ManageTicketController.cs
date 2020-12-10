@@ -101,12 +101,13 @@ namespace SmartParkingApplication.Controllers
             }
             var RegisDate = ticket.RegisDate.Value.ToString("MM/dd/yyyy");
             var ExpiryDate = ticket.ExpiryDate.Value.ToString("MM/dd/yyyy");
-            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardNumber = ticket.Card.CardNumber };
+            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardId = ticket.CardID, cardNumber = ticket.Card.CardNumber };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateTicket(MonthlyTicket ticket)
-        { 
+        {
+            //MonthlyTicket ticket = GetTicket(data);
             if (ModelState.IsValid)
             {
                 db.Entry(ticket).State = EntityState.Modified;
@@ -115,11 +116,23 @@ namespace SmartParkingApplication.Controllers
             return Json(ticket, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetIdCardFromNumber(string CardNumber)
-        {
-            var CardId = db.Cards.Where(c => c.CardNumber == CardNumber).Select(c => c.CardID);
-            return Json(CardId, JsonRequestBehavior.AllowGet);
-        }
+        //public MonthlyTicket GetTicket(MonthlyTicket ticket)
+        //{
+        //    var data = db.Cards.Where(c => c.CardNumber.Equals(ticket.CardID));
+        //    MonthlyTicket result = null;
+        //    foreach (var item in data)
+        //    {
+        //        result = new MonthlyTicket { MonthlyTicketID = ticket.MonthlyTicketID, CusName = ticket.CusName, Email = ticket.Email, Phone = ticket.Phone, RegisDate = ticket.RegisDate, ExpiryDate = ticket.ExpiryDate, LicensePlates = ticket.LicensePlates, IdentityCard = ticket.IdentityCard, TypeOfVehicle = ticket.TypeOfVehicle, CardID = item.CardID };
+        //    }
+        //    return result;
+        //}
+
+        //public JsonResult GetIdCardFromNumber(string CardNumber)
+        //{
+
+        //    var result = db.Cards.Where(c => c.CardNumber.Equals(CardNumber)).Select(c => c.CardID);
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         //Xuat file Exel Ticket
         public ActionResult XuatFileExel()

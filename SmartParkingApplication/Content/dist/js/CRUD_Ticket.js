@@ -4,6 +4,8 @@ $(document).ready(function () {
     ComboboxTicket();
 });
 
+var CardId;
+
 //reload modal when change combobox
 function reloadModalETK() {
     if ($("#cbETK").val() == "1") {
@@ -223,7 +225,6 @@ function UpdateExtendTK() {
 
 //Edit info ticket
 function UpdateInfoTicket() {
-    var CardId = GetIdCardFromNumber($('#CardNumberEdit').val());
     var empTicketObj = {
         MonthlyTicketID: $('#MonthlyTicketIdEdit').val(),
         CusName: $('#CusNameEdit').val(),
@@ -234,7 +235,7 @@ function UpdateInfoTicket() {
         LicensePlates: $('#LicensePlatesEdit').val(),
         RegisDate: $('#RegisDateEdit').val(),
         ExpiryDate: $('#ExpiryDateEdit').val(),
-        CardID: CardId,
+        CardID: $('#CardIdEdit').val(),
     };
     $.ajax({
         url: "/ManageTicket/UpdateTicket",
@@ -301,6 +302,7 @@ function getTicketByIDEdit(MonthlyTicketID) {
             $('#LicensePlatesEdit').val(result.LicensePlates);
             $('#RegisDateEdit').val(result.RegisDate);
             $('#ExpiryDateEdit').val(result.ExpiryDate);
+            $('#CardIdEdit').val(result.cardId);
             $('#CardNumberEdit').val(result.cardNumber);
 
             $('#myModalEditTicket').modal('show');
@@ -374,18 +376,21 @@ function getTicketByIDETK(MonthlyTicketID) {
 }
 
 
-function GetIdCardFromNumber(CardNumber) {
-    $.ajax({
-        url: "/ManageTicket/GetIdCardFromNumber",
-        data: JSON.stringify(CardNumber),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            var CardID = result.CardId;
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
+//function GetIdCardFromNumber(CardNumber) {
+
+//    $.ajax({
+//        url: "/ManageTicket/GetIdCardFromNumber",
+//        data: JSON.stringify({ CardNumber: CardNumber }),
+//        type: "POST",
+//        contentType: "application/json;charset=utf-8",
+//        dataType: "json",
+//        success: function (result) {
+//            $.each(result, function (key, item) {
+//                CardId = item;
+//            });
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
