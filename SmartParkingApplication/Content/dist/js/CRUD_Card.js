@@ -29,7 +29,7 @@ function loadDataCard() {
                         html += '<td><button class="btn btn-warning" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Mở Khóa</button></td>';
                         break;
                     case "Thẻ Hỏng":
-                        html += '<td></td>'
+                        html += '<td><h6 Hidden>The Hong</h6></td>'
                         break;
                 }
                 html += '</tr>';

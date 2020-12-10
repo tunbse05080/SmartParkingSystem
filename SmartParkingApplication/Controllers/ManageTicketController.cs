@@ -99,20 +99,26 @@ namespace SmartParkingApplication.Controllers
                     typeOfVehicle = "Ô tô";
                     break;
             }
-            var RegisDate = ticket.RegisDate.Value.ToString("dd/MM/yyyy");
-            var ExpiryDate = ticket.ExpiryDate.Value.ToString("dd/MM/yyyy");
+            var RegisDate = ticket.RegisDate.Value.ToString("MM/dd/yyyy");
+            var ExpiryDate = ticket.ExpiryDate.Value.ToString("MM/dd/yyyy");
             var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardNumber = ticket.Card.CardNumber };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateTicket(MonthlyTicket ticket)
-        {
+        { 
             if (ModelState.IsValid)
             {
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
             }
             return Json(ticket, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetIdCardFromNumber(string CardNumber)
+        {
+            var CardId = db.Cards.Where(c => c.CardNumber == CardNumber).Select(c => c.CardID);
+            return Json(CardId, JsonRequestBehavior.AllowGet);
         }
 
         //Xuat file Exel Ticket

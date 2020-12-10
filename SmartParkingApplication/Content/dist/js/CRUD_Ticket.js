@@ -1,5 +1,7 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     loadDataTicket();
+    ComboboxTicket();
 });
 
 //reload modal when change combobox
@@ -64,6 +66,7 @@ function ComboboxTicket() {
                 i++;
             });
             $("#cbTypeOfVehicleTK").html(html);
+            $("#cbTypeOfVehicleEdit").html(html);
             html = '';
             $.each(result.numberCards, function (key, item) {
                 html += '<option value="' + item.CardID + '">' + item.CardNumber + '</option>';
@@ -96,7 +99,7 @@ function loadDataTicket() {
 
                 html += '<td>' + item.CardNumber + '</td>';
 
-                html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
+                html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
             });
 
@@ -142,7 +145,6 @@ function loadDataTicket() {
 
 function clearTextBoxTicket() {
     var date = loadDateNow();
-    ComboboxTicket();
     $('#IdTK').val("");
     $('#CusNameTK').val("");
     $('#IdentityCardTK').val("");
@@ -187,6 +189,7 @@ function AddTicket() {
     });
 }
 
+//Extend ticket
 function UpdateExtendTK() {
     var empTicketObj = {
         MonthlyTicketID: $('#MonthlyTicketETK').val(),
@@ -218,6 +221,40 @@ function UpdateExtendTK() {
     });
 }
 
+//Edit info ticket
+function UpdateInfoTicket() {
+    var CardId = GetIdCardFromNumber($('#CardNumberEdit').val());
+    var empTicketObj = {
+        MonthlyTicketID: $('#MonthlyTicketIdEdit').val(),
+        CusName: $('#CusNameEdit').val(),
+        IdentityCard: $('#IdentityCardEdit').val(),
+        Phone: $('#PhoneEdit').val(),
+        Email: $('#EmailEdit').val(),
+        TypeOfVehicle: $('#cbTypeOfVehicleEdit').val(),
+        LicensePlates: $('#LicensePlatesEdit').val(),
+        RegisDate: $('#RegisDateEdit').val(),
+        ExpiryDate: $('#ExpiryDateEdit').val(),
+        CardID: CardId,
+    };
+    $.ajax({
+        url: "/ManageTicket/UpdateTicket",
+        data: JSON.stringify(empTicketObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#tbTicket').DataTable().clear().destroy();
+            loadDataTicket();
+            $('#myModalEditTicket').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+
 //get ticket by id to fill modal DetailTicket
 function getTicketByIDDetail(MonthlyTicketID) {
     $.ajax({
@@ -246,6 +283,7 @@ function getTicketByIDDetail(MonthlyTicketID) {
     });
     return false;
 }
+
 //get ticket by id to fill modal EditTicket
 function getTicketByIDEdit(MonthlyTicketID) {
     $.ajax({
@@ -254,20 +292,18 @@ function getTicketByIDEdit(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            var date = $('#cbETK').val();
-            $('#MonthlyTicketETK').val(result.MonthlyTicketID);
-            $('#CusNameETK').val(result.CusName);
-            $('#IdentityCardETK').val(result.IdentityCard);
-            $('#PhoneETK').val(result.Phone);
-            $('#EmailETK').val(result.Email);
-            $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
-            $('#LicensePlatesETK').val(result.LicensePlates);
-            $('#RegisDateETK').val(loadDateNow());
-            $('#ExpiryDateETk').val(DateETK(date));
-            $('#CardIDETK').val(result.CardID);
+            $('#MonthlyTicketIdEdit').val(result.MonthlyTicketID);
+            $('#CusNameEdit').val(result.CusName);
+            $('#IdentityCardEdit').val(result.IdentityCard);
+            $('#PhoneEdit').val(result.Phone);
+            $('#EmailEdit').val(result.Email);
+            $('#cbTypeOfVehicleEdit').val(result.typeOfVehicle);
+            $('#LicensePlatesEdit').val(result.LicensePlates);
+            $('#RegisDateEdit').val(result.RegisDate);
+            $('#ExpiryDateEdit').val(result.ExpiryDate);
+            $('#CardNumberEdit').val(result.cardNumber);
 
-            $('#myModalExtendTicket').modal('show');
-            $('#btnExtendTK').show();
+            $('#myModalEditTicket').modal('show');
 
         },
         error: function (errormessage) {
@@ -335,4 +371,21 @@ function getTicketByIDETK(MonthlyTicketID) {
         }
     });
     return false;
+}
+
+
+function GetIdCardFromNumber(CardNumber) {
+    $.ajax({
+        url: "/ManageTicket/GetIdCardFromNumber",
+        data: JSON.stringify(CardNumber),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var CardID = result.CardId;
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }
