@@ -55,14 +55,11 @@
                                 <thead>
                                     <tr>
                                         <th>Tên chủ thẻ</th>
-                                        @*<th>Số điện thoại</th>
-                                        <th>Email</th>
-                                        <th>Loại xe</th>*@
                                         <th>Biển số xe</th>
-                                        <th>Ngày đăng kí</th>
                                         <th>Ngày hết hạn</th>
-                                        <th>Trạng thái</th>
+
                                         <th>Số thẻ</th>
+                                        <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
@@ -70,14 +67,10 @@
                                 <tfoot>
                                     <tr>
                                         <th>Tên chủ thẻ</th>
-                                        @*<th>Số điện thoại</th>
-                                        <th>Email</th>
-                                        <th>Loại xe</th>*@
                                         <th>Biển số xe</th>
-                                        <th>Ngày đăng kí</th>
                                         <th>Ngày hết hạn</th>
-                                        <th>Trạng thái</th>
                                         <th>Số thẻ</th>
+                                        <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </tfoot>
@@ -126,7 +119,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="RegisDate">Ngày đăng kí</label>
-                                            <input type="text" class="form-control" id="RegisDateTK" placeholder="Ngày đăng kí" disabled/>
+                                            <input type="text" class="form-control" id="RegisDateTK" placeholder="Ngày đăng kí" disabled />
                                         </div>
                                         <div class="form-group">
                                             <label for="ExpiryDate">Ngày hết hạn</label>
@@ -236,6 +229,63 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" id="btnExtendTK" onclick="return UpdateExtendTK();">Gia Hạn</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The Modal Detail Monthly Ticket -->
+                        <div class="modal fade" id="myModalDetailTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Chi tiết vé tháng</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="Id">Id</label>
+                                            <input type="text" class="form-control" id="MonthlyTicketIdDetail" placeholder="Id" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CusName">Tên chủ xe</label>
+                                            <input type="text" class="form-control" id="CusNameDetail" placeholder="Tên chủ xe" disabled/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="IdentityCard">Số CMND</label>
+                                            <input type="text" class="form-control" id="IdentityCardDetail" placeholder="Số CMND" disabled/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Email">Email</label>
+                                            <input type="text" class="form-control" id="EmailDetail" placeholder="Email" disabled/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Phone">Số điện thoại</label>
+                                            <input type="text" class="form-control" id="PhoneDetail" placeholder="Số điện thoai" disabled/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="TypeOfVehicleDetail">Loại xe</label>
+                                            <input type="text" class="form-control" id="TypeOfVehicleDetail" placeholder="Loại xe" disabled/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="LicensePlates">Biển số xe</label>
+                                            <input type="text" class="form-control" id="LicensePlatesDetail" placeholder="Biển số xe" disabled/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="RegisDate">Ngày đăng kí</label>
+                                            <input type="text" class="form-control" id="RegisDateDetail" placeholder="Ngày đăng kí" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ExpiryDate">Ngày hết hạn</label>
+                                            <input type="text" class="form-control" id="ExpiryDateDetail" placeholder="Ngày hết hạn" disabled/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CardIDDetail">Số thẻ</label>
+                                            <input type="text" class="form-control" id="CardNumberDetail" placeholder="Số thẻ" disabled/>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>

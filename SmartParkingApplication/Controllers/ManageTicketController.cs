@@ -89,10 +89,19 @@ namespace SmartParkingApplication.Controllers
         public JsonResult TicketDetails(int id)
         {
             var ticket = db.MonthlyTickets.Find(id);
-
+            var typeOfVehicle = "";
+            switch (ticket.TypeOfVehicle)
+            {
+                case 0:
+                    typeOfVehicle = "Xe máy";
+                    break;
+                case 1:
+                    typeOfVehicle = "Ô tô";
+                    break;
+            }
             var RegisDate = ticket.RegisDate.Value.ToString("dd/MM/yyyy");
             var ExpiryDate = ticket.ExpiryDate.Value.ToString("dd/MM/yyyy");
-            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, ticket.TypeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, ticket.CardID };
+            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardNumber = ticket.Card.CardNumber };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

@@ -92,13 +92,11 @@ function loadDataTicket() {
                 html += '<tr>';
                 html += '<td>' + item.CusName + '</td>';
                 html += '<td>' + item.LicensePlates + '</td>';
-                html += '<td>' + item.RegisDate + '</td>';
-                html += '<td>' + item.ExpiryDate + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
 
                 html += '<td>' + item.CardNumber + '</td>';
 
-                html += '<td><button class="btn btn-primary" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
+                html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByID(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
                 html += '</tr>';
             });
 
@@ -233,11 +231,11 @@ function getTicketByIDDetail(MonthlyTicketID) {
             $('#IdentityCardDetail').val(result.IdentityCard);
             $('#PhoneDetail').val(result.Phone);
             $('#EmailDetail').val(result.Email);
-            $('#TypeOfVehicleDetail').val(result.TypeOfVehicle);
+            $('#TypeOfVehicleDetail').val(result.typeOfVehicle);
             $('#LicensePlatesDetail').val(result.LicensePlates);
-            $('#RegisDateDetail').val(loadDateNow());
-            $('#ExpiryDateDetail').val(DateETK(date));
-            $('#CardIDDetail').val(result.CardID);
+            $('#RegisDateDetail').val(result.RegisDate);
+            $('#ExpiryDateDetail').val(result.ExpiryDate);
+            $('#CardNumberDetail').val(result.cardNumber);
 
             $('#myModalDetailTicket').modal('show');
 
