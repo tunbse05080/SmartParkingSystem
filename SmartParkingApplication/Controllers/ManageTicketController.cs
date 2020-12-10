@@ -37,6 +37,7 @@ namespace SmartParkingApplication.Controllers
             {
                 var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy");
                 var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
+                var expiryDateES = item.ExpiryDate.Value.ToString("yyyy/MM/dd");
                 string typeOfVehicle = string.Empty;
                 switch (item.TypeOfVehicle)
                 {
@@ -59,6 +60,7 @@ namespace SmartParkingApplication.Controllers
                     RegisDate = regisDate,
                     ExpiryDate = expiryDate,
                     CardNumber = item.CardNumber,
+                    ExpiryDateES = expiryDateES,
                 };
                 
                 list.Add(tr);
@@ -101,7 +103,7 @@ namespace SmartParkingApplication.Controllers
             }
             var RegisDate = ticket.RegisDate.Value.ToString("MM/dd/yyyy");
             var ExpiryDate = ticket.ExpiryDate.Value.ToString("MM/dd/yyyy");
-            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardId = ticket.CardID, cardNumber = ticket.Card.CardNumber };
+            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardId = ticket.CardID, cardNumber = ticket.Card.CardNumber, ticket.TypeOfVehicle };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

@@ -93,15 +93,28 @@ function loadDataTicket() {
             var data = result.dataTicket;
             var html = '';
             var totalTicket = '';
+            var status = "";
             $.each(data, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.CusName + '</td>';
                 html += '<td>' + item.LicensePlates + '</td>';
                 html += '<td>' + item.ExpiryDate + '</td>';
-
                 html += '<td>' + item.CardNumber + '</td>';
-
-                html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" > Gia Hạn</button></td>';
+                if (item.ExpiryDateES < loadDateNowToCompare()) {
+                    status = "Hết hạn HĐ";
+                    html += '<td>' + status + '</td>';
+                } else {
+                    status = "Còn HĐ";
+                    html += '<td>' + status + '</td>';
+                }
+                switch (status) {
+                    case "Còn HĐ":
+                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Chấm Dứt HĐ</button></td>';
+                        break;
+                    case "Hết hạn HĐ":
+                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" > Gia Hạn HĐ</button></td>';
+                        break;
+                }
                 html += '</tr>';
             });
 
@@ -120,30 +133,6 @@ function loadDataTicket() {
         }
     });
 }
-
-//function pagingTicket(totalRowTicket, callback, changePageSizeTicket) {
-//    var totalPageTicket = Math.ceil(totalRowTicket / 5);
-
-//    //Unbind pagination if it existed or click change pageSize
-//    if ($('#paginationTicket').length === 0 || changePageSizeTicket === true) {
-//        $('#paginationTicket').empty();
-//        $('#paginationTicket').removeData("twbs-pagination");
-//        $('#paginationTicket').unbind("page");
-//    }
-
-//    $('#paginationTicket').twbsPagination({
-//        totalPages: totalPageTicket,
-//        first: "Đầu",
-//        next: "Tiếp",
-//        last: "Cuối",
-//        prev: "Trước",
-//        visiblePages: 10,
-//        onPageClick: function (event, pageTicket) {
-//            pageConfigTicket = pageTicket;
-//            setTimeout(callback, 200);
-//        }
-//    });
-//}
 
 function clearTextBoxTicket() {
     var date = loadDateNow();
@@ -256,6 +245,38 @@ function UpdateInfoTicket() {
 }
 
 
+//Drop contract ticket
+function UpdateDropContractTicket() {
+    var empTicketObj = {
+        MonthlyTicketID: $('#MonthlyTicketDC').val(),
+        CusName: $('#CusNameDC').val(),
+        IdentityCard: $('#IdentityCardDC').val(),
+        Phone: $('#PhoneDC').val(),
+        Email: $('#EmailDC').val(),
+        TypeOfVehicle: $('#TypeOfVehicleDC').val(),
+        LicensePlates: $('#LicensePlatesDC').val(),
+        RegisDate: $('#RegisDateDC').val(),
+        ExpiryDate: $('#ExpiryDateDC').val(),
+        CardID: $('#CardIDDC').val(),
+    };
+    $.ajax({
+        url: "/ManageTicket/UpdateTicket",
+        data: JSON.stringify(empTicketObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#tbTicket').DataTable().clear().destroy();
+            loadDataTicket();
+            $('#myModalDropContractTicket').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 //get ticket by id to fill modal DetailTicket
 function getTicketByIDDetail(MonthlyTicketID) {
     $.ajax({
@@ -314,6 +335,7 @@ function getTicketByIDEdit(MonthlyTicketID) {
     });
     return false;
 }
+
 //get ticket by id to fill modal DropContractTicket
 function getTicketByIDDropContract(MonthlyTicketID) {
     $.ajax({
@@ -322,20 +344,18 @@ function getTicketByIDDropContract(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            var date = $('#cbETK').val();
-            $('#MonthlyTicketETK').val(result.MonthlyTicketID);
-            $('#CusNameETK').val(result.CusName);
-            $('#IdentityCardETK').val(result.IdentityCard);
-            $('#PhoneETK').val(result.Phone);
-            $('#EmailETK').val(result.Email);
-            $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
-            $('#LicensePlatesETK').val(result.LicensePlates);
-            $('#RegisDateETK').val(loadDateNow());
-            $('#ExpiryDateETk').val(DateETK(date));
-            $('#CardIDETK').val(result.CardID);
+            $('#MonthlyTicketDC').val(result.MonthlyTicketID);
+            $('#CusNameDC').val(result.CusName);
+            $('#IdentityCardDC').val(result.IdentityCard);
+            $('#PhoneDC').val(result.Phone);
+            $('#EmailDC').val(result.Email);
+            $('#TypeOfVehicleDC').val(result.TypeOfVehicle);
+            $('#LicensePlatesDC').val(result.LicensePlates);
+            $('#RegisDateDC').val(result.RegisDate);
+            $('#ExpiryDateDC').val(loadDateNow());
+            $('#CardIDDC').val(result.cardId);
 
-            $('#myModalExtendTicket').modal('show');
-            $('#btnExtendTK').show();
+            $('#myModalDropContractTicket').modal('show');
 
         },
         error: function (errormessage) {
@@ -344,6 +364,7 @@ function getTicketByIDDropContract(MonthlyTicketID) {
     });
     return false;
 }
+
 //get ticket by id to fill modal ExtendTicket
 function getTicketByIDETK(MonthlyTicketID) {
     $.ajax({
@@ -362,7 +383,7 @@ function getTicketByIDETK(MonthlyTicketID) {
             $('#LicensePlatesETK').val(result.LicensePlates);
             $('#RegisDateETK').val(loadDateNow());
             $('#ExpiryDateETk').val(DateETK(date));
-            $('#CardIDETK').val(result.CardID);
+            $('#CardIDETK').val(result.cardId);
 
             $('#myModalExtendTicket').modal('show');
             $('#btnExtendTK').show();

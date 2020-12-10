@@ -234,6 +234,69 @@
                             </div>
                         </div>
 
+                        <!-- The Modal Extend Ticket -->
+                        <div class="modal fade" id="myModalDropContractTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Chấm dứt hợp đồng vé tháng</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div hidden>
+                                            <div class="form-group">
+                                                <label for="Id">Id</label>
+                                                <input type="text" class="form-control" id="MonthlyTicketDC" placeholder="Id" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="CusName">Tên chủ xe</label>
+                                                <input type="text" class="form-control" id="CusNameDC" placeholder="Tên chủ xe" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="IdentityCard">Số CMND</label>
+                                                <input type="text" class="form-control" id="IdentityCardDC" placeholder="Số CMND" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Email">Email</label>
+                                                <input type="text" class="form-control" id="EmailDC" placeholder="Email" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Phone">Số điện thoại</label>
+                                                <input type="text" class="form-control" id="PhoneDC" placeholder="Số điện thoai" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="TypeOfVehicle">Loại xe</label>
+                                                <input type="text" class="form-control" id="TypeOfVehicleDC" placeholder="Loại xe" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="LicensePlates">Biển số xe</label>
+                                                <input type="text" class="form-control" id="LicensePlatesDC" placeholder="Biển số xe" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ParkingPlace">Số thẻ</label>
+                                                <input type="text" class="form-control" id="RegisDateDC" placeholder="Số thẻ" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ParkingPlace">Số thẻ</label>
+                                                <input type="text" class="form-control" id="ExpiryDateDC" placeholder="Số thẻ" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ParkingPlace">Số thẻ</label>
+                                                <input type="text" class="form-control" id="CardIDDC" placeholder="Số thẻ" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-10">
+                                            <label for="Status">Bạn có muốn chấm dứt hợp đồng không?</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="btnDropContractTicket" onclick="return UpdateDropContractTicket();">Đồng ý</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- The Modal Detail Monthly Ticket -->
                         <div class="modal fade" id="myModalDetailTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -350,6 +413,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <!-- /.col -->
