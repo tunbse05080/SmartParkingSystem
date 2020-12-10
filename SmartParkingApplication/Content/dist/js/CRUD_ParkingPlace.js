@@ -52,30 +52,6 @@ function loadDataParkingPlace() {
 
 }
 
-    //function pagingpp(totalRowpp, callback, changePageSizepp) {
-    //    var totalPagepp = Math.ceil(totalRowpp / 5);
-
-    //    //Unbind pagination if it existed or click change pageSize
-    //    if ($('#paginationpp').length === 0 || changePageSizepp === true) {
-    //        $('#paginationpp').empty();
-    //        $('#paginationpp').removeData("twbs-pagination");
-    //        $('#paginationpp').unbind("page");
-    //    }
-
-    //    $('#paginationpp').twbsPagination({
-    //        totalPages: totalPagepp,
-    //        first: "Đầu",
-    //        next: "Tiếp",
-    //        last: "Cuối",
-    //        prev: "Trước",
-    //        visiblePages: 10,
-    //        onPageClick: function (event, pagepp) {
-    //            pageConfigpp = pagepp;
-    //            setTimeout(callback, 200);
-    //        }
-    //    });
-    //}
-
 //function getTicketByID(ParkingPlaceID) {
 //    $.ajax({
 //        url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
@@ -371,7 +347,7 @@ function LockParking() {
         NumberCarBlank: $('#NumberCarBlanklock').val(),
         NumberMotoBikeBlank: $('#NumberMotoBikeBlanklock').val(),
         
-        StatusOfParking: 0,
+        StatusOfParkingPlace: 0,
     };
     $.ajax({
         url: "/ManagePPlace/UpdatePP",
