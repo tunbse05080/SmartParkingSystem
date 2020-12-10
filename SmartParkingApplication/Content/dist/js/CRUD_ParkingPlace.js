@@ -343,6 +343,9 @@ function getLockParkingByID(ParkingPlaceID) {
             $('#ParkingPlaceIDlock').val(result.ParkingPlaceID);
             $('#NameOfParkinglock').val(result.NameOfParking);
             $('#NumberOfMotoBikelock').val(result.NumberOfMotoBike);
+            $('#Locationlock').val(result.Location);
+            $('#NumberOfCarlock').val(result.NumberOfCar);
+
             $('#NumberCarBlanklock').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlanklock').val(result.NumberMotoBikeBlank);
             $('#StatusOfParkinglock').val(result.statusOfParking);
@@ -357,4 +360,33 @@ function getLockParkingByID(ParkingPlaceID) {
         }
     });
     return false;
+}
+function LockParking() {
+    var emplockObj = {
+        ParkingPlaceID: $('#ParkingPlaceIDlock').val(),
+        NameOfParking: $('#NameOfParkinglock').val(),
+        Location: $('#Locationlock').val(),
+        NumberOfCar: $('#NumberOfCarlock').val(),
+        NumberOfMotoBike: $('#NumberOfMotoBikelock').val(),
+        NumberCarBlank: $('#NumberCarBlanklock').val(),
+        NumberMotoBikeBlank: $('#NumberMotoBikeBlanklock').val(),
+        
+        StatusOfParking: 0,
+    };
+    $.ajax({
+        url: "/ManagePPlace/UpdatePP",
+        data: JSON.stringify(emplockObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#tbPPlace').DataTable().clear().destroy();
+            loadDataParkingPlace();
+            $('#myModalParkingLock').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }
