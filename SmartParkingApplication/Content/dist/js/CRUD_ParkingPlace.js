@@ -367,3 +367,31 @@ function LockParking() {
         }
     });
 }
+function UnlockParking() {
+    var empParkingObj = {
+        ParkingPlaceID: $('#ParkingPlaceIDUnLock').val(),
+        NameOfParking: $('#NameOfParkingUnlock').val(),
+        Location: $('#LocationUnlock').val(),
+        NumberOfCar: $('#NumberOfCarUnlock').val(),
+        NumberOfMotoBike: $('#NumberOfMotoBikeUnlock').val(),
+        NumberCarBlank: $('#NumberCarBlankUnlock').val(),
+        NumberMotoBikeBlank: $('#NumberMotoBikeBlankUnlock').val(),
+        StatusOfParkingPlace: 1,
+    };
+    $.ajax({
+        url: "/ManagePPlace/UpdatePP",
+        data: JSON.stringify(empParkingObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#tbPPlace').DataTable().clear().destroy();
+            loadDataParkingPlace();
+            $('#myModalUnLockParking').modal('hide');
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
