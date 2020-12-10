@@ -150,6 +150,7 @@ function getPPDetailByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+
             $('#ParkingPlaceIDd').val(result.ParkingPlaceID);
             $('#NameOfParkingd').val(result.NameOfParking);
             $('#Locationd').val(result.Location);

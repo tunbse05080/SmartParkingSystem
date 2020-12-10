@@ -287,6 +287,60 @@
                             </div>
                         </div>
                         <!-- Lock Parking -->
+                        <!-- UNLock Parking -->
+                        <div class="modal fade" id="myModalUnLockParking" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Thông tin thẻ</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group" hidden>
+                                            <label for="Id">Id</label>
+                                            <input type="text" class="form-control" id="ParkingPlaceIDUnLock" placeholder="Id" disabled />
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="CardNumber">Số thẻ</label>
+                                            <input type="text" class="form-control" id="NameOfParkingUnlock" placeholder="Số thẻ" />
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="Date">Ngày nhập</label>
+                                            <input type="text" class="form-control" id="LocationUnlock" placeholder="Ngày nhập" />
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="Date">Ngày nhập</label>
+                                            <input type="text" class="form-control" id="NumberOfCarUnlock" placeholder="Ngày nhập" />
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="Date">Ngày nhập</label>
+                                            <input type="text" class="form-control" id="NumberOfMotoBikeUnlock" placeholder="Ngày nhập" />
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="Date">Ngày nhập</label>
+                                            <input type="text" class="form-control" id="NumberCarBlankUnlock" placeholder="Ngày nhập" />
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="Date">Ngày nhập</label>
+                                            <input type="text" class="form-control" id="NumberMotoBikeBlankUnlock" placeholder="Ngày nhập" />
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="Status">trạng thái thẻ</label>
+                                            <input type="text" class="form-control" id="StatusOfParkingPlace" placeholder="trạng thái thẻ" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Status">Bạn có muốn mở khóa Bãi đỗ không?</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success"  onclick="return UnlockParking();">Đồng ý</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- UNLock Parking -->
+
                     </div>
                 </div>
                 <!-- /.col -->
