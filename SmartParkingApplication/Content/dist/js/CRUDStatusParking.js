@@ -70,6 +70,27 @@ function getDetailTranByID(TransactionID) {
     });
     return false;
 }
+//comboboxlistOfParking
+function comboboxlistOfParking() {
+    $.ajax({
+        url: "/ManagePPlace/ComboboxListOfParking",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result, function (key, item) {
+                html += '<option value="' + i + '">' + item + '</option>';
+                i++;
+            });
+            $("#cblistOfParking").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
 //load information follow PPlaceName
 //function loadInfoPPlace() {
 //    $.ajax({

@@ -121,6 +121,33 @@ namespace SmartParkingApplication.Controllers
             var total = list.Count();
             return Json(new { datapp = list, total }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult loadDataWithParking(string nameOfParking)
+        {
+            var parking = from p in db.ParkingPlaces select new { p.ParkingPlaceID, p.NameOfParking, p.Location, p.NumberOfCar, p.NumberOfMotoBike, p.NumberCarBlank, p.NumberMotoBikeBlank, p.StatusOfParkingPlace };
+            //if (!string.IsNullOrEmpty(namepp))
+            //{
+            //    parking = parking.Where(x => x.NameOfParking.Contains(namepp));
+            //}
+
+            List<Object> list = new List<object>();
+            foreach (var item in parking)
+            {
+                string statusOfParking = string.Empty;
+                switch (item.StatusOfParkingPlace)
+                {
+                    case 0:
+                        statusOfParking = "Dừng hoạt động";
+                        break;
+                    case 1:
+                        statusOfParking = "Đang hoạt động";
+                        break;
+                }
+                var tr = new { ParkingPlaceID = item.ParkingPlaceID, NameOfParking = item.NameOfParking, Location = item.Location, NumberOfCar = item.NumberOfCar, NumberOfMotoBike = item.NumberOfMotoBike, NumberCarBlank = item.NumberCarBlank, NumberMotoBikeBlank = item.NumberMotoBikeBlank, StatusOfParkingPlace = statusOfParking };
+                list.Add(tr);
+            }
+            var total = list.Count();
+            return Json(new { datapp = list, total }, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult ParkingPlaceDetails(int id)
         {
@@ -189,6 +216,13 @@ namespace SmartParkingApplication.Controllers
                 }
             }
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ComboboxListOfParking()
+        {
+            var list = db.ParkingPlaces.Select(u => u.NameOfParking).Distinct().ToList();
+            List<string> result = new List<string>();
+           
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
     }
 }
