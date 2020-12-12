@@ -148,6 +148,7 @@
     <Content Include="Content\dist\img\user8-128x128.jpg" />
     <Content Include="Content\dist\js\adminlte.js" />
     <Content Include="Content\dist\js\adminlte.min.js" />
+    <Content Include="Content\dist\js\CarDensityStatistic.js" />
     <Content Include="Content\dist\js\Chart\export-data.src.js" />
     <Content Include="Content\dist\js\Chart\exporting.src.js" />
     <Content Include="Content\dist\js\CRUDStatusParking.js" />

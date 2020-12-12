@@ -30,18 +30,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-
-                            <div class="dropdown">
-                                <strong style="font-size:x-large">Bãi đỗ     </strong>
-                                <button class="btn btn-primary dropdown-toggle" style="margin-top:-10px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    FPT Place
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">FPT Place</a>
-                                    <a class="dropdown-item" href="#">Fsoft-1</a>
-                                    <a class="dropdown-item" href="#">Fsoft-2</a>
-                                </div>
-                            </div><br /><br />
+                            <div>
+                                <strong style="font-size:x-large">Bãi đỗ</strong>
+                                <select class="form-control w-50" onchange="loadChartCarDensity()" id="cbNameParkingPlaceD">
+                                </select>
+                            </div><br />
                             <div class="row invoice-info w-50">
                                 <table class="table table-avatar">
                                     <thead>
@@ -64,30 +57,8 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="chart-body">
-                            <!-- BAR CHART -->
-                            @*<div class="card card-success">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Bar Chart</h3>
-
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart">
-                                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                        </div>
-                                    </div>
-                                </div>*@
-
-
+                        <div class="card-body">
+                            <div id="ChartCarDensity" style="min-width:310px; height:400px;margin:0 auto"></div>
                         </div>
                         <!-- /.card-body -->
                     </div>

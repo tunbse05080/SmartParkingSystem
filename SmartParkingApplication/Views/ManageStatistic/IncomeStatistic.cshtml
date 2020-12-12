@@ -16,7 +16,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
-                        <li class="breadcrumb-item active">Thống kê mật độ xe</li>
+                        <li class="breadcrumb-item active">Thống kê doanh thu</li>
                     </ol>
                 </div>
             </div>
@@ -32,12 +32,12 @@
                         <div class="card-header">
                             <div>
                                 <strong style="font-size:x-large">Bãi đỗ</strong>
-                                <select class="form-control w-50" onchange="loadChart()" id="cbNameParkingPlace">
+                                <select class="form-control w-50" onchange="loadChartIncome()" id="cbNameParkingPlace">
                                 </select>
                             </div><br />
                             <div>
                                 <strong style="font-size:x-large">Bãi đỗ</strong>
-                                <select class="form-control w-50" onchange="loadChart()" id="cbTypeOfTicket">
+                                <select class="form-control w-50" onchange="loadChartIncome()" id="cbTypeOfTicket">
                                     <option value="0">Vé tháng</option>
                                     <option value="1">Vé ngày</option>
                                 </select>

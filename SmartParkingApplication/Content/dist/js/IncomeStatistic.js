@@ -1,9 +1,9 @@
 ﻿$(document).ready(function () {
-    loadChart();
+    loadChartIncome();
     ComboboxNameParking();
 });
 //var data;
-function loadChart() {
+function loadChartIncome() {
     var idParking = $('#cbNameParkingPlace').val();
     var idTypeOfTicket = $('#cbTypeOfTicket').val();
     if (!idParking) {
@@ -82,6 +82,8 @@ function ComboboxNameParking() {
                 html += '<option value=' + item.ParkingPlaceID + '>' + item.NameOfParking + '</option>';
             });
             $('#cbNameParkingPlace').html(html);
+            $('#cbNameParkingPlaceD').html(html);
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

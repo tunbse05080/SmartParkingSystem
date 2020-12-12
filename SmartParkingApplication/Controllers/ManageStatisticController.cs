@@ -45,6 +45,28 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
+        public JsonResult loadChartCarDensity(int idParking)
+        {
+            List<double> listMotoDestiny = new List<double>();
+            List<double> listCarDestiny = new List<double>();
+            for (int i = 0; i < 12; i++)
+            {
+                var dataMoto = (from tr in db.Transactions
+                                where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking)
+                                select new { tr.TypeOfVerhicleTran }).ToList();
+
+                listMotoDestiny.Add(dataMoto.Count());
+
+                var dataCar = (from tr in db.Transactions
+                               where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking)
+                               select new { tr.TypeOfVerhicleTran }).ToList();
+                listCarDestiny.Add(dataCar.Count());
+            }
+            listMotoDestiny.Reverse();
+            listCarDestiny.Reverse();
+            return Json(new { listMotoDestiny, listCarDestiny }, JsonRequestBehavior.AllowGet);
+        }
+
         //combobox Gender
         public JsonResult ComboboxNameParking()
         {
