@@ -19,18 +19,25 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadDataIncome()
         {
-            List<double> list = new List<double>();
+            List<double> listIncomeMoto = new List<double>();
+            List<double> listIncomeCar = new List<double>();
             for (int i = 0; i < 12; i++)
             {
-                var data = (from tr in db.Transactions
-                            where tr.TimeOutv.Value.Month == DateTime.Now.Month - i
+                var dataMoto = (from tr in db.Transactions
+                            where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && tr.TypeOfVerhicleTran == 0
                             select new { tr.TotalPrice }).ToList();
-                var sum = data.Select(s => s.TotalPrice).Sum();
-                int count = data.Count();
-                list.Add((double)sum);
+                var sumMoto = dataMoto.Select(s => s.TotalPrice).Sum();
+                listIncomeMoto.Add((double)sumMoto);
+
+                var dataCar = (from tr in db.Transactions
+                            where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && tr.TypeOfVerhicleTran == 1
+                            select new { tr.TotalPrice }).ToList();
+                var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
+                listIncomeCar.Add((double)sumCar);
             }
-            list.Reverse();
-            return Json(list,JsonRequestBehavior.AllowGet);
+            listIncomeMoto.Reverse();
+            listIncomeCar.Reverse();
+            return Json(new { listIncomeMoto, listIncomeCar }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DensityStatistic()
