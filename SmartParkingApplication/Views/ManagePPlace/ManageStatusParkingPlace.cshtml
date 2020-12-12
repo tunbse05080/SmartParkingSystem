@@ -19,11 +19,16 @@
                 url: '@Url.Action("loadtTable","ManagePPlace")',
                 success: function (result) {
 
-                    var t = '<option value="-1">Select Parking</option>';
+                    var html = "";
                     for (var i = 0; i < result.length; i++) {
-                        t += '<option value="' + result[i].Id + '">' + result[i].Name + '</option>'
+                        html += '<td>' + result[i].Id + '</td>';
+                        html += '<td>' + result[i].Name + '</td>'
+                        html += '<td>' + result[i].Name2 + '</td>'
+                        html += '<td>' + result[i].Name3 + '</td>'
+                        html += '<td>' + result[i].Name4 + '</td>'
+                           
                     }
-                    $('#cbxList').html(t);
+                    $('#tableList').html(html);
 
                     //var html = '';
                     //for (var i = 0; i < result.length; i++ ) {
@@ -77,14 +82,7 @@
                                             </select>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>ListTest</td>
-                                        <td>
-                                            <select class="form-control" id="cbxList">
-                                              
-                                            </select>
-                                        </td>
-                                    </tr>
+
                                 </table>
                             </form>
 
@@ -100,23 +98,8 @@
                                             <th>Biểu phí(theo giờ)</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbodyInfoStatusPP">
-                                        <tr>
-                                            <td style="font-weight:bolder">Xe máy</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123 VNĐ</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight:bolder">Ô tô</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123 VNĐ</td>
-                                        </tr>
+                                    <tbody id="tableList">
+                                      
                                     </tbody>
                                 </table>
                             </div>
