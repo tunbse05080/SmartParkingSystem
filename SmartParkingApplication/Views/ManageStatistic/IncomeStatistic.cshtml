@@ -56,66 +56,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <!-- BAR CHART -->
-                            @*<div class="card card-success">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Bar Chart</h3>
-
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart">
-                                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                        </div>
-                                    </div>
-                                </div>*@
-
-                            <script src="https://code.highcharts.com/highcharts.js"></script>
-                            <script src="https://code.highcharts.com/modules/exporting.js"></script>
-                            <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-                            <div id="container" style="min-width:310px; height:400px;margin:0 auto"></div>
-
-                            <script>
-                                Highcharts.chart('container', {
-                                    chart: {
-                                        type: 'line'
-                                    },
-                                    title: {
-                                        text: 'Biểu đồ doanh thu    '
-                                    },
-                                    xAxis: {
-                                        categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-                                    },
-                                    yAxis: {
-                                        title: {
-                                            text: 'Doanh Thu'
-                                        }
-                                    },
-                                    plotOptions: {
-                                        line: {
-                                            dataLabels: {
-                                                enabled: true
-                                            },
-                                            enableMouseTracking: false
-                                        }
-                                    },
-                                    series: [{
-                                        name: 'Ô tô',
-                                        data: [0, 0, 0, 0, 0, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-                                    }, {
-                                        name: 'Xe máy',
-                                        data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-                                    }]
-                                });
-                            </script>
+                            <div id="ChartIncome" style="min-width:310px; height:400px;margin:0 auto"></div>
                         </div>
                         <!-- /.card-body -->
                     </div>

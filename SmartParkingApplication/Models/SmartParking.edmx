@@ -19,8 +19,8 @@
             <PropertyRef Name="ImageID" />
           </Key>
           <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LinkImageIN" Type="nvarchar" MaxLength="50" />
-          <Property Name="LinkImageOut" Type="nvarchar" MaxLength="50" />
+          <Property Name="LinkImageIN" Type="nvarchar(max)" />
+          <Property Name="LinkImageOut" Type="nvarchar(max)" />
           <Property Name="TransactionID" Type="int" />
         </EntityType>
         <EntityType Name="MonthlyIncomeStatement">
@@ -65,17 +65,19 @@
           <Property Name="NumberCarBlank" Type="int" />
           <Property Name="NumberMotoBikeBlank" Type="int" />
           <Property Name="StatusOfParkingPlace" Type="int" />
+          <Property Name="PriceID" Type="int" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
             <PropertyRef Name="PriceID" />
           </Key>
           <Property Name="PriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TypeOfvehicle" Type="nvarchar" MaxLength="50" />
+          <Property Name="TypeOfvehicle" Type="int" />
           <Property Name="DayPrice" Type="int" />
           <Property Name="MonthPrice" Type="int" />
           <Property Name="FirstBlock" Type="int" />
           <Property Name="NextBlock" Type="int" />
+          <Property Name="ParkingPlaceID" Type="int" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -146,7 +148,7 @@
           <Property Name="UserID" Type="int" />
           <Property Name="ScheduleID" Type="int" />
         </EntityType>
-        <Association Name="FK__Image__Transacti__4CA06362">
+        <Association Name="FK__Image__Transacti__656C112C">
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
           <End Role="Image" Type="Self.Image" Multiplicity="*" />
           <ReferentialConstraint>
@@ -254,6 +256,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Price_ParkingPlace">
+          <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SmartParkingsModelStoreContainer">
           <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
@@ -268,7 +282,7 @@
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSchedule" EntityType="Self.UserSchedule" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Image__Transacti__4CA06362" Association="Self.FK__Image__Transacti__4CA06362">
+          <AssociationSet Name="FK__Image__Transacti__656C112C" Association="Self.FK__Image__Transacti__656C112C">
             <End Role="Transaction" EntitySet="Transaction" />
             <End Role="Image" EntitySet="Image" />
           </AssociationSet>
@@ -304,6 +318,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="UserSchedule" EntitySet="UserSchedule" />
           </AssociationSet>
+          <AssociationSet Name="FK_Price_ParkingPlace" Association="Self.FK_Price_ParkingPlace">
+            <End Role="ParkingPlace" EntitySet="ParkingPlace" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -326,10 +344,10 @@
             <PropertyRef Name="ImageID" />
           </Key>
           <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LinkImageIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LinkImageOut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LinkImageIN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LinkImageOut" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TransactionID" Type="Int32" />
-          <NavigationProperty Name="Transaction" Relationship="Self.FK__Image__Transacti__4CA06362" FromRole="Image" ToRole="Transaction" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__Image__Transacti__656C112C" FromRole="Image" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="MonthlyIncomeStatement">
           <Key>
@@ -376,19 +394,23 @@
           <Property Name="NumberCarBlank" Type="Int32" />
           <Property Name="NumberMotoBikeBlank" Type="Int32" />
           <Property Name="StatusOfParkingPlace" Type="Int32" />
+          <Property Name="PriceID" Type="Int32" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="ParkingPlace" ToRole="Transaction" />
           <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="ParkingPlace" ToRole="User" />
+          <NavigationProperty Name="Prices" Relationship="Self.FK_Price_ParkingPlace" FromRole="ParkingPlace" ToRole="Price" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
             <PropertyRef Name="PriceID" />
           </Key>
           <Property Name="PriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeOfvehicle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TypeOfvehicle" Type="Int32" />
           <Property Name="DayPrice" Type="Int32" />
           <Property Name="MonthPrice" Type="Int32" />
           <Property Name="FirstBlock" Type="Int32" />
           <Property Name="NextBlock" Type="Int32" />
+          <Property Name="ParkingPlaceID" Type="Int32" />
+          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK_Price_ParkingPlace" FromRole="Price" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -433,7 +455,7 @@
           <Property Name="ParkingPlaceID" Type="Int32" />
           <Property Name="TypeOfVerhicleTran" Type="Int32" />
           <NavigationProperty Name="Card" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Transaction" ToRole="Card" />
-          <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__4CA06362" FromRole="Transaction" ToRole="Image" />
+          <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__656C112C" FromRole="Transaction" ToRole="Image" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="Transaction" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="User">
@@ -493,7 +515,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Image__Transacti__4CA06362">
+        <Association Name="FK__Image__Transacti__656C112C">
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
           <End Role="Image" Type="Self.Image" Multiplicity="*" />
           <ReferentialConstraint>
@@ -537,6 +559,18 @@
               <PropertyRef Name="ParkingPlaceID" />
             </Principal>
             <Dependent Role="User">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_ParkingPlace">
+          <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="Price">
               <PropertyRef Name="ParkingPlaceID" />
             </Dependent>
           </ReferentialConstraint>
@@ -599,7 +633,7 @@
             <End Role="Card" EntitySet="Cards" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Image__Transacti__4CA06362" Association="Self.FK__Image__Transacti__4CA06362">
+          <AssociationSet Name="FK__Image__Transacti__656C112C" Association="Self.FK__Image__Transacti__656C112C">
             <End Role="Transaction" EntitySet="Transactions" />
             <End Role="Image" EntitySet="Images" />
           </AssociationSet>
@@ -614,6 +648,10 @@
           <AssociationSet Name="FK__User__ParkingPla__5535A963" Association="Self.FK__User__ParkingPla__5535A963">
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_ParkingPlace" Association="Self.FK_Price_ParkingPlace">
+            <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+            <End Role="Price" EntitySet="Prices" />
           </AssociationSet>
           <AssociationSet Name="FK__User__RoleID__5629CD9C" Association="Self.FK__User__RoleID__5629CD9C">
             <End Role="Role" EntitySet="Roles" />
@@ -698,6 +736,7 @@
                 <ScalarProperty Name="NumberCarBlank" ColumnName="NumberCarBlank" />
                 <ScalarProperty Name="NumberMotoBikeBlank" ColumnName="NumberMotoBikeBlank" />
                 <ScalarProperty Name="StatusOfParkingPlace" ColumnName="StatusOfParkingPlace" />
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -710,6 +749,7 @@
                 <ScalarProperty Name="MonthPrice" ColumnName="MonthPrice" />
                 <ScalarProperty Name="FirstBlock" ColumnName="FirstBlock" />
                 <ScalarProperty Name="NextBlock" ColumnName="NextBlock" />
+                <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

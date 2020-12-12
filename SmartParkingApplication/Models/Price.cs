@@ -15,10 +15,13 @@ namespace SmartParkingApplication.Models
     public partial class Price
     {
         public int PriceID { get; set; }
-        public string TypeOfvehicle { get; set; }
+        public Nullable<int> TypeOfvehicle { get; set; }
         public Nullable<int> DayPrice { get; set; }
         public Nullable<int> MonthPrice { get; set; }
         public Nullable<int> FirstBlock { get; set; }
         public Nullable<int> NextBlock { get; set; }
+        public Nullable<int> ParkingPlaceID { get; set; }
+    
+        public virtual ParkingPlace ParkingPlace { get; set; }
     }
 }
