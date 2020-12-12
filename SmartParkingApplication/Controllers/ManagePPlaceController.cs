@@ -21,15 +21,18 @@ namespace SmartParkingApplication.Controllers
 
         public ActionResult loadtTable(int ParkingPlaceID)
         {
-            
-            return Json ( db.ParkingPlaces.Where(x => x.ParkingPlaceID == ParkingPlaceID).Select(x => new
+
+            return Json(db.ParkingPlaces.Where(x => x.ParkingPlaceID == ParkingPlaceID).Select(x => new
             {
                 Id = x.ParkingPlaceID,
-                Name = x.NameOfParking,
-                Name2 = x.Prices,
-                Name3 = x.StatusOfParkingPlace,
+                ToTal = x.Transactions.Count(),
+                Name2 = x.NumberCarBlank + x.NumberMotoBikeBlank,
+                Name3 = x.Transactions.Count,
                 Name4 = x.NumberOfMotoBike,
-            }).ToList(),JsonRequestBehavior.AllowGet);
+                Name5= x.Transactions.Count,
+               
+
+            }).ToList(), JsonRequestBehavior.AllowGet) ;
         }
 
         public JsonResult LoadDataStatusPP()
