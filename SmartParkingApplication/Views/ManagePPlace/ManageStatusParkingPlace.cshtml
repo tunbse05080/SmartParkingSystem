@@ -19,20 +19,23 @@
                 url: '@Url.Action("loadtTable","ManagePPlace")',
                 success: function (result) {
 
-                    var html = '';
-                    for (var i = 0; i < result.length; i++ ) {
-                        html += '<tr>';
-                        html += '<td>' + result[i].ParkingPlaceID + '</td>';
-                        html += '<td>' + result[i].NameOfParking + '</td>';
-                        html += '</tr>';
+                    var t = '<option value="-1">Select Parking</option>';
+                    for (var i = 0; i < result.length; i++) {
+                        t += '<option value="' + result[i].Id + '">' + result[i].Name + '</option>'
                     }
-                    $('#dataTable').html(html);
+                    $('#cbxList').html(t);
 
+                    //var html = '';
+                    //for (var i = 0; i < result.length; i++ ) {
+                    //    html += '<tr>';
+                    //    html += '<td>' + result[i].ParkingPlaceID + '</td>';
+                    //    html += '<td>' + result[i].NameOfParking + '</td>';
+                    //    html += '</tr>';
+                  
                 },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
+               
 
-                } });
+                }) });
     });
 </script>
 <div class="content-wrapper">
@@ -66,10 +69,19 @@
                                         <td>Bãi Đỗ</td>
                                         <td>
                                             <select class="form-control" id="cbxListParking">
+                                                <option value="-1">Select Parking</option>
                                                 @foreach (var list in ViewBag.listParkingPlace)
                                                 {
                                                     <option value="@list.ParkingPlaceID"> @list.NameOfParking </option>
                                                 }
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>ListTest</td>
+                                        <td>
+                                            <select class="form-control" id="cbxList">
+                                              
                                             </select>
                                         </td>
                                     </tr>
