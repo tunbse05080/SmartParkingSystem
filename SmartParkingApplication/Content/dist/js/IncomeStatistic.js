@@ -5,14 +5,18 @@
 //var data;
 function loadChart() {
     var idParking = $('#cbNameParkingPlace').val();
+    var idTypeOfTicket = $('#cbTypeOfTicket').val();
     if (!idParking) {
         idParking = 1;
+    }
+    if (!idTypeOfTicket) {
+        idTypeOfTicket = 0;
     }
     $.ajax({
         url: "/ManageStatistic/LoadDataIncome",
         type: "POST",
         contents: "application/json",
-        data: { id: idParking },
+        data: { idParking: idParking, idTypeOfTicket: idTypeOfTicket},
         dataType: "json",
         success: function (result) {
             ChartIncome(result);
