@@ -19,7 +19,7 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadDataIncome()
         {
-            List<string> list = new List<string>();
+            List<double> list = new List<double>();
             for (int i = 0; i < 12; i++)
             {
                 var data = (from tr in db.Transactions
@@ -27,8 +27,9 @@ namespace SmartParkingApplication.Controllers
                             select new { tr.TotalPrice }).ToList();
                 var sum = data.Select(s => s.TotalPrice).Sum();
                 int count = data.Count();
-                list.Add("" + sum);
+                list.Add((double)sum);
             }
+            list.Reverse();
             return Json(list,JsonRequestBehavior.AllowGet);
         }
 
