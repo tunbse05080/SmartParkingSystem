@@ -1,13 +1,18 @@
 ﻿$(document).ready(function () {
     loadChart();
-
+    ComboboxNameParking();
 });
 //var data;
 function loadChart() {
+    var idParking = $('#cbNameParkingPlace').val();
+    if (!idParking) {
+        idParking = 1;
+    }
     $.ajax({
         url: "/ManageStatistic/LoadDataIncome",
-        type: "GET",
+        type: "POST",
         contents: "application/json",
+        data: { id: idParking },
         dataType: "json",
         success: function (result) {
             ChartIncome(result);
@@ -58,5 +63,24 @@ function ChartIncome(result) {
             data: result.listIncomeMoto,
 
         }],
+    });
+}
+
+function ComboboxNameParking() {
+    $.ajax({
+        url: "/ManageStatistic/ComboboxNameParking",
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            $.each(result, function (key, item) {
+                html += '<option value=' + item.ParkingPlaceID + '>' + item.NameOfParking + '</option>';
+            });
+            $('#cbNameParkingPlace').html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
     });
 }
