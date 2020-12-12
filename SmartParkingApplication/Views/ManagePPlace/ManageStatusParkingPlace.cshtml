@@ -19,20 +19,28 @@
                 url: '@Url.Action("loadtTable","ManagePPlace")',
                 success: function (result) {
 
-                    var html = '';
-                    for (var i = 0; i < result.length; i++ ) {
-                        html += '<tr>';
-                        html += '<td>' + result[i].ParkingPlaceID + '</td>';
-                        html += '<td>' + result[i].NameOfParking + '</td>';
-                        html += '</tr>';
+                    var html = "";
+                    for (var i = 0; i < result.length; i++) {
+                        html += '<td>' + result[i].Id + '</td>';
+                        html += '<td>' + result[i].Name + '</td>'
+                        html += '<td>' + result[i].Name2 + '</td>'
+                        html += '<td>' + result[i].Name3 + '</td>'
+                        html += '<td>' + result[i].Name4 + '</td>'
+                           
                     }
-                    $('#dataTable').html(html);
+                    $('#tableList').html(html);
 
+                    //var html = '';
+                    //for (var i = 0; i < result.length; i++ ) {
+                    //    html += '<tr>';
+                    //    html += '<td>' + result[i].ParkingPlaceID + '</td>';
+                    //    html += '<td>' + result[i].NameOfParking + '</td>';
+                    //    html += '</tr>';
+                  
                 },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
+               
 
-                } });
+                }) });
     });
 </script>
 <div class="content-wrapper">
@@ -66,6 +74,7 @@
                                         <td>Bãi Đỗ</td>
                                         <td>
                                             <select class="form-control" id="cbxListParking">
+                                                <option value="-1">Select Parking</option>
                                                 @foreach (var list in ViewBag.listParkingPlace)
                                                 {
                                                     <option value="@list.ParkingPlaceID"> @list.NameOfParking </option>
@@ -73,6 +82,7 @@
                                             </select>
                                         </td>
                                     </tr>
+
                                 </table>
                             </form>
 
@@ -88,23 +98,8 @@
                                             <th>Biểu phí(theo giờ)</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbodyInfoStatusPP">
-                                        <tr>
-                                            <td style="font-weight:bolder">Xe máy</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123 VNĐ</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight:bolder">Ô tô</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
-                                            <td>123 VNĐ</td>
-                                        </tr>
+                                    <tbody id="tableList">
+                                      
                                     </tbody>
                                 </table>
                             </div>

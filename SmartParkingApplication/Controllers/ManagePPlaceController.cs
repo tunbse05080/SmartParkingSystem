@@ -25,7 +25,10 @@ namespace SmartParkingApplication.Controllers
             return Json ( db.ParkingPlaces.Where(x => x.ParkingPlaceID == ParkingPlaceID).Select(x => new
             {
                 Id = x.ParkingPlaceID,
-                Name = x.NameOfParking
+                Name = x.NameOfParking,
+                Name2 = x.Prices,
+                Name3 = x.StatusOfParkingPlace,
+                Name4 = x.NumberOfMotoBike,
             }).ToList(),JsonRequestBehavior.AllowGet);
         }
 
