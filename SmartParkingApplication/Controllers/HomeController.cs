@@ -64,9 +64,9 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Get total income of all vehicle in current month
-        public double TotalIncome()
+        public string TotalIncome()
         {
-            Double result;
+            int data;
             //get income dataMoto of DailyTicket ( the current month )
             var dataMotoDailyTK = (from tr in db.Transactions
                                    where (tr.TimeOutv.Value.Month == DateTime.Now.Month) && (tr.TypeOfVerhicleTran == 0) && (tr.TypeOfTicket == 1)
@@ -90,7 +90,8 @@ namespace SmartParkingApplication.Controllers
             var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
             var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
 
-            result = (double)(sumCar + sumMoto);
+            data = (int)(sumCar + sumMoto);
+            string result = String.Format("{0:#,#.}", data);
             return result;
         }
 
