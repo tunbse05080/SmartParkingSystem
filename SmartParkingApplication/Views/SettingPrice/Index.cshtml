@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                         <!-- /.Ticket-body -->
-                        <!-- The Modal create new Monthly Ticket -->
+                        <!-- The Modal Setting Price -->
                         <div class="modal fade" id="myModalSettingPrice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
@@ -80,7 +80,10 @@
                                                     Giá theo ngày
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="DayPrice" placeholder="Giá theo ngày"  />
+                                                    <select class="form-control" id="cbTypeOfvehicle" onchange="reloadModalPR()">
+                                                        <option value="0">Xe máy</option>
+                                                        <option value="1">Ô tô</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +93,10 @@
                                                     Giá vé tháng
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="MonthPrice" placeholder="Giá vé tháng"  />
+                                                    <select class="form-control" id="cbTypeOfvehicle" onchange="reloadModalPR()">
+                                                        <option value="0">Xe máy</option>
+                                                        <option value="1">Ô tô</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,17 +106,20 @@
                                                     Giá block đầu
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="FirstBlockPrice" placeholder="Giá block đầu"  />
+                                                    <select class="form-control" id="cbTypeOfvehicle" onchange="reloadModalPR()">
+                                                        <option value="0">Xe máy</option>
+                                                        <option value="1">Ô tô</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                    Giá block tiếp theo
+                                                    Giá tiền
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="NextBlockPrice" placeholder="Giá block tiếp theo"  disabled/>
+                                                    <input type="text" class="form-control" id="SettingPrice" placeholder="Giá tiền"  disabled/>
                                                 </div>
                                             </div>
                                         </div>

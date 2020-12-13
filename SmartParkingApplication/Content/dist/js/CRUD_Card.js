@@ -62,13 +62,13 @@ function clearTextBoxCard() {
     $('#btnUpdate').hide();
 }
 
-function AddCard() {
+function AddCard(number) {
     var res = validateAddCard();
     if (res == false) {
         return false;
     }
     var empCardObj = {
-        CardNumber: $('#CardNumber').val(),
+        CardNumber: number,
         Date: $('#Date').val(),
         Status: 0,
     };
@@ -81,7 +81,8 @@ function AddCard() {
         success: function (result) {
             $('#tbCard').DataTable().clear().destroy();
             loadDataCard();
-            $('#myModalCard').modal('hide');
+            $('#CardNumber').val("");
+            $('#myModalCard').modal('show');
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -212,6 +213,14 @@ function ReportCardBreak() {
             alert(errormessage.responseText);
         }
     });
+}
+
+function CheckChange() {
+    var temp = '0000000000';
+    if ($('#CardNumber').val().length >= temp.length) {
+        AddCard($('#CardNumber').val());
+        
+    }
 }
 
 function getCardByID(CardID) {

@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     loadDataPrice();
 });
-var pageConfigpr = 1;
 
 function loadDataPrice(changsizepr) {
     var namepr = $('#txtNameSearchpr').val();
@@ -41,138 +40,117 @@ function loadDataPrice(changsizepr) {
 
         }
     });
-    //function pagingpr(totalRowpr, callback, changePageSizepr) {
-    //    var totalPagepr = Math.ceil(totalRowpr / 5);
+}
 
-    //    //Unbind pagination if it existed or click change pageSize
-    //    if ($('#paginationpr').length === 0 || changePageSizepr === true) {
-    //        $('#paginationpr').empty();
-    //        $('#paginationpr').removeData("twbs-pagination");
-    //        $('#paginationpr').unbind("page");
-    //    }
-
-    //    $('#paginationpr').twbsPagination({
-    //        totalPages: totalPagepr,
-    //        first: "Đầu",
-    //        next: "Tiếp",
-    //        last: "Cuối",
-    //        prev: "Trước",
-    //        visiblePages: 10,
-    //        onPageClick: function (event, pagepr) {
-    //            pageConfigpr = pagepr;
-    //            setTimeout(callback, 200);
-    //        }
-    //    });
+function ComboboxTypeOfvehicle() {
+    $.ajax({
+        url: "/SettingPrice/ComboboxTypeOfVehicle",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 1;
+            $.each(result, function (key, item) {
+                html += '<option value="' + i + '">' + item + '</option>';
+                i++;
+            });
+            $("#cbTypeOfvehicle").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+function UpdatePR() {
+    //var res = validateUpdatePP();
+    //if (res == false) {
+    //    return false;
     //}
-    function ComboboxTypeOfvehicle() {
-        $.ajax({
-            url: "/SettingPrice/ComboboxTypeOfVehicle",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var html = '';
-                var i = 1;
-                $.each(result, function (key, item) {
-                    html += '<option value="' + i + '">' + item + '</option>';
-                    i++;
-                });
-                $("#cbTypeOfvehicle").html(html);
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-    function UpdatePR() {
-        //var res = validateUpdatePP();
-        //if (res == false) {
-        //    return false;
-        //}
-        var typeofVehicle = $('#cbTypeOfvehicle').val();
-        var empPRObj = {
-            
-            TypeOfvehicle: typeofVehicle ,
-            DayPrice: $('#DayPriceEdit').val(),
-            MonthPrice: $('#MonthPriceEdit').val(),
-            FirstBlock: $('#FirstBlockEdit').val(),
-            NextBlock: $('#NextBlockEdit').val(),
-        };
-        $.ajax({
-            url: "/SettingPrice/UpdatePR",
-            data: JSON.stringify(empPRObj),
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                loadDataPrice(true);
-                $('#myModalUpdatePR').modal('hide');
+    var typeofVehicle = $('#cbTypeOfvehicle').val();
+    var empPRObj = {
 
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-    function getByTypeOfVehicle(PriceID) {
-        $.ajax({
-            url: "/SettingPrice/Details/" + PriceID,
-            type: "GET",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (result) {
-                
-                $('#Idd').val(result.PriceID);
-                $('#TypeOfvehicled').val(result.TypeOfvehicle);
-                $('#DayPriced').val(result.DayPrice);
-                $('#MonthPriced').val(result.MonthPrice);
-                $('#DateOfBirthd').val(result.FirstBlock);
-                $('#FirstBlockd').val(result.NextBlock);
-               
+        TypeOfvehicle: typeofVehicle,
+        DayPrice: $('#DayPriceEdit').val(),
+        MonthPrice: $('#MonthPriceEdit').val(),
+        FirstBlock: $('#FirstBlockEdit').val(),
+        NextBlock: $('#NextBlockEdit').val(),
+    };
+    $.ajax({
+        url: "/SettingPrice/UpdatePR",
+        data: JSON.stringify(empPRObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataPrice(true);
+            $('#myModalUpdatePR').modal('hide');
 
-                $('#myModalSettingPrice').modal('show');
-                $('#btnUpdate').show();
-            
-            },
-            error: function (errormessage) {
-                alert("Exception:" + PriceID + errormessage.responseText);
-            }
-        });
-        return false;
-    }
-    function reloadModalPR() {
-        if ($("#cbTypeOfvehicle").val() == "0") {
-            
-            $("#myModalSettingPrice").modal("show");
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
         }
-        else ($("#cbTypeOfvehicle").val() == "1")
-        {
-           
-            $("#myModalSettingPrice").modal("show");
+    });
+}
+function getByTypeOfVehicle(PriceID) {
+    $.ajax({
+        url: "/SettingPrice/Details/" + PriceID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+
+            $('#Idd').val(result.PriceID);
+            $('#TypeOfvehicled').val(result.TypeOfvehicle);
+            $('#DayPriced').val(result.DayPrice);
+            $('#MonthPriced').val(result.MonthPrice);
+            $('#DateOfBirthd').val(result.FirstBlock);
+            $('#FirstBlockd').val(result.NextBlock);
+
+
+            $('#myModalSettingPrice').modal('show');
+            $('#btnUpdate').show();
+
+        },
+        error: function (errormessage) {
+            alert("Exception:" + PriceID + errormessage.responseText);
         }
-      
+    });
+    return false;
+}
+
+function reloadModalPR() {
+    if ($("#cbTypeOfvehicle").val() == "0") {
+
+        $("#myModalSettingPrice").modal("show");
     }
-    function getEditPriceByID(PriceID) {
-        $.ajax({
-            url: "/SettingPrice/PriceDetails/" + PriceID,
-            type: "GET",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (result) {
-                $('#PriceIDed').val(result.PriceID);
-                $('#TypeOfvehicled').val(result.TypeOfvehicle);
-                $('#DayPriced').val(result.DayPrice);
-                $('#MonthPriced').val(result.MonthPrice);
-                $('#FirstBlockd').val(result.FirstBlock);
-                $('#NextBlockd').val(result.NextBlock);
-               
-                $('#myModalPREdit').modal('show');
-                $('#btnUpdate').show();
-            },
-            error: function (errormessage) {
-                alert("Exception:" + EmployeeID + errormessage.responseText);
-            }
-        });
-        return false;
+    else ($("#cbTypeOfvehicle").val() == "1")
+    {
+
+        $("#myModalSettingPrice").modal("show");
     }
+
+}
+function getEditPriceByID(PriceID) {
+    $.ajax({
+        url: "/SettingPrice/PriceDetails/" + PriceID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#PriceIDed').val(result.PriceID);
+            $('#TypeOfvehicled').val(result.TypeOfvehicle);
+            $('#DayPriced').val(result.DayPrice);
+            $('#MonthPriced').val(result.MonthPrice);
+            $('#FirstBlockd').val(result.FirstBlock);
+            $('#NextBlockd').val(result.NextBlock);
+
+            $('#myModalPREdit').modal('show');
+            $('#btnUpdate').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
+        }
+    });
+    return false;
 }
