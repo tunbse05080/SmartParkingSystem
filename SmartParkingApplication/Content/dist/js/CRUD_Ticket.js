@@ -205,7 +205,7 @@ function UpdateExtendTK() {
         dataType: "json",
         success: function (result) {
             $('#tbTicket').DataTable().clear().destroy();
-            UpdateMonthlyIncome($('#MonthlyTicketETK').val(), $('#priceETK').val());
+            CreateMonthlyIncome($('#MonthlyTicketETK').val(), $('#priceETK').val());
             loadDataTicket();
             $('#myModalExtendTicket').modal('hide');
              
@@ -216,10 +216,10 @@ function UpdateExtendTK() {
     });
 }
 
-//Update MonthlyIncomeStatment
-function UpdateMonthlyIncome(id, totalPrice) {
+//Create MonthlyIncomeStatment
+function CreateMonthlyIncome(id, totalPrice) {
     $.ajax({
-        url: "/ManageTicket/UpdateMonthlyIncome",
+        url: "/ManageTicket/CreateMonthlyIncome",
         type: "POST",
         data: JSON.stringify({ id: id, totalPrice: totalPrice }),
         contentType: "application/json",

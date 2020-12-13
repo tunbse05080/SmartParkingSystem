@@ -118,8 +118,8 @@ namespace SmartParkingApplication.Controllers
             return Json(ticket, JsonRequestBehavior.AllowGet);
         }
 
-        //Update MonthlyIncomeStatement
-        public JsonResult UpdateMonthlyIncome(int id,string totalPrice)
+        //Create MonthlyIncomeStatement
+        public JsonResult CreateMonthlyIncome(int id,string totalPrice)
         {
             string[] temp = totalPrice.Split(' ');
             int price = Convert.ToInt32(temp[0].Replace(",", string.Empty));
