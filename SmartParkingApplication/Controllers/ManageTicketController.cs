@@ -118,6 +118,20 @@ namespace SmartParkingApplication.Controllers
             return Json(ticket, JsonRequestBehavior.AllowGet);
         }
 
+        //Update MonthlyIncomeStatement
+        public JsonResult UpdateMonthlyIncome(int id,string totalPrice)
+        {
+            string[] temp = totalPrice.Split(' ');
+            int price = Convert.ToInt32(temp[0].Replace(",", string.Empty));
+            MonthlyIncomeStatement monthlyIncome = new MonthlyIncomeStatement { MonthlyTicketID = id, TotalPrice = price };
+            if (ModelState.IsValid)
+            {
+                db.MonthlyIncomeStatements.Add(monthlyIncome);
+                db.SaveChanges();
+            }
+            return Json(monthlyIncome, JsonRequestBehavior.AllowGet);
+        }
+
         //public MonthlyTicket GetTicket(MonthlyTicket ticket)
         //{
         //    var data = db.Cards.Where(c => c.CardNumber.Equals(ticket.CardID));
@@ -240,7 +254,6 @@ namespace SmartParkingApplication.Controllers
                          select new { p.MonthPrice }).FirstOrDefault();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
 
     }
 

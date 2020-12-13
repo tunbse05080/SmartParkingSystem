@@ -205,9 +205,26 @@ function UpdateExtendTK() {
         dataType: "json",
         success: function (result) {
             $('#tbTicket').DataTable().clear().destroy();
+            UpdateMonthlyIncome($('#MonthlyTicketETK').val(), $('#priceETK').val());
             loadDataTicket();
             $('#myModalExtendTicket').modal('hide');
              
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//Update MonthlyIncomeStatment
+function UpdateMonthlyIncome(id, totalPrice) {
+    $.ajax({
+        url: "/ManageTicket/UpdateMonthlyIncome",
+        type: "POST",
+        data: JSON.stringify({ id: id, totalPrice: totalPrice }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -408,7 +425,7 @@ function GetPriceMonthly() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            reloadModalETK(result.MonthPrice)
+            reloadModalETK(result.MonthPrice);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
