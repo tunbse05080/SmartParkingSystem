@@ -100,7 +100,32 @@
                     </div>
                     <!-- /.card -->
                 </section>
-                <section class="col-lg-5">
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-lg-5 connectedSortable">
+                    <!-- Map card -->
+                    <div class="card bg-gradient-primary" hidden>
+                        <!-- /.card-body-->
+                        <div class="card-footer bg-transparent">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <div id="sparkline-1"></div>
+
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-4 text-center">
+                                    <div id="sparkline-2"></div>
+
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-4 text-center">
+                                    <div id="sparkline-3"></div>
+
+                                </div>
+                                <!-- ./col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
                     <!-- /.card -->
                     <!-- Calendar -->
                     <div class="card bg-gradient-success">
@@ -110,11 +135,22 @@
                                 <i class="far fa-calendar-alt"></i>
                                 Calendar
                             </h3>
+                            <!-- tools card -->
+                            <div class="card-tools">
+                                <!-- button with a dropdown -->
+                                <div class="btn-group">
+                                    <div class="dropdown-menu" role="menu">
+                                        <a href="#" class="dropdown-item">Add new event</a>
+                                        <a href="#" class="dropdown-item">Clear events</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item">View calendar</a>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- /. tools -->
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body pt-0">
-                            calendar
                             <!--The calendar -->
                             <div id="calendar" style="width: 100%"></div>
                         </div>

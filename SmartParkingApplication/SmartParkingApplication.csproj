@@ -155,6 +155,7 @@
     <Content Include="Content\dist\js\Chart\highcharts.js" />
     <Content Include="Content\dist\js\Dashboard.js" />
     <Content Include="Content\dist\js\IncomeStatistic.js" />
+    <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\js\SettingPrice.js" />
     <Content Include="Content\dist\js\CRUD_Card.js" />
     <Content Include="Content\dist\js\CRUD_Employee.js" />
@@ -2195,7 +2196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\dist\js\pages\" />
     <Folder Include="Views\WorkingCalendar\" />
   </ItemGroup>
   <ItemGroup>
