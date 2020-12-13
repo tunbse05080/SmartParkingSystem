@@ -1117,7 +1117,7 @@
     <Content Include="Content\plugins\fontawesome-free\webfonts\fa-brands-400.svg" />
     <Content Include="Content\plugins\fontawesome-free\webfonts\fa-regular-400.svg" />
     <Content Include="Content\plugins\fontawesome-free\webfonts\fa-solid-900.svg" />
-    <Content Include="Content\plugins\fullcalendar\Calendar.js" />
+    <Content Include="Content\dist\js\Calendar\Calendar.js" />
     <Content Include="Content\plugins\fullcalendar\LICENSE.txt" />
     <Content Include="Content\plugins\fullcalendar\locales-all.js" />
     <Content Include="Content\plugins\fullcalendar\locales-all.min.js" />

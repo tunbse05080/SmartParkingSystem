@@ -45,7 +45,7 @@ function loadDataCalendar() {
 //}
 
 function initCalendar() {
-    var calendarEl = document.getElementById('calendar');
+    var calendarEl = document.getElementById('calendarWorking');
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
