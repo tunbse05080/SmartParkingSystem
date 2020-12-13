@@ -19,14 +19,15 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
-        public ActionResult loadtTable(int ParkingPlaceID)
+        public ActionResult loadtTableMotor(int ParkingPlaceID)
         {
 
             return Json(db.ParkingPlaces.Where(x => x.ParkingPlaceID == ParkingPlaceID).Select(x => new
             {
                 Id = x.ParkingPlaceID,
                 ToTal = x.Transactions.Count(),
-                Name2 = x.NumberCarBlank + x.NumberMotoBikeBlank,
+                
+                NumberMotoBikeBlank = x.NumberMotoBikeBlank,
                 Name3 = x.Transactions.Count,
                 Name4 = x.NumberOfMotoBike,
                 Name5= x.Transactions.Count,
@@ -35,9 +36,9 @@ namespace SmartParkingApplication.Controllers
             }).ToList(), JsonRequestBehavior.AllowGet) ;
         }
 
-        public JsonResult LoadDataStatusPP()
+        public JsonResult LoadDataStatusPP(int ParkingPlaceID)
         {
-            var trans = from t in db.Transactions
+            var trans = from t in db.Transactions.Where(x => x.ParkingPlaceID== ParkingPlaceID)
                         join c in db.Cards on t.CardID equals c.CardID into table1
                         from c in table1.DefaultIfEmpty()
                         orderby t.CardID

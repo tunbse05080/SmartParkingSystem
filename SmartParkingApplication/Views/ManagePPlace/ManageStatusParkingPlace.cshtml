@@ -16,15 +16,17 @@
             $.ajax({
                 type: 'GET',
                 data: { ParkingPlaceID: ParkingPlaceID },
-                url: '@Url.Action("loadtTable","ManagePPlace")',
+                url: '@Url.Action("loadtTableMotor", "ManagePPlace")',
                 success: function (result) {
 
                     var html = "";
                     for (var i = 0; i < result.length; i++) {
-                        html += '<td>' + result[i].Id + '</td>';
+                        
+                        html += '<td> Xe Máy </td>';
+                      
                         html += '<td>' + result[i].ToTal + '</td>'
-                        html += '<td>' + result[i].Name2 + '</td>'
-                        html += '<td>' + result[i].Name3 + '</td>'
+                        html += '<td>' + result[i].ToTal + '</td>'
+                        html += '<td>' + result[i].NumberMotoBikeBlank + '</td>'
                         html += '<td>' + result[i].Name4 + '</td>'
                         html += '<td>' + result[i].Name5 + '</td>'
                            
@@ -91,17 +93,19 @@
                                 <table class="table table-avatar">
                                     <thead>
                                         <tr class="bg-green">
-                                            <th></th>
+
+                                            <th>Loại Xe</th>
                                             <th>Đã gửi</th>
                                             <th>Chỗ trống</th>
                                             <th>Số vé tháng</th>
-                                            <th>Số vé ngày</th>
-                                            <th>Biểu phí(theo giờ)</th>
+                                            <th>Số vé Lượt</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tableList">
-                                      
                                     </tbody>
+                                    
+                                    
+
                                 </table>
                             </div>
                             <br />
