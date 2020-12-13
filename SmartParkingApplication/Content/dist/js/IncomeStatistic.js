@@ -1,6 +1,11 @@
 ﻿$(document).ready(function () {
     loadChartIncome();
     ComboboxNameParking();
+    if ($('#cbTypeOfTicket').val() == 0) {
+        $('#dvParking').hide();
+    } else {
+        $('#dvParking').show();
+    }
 });
 //var data;
 function loadChartIncome() {
@@ -11,6 +16,11 @@ function loadChartIncome() {
     }
     if (!idTypeOfTicket) {
         idTypeOfTicket = 0;
+    }
+    if ($('#cbTypeOfTicket').val() == 0) {
+        $('#dvParking').hide();
+    } else {
+        $('#dvParking').show();
     }
     $.ajax({
         url: "/ManageStatistic/LoadDataIncome",
