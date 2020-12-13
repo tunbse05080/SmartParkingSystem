@@ -7,7 +7,8 @@
         $('#dvParking').show();
     }
 });
-//var data;
+
+//Load Chart Income
 function loadChartIncome() {
     var idParking = $('#cbNameParkingPlace').val();
     var idTypeOfTicket = $('#cbTypeOfTicket').val();

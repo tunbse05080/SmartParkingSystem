@@ -153,6 +153,7 @@
     <Content Include="Content\dist\js\Chart\exporting.src.js" />
     <Content Include="Content\dist\js\CRUDStatusParking.js" />
     <Content Include="Content\dist\js\Chart\highcharts.js" />
+    <Content Include="Content\dist\js\Dashboard.js" />
     <Content Include="Content\dist\js\IncomeStatistic.js" />
     <Content Include="Content\dist\js\SettingPrice.js" />
     <Content Include="Content\dist\js\CRUD_Card.js" />
