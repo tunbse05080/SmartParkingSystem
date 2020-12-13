@@ -139,7 +139,7 @@
                         </div>
 
                         <!-- The Modal Extend Ticket -->
-                        <div class="modal fade" id="myModalExtendTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="myModalExtendTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
                                     <div class="modal-header">
@@ -207,7 +207,7 @@
                                                     Thời gian gia hạn
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <select class="form-control" id="cbETK" onchange="reloadModalETK()">
+                                                    <select class="form-control" id="cbETK" onchange="GetPriceMonthly()">
                                                         <option value="1">1 tháng</option>
                                                         <option value="2">6 tháng</option>
                                                         <option value="3">1 năm</option>
@@ -221,20 +221,20 @@
                                                     Thành tiền
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control" id="priceETK" placeholder="Thành tiền" value="500.000 VND" disabled />
+                                                    <input type="text" class="form-control" id="priceETK" placeholder="Thành tiền" disabled />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" id="btnExtendTK" onclick="return UpdateExtendTK();">Gia Hạn</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return clearETK()">Close</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- The Modal Extend Ticket -->
+                        <!-- The Modal DropContract Ticket -->
                         <div class="modal fade" id="myModalDropContractTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">

@@ -231,6 +231,17 @@ namespace SmartParkingApplication.Controllers
                               select new { c.CardNumber,c.CardID };
             return Json( new { numberCards , typeOfVehicles } , JsonRequestBehavior.AllowGet);
         }
+
+        //get price of monthly ticket base on typeOfVehicle
+        public JsonResult GetPriceMonthly(int typeOfVehicle)
+        {
+            var result = (from p in db.Prices
+                         where p.TypeOfvehicle == typeOfVehicle
+                         select new { p.MonthPrice }).FirstOrDefault();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 
 }

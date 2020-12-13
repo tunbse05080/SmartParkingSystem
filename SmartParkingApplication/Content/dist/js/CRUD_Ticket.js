@@ -2,25 +2,28 @@
 $(document).ready(function () {
     loadDataTicket();
     ComboboxTicket();
+    clearETK();
 });
 
 var CardId;
 
 //reload modal when change combobox
-function reloadModalETK() {
+function reloadModalETK(price) {
     if ($("#cbETK").val() == "1") {
         $('#ExpiryDateETk').val(DateETK(1));
-        $('#priceETK').val("500.000 VND");
+        $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
         $("#myModalExtendTicket").modal("show");
     }
     else if ($("#cbETK").val() == "2") {
+        price = price * 6;
         $('#ExpiryDateETk').val(DateETK(2));
-        $('#priceETK').val("2.500.000 VND");
+        $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
         $("#myModalExtendTicket").modal("show");
     }
     else {
+        price = price * 12;
         $('#ExpiryDateETk').val(DateETK(3));
-        $('#priceETK').val("4.000.000 VND");
+        $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
         $("#myModalExtendTicket").modal("show");
     }
 }
@@ -387,7 +390,6 @@ function getTicketByIDETK(MonthlyTicketID) {
 
             $('#myModalExtendTicket').modal('show');
             $('#btnExtendTK').show();
-
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
@@ -396,6 +398,31 @@ function getTicketByIDETK(MonthlyTicketID) {
     return false;
 }
 
+//get price of monthly ticket base on typeOfVehicle
+function GetPriceMonthly() {
+    var typeOfVehicle = $('#TypeOfVehicleETK').val();
+    $.ajax({
+        url: "/ManageTicket/GetPriceMonthly",
+        type: "POST",
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            reloadModalETK(result.MonthPrice)
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//clear modal ExtendTK
+function clearETK() {
+    $('#cbETK').val("");
+    $('#RegisDateETK').val("");
+    $('#ExpiryDateETk').val("");
+    $('#priceETK').val("");
+}
 
 //function GetIdCardFromNumber(CardNumber) {
 
