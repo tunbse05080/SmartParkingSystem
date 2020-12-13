@@ -17,6 +17,7 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
+        //Load Chart IncomeStatistic
         public JsonResult LoadDataIncome(int idParking, int idTypeOfTicket)
         {
             List<double> listIncomeMoto = new List<double>();
@@ -67,18 +68,20 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
+        //Load Chart CarDensity
         public JsonResult loadChartCarDensity(int idParking)
         {
             List<double> listMotoDestiny = new List<double>();
             List<double> listCarDestiny = new List<double>();
             for (int i = 0; i < 12; i++)
             {
+                //get density dataMoto base on ParkingPlace ID ( most nearly 12 months )
                 var dataMoto = (from tr in db.Transactions
                                 where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking)
                                 select new { tr.TypeOfVerhicleTran }).ToList();
-
                 listMotoDestiny.Add(dataMoto.Count());
 
+                //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
                 var dataCar = (from tr in db.Transactions
                                where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking)
                                select new { tr.TypeOfVerhicleTran }).ToList();
