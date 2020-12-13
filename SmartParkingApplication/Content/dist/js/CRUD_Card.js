@@ -218,8 +218,8 @@ function ReportCardBreak() {
 function CheckChange() {
     var temp = '0000000000';
     if ($('#CardNumber').val().length >= temp.length) {
-        AddCard($('#CardNumber').val());
-        
+        var data = $('#CardNumber').val().substring(0, 10);
+        AddCard(data);
     }
 }
 
