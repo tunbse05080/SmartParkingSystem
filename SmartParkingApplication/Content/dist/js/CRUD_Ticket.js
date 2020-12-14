@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 var CardId;
 
-//reload modal when change combobox
+//reload modal ExtendTK when change combobox
 function reloadModalETK(price) {
 
     for (var i = 1; i <= 12; i++) {
@@ -48,6 +48,19 @@ function DateETK(dateExtend) {
 
     date = mm + '/' + dd + '/' + yyyy;
     return date;
+}
+
+//reload modal RegisterTK when change combobox
+function reloadModalTK(price) {
+    for (var i = 1; i <= 12; i++) {
+        if ($("#cbTK").val() == i) {
+            price = price * i;
+            $('#ExpiryDateTK').val(DateETK(i));
+            $('#priceTK').val(new Intl.NumberFormat().format(price) + " VND");
+            $("#myModalTicket").modal("show");
+            break;
+        }
+    }
 }
 
 //Combobox Type of Vehicle
@@ -118,7 +131,7 @@ function loadDataTicket() {
             $('#tbodyTicket').html(html);
 
             $("#tbTicket").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbTicket_wrapper .col-md-6:eq(0)');
             totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
@@ -409,8 +422,8 @@ function getTicketByIDETK(MonthlyTicketID) {
     return false;
 }
 
-//get price of monthly ticket base on typeOfVehicle
-function GetPriceMonthly() {
+//get price of monthly Extendticket base on typeOfVehicle
+function GetPriceMonthlyExtendTK() {
     var typeOfVehicle = $('#TypeOfVehicleETK').val();
     $.ajax({
         url: "/ManageTicket/GetPriceMonthly",
@@ -427,12 +440,34 @@ function GetPriceMonthly() {
     });
 }
 
+//get price of monthly Registerticket base on typeOfVehicle
+function GetPriceMonthlyRegisterTK() {
+    var typeOfVehicle = $('#cbTypeOfVehicleTK').val();
+    $.ajax({
+        url: "/ManageTicket/GetPriceMonthly",
+        type: "POST",
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            reloadModalTK(result.MonthPrice);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+
 //clear modal ExtendTK
 function clearETK() {
     $('#cbETK').val("");
     $('#RegisDateETK').val("");
     $('#ExpiryDateETk').val("");
     $('#priceETK').val("");
+    $('#cbTK').val("");
+    $('#ExpiryDateTK').val("");
+    $('#priceTK').val("");
 }
 
 //function GetIdCardFromNumber(CardNumber) {
