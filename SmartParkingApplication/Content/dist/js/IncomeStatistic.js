@@ -94,6 +94,7 @@ function ComboboxNameParking() {
             });
             $('#cbNameParkingPlace').html(html);
             $('#cbNameParkingPlaceD').html(html);
+            $('#cbNameParkingPlaceSP').html(html);
 
         },
         error: function (errormessage) {

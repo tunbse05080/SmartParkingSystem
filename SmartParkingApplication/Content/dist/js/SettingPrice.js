@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
     loadDataPrice();
+    $('#dvFirstBlock').hide();
+    $('#dvPercent').hide();
+    $('#dvNextBlock').hide();
 });
 
 //load data price from table Price
@@ -21,6 +24,7 @@ function loadDataPrice() {
                 html += '<tr>';
                 html += '<td>' + item.typeOfVehicle + '</td>';
                 html += '<td>' + item.MonthPrice + '</td>';
+                html += '<td>' + item.DayPrice + '</td>';
                 html += '<td>' + item.FirstBlock + '</td>';
                 html += '<td>' + item.NextBlock + '</td>';
                 html += '</tr>';
@@ -38,26 +42,26 @@ function loadDataPrice() {
     });
 }
 
-function ComboboxTypeOfvehicle() {
-    $.ajax({
-        url: "/SettingPrice/ComboboxTypeOfVehicle",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            var html = '';
-            var i = 1;
-            $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
-            });
-            $("#cbTypeOfvehicle").html(html);
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
+//function ComboboxTypeOfvehicle() {
+//    $.ajax({
+//        url: "/SettingPrice/ComboboxTypeOfVehicle",
+//        type: "GET",
+//        contentType: "application/json;charset=utf-8",
+//        dataType: "json",
+//        success: function (result) {
+//            var html = '';
+//            var i = 1;
+//            $.each(result, function (key, item) {
+//                html += '<option value="' + i + '">' + item + '</option>';
+//                i++;
+//            });
+//            $("#cbTypeOfvehicle").html(html);
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
 
 
 function UpdatePR() {
@@ -91,40 +95,88 @@ function UpdatePR() {
     });
 }
 
-function getByTypeOfVehicle(PriceID) {
+//get price of monthly SettingPrice base on typeOfVehicle
+function GetPriceMonthlySP() {
+    var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
     $.ajax({
-        url: "/SettingPrice/Details/" + PriceID,
-        type: "GET",
+        url: "/ManageTicket/GetPriceMonthly",
+        type: "POST",
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#Idd').val(result.PriceID);
-            $('#TypeOfvehicled').val(result.TypeOfvehicle);
-            $('#DayPriced').val(result.DayPrice);
-            $('#MonthPriced').val(result.MonthPrice);
-            $('#DateOfBirthd').val(result.FirstBlock);
-            $('#FirstBlockd').val(result.NextBlock);
-            $('#myModalSettingPrice').modal('show');
-            $('#btnUpdate').show();
+            $('#PriceSP').val(new Intl.NumberFormat().format(result.MonthPrice) + " VND");
+            $("#myModalSettingPrice").modal("show");
         },
         error: function (errormessage) {
-            alert("Exception:" + PriceID + errormessage.responseText);
+            alert(errormessage.responseText);
         }
     });
-    return false;
 }
 
+//get price of monthly SettingPrice base on typeOfVehicle
+function GetPriceMonthlySP() {
+    var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
+    $.ajax({
+        url: "/ManageTicket/GetPriceMonthly",
+        type: "POST",
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#PriceSP').val(new Intl.NumberFormat().format(result.MonthPrice) + " VND");
+            $("#myModalSettingPrice").modal("show");
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//function getByTypeOfVehicle(PriceID) {
+//    $.ajax({
+//        url: "/SettingPrice/Details/" + PriceID,
+//        type: "GET",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#Idd').val(result.PriceID);
+//            $('#TypeOfvehicled').val(result.TypeOfvehicle);
+//            $('#DayPriced').val(result.DayPrice);
+//            $('#MonthPriced').val(result.MonthPrice);
+//            $('#DateOfBirthd').val(result.FirstBlock);
+//            $('#FirstBlockd').val(result.NextBlock);
+//            $('#myModalSettingPrice').modal('show');
+//            $('#btnUpdate').show();
+//        },
+//        error: function (errormessage) {
+//            alert("Exception:" + PriceID + errormessage.responseText);
+//        }
+//    });
+//    return false;
+//}
+
 function reloadModalPR() {
-    if ($("#cbTypeOfvehicle").val() == "0") {
-
+    if ($('#cbTypeOfTicketSP').val() == 1) {
+        $('#dvParkingPlaceSP').hide();
+        $('#dvFirstBlock').hide();
+        $('#dvPercent').hide();
+        $('#dvNextBlock').hide();
+        GetPriceMonthlySP();
+    } else if ($('#cbTypeOfTicketSP').val() == 0) {
+        $('#dvParkingPlaceSP').show();
+        $('#dvFirstBlock').hide();
+        $('#dvPercent').hide();
+        $('#dvNextBlock').hide();
+        $("#myModalSettingPrice").modal("show");
+    } else {
+        $('#dvParkingPlaceSP').show();
+        $('#dvPriceSP').hide();
+        $('#dvFirstBlock').show();
+        $('#dvPercent').show();
+        $('#dvNextBlock').show();
         $("#myModalSettingPrice").modal("show");
     }
-    else ($("#cbTypeOfvehicle").val() == "1")
-    {
-
-        $("#myModalSettingPrice").modal("show");
-    }
-
 }
 //function getEditPriceByID(PriceID) {
 //    $.ajax({

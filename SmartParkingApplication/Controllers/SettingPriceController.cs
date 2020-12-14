@@ -42,12 +42,6 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ComboboxTypeOfVehicle()
-        {
-            var list = db.Prices.Select(u => u.TypeOfvehicle).Distinct().ToList();
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult UpdatePR(Price id)
         {
             if (ModelState.IsValid)
@@ -58,20 +52,12 @@ namespace SmartParkingApplication.Controllers
             return Json(id, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Details(string typeOfvehicle)
+        //get price of daily ticket base on typeOfVehicle
+        public JsonResult GetPriceDaily(int typeOfVehicle,int ParkingPlaceID)
         {
-            var set = db.Prices.Find(typeOfvehicle);
-
-            var result = new { set.PriceID, set.TypeOfvehicle, set.DayPrice, set.MonthPrice, set.FirstBlock, set.NextBlock };
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult PriceDetails(int id)
-        {
-            var pr = db.Prices.Find(id);
-
-
-            var result = new { pr.PriceID, pr.TypeOfvehicle, pr.DayPrice, pr.MonthPrice, pr.FirstBlock, pr.NextBlock };
+            var result = (from p in db.Prices
+                          where p.TypeOfvehicle == typeOfVehicle
+                          select new { p.DayPrice }).FirstOrDefault();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
