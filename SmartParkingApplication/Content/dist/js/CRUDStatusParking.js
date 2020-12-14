@@ -65,12 +65,14 @@ function getDetailTranByID(TransactionID) {
             $('#TimeOutvd').val(result.TimeOut);
             $('#TypeOfTicketd').val(result.typeTicket);
             $('#CardNumber').val(result.CardNumber);
+            $('#TypeOfVe').val(result.typeVE);
+
           
 
             $('#myModalTranDetail').modal('show');
         },
         error: function (errormessage) {
-            alert("Exception:" + EmployeeID + errormessage.responseText);
+            alert("Exception:" + TransactionID + errormessage.responseText);
         }
     });
     return false;

@@ -89,14 +89,24 @@ namespace SmartParkingApplication.Controllers
             {
                 typeTicket = "Vé Lượt";
             }
-         
+            var typeVE = "";
+
+            if (tran.TypeOfVerhicleTran == 1)
+            {
+                typeVE = "Ô tô";
+            }
+            else
+            {
+                typeVE = "Xe máy";
+            }
+
 
 
 
             var TimeIn = tran.TimeIn.Value.ToString("MM/dd/yyyy hh:mm:ss");
             var TimeOut = tran.TimeOutv.Value.ToString("MM/dd/yyyy hh:mm:ss");
 
-            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn,TimeOut, typeTicket, tran.Card.CardNumber };
+            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn,TimeOut, typeTicket, tran.Card.CardNumber,typeVE };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
