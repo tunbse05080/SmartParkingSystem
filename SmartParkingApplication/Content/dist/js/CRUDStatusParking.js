@@ -30,7 +30,7 @@ function loadDataStatusParking() {
                     html += '<td>' + item.TimeOutv + '</td>';
                     html += '<td>' + item.TypeOfTicket + '</td>';
                     html += '<td>' + item.CardNumber + '</td>';
-                    html += '<td>' + 'Xe máy' + '</td>';
+                    html += '<td>' + item.TypeOfVerhicleTran + '</td>';
                     html += '<td><button class="btn btn-primary" onclick = "return getDetailTranByID(' + item.TransactionID + ')"> Chi tiết</button></td>';
                     html += '</tr>';
                 });

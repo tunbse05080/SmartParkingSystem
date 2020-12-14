@@ -40,7 +40,7 @@ namespace SmartParkingApplication.Controllers
                         join c in db.Cards on t.CardID equals c.CardID into table1
                         from c in table1.DefaultIfEmpty()
                         orderby t.CardID
-                        select new {t.TransactionID, t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber };
+                        select new {t.TransactionID, t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber,t.TypeOfVerhicleTran };
 
             List<Object> list = new List<object>();
             foreach (var item in trans)
@@ -48,6 +48,7 @@ namespace SmartParkingApplication.Controllers
                 var timeIn = item.TimeIn.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 var timeOut = item.TimeOutv.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
                 string typeofTicket = string.Empty;
+                string typeofVe= string.Empty;
                 switch (item.TypeOfTicket)
                 {
                     case 0: 
@@ -57,9 +58,20 @@ namespace SmartParkingApplication.Controllers
                         typeofTicket = "Vé Tháng";
                         break;
                 }
+                switch (item.TypeOfVerhicleTran)
+                {
+                    case 0:
+                        typeofVe = "Xe máy";
+                        break;
+                    case 1:
+                        typeofVe = "Ô tô";
+                        break;
+                }
 
-                
-                var tr = new { TransactionID = item.TransactionID, LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber };
+
+
+
+                var tr = new { TransactionID = item.TransactionID, LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber, TypeOfVerhicleTran = typeofVe };
                 list.Add(tr);
             }
             return Json(new { dataSSP = list}, JsonRequestBehavior.AllowGet);
@@ -77,9 +89,10 @@ namespace SmartParkingApplication.Controllers
             {
                 typeTicket = "Vé Lượt";
             }
-           
-           
-            
+         
+
+
+
             var TimeIn = tran.TimeIn.Value.ToString("MM/dd/yyyy hh:mm:ss");
             var TimeOut = tran.TimeOutv.Value.ToString("MM/dd/yyyy hh:mm:ss");
 
