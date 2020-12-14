@@ -29,7 +29,7 @@ function DateETK(dateExtend) {
     for (var i = 1; i <= 12; i++) {
         if (dateExtend) {
             if (dateExtend == i) {
-                date.setTime(date.getTime() + (30.5 * i * 24 * 60 * 60 * 1000));
+                date.setTime(date.getTime() + (30.4 * i * 24 * 60 * 60 * 1000));
                 break;
             }
         }
