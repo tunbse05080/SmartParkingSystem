@@ -2178,7 +2178,6 @@
     <Content Include="Views\ManageUser\Editworkingcalendar.cshtml" />
     <Content Include="Views\ManagePPlace\ManageStatusParkingPlace.cshtml" />
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
-    <Content Include="Views\ManageTicket\ListExtendTicket.cshtml" />
     <Content Include="Views\ManageStatistic\IncomeStatistic.cshtml" />
     <Content Include="Views\ManageStatistic\DensityStatistic.cshtml" />
     <Content Include="Views\LoginUser\Create.cshtml" />
