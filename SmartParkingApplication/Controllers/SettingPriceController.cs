@@ -53,12 +53,11 @@ namespace SmartParkingApplication.Controllers
         }
 
         //get price of daily ticket base on typeOfVehicle
-        public JsonResult GetPriceDaily(int typeOfVehicle,int ParkingPlaceID)
+        public JsonResult GetPrice(int typeOfVehicle,int ParkingPlaceID)
         {
             var result = (from p in db.Prices
                           where p.TypeOfvehicle == typeOfVehicle && p.ParkingPlaceID == ParkingPlaceID
-                          select new { p.DayPrice }).FirstOrDefault();
-
+                          select new { p.DayPrice, p.NextBlock, p.FirstBlock }).FirstOrDefault();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
