@@ -114,17 +114,18 @@ function GetPriceMonthlySP() {
     });
 }
 
-//get price of monthly SettingPrice base on typeOfVehicle
-function GetPriceMonthlySP() {
+//get price of daily SettingPrice base on typeOfVehicle,ParkingPlace
+function GetPriceDailySP() {
     var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
+    var ParkingPlaceID = $('#cbNameParkingPlaceSP').val();
     $.ajax({
-        url: "/ManageTicket/GetPriceMonthly",
+        url: "/SettingPrice/GetPriceDaily",
         type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle, ParkingPlaceID: ParkingPlaceID}),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#PriceSP').val(new Intl.NumberFormat().format(result.MonthPrice) + " VND");
+            $('#PriceSP').val(new Intl.NumberFormat().format(result.DayPrice) + " VND");
             $("#myModalSettingPrice").modal("show");
         },
         error: function (errormessage) {
@@ -168,7 +169,7 @@ function reloadModalPR() {
         $('#dvFirstBlock').hide();
         $('#dvPercent').hide();
         $('#dvNextBlock').hide();
-        $("#myModalSettingPrice").modal("show");
+        GetPriceDailySP();
     } else {
         $('#dvParkingPlaceSP').show();
         $('#dvPriceSP').hide();
