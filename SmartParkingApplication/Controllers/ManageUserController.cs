@@ -257,7 +257,7 @@ namespace SmartParkingApplication.Controllers
             dt.Columns.Add("Ngày Ký HĐ", typeof(String));
             dt.Columns.Add("Ngày Hết HĐ", typeof(String));
             // them ngay gia han
-            dt.Columns.Add("Ngày Gia hạn", typeof(String));
+            //dt.Columns.Add("Ngày Gia hạn", typeof(String));
 
 
 

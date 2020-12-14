@@ -9,38 +9,32 @@ var CardId;
 
 //reload modal when change combobox
 function reloadModalETK(price) {
-    if ($("#cbETK").val() == "1") {
-        $('#ExpiryDateETk').val(DateETK(1));
-        $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
-        $("#myModalExtendTicket").modal("show");
-    }
-    else if ($("#cbETK").val() == "2") {
-        price = price * 6;
-        $('#ExpiryDateETk').val(DateETK(2));
-        $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
-        $("#myModalExtendTicket").modal("show");
-    }
-    else {
-        price = price * 12;
-        $('#ExpiryDateETk').val(DateETK(3));
-        $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
-        $("#myModalExtendTicket").modal("show");
+
+    for (var i = 1; i <= 12; i++) {
+        if ($("#cbETK").val() == i) {
+            price = price * i;
+            $('#ExpiryDateETk').val(DateETK(i));
+            $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
+            $("#myModalExtendTicket").modal("show");
+            break;
+        }
     }
 }
 
-//DateETK
+//get date from comboboxDateExtend
 function DateETK(dateExtend) {
     // body...
-    if (dateExtend == 1) {
-        dateExtend = 30;
-    } else if (dateExtend == 2) {
-        dateExtend = 180;
-    } else {
-        dateExtend = 365;
-    }
-    
     var date = new Date();
-    date.setTime(date.getTime() + (dateExtend * 24 * 60 * 60 * 1000));
+
+    for (var i = 1; i <= 12; i++) {
+        if (dateExtend) {
+            if (dateExtend == i) {
+                date.setTime(date.getTime() + (30.5 * i * 24 * 60 * 60 * 1000));
+                break;
+            }
+        }
+    }
+
     var dd = date.getDate();
     var mm = date.getMonth() + 1; //January is 0!
     var yyyy = date.getFullYear();
@@ -124,7 +118,7 @@ function loadDataTicket() {
             $('#tbodyTicket').html(html);
 
             $("#tbTicket").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true, retrieve:true,
+                "responsive": true, "lengthChange": true, "autoWidth": true, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbTicket_wrapper .col-md-6:eq(0)');
             totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
@@ -208,7 +202,7 @@ function UpdateExtendTK() {
             CreateMonthlyIncome($('#MonthlyTicketETK').val(), $('#priceETK').val());
             loadDataTicket();
             $('#myModalExtendTicket').modal('hide');
-             
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
