@@ -12,7 +12,7 @@
 
         $('#cbxListParking').on('change', function () {
             var ParkingPlaceID = $('#cbxListParking').val();
-            alert(ParkingPlaceID);
+          
             $.ajax({
                 type: 'GET',
                 data: { ParkingPlaceID: ParkingPlaceID },
@@ -21,15 +21,24 @@
 
                     var html = "";
                     for (var i = 0; i < result.length; i++) {
-                        
+                        html += '<tr>'; 
                         html += '<td> Xe Máy </td>';
                       
-                        html += '<td>' + result[i].ToTal + '</td>'
-                        html += '<td>' + result[i].ToTal + '</td>'
+                       
+                        html += '<td>' + result[i].ToTalDaGuiXemay + '</td>'
                         html += '<td>' + result[i].NumberMotoBikeBlank + '</td>'
-                        html += '<td>' + result[i].Name4 + '</td>'
-                        html += '<td>' + result[i].Name5 + '</td>'
-                           
+                        
+                        
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Ô tô </td>';
+
+                        
+                        html += '<td>' + result[i].ToTalDaGuiOto + '</td>'
+                        html += '<td>' + result[i].NumberCarlank + '</td>'
+                        
+                        html += '</tr>';
+
                     }
                     $('#tableList').html(html);
 
@@ -97,8 +106,7 @@
                                             <th>Loại Xe</th>
                                             <th>Đã gửi</th>
                                             <th>Chỗ trống</th>
-                                            <th>Số vé tháng</th>
-                                            <th>Số vé Lượt</th>
+                                          
                                         </tr>
                                     </thead>
                                     <tbody id="tableList">

@@ -25,12 +25,10 @@ namespace SmartParkingApplication.Controllers
             return Json(db.ParkingPlaces.Where(x => x.ParkingPlaceID == ParkingPlaceID).Select(x => new
             {
                 Id = x.ParkingPlaceID,
-                ToTal = x.Transactions.Count(),
-                
+                ToTalDaGuiOto = x.NumberOfCar - x.NumberCarBlank,
                 NumberMotoBikeBlank = x.NumberMotoBikeBlank,
-                Name3 = x.Transactions.Count,
-                Name4 = x.NumberOfMotoBike,
-                Name5= x.Transactions.Count,
+                ToTalDaGuiXemay = x.NumberOfMotoBike - x.NumberMotoBikeBlank,
+                NumberCarlank = x.NumberCarBlank,
                
 
             }).ToList(), JsonRequestBehavior.AllowGet) ;

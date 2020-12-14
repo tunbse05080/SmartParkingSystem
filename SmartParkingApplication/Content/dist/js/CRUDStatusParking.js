@@ -9,7 +9,7 @@ function loadDataStatusParking() {
     //var timeFrom = $('#txtTimeFromSPP').val();
     $('#cbxListParking').on('change', function () {
         var ParkingPlaceID = $('#cbxListParking').val();
-        alert(ParkingPlaceID);
+        
         $.ajax({
             url: "/ManagePPlace/LoadDataStatusPP",
             type: "GET",
