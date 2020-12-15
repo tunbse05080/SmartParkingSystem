@@ -25,8 +25,7 @@ function loadDataPrice() {
                 html += '<td>' + item.DayPrice + '</td>';
                 html += '<td>' + item.FirstBlock + '</td>';
                 html += '<td>' + item.NextBlock + '</td>';
-                html += '<td>' + "12/12/2020" + '</td>';
-
+                html += '<td><button class="btn btn-primary" onclick="return getDetailPriceByID(' + item.PriceID + ')" >Chi tiết</button></td>';
                 html += '</tr>';
             });
             $('#tbodypr').html(html);
@@ -239,21 +238,21 @@ function getDetailPriceByID(PriceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#PriceIDed').val(result.PriceID);
-            $('#TypeOfvehicled').val(result.TypeOfvehicle);
-            $('#DayPriced').val(result.DayPrice);
-            $('#MonthPriced').val(result.MonthPrice);
-            $('#FirstBlockd').val(result.FirstBlock);
-            $('#NextBlockd').val(result.NextBlock);
+            $('#TypeOfVehicleDetailP').val(result.typeOfVehicle);
+            $('#MonthlyPriceDetail').val(result.DayPrice +" VNĐ");
+            $('#DailyPriceDetail').val(result.MonthPrice +" VNĐ");
+            $('#FBlockPriceDetail').val(result.FirstBlock +" VNĐ");
+            $('#NBlockPriceDetail').val(result.NextBlock +" VNĐ");
+            $('#TimeOfFirstBlock').val(result.TimeOfFirstBlock +" giờ");
+            $('#TimeOfNextBlock').val(result.TimeOfNextBlock + " giờ");
+            $('#TimeApply').val(result.TimeOfApply);
 
-            $('#myModalPREdit').modal('show');
-            $('#btnUpdate').show();
+            $('#myModalDetailPrice').modal('show');
         },
         error: function (errormessage) {
-            alert("Exception:" + EmployeeID + errormessage.responseText);
+            alert(errormessage.responseText);
         }
     });
-    return false;
 }
 
 //
