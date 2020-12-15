@@ -45,9 +45,10 @@
                                         <tr class="bg-green">
                                             <th>Loại xe</th>
                                             <th>Giá vé tháng(vnd)</th>
-                                            <th>Giá vé ngày - block đầu(vnd)</th>
+                                            <th>Giá vé ngày</th>
                                             <th>Giá vé block - đầu(vnd)</th>
                                             <th>Giá vé block - tiếp(vnd)</th>
+                                            <th>Thời gian áp dụng</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodypr">
@@ -122,23 +123,33 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group" id="dvPercent">
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Block sau = Block đầu *
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="percent" placeholder="Hệ số" />
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="form-group" id="dvNextBlock">
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Giá tiền block tiếp theo
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="PriceNB" placeholder="Giá tiền" disabled />
+                                                        <input type="text" class="form-control" id="PriceNB" placeholder="Giá tiền" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="dvTimeOfBlock">
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
+                                                        Thời gian 1 block
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" id="TimeOfBlock" placeholder="Thời gian" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="dvTimeOfApply">
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
+                                                        Thời gian áp dụng
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="date" class="form-control" id="TimeOfApply" placeholder="Thời gian" />
                                                     </div>
                                                 </div>
                                             </div>

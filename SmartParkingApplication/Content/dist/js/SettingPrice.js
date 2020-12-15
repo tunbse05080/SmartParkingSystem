@@ -25,6 +25,8 @@ function loadDataPrice() {
                 html += '<td>' + item.DayPrice + '</td>';
                 html += '<td>' + item.FirstBlock + '</td>';
                 html += '<td>' + item.NextBlock + '</td>';
+                html += '<td>' + "12/12/2020" + '</td>';
+
                 html += '</tr>';
             });
             $('#tbodypr').html(html);
@@ -193,6 +195,8 @@ function reloadModalPR() {
         $('#dvFirstBlock').hide();
         $('#dvPercent').hide();
         $('#dvNextBlock').hide();
+        $('#dvTimeOfBlock').hide();
+
         $('#dvPriceSP').show();
 
         GetPriceMonthlySP();
@@ -201,6 +205,7 @@ function reloadModalPR() {
         $('#dvFirstBlock').hide();
         $('#dvPercent').hide();
         $('#dvNextBlock').hide();
+        $('#dvTimeOfBlock').hide();
         $('#dvPriceSP').show();
         GetPriceDailySP();
     } else {
@@ -209,6 +214,7 @@ function reloadModalPR() {
         $('#dvFirstBlock').show();
         $('#dvPercent').show();
         $('#dvNextBlock').show();
+        $('#dvTimeOfBlock').show();
         GetPriceBlockSP();
     }
 }
@@ -239,6 +245,7 @@ function clear() {
     $('#dvFirstBlock').hide();
     $('#dvPercent').hide();
     $('#dvNextBlock').hide();
-    $('#cbTypeOfTicketSP').val("");
+    $('#dvTimeOfBlock').hide();
 
+    $('#cbTypeOfTicketSP').val("");
 }
