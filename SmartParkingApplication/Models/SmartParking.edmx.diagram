@@ -28,6 +28,8 @@
         <AssociationConnector Association="SmartParkingsModel.FK__User__RoleID__5629CD9C" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__UserSched__Sched__571DF1D5" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__UserSched__UserI__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingsModel.FK_Transaction_UserI" />
+        <AssociationConnector Association="SmartParkingsModel.FK_Transaction_UserO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

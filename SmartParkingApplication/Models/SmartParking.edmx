@@ -65,7 +65,6 @@
           <Property Name="NumberCarBlank" Type="int" />
           <Property Name="NumberMotoBikeBlank" Type="int" />
           <Property Name="StatusOfParkingPlace" Type="int" />
-          <Property Name="PriceID" Type="int" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
@@ -122,6 +121,8 @@
           <Property Name="CardID" Type="int" />
           <Property Name="ParkingPlaceID" Type="int" />
           <Property Name="TypeOfVerhicleTran" Type="int" />
+          <Property Name="UserIID" Type="int" />
+          <Property Name="UserOID" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -271,6 +272,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Transaction_UserI">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="UserIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_UserO">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="UserOID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SmartParkingsModelStoreContainer">
           <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
@@ -324,6 +349,14 @@
           <AssociationSet Name="FK_Price_ParkingPlace" Association="Self.FK_Price_ParkingPlace">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
             <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_UserI" Association="Self.FK_Transaction_UserI">
+            <End Role="User" EntitySet="User" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_UserO" Association="Self.FK_Transaction_UserO">
+            <End Role="User" EntitySet="User" />
+            <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -396,7 +429,6 @@
           <Property Name="NumberCarBlank" Type="Int32" />
           <Property Name="NumberMotoBikeBlank" Type="Int32" />
           <Property Name="StatusOfParkingPlace" Type="Int32" />
-          <Property Name="PriceID" Type="Int32" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="ParkingPlace" ToRole="Transaction" />
           <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="ParkingPlace" ToRole="User" />
           <NavigationProperty Name="Prices" Relationship="Self.FK_Price_ParkingPlace" FromRole="ParkingPlace" ToRole="Price" />
@@ -462,6 +494,10 @@
           <NavigationProperty Name="Card" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Transaction" ToRole="Card" />
           <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__656C112C" FromRole="Transaction" ToRole="Image" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="Transaction" ToRole="ParkingPlace" />
+          <Property Name="UserIID" Type="Int32" />
+          <Property Name="UserOID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="SmartParkingsModel.FK_Transaction_UserI" FromRole="Transaction" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="SmartParkingsModel.FK_Transaction_UserO" FromRole="Transaction" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -485,6 +521,8 @@
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="User" ToRole="ParkingPlace" />
           <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="User" ToRole="UserSchedule" />
+          <NavigationProperty Name="Transactions" Relationship="SmartParkingsModel.FK_Transaction_UserI" FromRole="User" ToRole="Transaction" />
+          <NavigationProperty Name="Transactions1" Relationship="SmartParkingsModel.FK_Transaction_UserO" FromRole="User" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -670,7 +708,39 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
           </AssociationSet>
+          <AssociationSet Name="FK_Transaction_UserI" Association="SmartParkingsModel.FK_Transaction_UserI">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_UserO" Association="SmartParkingsModel.FK_Transaction_UserO">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Transaction_UserI">
+          <End Type="SmartParkingsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="SmartParkingsModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="UserIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_UserO">
+          <End Type="SmartParkingsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="SmartParkingsModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="UserOID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -741,7 +811,6 @@
                 <ScalarProperty Name="NumberCarBlank" ColumnName="NumberCarBlank" />
                 <ScalarProperty Name="NumberMotoBikeBlank" ColumnName="NumberMotoBikeBlank" />
                 <ScalarProperty Name="StatusOfParkingPlace" ColumnName="StatusOfParkingPlace" />
-                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -794,6 +863,8 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="SmartParkingsModel.Transaction">
               <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="UserOID" ColumnName="UserOID" />
+                <ScalarProperty Name="UserIID" ColumnName="UserIID" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
                 <ScalarProperty Name="TimeOutv" ColumnName="TimeOutv" />

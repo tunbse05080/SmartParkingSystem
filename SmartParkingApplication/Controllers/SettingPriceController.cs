@@ -43,7 +43,7 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateSP(Price price)
+        public JsonResult Update(Price price)
         {
             //var data = (from p in db.Prices
             //                  where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle
@@ -93,11 +93,11 @@ namespace SmartParkingApplication.Controllers
         }
 
         //get price of daily ticket base on typeOfVehicle
-        public JsonResult GetPrice(int typeOfVehicle, int ParkingPlaceID)
+        public JsonResult GetPriceDaily(int typeOfVehicle, int ParkingPlaceID)
         {
             var result = (from p in db.Prices
                           where p.TypeOfvehicle == typeOfVehicle && p.ParkingPlaceID == ParkingPlaceID
-                          select new { p.DayPrice, p.NextBlock, p.FirstBlock }).FirstOrDefault();
+                          select new {p.PriceID, p.DayPrice,p.MonthPrice, p.NextBlock, p.FirstBlock, p.TimeOfFirstBlock, p.TimeOfNextBlock, p.TimeOfApply}).FirstOrDefault();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

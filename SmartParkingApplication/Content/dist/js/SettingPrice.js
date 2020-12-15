@@ -3,6 +3,23 @@
     clear();
 });
 
+//get format date
+function Getformatdate(date) {
+    var today = new Date(parseInt(date.substr(6)));
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var result = dd + '/' + mm + '/' + yyyy;
+    return result;
+}
+
 //load data price from table Price
 function loadDataPrice() {
     var ParkingPlaceID = $('#cbNameParkingPlaceD').val();
@@ -74,31 +91,11 @@ function CheckTypeOfTK() {
 }
 
 
-function UpdateSP() {
+function UpdateDailyPrice() {
     //var res = validateUpdatePP();
     //if (res == false) {
     //    return false;
     //}
-    if ($('#cbTypeOfTicketSP').val() == 0) {
-        var empPRObj = {
-            TypeOfvehicle: $('#cbTypeOfvehicleSP').val(),
-            ParkingPlaceID: $('#cbNameParkingPlaceSP').val(),
-            DayPrice: $('#PriceSP').val(),
-        };
-    } else if ($('#cbTypeOfTicketSP').val() == 1) {
-        var empPRObj = {
-            TypeOfvehicle: $('#cbTypeOfvehicleSP').val(),
-            ParkingPlaceID: $('#cbNameParkingPlaceSP').val(),
-            MonthPrice: $('#PriceSP').val(),
-        };
-    } else {
-        var empPRObj = {
-            TypeOfvehicle: $('#cbTypeOfvehicleSP').val(),
-            ParkingPlaceID: $('#cbNameParkingPlaceSP').val(),
-            FirstBlock: $('#PriceFB').val(),
-            NextBlock: $('#PriceNB').val(),
-        };
-    }
     $.ajax({
         url: "/SettingPrice/UpdateSP",
         data: JSON.stringify(empPRObj),
@@ -126,7 +123,7 @@ function GetPriceMonthlySP() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#PriceSP').val(new Intl.NumberFormat().format(result.MonthPrice) + " VND");
+            $('#PriceSP').val(new Intl.NumberFormat().format(result.MonthPrice) + " VNĐ");
             $("#myModalSettingPrice").modal("show");
         },
         error: function (errormessage) {
@@ -136,18 +133,26 @@ function GetPriceMonthlySP() {
 }
 
 //get price of daily SettingPrice base on typeOfVehicle,ParkingPlace
-function GetPriceDailySP() {
+function GetPriceDaily() {
     var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
     var ParkingPlaceID = $('#cbNameParkingPlaceSP').val();
     $.ajax({
-        url: "/SettingPrice/GetPrice",
+        url: "/SettingPrice/GetPriceDaily",
         type: "POST",
         data: JSON.stringify({ typeOfVehicle: typeOfVehicle, ParkingPlaceID: ParkingPlaceID}),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#PriceSP').val(new Intl.NumberFormat().format(result.DayPrice) + " VND");
-            $("#myModalSettingPrice").modal("show");
+            $('#PriceIDDailyTK').val(result.PriceID);
+            $('#DayPriceDailyTK').val(result.DayPrice + "đ");
+            $('#MonthlyPriceDailyTK').val(result.MonthPrice);
+            $('#FBlockPriceDailyTK').val(result.FirstBlock);
+            $('#NBlockPriceDailyTK').val(result.NextBlock);
+            $('#TimeFBlockPriceDailyTK').val(result.TimeOfFirstBlock);
+            $('#TimeNBlockPriceDailyTK').val(result.TimeOfNextBlock);
+            $('#TimeOfApply').val(Getformatdate(result.TimeOfApply));
+            //$('#PriceSP').val(new Intl.NumberFormat().format(result.DayPrice) + " VNĐ");
+            $('#myModalSettingDailyPrice').modal("show");
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -166,14 +171,29 @@ function GetPriceBlockSP() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#PriceFB').val(new Intl.NumberFormat().format(result.FirstBlock) + " VND");
-            $('#PriceNB').val(new Intl.NumberFormat().format(result.NextBlock) + " VND");
+            $('#PriceFB').val(new Intl.NumberFormat().format(result.FirstBlock) + " VNĐ");
+            $('#PriceNB').val(new Intl.NumberFormat().format(result.NextBlock) + " VNĐ");
             $("#myModalSettingPrice").modal("show");
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
         }
     });
+}
+
+//load modal price follow type ticket
+function loadModalPrice() {
+    if ($('#cbTypeOfTicketSP').val() == 0) {
+        $('#myModalTypeTicket').modal("hide");
+        GetPriceDaily();
+
+    } else if ($('#cbTypeOfTicketSP').val() == 1) {
+        $('#myModalTypeTicket').modal("hide");
+        $('#myModalSettingMonthlyPrice').modal("show");
+    } else {
+        $('#myModalTypeTicket').modal("hide");
+        $('#myModalSettingBlockPrice').modal("show");
+    }
 }
 
 //reload modal setting price

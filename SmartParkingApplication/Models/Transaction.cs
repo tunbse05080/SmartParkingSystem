@@ -29,10 +29,14 @@ namespace SmartParkingApplication.Models
         public Nullable<int> CardID { get; set; }
         public Nullable<int> ParkingPlaceID { get; set; }
         public Nullable<int> TypeOfVerhicleTran { get; set; }
+        public Nullable<int> UserIID { get; set; }
+        public Nullable<int> UserOID { get; set; }
     
         public virtual Card Card { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }
         public virtual ParkingPlace ParkingPlace { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }
