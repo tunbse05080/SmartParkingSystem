@@ -62,7 +62,7 @@ function loadDataPrice() {
 //}
 
 
-function UpdatePR() {
+function UpdateSP() {
     //var res = validateUpdatePP();
     //if (res == false) {
     //    return false;
@@ -88,7 +88,7 @@ function UpdatePR() {
         };
     }
     $.ajax({
-        url: "/SettingPrice/UpdatePR",
+        url: "/SettingPrice/UpdateSP",
         data: JSON.stringify(empPRObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",

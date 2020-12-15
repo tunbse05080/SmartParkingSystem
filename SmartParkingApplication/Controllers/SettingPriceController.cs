@@ -42,14 +42,25 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdatePR(Price id)
+        public JsonResult UpdateSP(Price price)
         {
+            //var data = (from p in db.Prices
+            //                  where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle
+            //                  select new { p.PriceID, p.NextBlock, p.FirstBlock, p.MonthPrice, p.TypeOfvehicle, p.ParkingPlaceID, price.DayPrice }).Single();
+            //Price priceUpdate = new Price { 
+            //        PriceID = data.PriceID, 
+            //        TypeOfvehicle = data.TypeOfvehicle, 
+            //        DayPrice = data.DayPrice, 
+            //        MonthPrice = data.MonthPrice, 
+            //        FirstBlock = data.FirstBlock, 
+            //        NextBlock = data.NextBlock, 
+            //        ParkingPlaceID = data.ParkingPlaceID };
             if (ModelState.IsValid)
             {
-                db.Entry(id).State = EntityState.Modified;
+                db.Entry(price).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return Json(id, JsonRequestBehavior.AllowGet);
+            return Json(price, JsonRequestBehavior.AllowGet);
         }
 
         //get price of daily ticket base on typeOfVehicle
