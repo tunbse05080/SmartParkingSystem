@@ -63,6 +63,15 @@ function loadDataPrice() {
 //    });
 //}
 
+function CheckTypeOfTK() {
+    if ($('#cbTypeOfTicketSP').val() == 0) {
+        
+    } else if ($('#cbTypeOfTicketSP').val() == 1) {
+
+    } else {
+
+    }
+}
 
 function UpdateSP() {
     //var res = validateUpdatePP();

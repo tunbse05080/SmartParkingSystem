@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="CardID" />
@@ -78,6 +78,9 @@
           <Property Name="FirstBlock" Type="int" />
           <Property Name="NextBlock" Type="int" />
           <Property Name="ParkingPlaceID" Type="int" />
+          <Property Name="TimeOfFirstBlock" Type="int" />
+          <Property Name="TimeOfNextBlock" Type="int" />
+          <Property Name="TimeOfApply" Type="date" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -323,8 +326,7 @@
             <End Role="Price" EntitySet="Price" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SmartParkingsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -411,6 +413,9 @@
           <Property Name="NextBlock" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK_Price_ParkingPlace" FromRole="Price" ToRole="ParkingPlace" />
+          <Property Name="TimeOfFirstBlock" Type="Int32" />
+          <Property Name="TimeOfNextBlock" Type="Int32" />
+          <Property Name="TimeOfApply" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -743,6 +748,9 @@
           <EntitySetMapping Name="Prices">
             <EntityTypeMapping TypeName="SmartParkingsModel.Price">
               <MappingFragment StoreEntitySet="Price">
+                <ScalarProperty Name="TimeOfApply" ColumnName="TimeOfApply" />
+                <ScalarProperty Name="TimeOfNextBlock" ColumnName="TimeOfNextBlock" />
+                <ScalarProperty Name="TimeOfFirstBlock" ColumnName="TimeOfFirstBlock" />
                 <ScalarProperty Name="PriceID" ColumnName="PriceID" />
                 <ScalarProperty Name="TypeOfvehicle" ColumnName="TypeOfvehicle" />
                 <ScalarProperty Name="DayPrice" ColumnName="DayPrice" />

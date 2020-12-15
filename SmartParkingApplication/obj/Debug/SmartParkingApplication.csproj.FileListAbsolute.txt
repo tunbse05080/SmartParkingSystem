@@ -452,6 +452,7 @@ D:\learning\FU\doc\swp490\project\tunb\SmartParkingApplication\obj\Debug\SmartPa
 D:\learning\FU\doc\swp490\project\tunb\SmartParkingApplication\obj\Debug\SmartParkingApplication.pdb
 D:\learning\FU\doc\swp490\project\tunb\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
 E:\ki 9\test\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
+D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\bin\SmartParkingApplication.dll.config
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\bin\SmartParkingApplication.dll
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\bin\SmartParkingApplication.pdb
@@ -527,5 +528,3 @@ F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Deb
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csproj.CopyComplete
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.dll
 F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.pdb
-F:\c#\SmartParkingApplication\SmartParkingSystem\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
-D:\New folder\SmartParkingApplication\obj\Debug\SmartParkingApplication.csprojAssemblyReference.cache
