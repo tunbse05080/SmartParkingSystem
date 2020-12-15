@@ -73,6 +73,7 @@ function CheckTypeOfTK() {
     }
 }
 
+
 function UpdateSP() {
     //var res = validateUpdatePP();
     //if (res == false) {
@@ -198,6 +199,8 @@ function GetPriceBlockSP() {
 //    return false;
 //}
 
+
+//reload modal setting price
 function reloadModalPR() {
     if ($('#cbTypeOfTicketSP').val() == 1) {
         $('#dvParkingPlaceSP').hide();
@@ -227,29 +230,33 @@ function reloadModalPR() {
         GetPriceBlockSP();
     }
 }
-//function getEditPriceByID(PriceID) {
-//    $.ajax({
-//        url: "/SettingPrice/PriceDetails/" + PriceID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#PriceIDed').val(result.PriceID);
-//            $('#TypeOfvehicled').val(result.TypeOfvehicle);
-//            $('#DayPriced').val(result.DayPrice);
-//            $('#MonthPriced').val(result.MonthPrice);
-//            $('#FirstBlockd').val(result.FirstBlock);
-//            $('#NextBlockd').val(result.NextBlock);
 
-//            $('#myModalPREdit').modal('show');
-//            $('#btnUpdate').show();
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + EmployeeID + errormessage.responseText);
-//        }
-//    });
-//    return false;
-//}
+//get info of price into modal detail price
+function getDetailPriceByID(PriceID) {
+    $.ajax({
+        url: "/SettingPrice/PriceDetails/" + PriceID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#PriceIDed').val(result.PriceID);
+            $('#TypeOfvehicled').val(result.TypeOfvehicle);
+            $('#DayPriced').val(result.DayPrice);
+            $('#MonthPriced').val(result.MonthPrice);
+            $('#FirstBlockd').val(result.FirstBlock);
+            $('#NextBlockd').val(result.NextBlock);
+
+            $('#myModalPREdit').modal('show');
+            $('#btnUpdate').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + EmployeeID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+
+//
 function clear() {
     $('#dvFirstBlock').hide();
     $('#dvPercent').hide();
