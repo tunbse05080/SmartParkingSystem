@@ -96,15 +96,29 @@ function UpdateDailyPrice() {
     //if (res == false) {
     //    return false;
     //}
+    var dayPrice = $('#DayPriceDailyTK').val();
+    dayPrice = dayPrice.replace(" đ","");
+    var empPRObj = {
+        PriceID: $('#PriceIDDailyTK').val(),
+        TypeOfvehicle: $('#cbTypeOfvehicleSP').val(),
+        DayPrice: dayPrice,
+        MonthPrice: $('#MonthlyPriceDailyTK').val(),
+        FirstBlock: $('#FBlockPriceDailyTK').val(),
+        NextBlock: $('#NBlockPriceDailyTK').val(),
+        ParkingPlaceID: $('#cbNameParkingPlaceSP').val(),
+        TimeOfFirstBlock: $('#TimeFBlockPriceDailyTK').val(),
+        TimeOfNextBlock: $('#TimeNBlockPriceDailyTK').val(),
+        TimeOfApply: $('#TimeOfApplyDailyTK').val(),
+    }
     $.ajax({
-        url: "/SettingPrice/UpdateSP",
+        url: "/SettingPrice/CheckUpdate",
         data: JSON.stringify(empPRObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
             loadDataPrice(true);
-            $('#myModalSettingPrice').modal('hide');
+            $('#myModalSettingDailyPrice').modal('hide');
 
         },
         error: function (errormessage) {
@@ -135,22 +149,14 @@ function GetPriceMonthlySP() {
 //get price of daily SettingPrice base on typeOfVehicle,ParkingPlace
 function GetPriceDaily() {
     var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
-    var ParkingPlaceID = $('#cbNameParkingPlaceSP').val();
     $.ajax({
-        url: "/SettingPrice/GetPriceDaily",
+        url: "/SettingPrice/GetPriceMonthly",
         type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle, ParkingPlaceID: ParkingPlaceID}),
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#PriceIDDailyTK').val(result.PriceID);
-            $('#DayPriceDailyTK').val(result.DayPrice + "đ");
             $('#MonthlyPriceDailyTK').val(result.MonthPrice);
-            $('#FBlockPriceDailyTK').val(result.FirstBlock);
-            $('#NBlockPriceDailyTK').val(result.NextBlock);
-            $('#TimeFBlockPriceDailyTK').val(result.TimeOfFirstBlock);
-            $('#TimeNBlockPriceDailyTK').val(result.TimeOfNextBlock);
-            $('#TimeOfApply').val(Getformatdate(result.TimeOfApply));
             //$('#PriceSP').val(new Intl.NumberFormat().format(result.DayPrice) + " VNĐ");
             $('#myModalSettingDailyPrice').modal("show");
         },

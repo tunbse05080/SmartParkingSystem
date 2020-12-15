@@ -43,6 +43,47 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        //Check Update for DailyPrice
+        public JsonResult CheckUpdate(Price price)
+        {
+            var result = (from p in db.Prices
+                          where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
+                          select new { p.PriceID, p.MonthPrice,p.FirstBlock,p.NextBlock,p.TimeOfFirstBlock,p.TimeOfNextBlock}).FirstOrDefault();
+            if (price.PriceID == 0 || result == null)
+            {
+                price.PriceID = 0;
+                price.MonthPrice = 1;
+                price.FirstBlock = 1;
+                price.NextBlock = 1;
+                price.TimeOfNextBlock = 1;
+                price.TimeOfFirstBlock = 1;
+                Create(price);
+            }
+            else
+            {
+                price.PriceID = result.PriceID;
+                price.MonthPrice = result.MonthPrice;
+                price.FirstBlock = result.FirstBlock;
+                price.NextBlock = result.NextBlock;
+                price.TimeOfNextBlock = result.TimeOfNextBlock;
+                price.TimeOfFirstBlock = result.TimeOfFirstBlock;
+                Update(price);
+            }
+            return Json(price, JsonRequestBehavior.AllowGet);
+        }
+
+        //create
+        public JsonResult Create(Price price)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Prices.Add(price);
+                db.SaveChanges();
+            }
+
+            return Json(price, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult Update(Price price)
         {
             //var data = (from p in db.Prices
@@ -92,12 +133,12 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //get price of daily ticket base on typeOfVehicle
-        public JsonResult GetPriceDaily(int typeOfVehicle, int ParkingPlaceID)
+        //get price of Monthly ticket base on typeOfVehicle
+        public JsonResult GetPriceMonthly(int typeOfVehicle)
         {
             var result = (from p in db.Prices
-                          where p.TypeOfvehicle == typeOfVehicle && p.ParkingPlaceID == ParkingPlaceID
-                          select new {p.PriceID, p.DayPrice,p.MonthPrice, p.NextBlock, p.FirstBlock, p.TimeOfFirstBlock, p.TimeOfNextBlock, p.TimeOfApply}).FirstOrDefault();
+                          where p.TypeOfvehicle == typeOfVehicle
+                          select new {p.MonthPrice}).FirstOrDefault();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
