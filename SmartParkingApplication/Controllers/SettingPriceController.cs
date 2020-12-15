@@ -22,11 +22,12 @@ namespace SmartParkingApplication.Controllers
         public JsonResult LoadDataPrice(int ParkingPlaceID)
         {
             List<Object> list = new List<Object>();
-            var result = (from s in db.Prices
-                          where s.ParkingPlaceID == ParkingPlaceID
-                          select new { s.PriceID, s.TypeOfvehicle, s.DayPrice, s.MonthPrice, s.FirstBlock, s.NextBlock }).ToList();
+            var result = (from p in db.Prices
+                          where p.ParkingPlaceID == ParkingPlaceID
+                          select new { p.PriceID, p.TypeOfvehicle, p.DayPrice, p.MonthPrice, p.FirstBlock, p.NextBlock , p.TimeOfApply }).ToList();
             foreach (var item in result)
             {
+                var TimeApply = item.TimeOfApply.Value.ToString("dd/MM/yyyy");
                 var typeOfVehicle = "";
                 switch (item.TypeOfvehicle)
                 {
@@ -37,7 +38,7 @@ namespace SmartParkingApplication.Controllers
                         typeOfVehicle = "Ô tô";
                         break;
                 }
-                list.Add(new { item.PriceID, typeOfVehicle, item.DayPrice, item.MonthPrice, item.FirstBlock, item.NextBlock });
+                list.Add(new { item.PriceID, typeOfVehicle, item.DayPrice, item.MonthPrice, item.FirstBlock, item.NextBlock, TimeApply});
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }

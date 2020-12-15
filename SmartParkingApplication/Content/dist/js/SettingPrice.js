@@ -25,6 +25,7 @@ function loadDataPrice() {
                 html += '<td>' + item.DayPrice + '</td>';
                 html += '<td>' + item.FirstBlock + '</td>';
                 html += '<td>' + item.NextBlock + '</td>';
+                html += '<td>' + item.TimeApply + '</td>';
                 html += '<td><button class="btn btn-primary" onclick="return getDetailPriceByID(' + item.PriceID + ')" >Chi tiết</button></td>';
                 html += '</tr>';
             });
@@ -174,30 +175,6 @@ function GetPriceBlockSP() {
         }
     });
 }
-
-//function getByTypeOfVehicle(PriceID) {
-//    $.ajax({
-//        url: "/SettingPrice/Details/" + PriceID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#Idd').val(result.PriceID);
-//            $('#TypeOfvehicled').val(result.TypeOfvehicle);
-//            $('#DayPriced').val(result.DayPrice);
-//            $('#MonthPriced').val(result.MonthPrice);
-//            $('#DateOfBirthd').val(result.FirstBlock);
-//            $('#FirstBlockd').val(result.NextBlock);
-//            $('#myModalSettingPrice').modal('show');
-//            $('#btnUpdate').show();
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + PriceID + errormessage.responseText);
-//        }
-//    });
-//    return false;
-//}
-
 
 //reload modal setting price
 function reloadModalPR() {

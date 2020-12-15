@@ -254,7 +254,6 @@ namespace SmartParkingApplication.Controllers
                          select new { p.MonthPrice }).FirstOrDefault();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
     }
 
 }
