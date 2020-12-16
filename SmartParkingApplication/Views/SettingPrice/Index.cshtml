@@ -44,7 +44,6 @@
                                     <thead>
                                         <tr class="bg-green">
                                             <th>Loại xe</th>
-                                            <th>Giá vé tháng(vnd)</th>
                                             <th>Giá vé ngày</th>
                                             <th>Giá vé block - đầu(vnd)</th>
                                             <th>Giá vé block - tiếp(vnd)</th>
@@ -131,56 +130,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group" hidden>
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Giá vé tháng
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="MonthlyPriceDailyTK" placeholder="Giá tiền" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" hidden>
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Giá tiền block đầu
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="FBlockPriceDailyTK" placeholder="Giá tiền" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" hidden>
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Giá tiền block tiếp theo
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="NBlockPriceDailyTK" placeholder="Giá tiền" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" hidden>
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Thời gian block đầu
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="TimeFBlockPriceDailyTK" placeholder="Thời gian" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" hidden>
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Thời gian block tiếp
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="TimeNBlockPriceDailyTK" placeholder="Thời gian" />
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
@@ -209,6 +158,17 @@
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-body">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
+                                                        Bãi đỗ
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <select class="form-control" onchange="loadModalPrice()" id="cbNameParkingPlaceMonthly">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
@@ -284,26 +244,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group" hidden>
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Giá tiền
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="DayPriceBlockTK" placeholder="Giá tiền" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" hidden>
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        Giá vé tháng
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="MonthlyPriceBlockTK" placeholder="Giá tiền" />
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
@@ -375,10 +315,6 @@
                                             <div class="form-group">
                                                 <label for="TypeOfVehiclePrice">Loại xe</label>
                                                 <input type="text" class="form-control" id="TypeOfVehicleDetailP" placeholder="Loại xe" disabled />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="MonthlyPriceDetail">Giá vé tháng</label>
-                                                <input type="text" class="form-control" id="MonthlyPriceDetail" placeholder="Giá vé tháng" disabled />
                                             </div>
                                             <div class="form-group">
                                                 <label for="DailyPriceDetail">Giá vé ngày</label>

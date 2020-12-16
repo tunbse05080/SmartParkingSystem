@@ -38,7 +38,6 @@ function loadDataPrice() {
             $.each(result, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.typeOfVehicle + '</td>';
-                html += '<td>' + item.MonthPrice + '</td>';
                 html += '<td>' + item.DayPrice + '</td>';
                 html += '<td>' + item.FirstBlock + '</td>';
                 html += '<td>' + item.NextBlock + '</td>';
@@ -92,12 +91,11 @@ function UpdateDailyPrice() {
     var empPRObj = {
         TypeOfvehicle: $('#cbTypeOfvehicleSP').val(),
         DayPrice: dayPrice,
-        MonthPrice: $('#MonthlyPriceDailyTK').val(),
-        FirstBlock: $('#FBlockPriceDailyTK').val(),
-        NextBlock: $('#NBlockPriceDailyTK').val(),
+        FirstBlock: 0,
+        NextBlock: 0,
         ParkingPlaceID: $('#cbNameParkingPlaceSP').val(),
-        TimeOfFirstBlock: $('#TimeFBlockPriceDailyTK').val(),
-        TimeOfNextBlock: $('#TimeNBlockPriceDailyTK').val(),
+        TimeOfFirstBlock: 0,
+        TimeOfNextBlock: 0,
         TimeOfApply: $('#TimeOfApplyDailyTK').val(),
     }
     $.ajax({
@@ -153,8 +151,7 @@ function UpdateBlockPrice() {
     //}
     var empPRObj = {
         TypeOfvehicle: $('#cbTypeOfvehicleBlock').val(),
-        DayPrice: $('#DayPriceBlockTK').val(),
-        MonthPrice: $('#MonthlyPriceBlockTK').val(),
+        DayPrice: 0,
         FirstBlock: $('#FBlockPriceBlockTK').val(),
         NextBlock: $('#NBlockPriceBlockTK').val(),
         ParkingPlaceID: $('#cbNameParkingPlaceBlock').val(),
@@ -180,54 +177,16 @@ function UpdateBlockPrice() {
     });
 }
 
-//get price monthly in modal daily price
-function GetPriceMonthlyDaily() {
-    var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
-    $.ajax({
-        url: "/SettingPrice/GetPriceMonthly",
-        type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#MonthlyPriceDailyTK').val(result.MonthPrice);
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-//get price monthly in modal block price
-function GetPriceMonthlyBlock() {
-    var typeOfVehicle = $('#cbTypeOfvehicleBlock').val();
-    $.ajax({
-        url: "/SettingPrice/GetPriceMonthly",
-        type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#MonthlyPriceBlockTK').val(result.MonthPrice);
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
 //load modal price follow type ticket
 function loadModalPrice() {
     if ($('#cbTypeOfTicketSP').val() == 0) {
         $('#myModalTypeTicket').modal("hide");
-        GetPriceMonthlyDaily();
         $('#myModalSettingDailyPrice').modal("show");
     } else if ($('#cbTypeOfTicketSP').val() == 1) {
         $('#myModalTypeTicket').modal("hide");
         $('#myModalSettingMonthlyPrice').modal("show");
     } else {
         $('#myModalTypeTicket').modal("hide");
-        GetPriceMonthlyBlock();
         $('#myModalSettingBlockPrice').modal("show");
     }
 }
@@ -241,8 +200,7 @@ function getDetailPriceByID(PriceID) {
         dataType: "json",
         success: function (result) {
             $('#TypeOfVehicleDetailP').val(result.typeOfVehicle);
-            $('#MonthlyPriceDetail').val(result.DayPrice + " VNĐ");
-            $('#DailyPriceDetail').val(result.MonthPrice + " VNĐ");
+            $('#DailyPriceDetail').val(result.DayPrice + " VNĐ");
             $('#FBlockPriceDetail').val(result.FirstBlock + " VNĐ");
             $('#NBlockPriceDetail').val(result.NextBlock + " VNĐ");
             $('#TimeOfFirstBlock').val(result.TimeOfFirstBlock + " giờ");

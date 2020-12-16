@@ -17,7 +17,7 @@ namespace SmartParkingApplication.Controllers
         }
         public JsonResult LoadDataPrice(int page, String name, int pageSize = 5  )
         {
-            var set = from s in db.Prices select new { s.PriceID,s.TypeOfvehicle,s.DayPrice,s.MonthPrice,s.FirstBlock,s.NextBlock};
+            var set = from s in db.Prices select new { s.PriceID,s.TypeOfvehicle,s.DayPrice,s.FirstBlock,s.NextBlock};
            
 
             List<Object> list = new List<object>();
@@ -25,7 +25,7 @@ namespace SmartParkingApplication.Controllers
             {
                
                
-                var tr = new { PriceID = item.PriceID, TypeOfvehicle = item.TypeOfvehicle, MonthPrice = item.MonthPrice, FirstBlock = item.FirstBlock,NextBlock = item.NextBlock };
+                var tr = new { PriceID = item.PriceID, TypeOfvehicle = item.TypeOfvehicle, FirstBlock = item.FirstBlock,NextBlock = item.NextBlock };
                 list.Add(tr);
             }
 

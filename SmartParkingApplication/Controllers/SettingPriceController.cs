@@ -24,7 +24,7 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<Object>();
             var result = (from p in db.Prices
                           where p.ParkingPlaceID == ParkingPlaceID
-                          select new { p.PriceID, p.TypeOfvehicle, p.DayPrice, p.MonthPrice, p.FirstBlock, p.NextBlock , p.TimeOfApply }).ToList();
+                          select new { p.PriceID, p.TypeOfvehicle, p.DayPrice, p.FirstBlock, p.NextBlock , p.TimeOfApply }).ToList();
             foreach (var item in result)
             {
                 var TimeApply = item.TimeOfApply.Value.ToString("dd/MM/yyyy");
@@ -38,7 +38,7 @@ namespace SmartParkingApplication.Controllers
                         typeOfVehicle = "Ô tô";
                         break;
                 }
-                list.Add(new { item.PriceID, typeOfVehicle, item.DayPrice, item.MonthPrice, item.FirstBlock, item.NextBlock, TimeApply});
+                list.Add(new { item.PriceID, typeOfVehicle, item.DayPrice, item.FirstBlock, item.NextBlock, TimeApply});
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -48,7 +48,7 @@ namespace SmartParkingApplication.Controllers
         {
             var result = (from p in db.Prices
                           where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
-                          select new { p.PriceID, p.MonthPrice,p.FirstBlock,p.NextBlock,p.TimeOfFirstBlock,p.TimeOfNextBlock}).FirstOrDefault();
+                          select new { p.PriceID }).FirstOrDefault();
             if (price.PriceID == 0 && result == null)
             {
                 price.FirstBlock = 0;
@@ -137,7 +137,6 @@ namespace SmartParkingApplication.Controllers
             {
                 typeOfVehicle,
                 price.DayPrice,
-                price.MonthPrice,
                 price.FirstBlock,
                 price.NextBlock,
                 price.TimeOfFirstBlock,
@@ -148,13 +147,13 @@ namespace SmartParkingApplication.Controllers
         }
 
         //get price of Monthly ticket base on typeOfVehicle
-        public JsonResult GetPriceMonthly(int typeOfVehicle)
-        {
-            var result = (from p in db.Prices
-                          where p.TypeOfvehicle == typeOfVehicle
-                          select new {p.MonthPrice}).FirstOrDefault();
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GetPriceMonthly(int typeOfVehicle)
+        //{
+        //    var result = (from p in db.Prices
+        //                  where p.TypeOfvehicle == typeOfVehicle
+        //                  select new {p.MonthPrice}).FirstOrDefault();
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
     }
 }
