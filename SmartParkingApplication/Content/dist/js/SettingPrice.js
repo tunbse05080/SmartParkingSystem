@@ -82,7 +82,7 @@ function loadDataPrice() {
 
 function CheckTypeOfTK() {
     if ($('#cbTypeOfTicketSP').val() == 0) {
-        
+
     } else if ($('#cbTypeOfTicketSP').val() == 1) {
 
     } else {
@@ -90,14 +90,14 @@ function CheckTypeOfTK() {
     }
 }
 
-
+//Update daily price
 function UpdateDailyPrice() {
     //var res = validateUpdatePP();
     //if (res == false) {
     //    return false;
     //}
     var dayPrice = $('#DayPriceDailyTK').val();
-    dayPrice = dayPrice.replace(" đ","");
+    dayPrice = dayPrice.replace(" đ", "");
     var empPRObj = {
         TypeOfvehicle: $('#cbTypeOfvehicleSP').val(),
         DayPrice: dayPrice,
@@ -110,7 +110,7 @@ function UpdateDailyPrice() {
         TimeOfApply: $('#TimeOfApplyDailyTK').val(),
     }
     $.ajax({
-        url: "/SettingPrice/CheckUpdate",
+        url: "/SettingPrice/CheckUpdateDailyPrice",
         data: JSON.stringify(empPRObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
@@ -118,7 +118,41 @@ function UpdateDailyPrice() {
         success: function (result) {
             loadDataPrice(true);
             $('#myModalSettingDailyPrice').modal('hide');
+            clear();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
 
+//Update block price
+function UpdateBlockPrice() {
+    //var res = validateUpdatePP();
+    //if (res == false) {
+    //    return false;
+    //}
+    var empPRObj = {
+        TypeOfvehicle: $('#cbTypeOfvehicleBlock').val(),
+        DayPrice: $('#DayPriceBlockTK').val(),
+        MonthPrice: $('#MonthlyPriceBlockTK').val(),
+        FirstBlock: $('#FBlockPriceBlockTK').val(),
+        NextBlock: $('#NBlockPriceBlockTK').val(),
+        ParkingPlaceID: $('#cbNameParkingPlaceBlock').val(),
+        TimeOfFirstBlock: $('#TimeFBlockPriceBlockTK').val(),
+        TimeOfNextBlock: $('#TimeNBlockPriceBlockTK').val(),
+        TimeOfApply: $('#TimeOfApplyBlockTK').val(),
+    }
+    $.ajax({
+        url: "/SettingPrice/CheckUpdateBlockPrice",
+        data: JSON.stringify(empPRObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            loadDataPrice(true);
+            $('#myModalSettingBlockPrice').modal('hide');
+            clear();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -127,26 +161,26 @@ function UpdateDailyPrice() {
 }
 
 //get price of monthly SettingPrice base on typeOfVehicle
-function GetPriceMonthlySP() {
-    var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
-    $.ajax({
-        url: "/ManageTicket/GetPriceMonthly",
-        type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#PriceSP').val(new Intl.NumberFormat().format(result.MonthPrice) + " VNĐ");
-            $("#myModalSettingPrice").modal("show");
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
+//function GetPriceMonthlySP() {
+//    var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
+//    $.ajax({
+//        url: "/ManageTicket/GetPriceMonthly",
+//        type: "POST",
+//        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#PriceSP').val(new Intl.NumberFormat().format(result.MonthPrice) + " VNĐ");
+//            $("#myModalSettingPrice").modal("show");
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
 
-//get price of daily SettingPrice base on typeOfVehicle,ParkingPlace
-function GetPriceDaily() {
+//get price monthly in modal daily price
+function GetPriceMonthly() {
     var typeOfVehicle = $('#cbTypeOfvehicleSP').val();
     $.ajax({
         url: "/SettingPrice/GetPriceMonthly",
@@ -156,8 +190,30 @@ function GetPriceDaily() {
         dataType: "json",
         success: function (result) {
             $('#MonthlyPriceDailyTK').val(result.MonthPrice);
+            //$('#MonthlyPriceMonthlyTK').val(result.MonthPrice);
+            $('#MonthlyPriceBlockTK').val(result.MonthPrice);
             //$('#PriceSP').val(new Intl.NumberFormat().format(result.DayPrice) + " VNĐ");
-            $('#myModalSettingDailyPrice').modal("show");
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//get price monthly in modal block price
+function GetPriceMonthlyBlock() {
+    var typeOfVehicle = $('#cbTypeOfvehicleBlock').val();
+    $.ajax({
+        url: "/SettingPrice/GetPriceMonthly",
+        type: "POST",
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#MonthlyPriceDailyTK').val(result.MonthPrice);
+            //$('#MonthlyPriceMonthlyTK').val(result.MonthPrice);
+            $('#MonthlyPriceBlockTK').val(result.MonthPrice);
+            //$('#PriceSP').val(new Intl.NumberFormat().format(result.DayPrice) + " VNĐ");
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -190,13 +246,15 @@ function GetPriceBlockSP() {
 function loadModalPrice() {
     if ($('#cbTypeOfTicketSP').val() == 0) {
         $('#myModalTypeTicket').modal("hide");
-        GetPriceDaily();
-
+        GetPriceMonthly();
+        $('#myModalSettingDailyPrice').modal("show");
     } else if ($('#cbTypeOfTicketSP').val() == 1) {
         $('#myModalTypeTicket').modal("hide");
+        GetPriceMonthly();
         $('#myModalSettingMonthlyPrice').modal("show");
     } else {
         $('#myModalTypeTicket').modal("hide");
+        GetPriceMonthlyBlock();
         $('#myModalSettingBlockPrice').modal("show");
     }
 }
@@ -241,11 +299,11 @@ function getDetailPriceByID(PriceID) {
         dataType: "json",
         success: function (result) {
             $('#TypeOfVehicleDetailP').val(result.typeOfVehicle);
-            $('#MonthlyPriceDetail').val(result.DayPrice +" VNĐ");
-            $('#DailyPriceDetail').val(result.MonthPrice +" VNĐ");
-            $('#FBlockPriceDetail').val(result.FirstBlock +" VNĐ");
-            $('#NBlockPriceDetail').val(result.NextBlock +" VNĐ");
-            $('#TimeOfFirstBlock').val(result.TimeOfFirstBlock +" giờ");
+            $('#MonthlyPriceDetail').val(result.DayPrice + " VNĐ");
+            $('#DailyPriceDetail').val(result.MonthPrice + " VNĐ");
+            $('#FBlockPriceDetail').val(result.FirstBlock + " VNĐ");
+            $('#NBlockPriceDetail').val(result.NextBlock + " VNĐ");
+            $('#TimeOfFirstBlock').val(result.TimeOfFirstBlock + " giờ");
             $('#TimeOfNextBlock').val(result.TimeOfNextBlock + " giờ");
             $('#TimeApply').val(result.TimeOfApply);
 
@@ -259,10 +317,11 @@ function getDetailPriceByID(PriceID) {
 
 //
 function clear() {
-    $('#dvFirstBlock').hide();
-    $('#dvPercent').hide();
-    $('#dvNextBlock').hide();
-    $('#dvTimeOfBlock').hide();
-
+    $('#DayPriceDailyTK').val("");
+    $('#DayPriceBlockTK').val("");
+    $('#FBlockPriceBlockTK').val("");
+    $('#NBlockPriceBlockTK').val("");
+    $('#TimeFBlockPriceBlockTK').val("");
+    $('#TimeNBlockPriceBlockTK').val("");
     $('#cbTypeOfTicketSP').val("");
 }

@@ -124,16 +124,6 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
-                                                        ID
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="PriceIDDailyTK" placeholder="ID" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Giá tiền
                                                     </div>
                                                     <div class="col-md-7">
@@ -141,7 +131,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Giá vé tháng
@@ -151,7 +141,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Giá tiền block đầu
@@ -161,7 +151,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Giá tiền block tiếp theo
@@ -171,7 +161,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Thời gian block đầu
@@ -181,7 +171,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Thời gian block tiếp
@@ -203,7 +193,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" id="btnSettingPrice" onclick="return UpdateDailyPrice();">Thiết lập</button>
+                                            <button type="button" class="btn btn-primary" id="btnSettingDailyPrice" onclick="return UpdateDailyPrice();">Thiết lập</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
@@ -330,7 +320,7 @@
                                                         Bãi đỗ
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <select class="form-control" onchange="reloadModalPR()" id="cbNameParkingPlaceSP">
+                                                        <select class="form-control" onchange="loadModalPrice()" id="cbNameParkingPlaceBlock">
                                                         </select>
                                                     </div>
                                                 </div>
@@ -341,30 +331,30 @@
                                                         Loại xe
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <select class="form-control" id="cbTypeOfvehicleSP" onchange="reloadModalPR()">
+                                                        <select class="form-control" id="cbTypeOfvehicleBlock" onchange="loadModalPrice()">
                                                             <option value="0">Xe máy</option>
                                                             <option value="1">Ô tô</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Giá tiền
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="DayPriceDailyTK" placeholder="Giá tiền" />
+                                                        <input type="text" class="form-control" id="DayPriceBlockTK" placeholder="Giá tiền" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <div class="row">
                                                     <div class="col-md-5" style="padding-left:40px;margin-top:5px">
                                                         Giá vé tháng
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="MonthlyPriceDailyTK" placeholder="Giá tiền" />
+                                                        <input type="text" class="form-control" id="MonthlyPriceBlockTK" placeholder="Giá tiền" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -374,7 +364,7 @@
                                                         Giá tiền block đầu
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="FBlockPriceDailyTK" placeholder="Giá tiền" />
+                                                        <input type="text" class="form-control" id="FBlockPriceBlockTK" placeholder="Giá tiền" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -384,7 +374,7 @@
                                                         Giá tiền block tiếp theo
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="NBlockPriceDailyTK" placeholder="Giá tiền" />
+                                                        <input type="text" class="form-control" id="NBlockPriceBlockTK" placeholder="Giá tiền" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -394,7 +384,7 @@
                                                         Thời gian block đầu
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="TimeFBlockPriceDailyTK" placeholder="Thời gian" />
+                                                        <input type="text" class="form-control" id="TimeFBlockPriceBlockTK" placeholder="Thời gian" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -404,16 +394,23 @@
                                                         Thời gian block tiếp
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" id="TimeNBlockPriceDailyTK" placeholder="Thời gian" />
+                                                        <input type="text" class="form-control" id="TimeNBlockPriceBlockTK" placeholder="Thời gian" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="TimeOfApply" placeholder="Thời gian" />
+                                                <div class="row">
+                                                    <div class="col-md-5" style="padding-left:40px;margin-top:5px">
+                                                        Thời gian áp dụng
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="date" class="form-control" id="TimeOfApplyBlockTK" onchange="loadModalPrice()" placeholder="Thời gian" />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" id="btnSettingPrice" onclick="return UpdateDailyPrice();">Thiết lập</button>
+                                            <button type="button" class="btn btn-primary" id="btnSettingBlockPrice" onclick="return UpdateBlockPrice();">Thiết lập</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>

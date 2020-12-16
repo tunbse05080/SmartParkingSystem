@@ -44,7 +44,7 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Check Update for DailyPrice
-        public JsonResult CheckUpdate(Price price)
+        public JsonResult CheckUpdateDailyPrice(Price price)
         {
             var result = (from p in db.Prices
                           where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
@@ -60,15 +60,35 @@ namespace SmartParkingApplication.Controllers
             else
             {
                 price.PriceID = result.PriceID;
-                price.MonthPrice = result.MonthPrice;
-                price.FirstBlock = result.FirstBlock;
-                price.NextBlock = result.NextBlock;
-                price.TimeOfNextBlock = result.TimeOfNextBlock;
-                price.TimeOfFirstBlock = result.TimeOfFirstBlock;
+                price.FirstBlock = 0;
+                price.NextBlock = 0;
+                price.TimeOfNextBlock = 0;
+                price.TimeOfFirstBlock = 0;
                 Update(price);
             }
             return Json(price, JsonRequestBehavior.AllowGet);
         }
+
+        //Check Update for BlockPrice
+        public JsonResult CheckUpdateBlockPrice(Price price)
+        {
+            var result = (from p in db.Prices
+                          where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
+                          select new { p.PriceID }).FirstOrDefault();
+            if (price.PriceID == 0 && result == null)
+            {
+                price.DayPrice = 0;
+                Create(price);
+            }
+            else
+            {
+                price.PriceID = result.PriceID;
+                price.DayPrice = 0;
+                Update(price);
+            }
+            return Json(price, JsonRequestBehavior.AllowGet);
+        }
+
 
         //create
         public JsonResult Create(Price price)
