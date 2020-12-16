@@ -99,7 +99,6 @@ function UpdateDailyPrice() {
     var dayPrice = $('#DayPriceDailyTK').val();
     dayPrice = dayPrice.replace(" đ","");
     var empPRObj = {
-        PriceID: $('#PriceIDDailyTK').val(),
         TypeOfvehicle: $('#cbTypeOfvehicleSP').val(),
         DayPrice: dayPrice,
         MonthPrice: $('#MonthlyPriceDailyTK').val(),

@@ -49,14 +49,12 @@ namespace SmartParkingApplication.Controllers
             var result = (from p in db.Prices
                           where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
                           select new { p.PriceID, p.MonthPrice,p.FirstBlock,p.NextBlock,p.TimeOfFirstBlock,p.TimeOfNextBlock}).FirstOrDefault();
-            if (price.PriceID == 0 || result == null)
+            if (price.PriceID == 0 && result == null)
             {
-                price.PriceID = 0;
-                price.MonthPrice = 1;
-                price.FirstBlock = 1;
-                price.NextBlock = 1;
-                price.TimeOfNextBlock = 1;
-                price.TimeOfFirstBlock = 1;
+                price.FirstBlock = 0;
+                price.NextBlock = 0;
+                price.TimeOfNextBlock = 0;
+                price.TimeOfFirstBlock = 0;
                 Create(price);
             }
             else
@@ -80,23 +78,12 @@ namespace SmartParkingApplication.Controllers
                 db.Prices.Add(price);
                 db.SaveChanges();
             }
-
             return Json(price, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Update(Price price)
         {
-            //var data = (from p in db.Prices
-            //                  where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle
-            //                  select new { p.PriceID, p.NextBlock, p.FirstBlock, p.MonthPrice, p.TypeOfvehicle, p.ParkingPlaceID, price.DayPrice }).Single();
-            //Price priceUpdate = new Price { 
-            //        PriceID = data.PriceID, 
-            //        TypeOfvehicle = data.TypeOfvehicle, 
-            //        DayPrice = data.DayPrice, 
-            //        MonthPrice = data.MonthPrice, 
-            //        FirstBlock = data.FirstBlock, 
-            //        NextBlock = data.NextBlock, 
-            //        ParkingPlaceID = data.ParkingPlaceID };
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
                 db.Entry(price).State = EntityState.Modified;
