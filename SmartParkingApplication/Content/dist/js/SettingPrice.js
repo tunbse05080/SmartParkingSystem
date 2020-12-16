@@ -58,6 +58,45 @@ function loadDataPrice() {
     });
 }
 
+//load data price monthly from table Price
+function loadDataPriceMonthly() {
+    var ParkingPlaceID = $('#cbNameParkingPlaceD').val();
+    if (ParkingPlaceID) {
+    } else {
+        ParkingPlaceID = 1;
+    }
+    $.ajax({
+        url: "/SettingPrice/LoadDataPrice",
+        type: "POST",
+        data: JSON.stringify({ ParkingPlaceID: ParkingPlaceID }),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            $.each(result, function (key, item) {
+                html += '<tr>';
+                html += '<td>' + item.typeOfVehicle + '</td>';
+                html += '<td>' + item.DayPrice + '</td>';
+                html += '<td>' + item.FirstBlock + '</td>';
+                html += '<td>' + item.NextBlock + '</td>';
+                html += '<td>' + item.TimeApply + '</td>';
+                html += '<td><button class="btn btn-primary" onclick="return getDetailPriceByID(' + item.PriceID + ')" >Chi tiết</button></td>';
+                html += '</tr>';
+            });
+            $('#tbodypr').html(html);
+
+            $("#tbPrice").DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            }).buttons().container().appendTo('#tbPrice_wrapper .col-md-6:eq(0)');
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+
 //function ComboboxTypeOfvehicle() {
 //    $.ajax({
 //        url: "/SettingPrice/ComboboxTypeOfVehicle",
@@ -93,7 +132,7 @@ function UpdateDailyPrice() {
         DayPrice: dayPrice,
         FirstBlock: 0,
         NextBlock: 0,
-        ParkingPlaceID: $('#cbNameParkingPlaceSP').val(),
+        ParkingPlaceID: $('#cbNameParkingPlaceDaily').val(),
         TimeOfFirstBlock: 0,
         TimeOfNextBlock: 0,
         TimeOfApply: $('#TimeOfApplyDailyTK').val(),
@@ -122,12 +161,15 @@ function UpdateMonthlyPrice() {
     //if (res == false) {
     //    return false;
     //}
-    var TypeOfvehicle = $('#cbTypeOfvehicleMonthly').val();
-    var MonthPrice = $('#MonthlyPriceTK').val();
-    var TimeOfApply = $('#TimeOfApplyMonthlyTK').val();
+    var empPRObj = {
+        TypeOfvehicle: $('#cbTypeOfvehicleMonthly').val(),
+        MonthlyPrice: $('#MonthlyPriceTK').val(),
+        ParkingPlaceID: $('#cbNameParkingPlaceMonthly').val(),
+        TimeOfApplyMontlhyPrice: $('#TimeOfApplyMonthlyTK').val()
+    }
     $.ajax({
         url: "/SettingPrice/UpdateMonthlyPrice",
-        data: JSON.stringify({ TypeOfvehicle: TypeOfvehicle, MonthPrice: MonthPrice, TimeOfApply: TimeOfApply}),
+        data: JSON.stringify(empPRObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",

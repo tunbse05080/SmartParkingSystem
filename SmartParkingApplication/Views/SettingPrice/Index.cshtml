@@ -34,11 +34,20 @@
                         </div>
                         <!-- /.Ticket-header -->
                         <div class="card-body">
-                            <div>
-                                <strong style="font-size:x-large">Bãi đỗ</strong>
-                                <select class="form-control w-50" onchange="loadDataPrice()" id="cbNameParkingPlaceD">
-                                </select>
-                            </div><br />
+                            <div class="row" style="margin-bottom:20px">
+                                <strong style="font-size:x-large">Bãi đỗ:</strong>
+                                <div class="col-md-2">
+                                    <select class="form-control" onchange="loadDataPrice()" id="cbNameParkingPlaceD">
+                                    </select>
+                                </div>
+                                <strong style="font-size:x-large;margin-left:10px">Loại vé:</strong>
+                                <div class="col-md-3">
+                                    <select class="form-control w-75" id="cbTypeOfTicketLoad" onchange="loadDataPrice()">
+                                        <option value="0">Vé Ngày và block</option>
+                                        <option value="1">Vé tháng</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row invoice-info">
                                 <table id="tbPrice" class="table table-avatar">
                                     <thead>
@@ -52,6 +61,20 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tbodypr">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row invoice-info">
+                                <table id="tbPriceMonth" class="table table-avatar">
+                                    <thead>
+                                        <tr class="bg-green">
+                                            <th>Loại xe</th>
+                                            <th>Giá vé</th>
+                                            <th>Ngày áp dụng</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyprMonth">
                                     </tbody>
                                 </table>
                             </div>
@@ -102,7 +125,7 @@
                                                         Bãi đỗ
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <select class="form-control" onchange="loadModalPrice()" id="cbNameParkingPlaceSP">
+                                                        <select class="form-control" onchange="loadModalPrice()" id="cbNameParkingPlaceDaily">
                                                         </select>
                                                     </div>
                                                 </div>

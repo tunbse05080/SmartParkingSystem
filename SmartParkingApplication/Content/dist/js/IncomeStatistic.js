@@ -94,8 +94,10 @@ function ComboboxNameParking() {
             });
             $('#cbNameParkingPlace').html(html);
             $('#cbNameParkingPlaceD').html(html);
-            $('#cbNameParkingPlaceSP').html(html);
+            $('#cbNameParkingPlaceDaily').html(html);
             $('#cbNameParkingPlaceBlock').html(html);
+            $('#cbNameParkingPlaceMonthly').html(html);
+
 
 
         },
