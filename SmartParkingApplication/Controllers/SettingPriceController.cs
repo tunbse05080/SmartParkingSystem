@@ -89,13 +89,13 @@ namespace SmartParkingApplication.Controllers
             return Json(price, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateMonthlyPrice(List<string> price)
-        {
-            var result = from p in db.Prices
-                         where 
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //Update monthly price for all parkingplace 
+        //public JsonResult UpdateMonthlyPrice(int TypeOfvehicle, int MonthPrice, DateTime TimeOfApply)
+        //{
+        //    var result = from p in db.Prices
+        //                 where p.TypeOfvehicle == TypeOfvehicle && p.TimeOfApply
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         //create
         public JsonResult Create(Price price)

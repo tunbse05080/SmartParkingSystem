@@ -2112,6 +2112,9 @@
     <Compile Include="Models\MonthlyTicket.cs">
       <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MothlyPrice.cs">
+      <DependentUpon>SmartParking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MultipleTablesJoinClass.cs" />
     <Compile Include="Models\Notification.cs">
       <DependentUpon>SmartParking.tt</DependentUpon>

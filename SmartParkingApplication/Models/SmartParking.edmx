@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="CardID" />
@@ -30,6 +30,7 @@
           <Property Name="MonthlyIncomeStatementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MonthlyTicketID" Type="int" />
           <Property Name="TotalPrice" Type="int" />
+          <Property Name="PaymentDate" Type="date" />
         </EntityType>
         <EntityType Name="MonthlyTicket">
           <Key>
@@ -45,6 +46,16 @@
           <Property Name="RegisDate" Type="date" />
           <Property Name="ExpiryDate" Type="date" />
           <Property Name="CardID" Type="int" />
+        </EntityType>
+        <EntityType Name="MothlyPrice">
+          <Key>
+            <PropertyRef Name="MonthlyPriceID" />
+          </Key>
+          <Property Name="MonthlyPriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeOfvehicle" Type="int" />
+          <Property Name="MonthlyPrice" Type="int" />
+          <Property Name="ParkingPlaceID" Type="int" />
+          <Property Name="TimeOfApplyMontlhyPrice" Type="date" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -73,7 +84,6 @@
           <Property Name="PriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TypeOfvehicle" Type="int" />
           <Property Name="DayPrice" Type="int" />
-          <Property Name="MonthPrice" Type="int" />
           <Property Name="FirstBlock" Type="int" />
           <Property Name="NextBlock" Type="int" />
           <Property Name="ParkingPlaceID" Type="int" />
@@ -260,6 +270,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MothlyPrice_ParkingPlace">
+          <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+          <End Role="MothlyPrice" Type="Self.MothlyPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="MothlyPrice">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Price_ParkingPlace">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="Price" Type="Self.Price" Multiplicity="*" />
@@ -301,6 +323,7 @@
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyIncomeStatement" EntityType="Self.MonthlyIncomeStatement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyTicket" EntityType="Self.MonthlyTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MothlyPrice" EntityType="Self.MothlyPrice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ParkingPlace" EntityType="Self.ParkingPlace" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
@@ -346,6 +369,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="UserSchedule" EntitySet="UserSchedule" />
           </AssociationSet>
+          <AssociationSet Name="FK_MothlyPrice_ParkingPlace" Association="Self.FK_MothlyPrice_ParkingPlace">
+            <End Role="ParkingPlace" EntitySet="ParkingPlace" />
+            <End Role="MothlyPrice" EntitySet="MothlyPrice" />
+          </AssociationSet>
           <AssociationSet Name="FK_Price_ParkingPlace" Association="Self.FK_Price_ParkingPlace">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
             <End Role="Price" EntitySet="Price" />
@@ -359,7 +386,8 @@
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SmartParkingsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -391,6 +419,7 @@
           <Property Name="MonthlyIncomeStatementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MonthlyTicketID" Type="Int32" />
           <Property Name="TotalPrice" Type="Int32" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MonthlyTicket" Relationship="Self.FK__MonthlyIn__Month__4D94879B" FromRole="MonthlyIncomeStatement" ToRole="MonthlyTicket" />
         </EntityType>
         <EntityType Name="MonthlyTicket">
@@ -409,6 +438,17 @@
           <Property Name="CardID" Type="Int32" />
           <NavigationProperty Name="Card" Relationship="Self.FK__MonthlyTi__CardI__4E88ABD4" FromRole="MonthlyTicket" ToRole="Card" />
           <NavigationProperty Name="MonthlyIncomeStatements" Relationship="Self.FK__MonthlyIn__Month__4D94879B" FromRole="MonthlyTicket" ToRole="MonthlyIncomeStatement" />
+        </EntityType>
+        <EntityType Name="MothlyPrice">
+          <Key>
+            <PropertyRef Name="MonthlyPriceID" />
+          </Key>
+          <Property Name="MonthlyPriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeOfvehicle" Type="Int32" />
+          <Property Name="MonthlyPrice" Type="Int32" />
+          <Property Name="ParkingPlaceID" Type="Int32" />
+          <Property Name="TimeOfApplyMontlhyPrice" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK_MothlyPrice_ParkingPlace" FromRole="MothlyPrice" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -429,6 +469,7 @@
           <Property Name="NumberCarBlank" Type="Int32" />
           <Property Name="NumberMotoBikeBlank" Type="Int32" />
           <Property Name="StatusOfParkingPlace" Type="Int32" />
+          <NavigationProperty Name="MothlyPrices" Relationship="Self.FK_MothlyPrice_ParkingPlace" FromRole="ParkingPlace" ToRole="MothlyPrice" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="ParkingPlace" ToRole="Transaction" />
           <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="ParkingPlace" ToRole="User" />
           <NavigationProperty Name="Prices" Relationship="Self.FK_Price_ParkingPlace" FromRole="ParkingPlace" ToRole="Price" />
@@ -440,14 +481,13 @@
           <Property Name="PriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeOfvehicle" Type="Int32" />
           <Property Name="DayPrice" Type="Int32" />
-          <Property Name="MonthPrice" Type="Int32" />
           <Property Name="FirstBlock" Type="Int32" />
           <Property Name="NextBlock" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
-          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK_Price_ParkingPlace" FromRole="Price" ToRole="ParkingPlace" />
           <Property Name="TimeOfFirstBlock" Type="Int32" />
           <Property Name="TimeOfNextBlock" Type="Int32" />
           <Property Name="TimeOfApply" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ParkingPlace" Relationship="Self.FK_Price_ParkingPlace" FromRole="Price" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -491,13 +531,13 @@
           <Property Name="CardID" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
           <Property Name="TypeOfVerhicleTran" Type="Int32" />
+          <Property Name="UserIID" Type="Int32" />
+          <Property Name="UserOID" Type="Int32" />
           <NavigationProperty Name="Card" Relationship="Self.FK__Transacti__CardI__534D60F1" FromRole="Transaction" ToRole="Card" />
           <NavigationProperty Name="Images" Relationship="Self.FK__Image__Transacti__656C112C" FromRole="Transaction" ToRole="Image" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="Transaction" ToRole="ParkingPlace" />
-          <Property Name="UserIID" Type="Int32" />
-          <Property Name="UserOID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="SmartParkingsModel.FK_Transaction_UserI" FromRole="Transaction" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="SmartParkingsModel.FK_Transaction_UserO" FromRole="Transaction" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Transaction_UserI" FromRole="Transaction" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Transaction_UserO" FromRole="Transaction" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -520,9 +560,9 @@
           <Property Name="StatusOfWork" Type="Int32" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="User" ToRole="ParkingPlace" />
           <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_UserI" FromRole="User" ToRole="Transaction" />
+          <NavigationProperty Name="Transactions1" Relationship="Self.FK_Transaction_UserO" FromRole="User" ToRole="Transaction" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="User" ToRole="UserSchedule" />
-          <NavigationProperty Name="Transactions" Relationship="SmartParkingsModel.FK_Transaction_UserI" FromRole="User" ToRole="Transaction" />
-          <NavigationProperty Name="Transactions1" Relationship="SmartParkingsModel.FK_Transaction_UserO" FromRole="User" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -579,6 +619,18 @@
             </Principal>
             <Dependent Role="MonthlyIncomeStatement">
               <PropertyRef Name="MonthlyTicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MothlyPrice_ParkingPlace">
+          <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+          <End Role="MothlyPrice" Type="Self.MothlyPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="MothlyPrice">
+              <PropertyRef Name="ParkingPlaceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -642,6 +694,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Transaction_UserI">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="UserIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_UserO">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="UserOID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__UserSched__UserI__5812160E">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
@@ -659,6 +735,7 @@
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="MonthlyIncomeStatements" EntityType="Self.MonthlyIncomeStatement" />
           <EntitySet Name="MonthlyTickets" EntityType="Self.MonthlyTicket" />
+          <EntitySet Name="MothlyPrices" EntityType="Self.MothlyPrice" />
           <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="ParkingPlaces" EntityType="Self.ParkingPlace" />
           <EntitySet Name="Prices" EntityType="Self.Price" />
@@ -684,6 +761,10 @@
             <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
             <End Role="MonthlyIncomeStatement" EntitySet="MonthlyIncomeStatements" />
           </AssociationSet>
+          <AssociationSet Name="FK_MothlyPrice_ParkingPlace" Association="Self.FK_MothlyPrice_ParkingPlace">
+            <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+            <End Role="MothlyPrice" EntitySet="MothlyPrices" />
+          </AssociationSet>
           <AssociationSet Name="FK__Transacti__Parki__5441852A" Association="Self.FK__Transacti__Parki__5441852A">
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="Transaction" EntitySet="Transactions" />
@@ -704,43 +785,19 @@
             <End Role="Schedule" EntitySet="Schedules" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
           </AssociationSet>
+          <AssociationSet Name="FK_Transaction_UserI" Association="Self.FK_Transaction_UserI">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_UserO" Association="Self.FK_Transaction_UserO">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
           <AssociationSet Name="FK__UserSched__UserI__5812160E" Association="Self.FK__UserSched__UserI__5812160E">
             <End Role="User" EntitySet="Users" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
           </AssociationSet>
-          <AssociationSet Name="FK_Transaction_UserI" Association="SmartParkingsModel.FK_Transaction_UserI">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Transaction" EntitySet="Transactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Transaction_UserO" Association="SmartParkingsModel.FK_Transaction_UserO">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Transaction" EntitySet="Transactions" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Transaction_UserI">
-          <End Type="SmartParkingsModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="SmartParkingsModel.Transaction" Role="Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Transaction">
-              <PropertyRef Name="UserIID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Transaction_UserO">
-          <End Type="SmartParkingsModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="SmartParkingsModel.Transaction" Role="Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Transaction">
-              <PropertyRef Name="UserOID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -773,6 +830,7 @@
                 <ScalarProperty Name="MonthlyIncomeStatementID" ColumnName="MonthlyIncomeStatementID" />
                 <ScalarProperty Name="MonthlyTicketID" ColumnName="MonthlyTicketID" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -789,6 +847,17 @@
                 <ScalarProperty Name="RegisDate" ColumnName="RegisDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="CardID" ColumnName="CardID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MothlyPrices">
+            <EntityTypeMapping TypeName="SmartParkingsModel.MothlyPrice">
+              <MappingFragment StoreEntitySet="MothlyPrice">
+                <ScalarProperty Name="MonthlyPriceID" ColumnName="MonthlyPriceID" />
+                <ScalarProperty Name="TypeOfvehicle" ColumnName="TypeOfvehicle" />
+                <ScalarProperty Name="MonthlyPrice" ColumnName="MonthlyPrice" />
+                <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+                <ScalarProperty Name="TimeOfApplyMontlhyPrice" ColumnName="TimeOfApplyMontlhyPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -817,16 +886,15 @@
           <EntitySetMapping Name="Prices">
             <EntityTypeMapping TypeName="SmartParkingsModel.Price">
               <MappingFragment StoreEntitySet="Price">
-                <ScalarProperty Name="TimeOfApply" ColumnName="TimeOfApply" />
-                <ScalarProperty Name="TimeOfNextBlock" ColumnName="TimeOfNextBlock" />
-                <ScalarProperty Name="TimeOfFirstBlock" ColumnName="TimeOfFirstBlock" />
                 <ScalarProperty Name="PriceID" ColumnName="PriceID" />
                 <ScalarProperty Name="TypeOfvehicle" ColumnName="TypeOfvehicle" />
                 <ScalarProperty Name="DayPrice" ColumnName="DayPrice" />
-                <ScalarProperty Name="MonthPrice" ColumnName="MonthPrice" />
                 <ScalarProperty Name="FirstBlock" ColumnName="FirstBlock" />
                 <ScalarProperty Name="NextBlock" ColumnName="NextBlock" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
+                <ScalarProperty Name="TimeOfFirstBlock" ColumnName="TimeOfFirstBlock" />
+                <ScalarProperty Name="TimeOfNextBlock" ColumnName="TimeOfNextBlock" />
+                <ScalarProperty Name="TimeOfApply" ColumnName="TimeOfApply" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -863,8 +931,6 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="SmartParkingsModel.Transaction">
               <MappingFragment StoreEntitySet="Transaction">
-                <ScalarProperty Name="UserOID" ColumnName="UserOID" />
-                <ScalarProperty Name="UserIID" ColumnName="UserIID" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
                 <ScalarProperty Name="TimeOutv" ColumnName="TimeOutv" />
@@ -874,6 +940,8 @@
                 <ScalarProperty Name="CardID" ColumnName="CardID" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
                 <ScalarProperty Name="TypeOfVerhicleTran" ColumnName="TypeOfVerhicleTran" />
+                <ScalarProperty Name="UserIID" ColumnName="UserIID" />
+                <ScalarProperty Name="UserOID" ColumnName="UserOID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

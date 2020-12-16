@@ -29,6 +29,7 @@ namespace SmartParkingApplication.Models
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<MonthlyIncomeStatement> MonthlyIncomeStatements { get; set; }
         public virtual DbSet<MonthlyTicket> MonthlyTickets { get; set; }
+        public virtual DbSet<MothlyPrice> MothlyPrices { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<ParkingPlace> ParkingPlaces { get; set; }
         public virtual DbSet<Price> Prices { get; set; }

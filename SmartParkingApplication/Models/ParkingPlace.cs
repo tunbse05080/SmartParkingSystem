@@ -17,6 +17,7 @@ namespace SmartParkingApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ParkingPlace()
         {
+            this.MothlyPrices = new HashSet<MothlyPrice>();
             this.Transactions = new HashSet<Transaction>();
             this.Users = new HashSet<User>();
             this.Prices = new HashSet<Price>();
@@ -31,6 +32,8 @@ namespace SmartParkingApplication.Models
         public Nullable<int> NumberMotoBikeBlank { get; set; }
         public Nullable<int> StatusOfParkingPlace { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MothlyPrice> MothlyPrices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

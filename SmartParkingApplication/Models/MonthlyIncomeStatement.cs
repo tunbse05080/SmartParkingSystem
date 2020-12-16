@@ -17,6 +17,7 @@ namespace SmartParkingApplication.Models
         public int MonthlyIncomeStatementID { get; set; }
         public Nullable<int> MonthlyTicketID { get; set; }
         public Nullable<int> TotalPrice { get; set; }
+        public Nullable<System.DateTime> PaymentDate { get; set; }
     
         public virtual MonthlyTicket MonthlyTicket { get; set; }
     }

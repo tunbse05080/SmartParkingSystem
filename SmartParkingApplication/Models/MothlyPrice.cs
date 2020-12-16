@@ -12,17 +12,13 @@ namespace SmartParkingApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Price
+    public partial class MothlyPrice
     {
-        public int PriceID { get; set; }
+        public int MonthlyPriceID { get; set; }
         public Nullable<int> TypeOfvehicle { get; set; }
-        public Nullable<int> DayPrice { get; set; }
-        public Nullable<int> FirstBlock { get; set; }
-        public Nullable<int> NextBlock { get; set; }
+        public Nullable<int> MonthlyPrice { get; set; }
         public Nullable<int> ParkingPlaceID { get; set; }
-        public Nullable<int> TimeOfFirstBlock { get; set; }
-        public Nullable<int> TimeOfNextBlock { get; set; }
-        public Nullable<System.DateTime> TimeOfApply { get; set; }
+        public Nullable<System.DateTime> TimeOfApplyMontlhyPrice { get; set; }
     
         public virtual ParkingPlace ParkingPlace { get; set; }
     }

@@ -124,14 +124,12 @@ function UpdateMonthlyPrice() {
     //if (res == false) {
     //    return false;
     //}
-    var empPRObj = {
-        TypeOfvehicle: $('#cbTypeOfvehicleMonthly').val(),
-        MonthPrice: $('#MonthlyPriceTK').val(),
-        TimeOfApply: $('#TimeOfApplyMonthlyTK').val()
-    }
+    var TypeOfvehicle = $('#cbTypeOfvehicleMonthly').val();
+    var MonthPrice = $('#MonthlyPriceTK').val();
+    var TimeOfApply = $('#TimeOfApplyMonthlyTK').val();
     $.ajax({
         url: "/SettingPrice/UpdateMonthlyPrice",
-        data: JSON.stringify(empPRObj),
+        data: JSON.stringify({ TypeOfvehicle: TypeOfvehicle, MonthPrice: MonthPrice, TimeOfApply: TimeOfApply}),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -226,7 +224,6 @@ function loadModalPrice() {
         $('#myModalSettingDailyPrice').modal("show");
     } else if ($('#cbTypeOfTicketSP').val() == 1) {
         $('#myModalTypeTicket').modal("hide");
-        GetPriceMonthly();
         $('#myModalSettingMonthlyPrice').modal("show");
     } else {
         $('#myModalTypeTicket').modal("hide");
