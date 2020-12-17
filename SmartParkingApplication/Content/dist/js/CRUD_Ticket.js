@@ -180,7 +180,7 @@ function loadDataTicket() {
                         html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Dừng HĐ</button></td>';
                         break;
                     case "Hết hạn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketReRegister(' + item.MonthlyTicketID + ')" >Đăng ký lại HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketReRegister(' + item.MonthlyTicketID + ')" >Ký lại HĐ</button></td>';
                         break;
                 }
                 html += '</tr>';
@@ -377,6 +377,7 @@ function UpdateDropContractTicket() {
         Phone: $('#PhoneDC').val(),
         Email: $('#EmailDC').val(),
         TypeOfVehicle: $('#TypeOfVehicleDC').val(),
+        ParkingPlaceID: $('#ParkingPlaceDC').val(),
         LicensePlates: $('#LicensePlatesDC').val(),
         RegisDate: $('#RegisDateDC').val(),
         ExpiryDate: $('#ExpiryDateDC').val(),
@@ -474,6 +475,7 @@ function getTicketByIDDropContract(MonthlyTicketID) {
             $('#IdentityCardDC').val(result.IdentityCard);
             $('#PhoneDC').val(result.Phone);
             $('#EmailDC').val(result.Email);
+            $('#ParkingPlaceDC').val(result.ParkingPlaceID);
             $('#TypeOfVehicleDC').val(result.TypeOfVehicle);
             $('#LicensePlatesDC').val(result.LicensePlates);
             $('#RegisDateDC').val(result.RegisDate);
