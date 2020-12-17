@@ -143,10 +143,17 @@ function ComboboxTicket() {
                 html += '<option value="' + item.CardID + '">' + item.CardNumber + '</option>';
             });
             $("#cbCardNumberTK").html(html);
+            $('#cbCardNumberTK').val(null).trigger('change');
             $("#cbCardNumberTK").select2({
                 placeholder: "Chọn số thẻ",
                 allowClear: true
             });
+            $("#cbCardNumberEdit").html(html);
+            $("#cbCardNumberEdit").select2({
+                placeholder: "Chọn số thẻ",
+                allowClear: true
+            });
+            $('#cbCardNumberEdit').val(null).trigger('change');
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -218,7 +225,7 @@ function clearTextBoxTicket() {
     $('#LicensePlatesTK').val("");
     $('#RegisDateTK').val("" + date);
     $('#ExpiryDateTK').val("" + date);
-
+    $('#cbCardNumberTK').val(null).trigger('change');
     $('#btnAdd').show();
     $('#btnUpdate').hide();
 
@@ -353,7 +360,7 @@ function UpdateInfoTicket() {
         LicensePlates: $('#LicensePlatesEdit').val(),
         RegisDate: $('#RegisDateEdit').val(),
         ExpiryDate: $('#ExpiryDateEdit').val(),
-        CardID: $('#CardIdEdit').val(),
+        CardID: $('#cbCardNumberEdit').val(),
     };
     $.ajax({
         url: "/ManageTicket/UpdateTicket",
@@ -444,6 +451,7 @@ function getTicketByIDEdit(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+            $('#cbCardNumberEdit').val(null).trigger('change');
             $('#MonthlyTicketIdEdit').val(result.MonthlyTicketID);
             $('#CusNameEdit').val(result.CusName);
             $('#IdentityCardEdit').val(result.IdentityCard);
@@ -454,8 +462,6 @@ function getTicketByIDEdit(MonthlyTicketID) {
             $('#LicensePlatesEdit').val(result.LicensePlates);
             $('#RegisDateEdit').val(result.RegisDate);
             $('#ExpiryDateEdit').val(result.ExpiryDate);
-            $('#CardIdEdit').val(result.cardId);
-            $('#CardNumberEdit').val(result.cardNumber);
 
             $('#myModalEditTicket').modal('show');
 
