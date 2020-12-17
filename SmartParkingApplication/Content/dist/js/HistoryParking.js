@@ -1,12 +1,19 @@
 ﻿//load page
 $(document).ready(function () {
+    //getDayFirstInLastOut();
     loadDataHistoryParking();
 });
 
+//var temp = {
+//    timeFrom: "",
+//    timeTo: ""
+//}
+
+
 //Load Data function
 function loadDataHistoryParking() {
-    //var timeTo = $('#txtTimeToSPP').val();
-    //var timeFrom = $('#txtTimeFromSPP').val();
+    var timeTo = $('#TimeToHis').val();
+    var timeFrom = $('#TimeFromHis').val();
     var ParkingPlaceID = $('#cbNameParkingPlaceD').val();
     if (ParkingPlaceID) {
         $('#tbHistory').DataTable().clear().destroy();
@@ -15,13 +22,9 @@ function loadDataHistoryParking() {
     }
     $.ajax({
         url: "/ManageHistoryParking/LoadHistoryParking",
-        type: "GET",
-        data: { ParkingPlaceID: ParkingPlaceID },
+        type: "POST",
         contentType: "application/json;charset=utf-8",
-        //data: {
-        //    timeFrom: timeFrom,
-        //    timeTo: timeTo
-        //},
+        data: JSON.stringify({ timeFrom: timeFrom, timeTo: timeTo, ParkingPlaceID: ParkingPlaceID }),
         dataType: "json",
         success: function (result) {
             var html = '';
@@ -54,6 +57,24 @@ function loadDataHistoryParking() {
     });
 }
 
+//get day firstTime and lastOut
+//function getDayFirstInLastOut() {
+//    $.ajax({
+//        url: "/ManageHistoryParking/getDayFirstInLastOut",
+//        type: "GET",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#TimeFromHis').val(result.firstIn);
+//            $('#TimeToHis').val(result.lastOut);
+//            temp.timeFrom = result.firstIn;
+//            temp.timeTo = result.lastOut;
+//        },
+//        error: function (errormessage) {
+//            alert("Exception:" + errormessage.responseText);
+//        }
+//    });
+//}
 //get info transacsion from transactionID
 //function getDetailHisByID(TransactionID) {
 //    $.ajax({
@@ -78,5 +99,4 @@ function loadDataHistoryParking() {
 //            alert("Exception:" + TransactionID + errormessage.responseText);
 //        }
 //    });
-//    return false;
 //}

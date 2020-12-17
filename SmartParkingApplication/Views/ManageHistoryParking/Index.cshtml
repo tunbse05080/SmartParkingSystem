@@ -42,18 +42,12 @@
                                 </div>
                             </div><br />
                             <div class="row">
-                                <div class="col-md-9">
-                                    <form autocomplete="off">
-                                        <div class="flex-row d-flex justify-content-center">
-                                            <a>Từ ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-01T07:30" id="TimeFromHis" />
-                                            <a style="margin-left:20px">Đến ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-31T07:30" id="TimeToHis" />
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-md-3">
-                                    <form class="form-inline active-purple-3 active-purple-4">
-                                    </form>
-                                </div>
+                                <form autocomplete="off">
+                                    <div class="flex-row d-flex justify-content-center" style="padding-left:150px;padding-bottom:20px">
+                                        <a>Từ ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-01T07:30" id="TimeFromHis" onchange="loadDataHistoryParking()"/>
+                                        <a style="margin-left:20px">Đến ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-30T07:30" id="TimeToHis" onchange="loadDataHistoryParking()"/>
+                                    </div>
+                                </form>
                             </div>
                             <!-- table info price day and block -->
                             <div class="row invoice-info">
