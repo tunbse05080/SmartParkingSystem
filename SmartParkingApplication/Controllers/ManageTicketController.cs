@@ -103,7 +103,7 @@ namespace SmartParkingApplication.Controllers
             }
             var RegisDate = ticket.RegisDate.Value.ToString("MM/dd/yyyy");
             var ExpiryDate = ticket.ExpiryDate.Value.ToString("MM/dd/yyyy");
-            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardId = ticket.CardID, cardNumber = ticket.Card.CardNumber, ticket.TypeOfVehicle };
+            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardId = ticket.CardID, cardNumber = ticket.Card.CardNumber, ticket.TypeOfVehicle, ticket.ParkingPlaceID, ticket.ParkingPlace.NameOfParking };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

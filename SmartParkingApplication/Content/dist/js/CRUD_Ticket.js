@@ -7,6 +7,10 @@ $(document).ready(function () {
 
 var CardId;
 
+var temp = {
+    ExpiryDate: ""
+};
+
 //reload modal ExtendTK when change combobox
 function reloadModalETK(price) {
 
@@ -21,21 +25,36 @@ function reloadModalETK(price) {
     }
 }
 
-//get date from comboboxDateExtend
-function DateETK(dateExtend) {
+//get endDate contract in modal extend ticket from comboboxDate
+function DateETK(monthExtend) {
+    // body...
+    if (monthExtend == null) {
+        monthExtend = 0;
+    }
+    var date = new Date(temp.ExpiryDate);
+    date.setMonth(date.getMonth() + monthExtend);
+
+    var dd = date.getDate();
+    var mm = date.getMonth() + 1; //January is 0!
+    var yyyy = date.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    date = mm + '/' + dd + '/' + yyyy;
+    return date;
+}
+
+//get endDate contract in modal register and Re register ticket from comboboxDate
+function DateRegisterTK(monthExtend) {
     // body...
     var date = new Date($('#RegisDateTK').val());
 
-    //for (var i = 1; i <= 12; i++) {
-    //    if (dateExtend) {
-    //        if (dateExtend == i) {
-    //            date.setTime(date.getTime() + (30.4 * i * 24 * 60 * 60 * 1000));
-    //            break;
-    //        }
-    //    }
-    //}
-
-    date.setMonth(date.getMonth() + dateExtend);
+    date.setMonth(date.getMonth() + monthExtend);
 
     var dd = date.getDate();
     var mm = date.getMonth() + 1; //January is 0!
@@ -57,7 +76,7 @@ function reloadModalTK(price) {
     for (var i = 1; i <= 12; i++) {
         if ($("#cbTK").val() == i) {
             price = price * i;
-            $('#ExpiryDateTK').val(DateETK(i));
+            $('#ExpiryDateTK').val(DateRegisterTK(i));
             $('#priceTK').val(new Intl.NumberFormat().format(price) + " VND");
             $("#myModalTicket").modal("show");
             break;
@@ -121,10 +140,10 @@ function loadDataTicket() {
                 }
                 switch (status) {
                     case "Còn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Chấm Dứt HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Chấm Dứt HĐ</button></td>';
                         break;
                     case "Hết hạn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" > Gia Hạn HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketReRegister(' + item.MonthlyTicketID + ')" >Đăng ký lại HĐ</button></td>';
                         break;
                 }
                 html += '</tr>';
@@ -202,6 +221,7 @@ function UpdateExtendTK() {
         IdentityCard: $('#IdentityCardETK').val(),
         Phone: $('#PhoneETK').val(),
         Email: $('#EmailETK').val(),
+        ParkingPlaceID: $('#ParkingPlaceIDETK').val(),
         TypeOfVehicle: $('#TypeOfVehicleETK').val(),
         LicensePlates: $('#LicensePlatesETK').val(),
         RegisDate: $('#RegisDateETK').val(),
@@ -251,7 +271,7 @@ function UpdateInfoTicket() {
         IdentityCard: $('#IdentityCardEdit').val(),
         Phone: $('#PhoneEdit').val(),
         Email: $('#EmailEdit').val(),
-        TypeOfVehicle: $('#cbTypeOfVehicleEdit').val(),
+        TypeOfVehicle: $('#TypeOfVehicleEdit').val(),
         LicensePlates: $('#LicensePlatesEdit').val(),
         RegisDate: $('#RegisDateEdit').val(),
         ExpiryDate: $('#ExpiryDateEdit').val(),
@@ -322,6 +342,7 @@ function getTicketByIDDetail(MonthlyTicketID) {
             $('#PhoneDetail').val(result.Phone);
             $('#EmailDetail').val(result.Email);
             $('#TypeOfVehicleDetail').val(result.typeOfVehicle);
+            $('#ParkingPlaceNameDetail').val(result.NameOfParking);
             $('#LicensePlatesDetail').val(result.LicensePlates);
             $('#RegisDateDetail').val(result.RegisDate);
             $('#ExpiryDateDetail').val(result.ExpiryDate);
@@ -350,7 +371,7 @@ function getTicketByIDEdit(MonthlyTicketID) {
             $('#IdentityCardEdit').val(result.IdentityCard);
             $('#PhoneEdit').val(result.Phone);
             $('#EmailEdit').val(result.Email);
-            $('#cbTypeOfVehicleEdit').val(result.typeOfVehicle);
+            $('#TypeOfVehicleEdit').val(result.typeOfVehicle);
             $('#LicensePlatesEdit').val(result.LicensePlates);
             $('#RegisDateEdit').val(result.RegisDate);
             $('#ExpiryDateEdit').val(result.ExpiryDate);
@@ -396,8 +417,41 @@ function getTicketByIDDropContract(MonthlyTicketID) {
     return false;
 }
 
-//get ticket by id to fill modal ExtendTicket
+//get ticket by id to fill modal Extend Contract Ticket
 function getTicketByIDETK(MonthlyTicketID) {
+    $.ajax({
+        url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            var date = $('#cbETK').val();
+            temp.ExpiryDate = result.ExpiryDate;
+            $('#MonthlyTicketETK').val(result.MonthlyTicketID);
+            $('#CusNameETK').val(result.CusName);
+            $('#IdentityCardETK').val(result.IdentityCard);
+            $('#PhoneETK').val(result.Phone);
+            $('#EmailETK').val(result.Email);
+            $('#ParkingPlaceIDETK').val(result.ParkingPlaceID);
+            $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
+            $('#LicensePlatesETK').val(result.LicensePlates);
+            $('#RegisDateETK').val(result.RegisDate);
+            $('#ExpiryDateETk').val(DateETK(date));
+            $('#CardIDETK').val(result.cardId);
+            
+
+            $('#myModalExtendTicket').modal('show');
+            $('#btnExtendTK').show();
+        },
+        error: function (errormessage) {
+            alert("Exception:" + MonthlyTicketID + errormessage.responseText);
+        }
+    });
+    return false;
+}
+
+//get ticket by id to fill modal Re Register Contract ticket
+function getTicketReRegister(MonthlyTicketID) {
     $.ajax({
         url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
         type: "GET",
@@ -416,8 +470,7 @@ function getTicketByIDETK(MonthlyTicketID) {
             $('#ExpiryDateETk').val(DateETK(date));
             $('#CardIDETK').val(result.cardId);
 
-            $('#myModalExtendTicket').modal('show');
-            $('#btnExtendTK').show();
+            $('#myModalReRegisterTicket').modal('show');
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
@@ -429,14 +482,15 @@ function getTicketByIDETK(MonthlyTicketID) {
 //get price of monthly Extendticket base on typeOfVehicle
 function GetPriceMonthlyExtendTK() {
     var typeOfVehicle = $('#TypeOfVehicleETK').val();
+    var parkingPlaceID = $('#ParkingPlaceIDETK').val();
     $.ajax({
         url: "/ManageTicket/GetPriceMonthly",
         type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle, parkingPlaceID: parkingPlaceID}),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            reloadModalETK(result.MonthPrice);
+            reloadModalETK(result.MonthlyPrice);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
