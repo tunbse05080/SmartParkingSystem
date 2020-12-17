@@ -23,14 +23,25 @@ namespace SmartParkingApplication.Controllers
       
 
         [HttpPost]
-        public JsonResult ValidateUser(string userid, string password)
+        public JsonResult ValidateUser(string username, string password)
         {
             
-            var data = from u in db.Users where u.UserName == userid && u.PassWork == password select u;
+            var data = from u in db.Users where u.UserName == username && u.PassWork == password  select u;
             if (data.Count() > 0)
+            {
+                Session["UserName"] = username;
+                Session["password"] = password;
                 return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+            }
             else
                 return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Index", "Login");
+
+
         }
 
         // GET: LoginUser/Details/5

@@ -11,16 +11,22 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Đăng nhập </title>
-    <link rel="stylesheet" href="~/Content/bootstrap.css" />
-    <link rel="stylesheet" href="~/Content/LoginCss.css" />
-
+    @*<link rel="stylesheet" href="~/Content/bootstrap.css" />
+        <link rel="stylesheet" href="~/Content/LoginCss.css" />*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+   
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous"></script>
 
 
 </head>
 <body>
 
 
-    @*<div class="content">
+    <div class="content">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6col-md-offset-3">
@@ -31,7 +37,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphiconglyphicon-user"></i></span>
-                                            <input type="text" id="userid" class="form-control" placeholder="Username">
+                                            <input type="text" id="username" class="form-control" placeholder="Username">
                                         </div>
                                     </div>
                                 </div>
@@ -58,8 +64,8 @@
                     </div>
                 </div>
             </div>
-        </div>*@
-    <div class="login-page">
+        </div>
+    @*<div class="login-page">
         <div class="form">
            
             <form class="login-form">
@@ -69,14 +75,17 @@
                 
             </form>
         </div>
-    </div>
+    </div>*@
    
     <script>
     $(document).ready(function () {
         $('#savedata').click(function () {
             var data = {
-                "userid": $("#userid").val(),
-                "password": $("#password").val()
+                
+                "password": $("#password").val(),
+                "username": $("#username").val(),
+                
+                
             };
             $.ajax({
                 url: "/LoginUser/ValidateUser",
@@ -86,6 +95,7 @@
                 contentType: "application/json",
                 success: function (response) {
                     if (response.Success) {
+                        alert('Login Sucessful');
                         $.get("@Url.Action("Index", "Home")", function (data) {
                             $('.container').html(data);
                         });
@@ -97,7 +107,7 @@
                     }
                 },
                 error: function () {
-
+                    alert('Login Fail!!!');
                 }
             });
         });
