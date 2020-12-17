@@ -157,6 +157,8 @@
     <Content Include="Content\dist\css\IconDashboard\ionicons.min.css" />
     <Content Include="Content\dist\js\IncomeStatistic.js" />
     <Content Include="Content\dist\js\pages\dashboard.js" />
+    <Content Include="Content\dist\css\Select2\select2.min.css" />
+    <Content Include="Content\dist\js\Select2\select2.min.js" />
     <Content Include="Content\dist\js\SettingPrice.js" />
     <Content Include="Content\dist\js\CRUD_Card.js" />
     <Content Include="Content\dist\js\CRUD_Employee.js" />

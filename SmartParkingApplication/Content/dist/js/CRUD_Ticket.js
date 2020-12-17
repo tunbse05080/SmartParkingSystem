@@ -3,6 +3,7 @@ $(document).ready(function () {
     loadDataTicket();
     ComboboxTicket();
     clearETK();
+
 });
 
 var CardId;
@@ -142,6 +143,10 @@ function ComboboxTicket() {
                 html += '<option value="' + item.CardID + '">' + item.CardNumber + '</option>';
             });
             $("#cbCardNumberTK").html(html);
+            $("#cbCardNumberTK").select2({
+                placeholder: "Chọn số thẻ",
+                allowClear: true
+            });
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
