@@ -43,6 +43,30 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult LoadDataPriceMonthly(int ParkingPlaceID)
+        {
+            List<Object> list = new List<Object>();
+            var result = (from p in db.MothlyPrices
+                          where p.ParkingPlaceID == ParkingPlaceID
+                          select new { p.MonthlyPriceID, p.TypeOfvehicle, p.MonthlyPrice,p.TimeOfApplyMontlhyPrice }).ToList();
+            foreach (var item in result)
+            {
+                var TimeApply = item.TimeOfApplyMontlhyPrice.Value.ToString("dd/MM/yyyy");
+                var typeOfVehicle = "";
+                switch (item.TypeOfvehicle)
+                {
+                    case 0:
+                        typeOfVehicle = "Xe máy";
+                        break;
+                    case 1:
+                        typeOfVehicle = "Ô tô";
+                        break;
+                }
+                list.Add(new { item.MonthlyPriceID, typeOfVehicle, item.MonthlyPrice, TimeApply });
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
         //Check Update for DailyPrice
         public JsonResult CheckUpdateDailyPrice(Price price)
         {
@@ -96,7 +120,7 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //create
+        //create price day and block
         public JsonResult Create(Price price)
         {
             if (ModelState.IsValid)
@@ -107,6 +131,7 @@ namespace SmartParkingApplication.Controllers
             return Json(price, JsonRequestBehavior.AllowGet);
         }
 
+        //update price price day and block
         public JsonResult Update(Price price)
         {
             //var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -118,6 +143,31 @@ namespace SmartParkingApplication.Controllers
             return Json(price, JsonRequestBehavior.AllowGet);
         }
 
+        //get detail info price of month ticket
+        public JsonResult PriceMonthDetails(int id)
+        {
+            MothlyPrice price = db.MothlyPrices.Find(id);
+            var TimeOfApply = price.TimeOfApplyMontlhyPrice.Value.ToString("dd/MM/yyyy");
+            var typeOfVehicle = "";
+            switch (price.TypeOfvehicle)
+            {
+                case 0:
+                    typeOfVehicle = "Xe máy";
+                    break;
+                case 1:
+                    typeOfVehicle = "Ô tô";
+                    break;
+            }
+            var result = new
+            {
+                typeOfVehicle,
+                price.MonthlyPrice,
+                TimeOfApply
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        //get detail info price of day and block
         public JsonResult PriceDetails(int id)
         {
             Price price = db.Prices.Find(id);

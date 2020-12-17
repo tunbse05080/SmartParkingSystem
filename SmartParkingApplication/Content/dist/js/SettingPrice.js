@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    loadDataPrice();
+    checkLoadData();
     clear();
 });
 
@@ -18,6 +18,22 @@ function Getformatdate(date) {
     }
     var result = dd + '/' + mm + '/' + yyyy;
     return result;
+}
+
+//Check load data price follow parkingplace and type of ticket
+
+function checkLoadData() {
+    if ($('#cbTypeOfTicketLoad').val() == 0) {
+        $('#tbPriceMonth').hide();
+        $('#tbPrice').show();
+        $('#tbPriceMonth').DataTable().clear().destroy();
+        loadDataPrice();
+    } else {
+        $('#tbPrice').hide();
+        $('#tbPriceMonth').show();
+        $('#tbPrice').DataTable().clear().destroy();
+        loadDataPriceMonthly();
+    }
 }
 
 //load data price from table Price
@@ -66,7 +82,7 @@ function loadDataPriceMonthly() {
         ParkingPlaceID = 1;
     }
     $.ajax({
-        url: "/SettingPrice/LoadDataPrice",
+        url: "/SettingPrice/LoadDataPriceMonthly",
         type: "POST",
         data: JSON.stringify({ ParkingPlaceID: ParkingPlaceID }),
         contentType: "application/json;charset=utf-8",
@@ -76,19 +92,17 @@ function loadDataPriceMonthly() {
             $.each(result, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.typeOfVehicle + '</td>';
-                html += '<td>' + item.DayPrice + '</td>';
-                html += '<td>' + item.FirstBlock + '</td>';
-                html += '<td>' + item.NextBlock + '</td>';
+                html += '<td>' + item.MonthlyPrice + '</td>';
                 html += '<td>' + item.TimeApply + '</td>';
-                html += '<td><button class="btn btn-primary" onclick="return getDetailPriceByID(' + item.PriceID + ')" >Chi tiết</button></td>';
+                html += '<td><button class="btn btn-primary" onclick="return getDetailPriceMonthByID(' + item.MonthlyPriceID + ')" >Chi tiết</button></td>';
                 html += '</tr>';
             });
-            $('#tbodypr').html(html);
+            $('#tbodyprMonth').html(html);
 
-            $("#tbPrice").DataTable({
+            $("#tbPriceMonth").DataTable({
                 "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print"]
-            }).buttons().container().appendTo('#tbPrice_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#tbPriceMonth_wrapper .col-md-6:eq(0)');
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -250,6 +264,26 @@ function getDetailPriceByID(PriceID) {
             $('#TimeApply').val(result.TimeOfApply);
 
             $('#myModalDetailPrice').modal('show');
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//get info of price into modal detial price month
+function getDetailPriceMonthByID(PriceID) {
+    $.ajax({
+        url: "/SettingPrice/PriceMonthDetails/" + PriceID,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            $('#TypeOfVehicleDetailMonth').val(result.typeOfVehicle);
+            $('#MonthlyPriceDetail').val(result.MonthlyPrice + " VNĐ");
+            $('#TimeApplyMonthly').val(result.TimeOfApply);
+
+            $('#myModalDetailPriceMonth').modal('show');
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
