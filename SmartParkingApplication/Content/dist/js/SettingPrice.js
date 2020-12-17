@@ -21,17 +21,18 @@ function Getformatdate(date) {
 }
 
 //Check load data price follow parkingplace and type of ticket
-
 function checkLoadData() {
     if ($('#cbTypeOfTicketLoad').val() == 0) {
         $('#tbPriceMonth').hide();
         $('#tbPrice').show();
+        $('#tbPrice').DataTable().clear().destroy();
         $('#tbPriceMonth').DataTable().clear().destroy();
         loadDataPrice();
     } else {
         $('#tbPrice').hide();
         $('#tbPriceMonth').show();
         $('#tbPrice').DataTable().clear().destroy();
+        $('#tbPriceMonth').DataTable().clear().destroy();
         loadDataPriceMonthly();
     }
 }
@@ -159,7 +160,7 @@ function UpdateDailyPrice() {
         dataType: "json",
         success: function (result) {
             $('#tbPrice').DataTable().clear().destroy();
-            loadDataPrice();
+            checkLoadData();
             $('#myModalSettingDailyPrice').modal('hide');
             clear();
         },
@@ -175,21 +176,21 @@ function UpdateMonthlyPrice() {
     //if (res == false) {
     //    return false;
     //}
-    var empPRObj = {
+    var monthlyPrice = {
         TypeOfvehicle: $('#cbTypeOfvehicleMonthly').val(),
         MonthlyPrice: $('#MonthlyPriceTK').val(),
         ParkingPlaceID: $('#cbNameParkingPlaceMonthly').val(),
         TimeOfApplyMontlhyPrice: $('#TimeOfApplyMonthlyTK').val()
     }
     $.ajax({
-        url: "/SettingPrice/UpdateMonthlyPrice",
-        data: JSON.stringify(empPRObj),
+        url: "/SettingPrice/CheckMonthlyPrice",
+        data: JSON.stringify({ monthlyPrice: monthlyPrice}),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPrice').DataTable().clear().destroy();
-            loadDataPrice();
+            $('#tbPriceMonth').DataTable().clear().destroy();
+            checkLoadData();
             $('#myModalSettingMonthlyPrice').modal('hide');
             clear();
         },

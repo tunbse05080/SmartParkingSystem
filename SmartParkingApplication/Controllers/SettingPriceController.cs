@@ -113,11 +113,45 @@ namespace SmartParkingApplication.Controllers
             return Json(price, JsonRequestBehavior.AllowGet);
         }
 
-        //Update monthly price for all parkingplace
-        public JsonResult UpdateMonthlyPrice(MothlyPrice monthlyPrice)
+        //Check update monthly price for all parkingplace
+        public JsonResult CheckMonthlyPrice(MothlyPrice monthlyPrice)
         {
-            var result = "";
-            return Json(result, JsonRequestBehavior.AllowGet);
+            var result = (from p in db.MothlyPrices
+                          where p.TypeOfvehicle == monthlyPrice.TypeOfvehicle && p.ParkingPlaceID == monthlyPrice.ParkingPlaceID && p.TimeOfApplyMontlhyPrice == monthlyPrice.TimeOfApplyMontlhyPrice
+                          select new { p.MonthlyPriceID }).FirstOrDefault();
+            if (result == null)
+            {
+                CreateMonthPrice(monthlyPrice);
+            }
+            else
+            {
+                monthlyPrice.MonthlyPriceID = result.MonthlyPriceID;
+                UpdateMonthPrice(monthlyPrice);
+            }
+            return Json(monthlyPrice, JsonRequestBehavior.AllowGet);
+        }
+
+        //create price day and block
+        public JsonResult CreateMonthPrice(MothlyPrice monthlyPrice)
+        {
+            if (ModelState.IsValid)
+            {
+                db.MothlyPrices.Add(monthlyPrice);
+                db.SaveChanges();
+            }
+            return Json(monthlyPrice, JsonRequestBehavior.AllowGet);
+        }
+
+        //update price price day and block
+        public JsonResult UpdateMonthPrice(MothlyPrice monthlyPrice)
+        {
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                db.Entry(monthlyPrice).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(monthlyPrice, JsonRequestBehavior.AllowGet);
         }
 
         //create price day and block
