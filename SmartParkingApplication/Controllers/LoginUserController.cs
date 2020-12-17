@@ -36,12 +36,17 @@ namespace SmartParkingApplication.Controllers
             else
                 return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
         }
+        //public ActionResult Logout()
+        //{
+        //    Session.Abandon();
+        //    return RedirectToAction("Index", "Login");
+
+
+        //}
         public ActionResult Logout()
         {
             Session.Abandon();
             return RedirectToAction("Index", "Login");
-
-
         }
 
         // GET: LoginUser/Details/5

@@ -25,7 +25,7 @@ function loadDataParkingPlace() {
                 
                 switch (item.StatusOfParkingPlace) {
                     case "Dừng hoạt động":
-                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-warning" style="width:150px" onclick="return getUnLockParkingByID(' + item.ParkingPlaceID + ')" >Mở Khóa Bãi Đỗ</button></td>';
+                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-warning" style="width:150px" onclick="return getUnLockParkingByID(' + item.ParkingPlaceID + ')" >Mở Hoạt Động Bãi Đỗ</button></td>';
                         break;
                     case "Đang hoạt động":
                         html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button><button class="btn btn-danger" style="width:218px" onclick="return getLockParkingByID(' + item.ParkingPlaceID + ')" > Tạm Dừng Hoạt Động</button></td>';
