@@ -9,24 +9,73 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Đăng nhập </title>
-    @*<link rel="stylesheet" href="~/Content/bootstrap.css" />
-        <link rel="stylesheet" href="~/Content/LoginCss.css" />*@
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
    
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.js"
-            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-            crossorigin="anonymous"></script>
-
 
 </head>
-<body>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a ><b>SmartParking</b> Systems</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Đăng nhập để bắt đầu</p>
 
+                <form action="@Url.Action("Index","Home")" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" id="username" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password"  id="password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">
+                                    Nhớ mật khẩu
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" id="savedata" class="btn btn-primary btn-block">Đăng nhập</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
 
-    <div class="content">
+              
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">Quên mật khẩu</a>
+                </p>
+              
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/Content//plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Content//plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content//dist/js/adminlte.min.js"></script>
+
+    @*<div class="content">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6col-md-offset-3">
@@ -64,28 +113,28 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
     @*<div class="login-page">
-        <div class="form">
-           
-            <form class="login-form">
-                <input type="text" id="userid"  placeholder="Tên Đăng Nhập" />
-                <input type="password" id="password" placeholder="Mật Khẩu" />
-                <button type="submit" id="savedata">Đăng Nhập</button>
-                
-            </form>
-        </div>
-    </div>*@
+            <div class="form">
+
+                <form class="login-form">
+                    <input type="text" id="userid"  placeholder="Tên Đăng Nhập" />
+                    <input type="password" id="password" placeholder="Mật Khẩu" />
+                    <button type="submit" id="savedata">Đăng Nhập</button>
+
+                </form>
+            </div>
+        </div>*@
    
     <script>
     $(document).ready(function () {
         $('#savedata').click(function () {
             var data = {
-                
+
                 "password": $("#password").val(),
                 "username": $("#username").val(),
-                
-                
+
+
             };
             $.ajax({
                 url: "/LoginUser/ValidateUser",
@@ -95,25 +144,27 @@
                 contentType: "application/json",
                 success: function (response) {
                     if (response.Success) {
-                        alert('Login Sucessful');
+                       
                         $.get("@Url.Action("Index", "Home")", function (data) {
                             $('.container').html(data);
                         });
+                        alert('Login Sucessful');
                     }
                     else {
-                        @*alert('Login Fail!!!');
-                        window.location.href = "@Url.Action("Index", "LoginUser")";*@
+                        alert('Login Fail!!!');
+                        
+                        window.location.href = "@Url.Action("Index", "LoginUser")";
 
                     }
                 },
                 error: function () {
-                    alert('Login Fail!!!');
+                   
                 }
             });
         });
     });
     </script>
-    
+
 
 
 </body>
