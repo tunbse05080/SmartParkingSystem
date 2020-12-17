@@ -9,6 +9,7 @@ function loadDataHistoryParking() {
     //var timeFrom = $('#txtTimeFromSPP').val();
     var ParkingPlaceID = $('#cbNameParkingPlaceD').val();
     if (ParkingPlaceID) {
+        $('#tbHistory').DataTable().clear().destroy();
     } else {
         ParkingPlaceID = 1;
     }
@@ -39,7 +40,7 @@ function loadDataHistoryParking() {
                 html += '</tr>';
             });
             $('#tbodyHis').html(html);
-            var table = $('#tbHistory').DataTable({
+            $('#tbHistory').DataTable({
                 "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbHistory_wrapper .col-md-6:eq(0)');
