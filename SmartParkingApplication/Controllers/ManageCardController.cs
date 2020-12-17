@@ -40,6 +40,9 @@ namespace SmartParkingApplication.Controllers
                     case 3:
                         StatusofCard = "Đã Khóa";
                         break;
+                    case 4:
+                        StatusofCard = "Đang sử dụng";
+                        break;
                 }
                 var tr = new { CardID = item.CardID, CardNumber = item.CardNumber, Status = StatusofCard, Date = date};
                 list.Add(tr);

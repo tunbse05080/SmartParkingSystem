@@ -21,6 +21,7 @@ namespace SmartParkingApplication.Models
             this.Transactions = new HashSet<Transaction>();
             this.Users = new HashSet<User>();
             this.Prices = new HashSet<Price>();
+            this.MonthlyTickets = new HashSet<MonthlyTicket>();
         }
     
         public int ParkingPlaceID { get; set; }
@@ -40,5 +41,7 @@ namespace SmartParkingApplication.Models
         public virtual ICollection<User> Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Price> Prices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MonthlyTicket> MonthlyTickets { get; set; }
     }
 }

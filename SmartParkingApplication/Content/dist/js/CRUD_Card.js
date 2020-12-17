@@ -25,6 +25,9 @@ function loadDataCard() {
                     case "Đã đăng kí":
                         html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getReportCardBreakByID(' + item.CardID + ')">Báo hỏng thẻ</button></td>';
                         break;
+                    case "Đang sử dụng":
+                        html += '<td><button class="btn btn-success" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Sửa</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getLockCardByID(' + item.CardID + ')" >Khóa thẻ</button><button class="btn btn-danger" style="margin-left:2px" onclick="return getReportCardBreakByID(' + item.CardID + ')">Báo hỏng thẻ</button></td>';
+                        break;
                     case "Đã Khóa":
                         html += '<td><button class="btn btn-warning" style="width:95px" onclick="return getCardByID(' + item.CardID + ')" >Mở Khóa</button></td>';
                         break;

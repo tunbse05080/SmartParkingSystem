@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="CardID" />
@@ -46,6 +46,7 @@
           <Property Name="RegisDate" Type="date" />
           <Property Name="ExpiryDate" Type="date" />
           <Property Name="CardID" Type="int" />
+          <Property Name="ParkingPlaceID" Type="int" />
         </EntityType>
         <EntityType Name="MothlyPrice">
           <Key>
@@ -270,6 +271,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MonthlyTicket_ParkingPlace">
+          <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+          <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="MonthlyTicket">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MothlyPrice_ParkingPlace">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="MothlyPrice" Type="Self.MothlyPrice" Multiplicity="*" />
@@ -369,6 +382,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="UserSchedule" EntitySet="UserSchedule" />
           </AssociationSet>
+          <AssociationSet Name="FK_MonthlyTicket_ParkingPlace" Association="Self.FK_MonthlyTicket_ParkingPlace">
+            <End Role="ParkingPlace" EntitySet="ParkingPlace" />
+            <End Role="MonthlyTicket" EntitySet="MonthlyTicket" />
+          </AssociationSet>
           <AssociationSet Name="FK_MothlyPrice_ParkingPlace" Association="Self.FK_MothlyPrice_ParkingPlace">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
             <End Role="MothlyPrice" EntitySet="MothlyPrice" />
@@ -386,8 +403,7 @@
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SmartParkingsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -438,6 +454,8 @@
           <Property Name="CardID" Type="Int32" />
           <NavigationProperty Name="Card" Relationship="Self.FK__MonthlyTi__CardI__4E88ABD4" FromRole="MonthlyTicket" ToRole="Card" />
           <NavigationProperty Name="MonthlyIncomeStatements" Relationship="Self.FK__MonthlyIn__Month__4D94879B" FromRole="MonthlyTicket" ToRole="MonthlyIncomeStatement" />
+          <Property Name="ParkingPlaceID" Type="Int32" />
+          <NavigationProperty Name="ParkingPlace" Relationship="SmartParkingsModel.FK_MonthlyTicket_ParkingPlace" FromRole="MonthlyTicket" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="MothlyPrice">
           <Key>
@@ -473,6 +491,7 @@
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Parki__5441852A" FromRole="ParkingPlace" ToRole="Transaction" />
           <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="ParkingPlace" ToRole="User" />
           <NavigationProperty Name="Prices" Relationship="Self.FK_Price_ParkingPlace" FromRole="ParkingPlace" ToRole="Price" />
+          <NavigationProperty Name="MonthlyTickets" Relationship="SmartParkingsModel.FK_MonthlyTicket_ParkingPlace" FromRole="ParkingPlace" ToRole="MonthlyTicket" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
@@ -797,7 +816,23 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
           </AssociationSet>
+          <AssociationSet Name="FK_MonthlyTicket_ParkingPlace" Association="SmartParkingsModel.FK_MonthlyTicket_ParkingPlace">
+            <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+            <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_MonthlyTicket_ParkingPlace">
+          <End Type="SmartParkingsModel.ParkingPlace" Role="ParkingPlace" Multiplicity="0..1" />
+          <End Type="SmartParkingsModel.MonthlyTicket" Role="MonthlyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="MonthlyTicket">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -837,6 +872,7 @@
           <EntitySetMapping Name="MonthlyTickets">
             <EntityTypeMapping TypeName="SmartParkingsModel.MonthlyTicket">
               <MappingFragment StoreEntitySet="MonthlyTicket">
+                <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
                 <ScalarProperty Name="MonthlyTicketID" ColumnName="MonthlyTicketID" />
                 <ScalarProperty Name="CusName" ColumnName="CusName" />
                 <ScalarProperty Name="IdentityCard" ColumnName="IdentityCard" />

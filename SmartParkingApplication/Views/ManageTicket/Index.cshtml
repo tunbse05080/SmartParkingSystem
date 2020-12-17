@@ -108,6 +108,11 @@
                                             <input type="text" class="form-control" id="PhoneTK" placeholder="Số điện thoai" />
                                         </div>
                                         <div class="form-group">
+                                            <label for="TypeOfVehicle">Bãi đỗ</label>
+                                            <select class="form-control" onchange="GetPriceMonthlyRegisterTK()" id="cbNameParkingPlaceTK">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="TypeOfVehicle">Loại xe</label>
                                             <select class="form-control" id="cbTypeOfVehicleTK" onchange="GetPriceMonthlyRegisterTK()">
                                             </select>
@@ -118,11 +123,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="RegisDate">Ngày đăng kí</label>
-                                            <input type="text" class="form-control" id="RegisDateTK" placeholder="Ngày đăng kí" disabled />
+                                            <input type="date" class="form-control" id="RegisDateTK" placeholder="Ngày đăng kí" onchange="GetPriceMonthlyRegisterTK()"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="ExpiryDate">Ngày hết hạn</label>
-                                            <input type="text" class="form-control" id="ExpiryDateTK" placeholder="Ngày hết hạn" />
+                                            <input type="text" class="form-control" id="ExpiryDateTK" placeholder="Ngày hết hạn" disabled/>
                                         </div>
                                         <div class="form-group">
                                             <label for="TimeRegis">Thời gian đăng ký</label>

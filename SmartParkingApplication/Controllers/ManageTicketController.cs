@@ -123,7 +123,7 @@ namespace SmartParkingApplication.Controllers
         {
             string[] temp = totalPrice.Split(' ');
             int price = Convert.ToInt32(temp[0].Replace(",", string.Empty));
-            MonthlyIncomeStatement monthlyIncome = new MonthlyIncomeStatement { MonthlyTicketID = id, TotalPrice = price };
+            MonthlyIncomeStatement monthlyIncome = new MonthlyIncomeStatement { MonthlyTicketID = id, TotalPrice = price , PaymentDate = DateTime.Now };
             if (ModelState.IsValid)
             {
                 db.MonthlyIncomeStatements.Add(monthlyIncome);
@@ -247,12 +247,13 @@ namespace SmartParkingApplication.Controllers
         }
 
         //get price of monthly ticket base on typeOfVehicle
-        //public JsonResult GetPriceMonthly(int typeOfVehicle)
-        //{
-        //    var result = (from p in db.Prices
-        //                 where p.TypeOfvehicle == typeOfVehicle
-        //                 select new { p.MonthPrice }).FirstOrDefault();
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult GetPriceMonthly(int typeOfVehicle, int parkingPlaceID)
+        {
+            var result = (from p in db.MothlyPrices
+                          where p.TypeOfvehicle == typeOfVehicle && p.ParkingPlaceID == parkingPlaceID && p.TimeOfApplyMontlhyPrice <= DateTime.Now
+                          orderby p.TimeOfApplyMontlhyPrice descending
+                          select new { p.MonthlyPrice }).FirstOrDefault();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

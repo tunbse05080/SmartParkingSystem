@@ -93,6 +93,7 @@ function ComboboxNameParking() {
                 html += '<option value=' + item.ParkingPlaceID + '>' + item.NameOfParking + '</option>';
             });
             $('#cbNameParkingPlace').html(html);
+            $('#cbNameParkingPlaceTK').html(html);
             $('#cbNameParkingPlaceD').html(html);
             $('#cbNameParkingPlaceDaily').html(html);
             $('#cbNameParkingPlaceBlock').html(html);

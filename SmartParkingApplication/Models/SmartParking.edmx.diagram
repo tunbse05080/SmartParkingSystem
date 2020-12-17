@@ -32,6 +32,7 @@
         <AssociationConnector Association="SmartParkingsModel.FK_Transaction_UserI" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK_Transaction_UserO" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__UserSched__UserI__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="SmartParkingsModel.FK_MonthlyTicket_ParkingPlace" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

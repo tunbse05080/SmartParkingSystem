@@ -24,16 +24,18 @@ function reloadModalETK(price) {
 //get date from comboboxDateExtend
 function DateETK(dateExtend) {
     // body...
-    var date = new Date();
+    var date = new Date($('#RegisDateTK').val());
 
-    for (var i = 1; i <= 12; i++) {
-        if (dateExtend) {
-            if (dateExtend == i) {
-                date.setTime(date.getTime() + (30.4 * i * 24 * 60 * 60 * 1000));
-                break;
-            }
-        }
-    }
+    //for (var i = 1; i <= 12; i++) {
+    //    if (dateExtend) {
+    //        if (dateExtend == i) {
+    //            date.setTime(date.getTime() + (30.4 * i * 24 * 60 * 60 * 1000));
+    //            break;
+    //        }
+    //    }
+    //}
+
+    date.setMonth(date.getMonth() + dateExtend);
 
     var dd = date.getDate();
     var mm = date.getMonth() + 1; //January is 0!
@@ -168,6 +170,7 @@ function AddTicket() {
         Email: $('#EmailTK').val(),
         TypeOfVehicle: $('#cbTypeOfVehicleTK').val(),
         LicensePlates: $('#LicensePlatesTK').val(),
+        ParkingPlaceID: $('#cbNameParkingPlaceTK').val(),
         RegisDate: $('#RegisDateTK').val(),
         ExpiryDate: $('#ExpiryDateTK').val(),
         CardID: $('#cbCardNumberTK').val()
@@ -229,7 +232,7 @@ function CreateMonthlyIncome(id, totalPrice) {
     $.ajax({
         url: "/ManageTicket/CreateMonthlyIncome",
         type: "POST",
-        data: JSON.stringify({ id: id, totalPrice: totalPrice }),
+        data: JSON.stringify({ id: id, totalPrice: totalPrice}),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
@@ -444,14 +447,15 @@ function GetPriceMonthlyExtendTK() {
 //get price of monthly Registerticket base on typeOfVehicle
 function GetPriceMonthlyRegisterTK() {
     var typeOfVehicle = $('#cbTypeOfVehicleTK').val();
+    var parkingPlaceID = $('#cbNameParkingPlaceTK').val();
     $.ajax({
         url: "/ManageTicket/GetPriceMonthly",
         type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle }),
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle, parkingPlaceID: parkingPlaceID }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            reloadModalTK(result.MonthPrice);
+            reloadModalTK(result.MonthlyPrice);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
