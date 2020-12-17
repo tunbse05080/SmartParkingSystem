@@ -11,19 +11,6 @@ var temp = {
     ExpiryDate: ""
 };
 
-//reload modal ExtendTK when change combobox
-function reloadModalETK(price) {
-
-    for (var i = 1; i <= 12; i++) {
-        if ($("#cbETK").val() == i) {
-            price = price * i;
-            $('#ExpiryDateETk').val(DateETK(i));
-            $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
-            $("#myModalExtendTicket").modal("show");
-            break;
-        }
-    }
-}
 
 //get endDate contract in modal extend ticket from comboboxDate
 function DateETK(monthExtend) {
@@ -49,7 +36,7 @@ function DateETK(monthExtend) {
     return date;
 }
 
-//get endDate contract in modal register and Re register ticket from comboboxDate
+//get endDate contract in modal register ticket from comboboxDate
 function DateRegisterTK(monthExtend) {
     // body...
     var date = new Date($('#RegisDateTK').val());
@@ -71,6 +58,43 @@ function DateRegisterTK(monthExtend) {
     return date;
 }
 
+//get endDate contract in modal Re register ticket from comboboxDate
+function DateReRegisterTK(monthExtend) {
+    // body...
+    var date = new Date($('#RegisDateRe').val());
+
+    date.setMonth(date.getMonth() + monthExtend);
+
+    var dd = date.getDate();
+    var mm = date.getMonth() + 1; //January is 0!
+    var yyyy = date.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    date = mm + '/' + dd + '/' + yyyy;
+    return date;
+}
+
+
+//reload modal ExtendTK when change combobox
+function reloadModalETK(price) {
+
+    for (var i = 1; i <= 12; i++) {
+        if ($("#cbETK").val() == i) {
+            price = price * i;
+            $('#ExpiryDateETk').val(DateETK(i));
+            $('#priceETK').val(new Intl.NumberFormat().format(price) + " VND");
+            $("#myModalExtendTicket").modal("show");
+            break;
+        }
+    }
+}
+
 //reload modal RegisterTK when change combobox
 function reloadModalTK(price) {
     for (var i = 1; i <= 12; i++) {
@@ -79,6 +103,19 @@ function reloadModalTK(price) {
             $('#ExpiryDateTK').val(DateRegisterTK(i));
             $('#priceTK').val(new Intl.NumberFormat().format(price) + " VND");
             $("#myModalTicket").modal("show");
+            break;
+        }
+    }
+}
+
+//reload modal Re Register when change combobox
+function reloadModalReRegister(price) {
+    for (var i = 1; i <= 12; i++) {
+        if ($("#cbRe").val() == i) {
+            price = price * i;
+            $('#ExpiryDateRe').val(DateReRegisterTK(i));
+            $('#priceRe').val(new Intl.NumberFormat().format(price) + " VND");
+            $("#myModalReRegisterTicket").modal("show");
             break;
         }
     }
@@ -140,7 +177,7 @@ function loadDataTicket() {
                 }
                 switch (status) {
                     case "Còn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Chấm Dứt HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Dừng HĐ</button></td>';
                         break;
                     case "Hết hạn HĐ":
                         html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketReRegister(' + item.MonthlyTicketID + ')" >Đăng ký lại HĐ</button></td>';
@@ -165,6 +202,7 @@ function loadDataTicket() {
     });
 }
 
+//clear textbox in modal Register ticket
 function clearTextBoxTicket() {
     var date = loadDateNow();
     $('#IdTK').val("");
@@ -179,6 +217,22 @@ function clearTextBoxTicket() {
     $('#btnAdd').show();
     $('#btnUpdate').hide();
 
+}
+
+//Create MonthlyIncomeStatment
+function CreateMonthlyIncome(id, totalPrice) {
+    $.ajax({
+        url: "/ManageTicket/CreateMonthlyIncome",
+        type: "POST",
+        data: JSON.stringify({ id: id, totalPrice: totalPrice}),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }
 
 function AddTicket() {
@@ -213,7 +267,7 @@ function AddTicket() {
     });
 }
 
-//Extend ticket
+//Update Extend ticket
 function UpdateExtendTK() {
     var empTicketObj = {
         MonthlyTicketID: $('#MonthlyTicketETK').val(),
@@ -247,15 +301,33 @@ function UpdateExtendTK() {
     });
 }
 
-//Create MonthlyIncomeStatment
-function CreateMonthlyIncome(id, totalPrice) {
+//Update Re Register ticket
+function UpdateReRegister() {
+    var empTicketObj = {
+        MonthlyTicketID: $('#MonthlyTicketIDRe').val(),
+        CusName: $('#CusNameRe').val(),
+        IdentityCard: $('#IdentityCardRe').val(),
+        Phone: $('#PhoneRe').val(),
+        Email: $('#EmailRe').val(),
+        ParkingPlaceID: $('#ParkingPlaceIDRe').val(),
+        TypeOfVehicle: $('#TypeOfVehicleRe').val(),
+        LicensePlates: $('#LicensePlatesRe').val(),
+        RegisDate: $('#RegisDateRe').val(),
+        ExpiryDate: $('#ExpiryDateRe').val(),
+        CardID: $('#CardIDRe').val(),
+    };
     $.ajax({
-        url: "/ManageTicket/CreateMonthlyIncome",
+        url: "/ManageTicket/UpdateTicket",
+        data: JSON.stringify(empTicketObj),
         type: "POST",
-        data: JSON.stringify({ id: id, totalPrice: totalPrice}),
-        contentType: "application/json",
+        contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $('#tbTicket').DataTable().clear().destroy();
+            CreateMonthlyIncome($('#MonthlyTicketIDRe').val(), $('#priceRe').val());
+            loadDataTicket();
+            $('#myModalReRegisterTicket').modal('hide');
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -271,6 +343,7 @@ function UpdateInfoTicket() {
         IdentityCard: $('#IdentityCardEdit').val(),
         Phone: $('#PhoneEdit').val(),
         Email: $('#EmailEdit').val(),
+        ParkingPlaceID: $('#ParkingPlaceEdit').val(),
         TypeOfVehicle: $('#TypeOfVehicleEdit').val(),
         LicensePlates: $('#LicensePlatesEdit').val(),
         RegisDate: $('#RegisDateEdit').val(),
@@ -294,7 +367,6 @@ function UpdateInfoTicket() {
         }
     });
 }
-
 
 //Drop contract ticket
 function UpdateDropContractTicket() {
@@ -371,7 +443,8 @@ function getTicketByIDEdit(MonthlyTicketID) {
             $('#IdentityCardEdit').val(result.IdentityCard);
             $('#PhoneEdit').val(result.Phone);
             $('#EmailEdit').val(result.Email);
-            $('#TypeOfVehicleEdit').val(result.typeOfVehicle);
+            $('#ParkingPlaceEdit').val(result.ParkingPlaceID);
+            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
             $('#LicensePlatesEdit').val(result.LicensePlates);
             $('#RegisDateEdit').val(result.RegisDate);
             $('#ExpiryDateEdit').val(result.ExpiryDate);
@@ -458,17 +531,18 @@ function getTicketReRegister(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            var date = $('#cbETK').val();
-            $('#MonthlyTicketETK').val(result.MonthlyTicketID);
-            $('#CusNameETK').val(result.CusName);
-            $('#IdentityCardETK').val(result.IdentityCard);
-            $('#PhoneETK').val(result.Phone);
-            $('#EmailETK').val(result.Email);
-            $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
-            $('#LicensePlatesETK').val(result.LicensePlates);
-            $('#RegisDateETK').val(loadDateNow());
-            $('#ExpiryDateETk').val(DateETK(date));
-            $('#CardIDETK').val(result.cardId);
+            var date = $('#cbRe').val();
+            $('#MonthlyTicketIDRe').val(result.MonthlyTicketID);
+            $('#CusNameRe').val(result.CusName);
+            $('#IdentityCardRe').val(result.IdentityCard);
+            $('#PhoneRe').val(result.Phone);
+            $('#EmailRe').val(result.Email);
+            $('#TypeOfVehicleRe').val(result.TypeOfVehicle);
+            $('#LicensePlatesRe').val(result.LicensePlates);
+            $('#ParkingPlaceIDRe').val(result.ParkingPlaceID);
+            $('#RegisDateRe').val(loadDateNow());
+            $('#ExpiryDateRe').val(DateReRegisterTK(date));
+            $('#CardIDRe').val(result.cardId);
 
             $('#myModalReRegisterTicket').modal('show');
         },
@@ -479,7 +553,7 @@ function getTicketReRegister(MonthlyTicketID) {
     return false;
 }
 
-//get price of monthly Extendticket base on typeOfVehicle
+//get price of monthly extend ticket base on typeOfVehicle and parkingPlaceID
 function GetPriceMonthlyExtendTK() {
     var typeOfVehicle = $('#TypeOfVehicleETK').val();
     var parkingPlaceID = $('#ParkingPlaceIDETK').val();
@@ -498,7 +572,7 @@ function GetPriceMonthlyExtendTK() {
     });
 }
 
-//get price of monthly Registerticket base on typeOfVehicle
+//get price of monthly register ticket base on typeOfVehicle and parkingPlaceID
 function GetPriceMonthlyRegisterTK() {
     var typeOfVehicle = $('#cbTypeOfVehicleTK').val();
     var parkingPlaceID = $('#cbNameParkingPlaceTK').val();
@@ -517,6 +591,24 @@ function GetPriceMonthlyRegisterTK() {
     });
 }
 
+//get price of monthly re register ticket base on typeOfVehicle and parkingPlaceID
+function GetPriceMonthlyReRegisterTK() {
+    var typeOfVehicle = $('#TypeOfVehicleRe').val();
+    var parkingPlaceID = $('#ParkingPlaceIDRe').val();
+    $.ajax({
+        url: "/ManageTicket/GetPriceMonthly",
+        type: "POST",
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle, parkingPlaceID: parkingPlaceID }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            reloadModalReRegister(result.MonthlyPrice);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
 
 //clear modal ExtendTK
 function clearETK() {
