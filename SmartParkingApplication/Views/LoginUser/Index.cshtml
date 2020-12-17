@@ -37,7 +37,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a ><b>SmartParking</b> Systems</a>
+            <a><b>SmartParking</b> Systems</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password"  id="password" class="form-control" placeholder="Password">
+                        <input type="password" id="password" class="form-control" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -78,13 +78,13 @@
                     </div>
                 </form>
 
-              
+
                 <!-- /.social-auth-links -->
 
                 <p class="mb-1">
                     <a href="forgot-password.html">Quên mật khẩu</a>
                 </p>
-              
+
             </div>
             <!-- /.login-card-body -->
         </div>
@@ -147,7 +147,11 @@
                 </form>
             </div>
         </div>*@
-   
+    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Content//plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/dist/js/adminlte.min.js"></script>
     <script>
     $(document).ready(function () {
         $('#savedata').click(function () {
@@ -166,7 +170,7 @@
                 contentType: "application/json",
                 success: function (response) {
                     if (response.Success) {
-                       
+
                         $.get("@Url.Action("Index", "Home")", function (data) {
                             $('.container').html(data);
                         });
@@ -174,13 +178,13 @@
                     }
                     else {
                         alert('Login Fail!!!');
-                        
+
                         window.location.href = "@Url.Action("Index", "LoginUser")";
 
                     }
                 },
                 error: function () {
-                   
+
                 }
             });
         });
