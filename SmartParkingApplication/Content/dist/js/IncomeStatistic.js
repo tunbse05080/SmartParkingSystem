@@ -100,7 +100,6 @@ function ComboboxNameParking() {
             $('#cbNameParkingPlaceMonthly').html(html);
 
 
-
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

@@ -155,6 +155,7 @@
     <Content Include="Content\dist\js\Chart\highcharts.js" />
     <Content Include="Content\dist\js\Dashboard.js" />
     <Content Include="Content\dist\css\IconDashboard\ionicons.min.css" />
+    <Content Include="Content\dist\js\HistoryParking.js" />
     <Content Include="Content\dist\js\IncomeStatistic.js" />
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\css\Select2\select2.min.css" />
@@ -2092,8 +2093,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
     <Compile Include="Controllers\ManageCardController.cs" />
+    <Compile Include="Controllers\ManageHistoryParkingController.cs" />
     <Compile Include="Controllers\ManagePPlaceController.cs" />
-    <Compile Include="Controllers\ManageReportController.cs" />
     <Compile Include="Controllers\ManageStatisticController.cs" />
     <Compile Include="Controllers\ManageTicketController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
@@ -2192,7 +2193,7 @@
     <Content Include="Views\LoginUser\Edit.cshtml" />
     <Content Include="Views\LoginUser\Index.cshtml" />
     <Content Include="Views\SettingPrice\Index.cshtml" />
-    <Content Include="Views\ManageReport\Index.cshtml" />
+    <Content Include="Views\ManageHistoryParking\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

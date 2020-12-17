@@ -68,9 +68,6 @@ namespace SmartParkingApplication.Controllers
                         break;
                 }
 
-
-
-
                 var tr = new { TransactionID = item.TransactionID, LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber, TypeOfVerhicleTran = typeofVe };
                 list.Add(tr);
             }
@@ -99,14 +96,10 @@ namespace SmartParkingApplication.Controllers
             {
                 typeVE = "Xe máy";
             }
-
-
-
-
             var TimeIn = tran.TimeIn.Value.ToString("MM/dd/yyyy hh:mm:ss");
             var TimeOut = tran.TimeOutv.Value.ToString("MM/dd/yyyy hh:mm:ss");
 
-            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn,TimeOut, typeTicket, tran.Card.CardNumber,typeVE };
+            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn,TimeOut, typeTicket, tran.Card.CardNumber,typeVE,tran.TotalPrice};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -189,9 +182,8 @@ namespace SmartParkingApplication.Controllers
             {
                 statusOfParking = "Đang hoạt động";
             }
-           
 
-                var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking};
+                var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
