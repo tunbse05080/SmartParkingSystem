@@ -27,7 +27,7 @@ function loadDataStatusParking() {
                     html += '<tr>';
                     html += '<td>' + item.LicensePlates + '</td>';
                     html += '<td>' + item.TimeIn + '</td>';
-                    html += '<td>' + item.TimeOutv + '</td>';
+                   
                     html += '<td>' + item.TypeOfTicket + '</td>';
                     html += '<td>' + item.CardNumber + '</td>';
                     html += '<td>' + item.TypeOfVerhicleTran + '</td>';
@@ -62,7 +62,7 @@ function getDetailTranByID(TransactionID) {
             $('#Idd').val(result.TransactionID);
             $('#LicensePlatesd').val(result.LicensePlates);
             $('#TimeInd').val(result.TimeIn);
-            $('#TimeOutvd').val(result.TimeOut);
+            
             $('#TypeOfTicketd').val(result.typeTicket);
             $('#CardNumber').val(result.CardNumber);
             $('#TypeOfVe').val(result.typeVE);

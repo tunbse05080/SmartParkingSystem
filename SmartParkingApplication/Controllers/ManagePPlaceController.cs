@@ -36,17 +36,18 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadDataStatusPP(int ParkingPlaceID)
         {
-            var trans = from t in db.Transactions.Where(x => x.ParkingPlaceID== ParkingPlaceID)
+            
+            var trans = from t in db.Transactions.Where(x => x.ParkingPlaceID == ParkingPlaceID )
                         join c in db.Cards on t.CardID equals c.CardID into table1
                         from c in table1.DefaultIfEmpty()
                         orderby t.CardID
-                        select new {t.TransactionID, t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber,t.TypeOfVerhicleTran };
+                        select new {t.TransactionID, t.LicensePlates, t.TimeIn, t.TypeOfTicket, c.CardNumber,t.TypeOfVerhicleTran };
 
             List<Object> list = new List<object>();
             foreach (var item in trans)
             {
                 var timeIn = item.TimeIn.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                var timeOut = item.TimeOutv.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
+                
                 string typeofTicket = string.Empty;
                 string typeofVe= string.Empty;
                 switch (item.TypeOfTicket)
@@ -68,7 +69,7 @@ namespace SmartParkingApplication.Controllers
                         break;
                 }
 
-                var tr = new { TransactionID = item.TransactionID, LicensePlates = item.LicensePlates, TimeIn = timeIn, TimeOutv = timeOut, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber, TypeOfVerhicleTran = typeofVe };
+                var tr = new { TransactionID = item.TransactionID, LicensePlates = item.LicensePlates, TimeIn = timeIn, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber, TypeOfVerhicleTran = typeofVe };
                 list.Add(tr);
             }
             return Json(new { dataSSP = list}, JsonRequestBehavior.AllowGet);
@@ -97,9 +98,9 @@ namespace SmartParkingApplication.Controllers
                 typeVE = "Xe máy";
             }
             var TimeIn = tran.TimeIn.Value.ToString("MM/dd/yyyy hh:mm:ss");
-            var TimeOut = tran.TimeOutv.Value.ToString("MM/dd/yyyy hh:mm:ss");
+            
 
-            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn,TimeOut, typeTicket, tran.Card.CardNumber,typeVE,tran.TotalPrice};
+            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn, typeTicket, tran.Card.CardNumber,typeVE,tran.TotalPrice};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
