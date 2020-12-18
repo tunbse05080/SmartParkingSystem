@@ -6,82 +6,64 @@ $(document).ready(function () {
 //Function for getting data to fill in modal UpdateRole base on AccountID
 function getAccountModalRole(AccountID) {
     $.ajax({
-        url: "/ManageAccount/Details/" + EmployeeID,
+        url: "/ManageAccount/Details/" + AccountID,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#IdEdit').val(result.UserID);
-            $('#FullNameEdit').val(result.Name);
-            $('#DateOfBirthEdit').val(result.dateOfBirth);
-            $('#AddressEdit').val(result.UserAddress);
-            $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneNumberEdit').val(result.Phone);
-            $('#EmailEdit').val(result.email);
-            $('#StatusOfWorkingEdit').val(result.StatusOfwork);
-            $('#AccountID').val(result.AccountID);
-            $('#myModalUserEdit').modal('show');
-            $('#btnUpdate').show();
+            $('#AccountIDEdit').val(result.AccountID);
+            $('#AccountNameEdit').val(result.UserName);
+            $('#PasswordEdit').val(result.PassWord);
+            $('#StatusAccountEdit').val(result.StatusOfAccount);
+            $('#cbRoleNameREdit').val(result.RoleID);
+            $('#myModalRoleAccountEdit').modal('show');
         },
         error: function (errormessage) {
-            alert("Exception:" + EmployeeID + errormessage.responseText);
+            alert("Exception:" + AccountID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 //Function for getting data to fill in modal UpdatePassword base on AccountID
 function getAccountModalPassword(AccountID) {
     $.ajax({
-        url: "/ManageAccount/Details/" + EmployeeID,
+        url: "/ManageAccount/Details/" + AccountID,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#IdEdit').val(result.UserID);
-            $('#FullNameEdit').val(result.Name);
-            $('#DateOfBirthEdit').val(result.dateOfBirth);
-            $('#AddressEdit').val(result.UserAddress);
-            $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneNumberEdit').val(result.Phone);
-            $('#EmailEdit').val(result.email);
-            $('#StatusOfWorkingEdit').val(result.StatusOfwork);
-            $('#AccountID').val(result.AccountID);
-            $('#myModalUserEdit').modal('show');
-            $('#btnUpdate').show();
+            $('#AccountIDPasEdit').val(result.AccountID);
+            $('#AccountNamePasEdit').val(result.UserName);
+            $('#PasswordPasEdit').val(result.PassWord);
+            $('#StatusAccountPasEdit').val(result.StatusOfAccount);
+            $('#RoleNamePasEdit').val(result.RoleID);
+            $('#myModalPassAccountEdit').modal('show');
         },
         error: function (errormessage) {
-            alert("Exception:" + EmployeeID + errormessage.responseText);
+            alert("Exception:" + AccountID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 //Function for getting data to fill in modal UpdateStatus base on AccountID
 function getAccountModalStatus(AccountID) {
     $.ajax({
-        url: "/ManageAccount/Details/" + EmployeeID,
+        url: "/ManageAccount/Details/" + AccountID,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#IdEdit').val(result.UserID);
-            $('#FullNameEdit').val(result.Name);
-            $('#DateOfBirthEdit').val(result.dateOfBirth);
-            $('#AddressEdit').val(result.UserAddress);
-            $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneNumberEdit').val(result.Phone);
-            $('#EmailEdit').val(result.email);
-            $('#StatusOfWorkingEdit').val(result.StatusOfwork);
-            $('#AccountID').val(result.AccountID);
-            $('#myModalUserEdit').modal('show');
-            $('#btnUpdate').show();
+            $('#AccountIDStatusEdit').val(result.AccountID);
+            $('#AccountNameStatusEdit').val(result.UserName);
+            $('#PasswordStatusEdit').val(result.PassWord);
+            $('#StatusAccountStatusEdit').val(result.StatusOfAccount);
+            $('#RoleNameStatusEdit').val(result.RoleID);
+            $('#myModalStatusAccountEdit').modal('show');
         },
         error: function (errormessage) {
-            alert("Exception:" + EmployeeID + errormessage.responseText);
+            alert("Exception:" + AccountID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 
@@ -100,10 +82,10 @@ function LoadDataAccount() {
                 html += '<td>' + item.status + '</td>';
                 switch (item.StatusOfAccount) {
                     case 0:
-                        html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.UserID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.UserID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalStatus(' + item.UserID + ')">Khóa tài khoản</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalStatus(' + item.AccountID + ')">Khóa tài khoản</button></td>';
                         break;
                     case 1:
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.AccountID + ')"> Chi tiết</button></td>';
                         break;
                 }
                 html += '</tr>';

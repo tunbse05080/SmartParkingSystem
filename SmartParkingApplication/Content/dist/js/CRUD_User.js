@@ -598,6 +598,7 @@ function ComboboxRoleNameU() {
             });
             $("#cbRoleNameU").html(html);
             $("#cbRoleNameUEdit").html(html);
+            $("#cbRoleNameREdit").html(html);
 
         },
         error: function (errormessage) {

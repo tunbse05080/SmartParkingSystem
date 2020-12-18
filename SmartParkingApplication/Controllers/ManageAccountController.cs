@@ -28,7 +28,7 @@ namespace SmartParkingApplication.Controllers
                 switch (item.StatusOfAccount)
                 {
                     case 0:
-                        status = "Not đã khóa";
+                        status = "Active";
                         break;
                     case 1:
                         status = "Đã khóa";
@@ -44,7 +44,7 @@ namespace SmartParkingApplication.Controllers
         public JsonResult Details(int id)
         {
             var account = db.Accounts.Find(id);
-            return Json(account, JsonRequestBehavior.AllowGet);
+            return Json(new { account.AccountID,account.UserName,account.PassWord,account.RoleID,account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Create(Account account)
