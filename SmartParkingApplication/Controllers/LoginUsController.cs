@@ -45,9 +45,9 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
         }
-        public ActionResult forgot()
-        {
+    public ActionResult Forgot (){
             return View();
+
         }
 
     }

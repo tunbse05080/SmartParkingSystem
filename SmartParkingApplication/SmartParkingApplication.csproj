@@ -120,6 +120,7 @@
     <Content Include="Content\dist\img\avatar5.png" />
     <Content Include="Content\dist\img\boxed-bg.jpg" />
     <Content Include="Content\dist\img\boxed-bg.png" />
+    <Content Include="Content\dist\img\bãi-đậu-xe-2-2.jpg" />
     <Content Include="Content\dist\img\credit\american-express.png" />
     <Content Include="Content\dist\img\credit\cirrus.png" />
     <Content Include="Content\dist\img\credit\mastercard.png" />
@@ -2198,6 +2199,7 @@
     <Content Include="Views\SettingPrice\Index.cshtml" />
     <Content Include="Views\ManageHistoryParking\Index.cshtml" />
     <Content Include="Views\LoginUs\Index.cshtml" />
+    <Content Include="Views\LoginUs\Forgot.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
