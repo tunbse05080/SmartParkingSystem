@@ -30,11 +30,9 @@ namespace SmartParkingApplication.Models
         public string IdentityCard { get; set; }
         public Nullable<int> Phone { get; set; }
         public string email { get; set; }
-        public Nullable<System.DateTime> ContractSigningDate { get; set; }
-        public Nullable<System.DateTime> ContractExpirationDate { get; set; }
         public Nullable<int> ParkingPlaceID { get; set; }
-        public Nullable<int> StatusOfWork { get; set; }
         public Nullable<int> AccountID { get; set; }
+        public Nullable<int> StatusOfwork { get; set; }
     
         public virtual ParkingPlace ParkingPlace { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -35,20 +35,18 @@ namespace SmartParkingApplication.Controllers
             //            select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
 
             var users = (from u in db.Users
+                         where u.Account.Role.RoleID == 2
                         orderby u.UserID
                         select new { 
                             u.UserID, u.Name, u.DateOfBirth, 
                             u.Gender, u.UserAddress, u.IdentityCard, 
-                            u.Phone, u.email, u.ContractSigningDate, 
-                            u.ContractExpirationDate, u.StatusOfWork, 
-                            u.ParkingPlace.NameOfParking, u.Account.Role.RoleName }).ToList();
+                            u.Phone, u.email, u.StatusOfwork, 
+                            u.ParkingPlace.NameOfParking, u.Account.Role.RoleName, u.Account.StatusOfAccount }).ToList();
 
             List<Object> list = new List<object>();
             foreach (var item in users)
             {
                 var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy");
-                var signdate = item.ContractSigningDate.Value.ToString("dd/MM/yyyy");
-                var expdate = item.ContractExpirationDate.Value.ToString("dd/MM/yyyy");
                 //var expdateFormES = item.ContractExpirationDate.Value.ToString("yyyy/MM/dd");
                 string gender = string.Empty;
                 switch (item.Gender)
@@ -61,20 +59,20 @@ namespace SmartParkingApplication.Controllers
                         break;
                 }
                 string statusOfwork = string.Empty;
-                switch (item.StatusOfWork)
+                switch (item.StatusOfwork)
                 {
                     case 0:
-                        statusOfwork = "Hết hạn HĐ";
+                        statusOfwork = "Đang trong ca";
                         break;
                     case 1:
-                        statusOfwork = "Còn hợp đồng";
+                        statusOfwork = "Không trong ca";
                         break;
                 }
-                var tr = new { item.UserID, item.Name, DateOfBirth = datebirth, Gender = gender, item.UserAddress, item.IdentityCard, item.Phone, item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, item.NameOfParking, item.RoleName};
+                var tr = new { item.UserID, item.Name, DateOfBirth = datebirth, Gender = gender, item.UserAddress, item.IdentityCard, item.Phone, item.email, StatusOfWork = statusOfwork, item.NameOfParking, item.RoleName, item.StatusOfAccount};
                 list.Add(tr);
             }
 
-            return Json(new { data = list }, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Details/5
@@ -92,32 +90,32 @@ namespace SmartParkingApplication.Controllers
             {
                 gender = "Nam";
             }
-            if (user.StatusOfWork == 1)
+            if (user.StatusOfwork == 0)
             {
-                statusOfwork = "Đang trong HĐ";
+                statusOfwork = "Đang trong ca";
             }
             else
             {
-                statusOfwork = "Hết hạn HĐ";
+                statusOfwork = "Không trong ca";
             }
-            var status = user.StatusOfWork;
+            var status = user.StatusOfwork;
             dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
-            var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
-            var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork , status};
+            //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
+            //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
+            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, user.StatusOfwork , statusOfwork, user.AccountID, user.Account.UserName};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DetailsGH(int id)
-        {
-            var user = db.Users.Find(id);
-            var dateOfBirth = "";
-            dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
-            var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
-            var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { user.UserID, user.Name, user.UserAddress, user.Gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.ParkingPlaceID, user.Account.RoleID, contractSigningDate, contractExpirationDate, user.StatusOfWork };
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult DetailsGH(int id)
+        //{
+        //    var user = db.Users.Find(id);
+        //    var dateOfBirth = "";
+        //    dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
+        //    //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
+        //    //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
+        //    var result = new { user.UserID, user.Name, user.UserAddress, user.Gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.ParkingPlaceID, user.Account.RoleID, user.StatusOfwork };
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -172,7 +170,7 @@ namespace SmartParkingApplication.Controllers
         // combobox status of work
         public JsonResult ComboboxStatusOfwork()
         {
-            var list = db.Users.Select(u => u.StatusOfWork).Distinct().ToList();
+            var list = db.Users.Select(u => u.StatusOfwork).Distinct().ToList();
             List<string> result = new List<string>();
             foreach (var item in list)
             {
@@ -180,11 +178,11 @@ namespace SmartParkingApplication.Controllers
                 switch (item)
                 {
                     case 0:
-                        statusOfwork = "Hết hạn HĐ";
+                        statusOfwork = "Đang trong ca";
                         result.Add(statusOfwork);
                         break;
                     case 1:
-                        statusOfwork = "Đang trong HĐ";
+                        statusOfwork = "Không trong ca";
                         result.Add(statusOfwork);
                         break;
                 }
@@ -200,11 +198,11 @@ namespace SmartParkingApplication.Controllers
         }
 
         //combobox Rolename user
-        public JsonResult ComboboxRoleName()
-        {
-            var list = db.Roles.Select(u => u.RoleName).Distinct().ToList();
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult ComboboxRoleName()
+        //{
+        //    var list = db.Roles.Select(u => u.RoleName).Distinct().ToList();
+        //    return Json(list, JsonRequestBehavior.AllowGet);
+        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -248,8 +246,7 @@ namespace SmartParkingApplication.Controllers
         //Xuat file Exel User
         public ActionResult ExportListAlmostExpired()
         {
-            var dateNow = DateTime.Now.AddDays(+7);
-            List<User> user = db.Users.Where(x => x.ContractExpirationDate <= dateNow && x.ContractExpirationDate >= DateTime.Now).ToList();
+            List<User> users = db.Users.ToList();
             var alluser = new GridView();
             //===================================================
             DataTable dt = new DataTable();
@@ -277,7 +274,7 @@ namespace SmartParkingApplication.Controllers
             //Add in the datarow
 
 
-            foreach (var item in user)
+            foreach (var item in users)
             {
                 DataRow newRow = dt.NewRow();
                 // newRow["Họ tên"] = item.UserName;
@@ -295,8 +292,8 @@ namespace SmartParkingApplication.Controllers
                 newRow["Số CMND"] = item.IdentityCard;
                 // newRow["Ngày ký HĐ"] = item.UserName;
                 // newRow["Ngày hết HĐ"] = item.UserName;
-                newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
-                newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
+                //newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
+                //newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
                 newRow["Chức vụ"] = item.Account.Role.RoleName;
                 newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
                 // newRow["Số CMND"] = item.UserName;

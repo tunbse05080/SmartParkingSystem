@@ -14,7 +14,7 @@ namespace SmartParkingApplication.Controllers
         public ActionResult Index()
         {
 
-            List<User> listUser = db.Users.ToList();
+            List<User> listUser = db.Users.Where(u => u.Account.Role.RoleID == 2).ToList();
             List<ParkingPlace> listPPlace = db.ParkingPlaces.ToList();
             List<MonthlyTicket> listMonthlyTickets = db.MonthlyTickets.ToList();
             ViewBag.NumberOfUser = listUser.Count();

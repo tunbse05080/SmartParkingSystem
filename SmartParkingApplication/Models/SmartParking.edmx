@@ -13,6 +13,7 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="PassWord" Type="nvarchar" MaxLength="50" />
           <Property Name="RoleID" Type="int" />
+          <Property Name="StatusOfAccount" Type="int" />
         </EntityType>
         <EntityType Name="Card">
           <Key>
@@ -156,11 +157,9 @@
           <Property Name="IdentityCard" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="int" />
           <Property Name="email" Type="nvarchar" MaxLength="50" />
-          <Property Name="ContractSigningDate" Type="date" />
-          <Property Name="ContractExpirationDate" Type="date" />
           <Property Name="ParkingPlaceID" Type="int" />
-          <Property Name="StatusOfWork" Type="int" />
           <Property Name="AccountID" Type="int" />
+          <Property Name="StatusOfwork" Type="int" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -594,16 +593,14 @@
           <Property Name="IdentityCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="Int32" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ContractSigningDate" Type="DateTime" Precision="0" />
-          <Property Name="ContractExpirationDate" Type="DateTime" Precision="0" />
           <Property Name="ParkingPlaceID" Type="Int32" />
-          <Property Name="StatusOfWork" Type="Int32" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="User" ToRole="ParkingPlace" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_UserI" FromRole="User" ToRole="Transaction" />
           <NavigationProperty Name="Transactions1" Relationship="Self.FK_Transaction_UserO" FromRole="User" ToRole="Transaction" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="User" ToRole="UserSchedule" />
           <Property Name="AccountID" Type="Int32" />
           <NavigationProperty Name="Account" Relationship="SmartParkingsModel.FK_User_Account" FromRole="User" ToRole="Account" />
+          <Property Name="StatusOfwork" Type="Int32" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -858,6 +855,7 @@
           <Property Name="RoleID" Type="Int32" />
           <NavigationProperty Name="Role" Relationship="SmartParkingsModel.FK__Account__RoleID__7B5B524B" FromRole="Account" ToRole="Role" />
           <NavigationProperty Name="Users" Relationship="SmartParkingsModel.FK_User_Account" FromRole="Account" ToRole="User" />
+          <Property Name="StatusOfAccount" Type="Int32" />
         </EntityType>
         <Association Name="FK__Account__RoleID__7B5B524B">
           <End Type="SmartParkingsModel.Role" Role="Role" Multiplicity="0..1" />
@@ -1034,6 +1032,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SmartParkingsModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="StatusOfwork" ColumnName="StatusOfwork" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1043,10 +1042,7 @@
                 <ScalarProperty Name="IdentityCard" ColumnName="IdentityCard" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="ContractSigningDate" ColumnName="ContractSigningDate" />
-                <ScalarProperty Name="ContractExpirationDate" ColumnName="ContractExpirationDate" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
-                <ScalarProperty Name="StatusOfWork" ColumnName="StatusOfWork" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1062,6 +1058,7 @@
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="SmartParkingsModel.Account">
               <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="StatusOfAccount" ColumnName="StatusOfAccount" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="PassWord" ColumnName="PassWord" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
