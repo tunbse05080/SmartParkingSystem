@@ -2083,6 +2083,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -2091,7 +2096,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\LoginUsController.cs" />
     <Compile Include="Controllers\ManageCardController.cs" />
     <Compile Include="Controllers\ManageHistoryParkingController.cs" />
     <Compile Include="Controllers\ManagePPlaceController.cs" />
@@ -2190,13 +2195,9 @@
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
     <Content Include="Views\ManageStatistic\IncomeStatistic.cshtml" />
     <Content Include="Views\ManageStatistic\DensityStatistic.cshtml" />
-    <Content Include="Views\LoginUser\Create.cshtml" />
-    <Content Include="Views\LoginUser\Delete.cshtml" />
-    <Content Include="Views\LoginUser\Details.cshtml" />
-    <Content Include="Views\LoginUser\Edit.cshtml" />
-    <Content Include="Views\LoginUser\Index.cshtml" />
     <Content Include="Views\SettingPrice\Index.cshtml" />
     <Content Include="Views\ManageHistoryParking\Index.cshtml" />
+    <Content Include="Views\LoginUs\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
