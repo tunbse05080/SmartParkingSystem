@@ -2,8 +2,7 @@
 $(document).ready(function () {
     loadData();
     ComboboxGender();
-    //ComboboxStatusOfwork();
-    //ComboboxRoleNameU();
+    ComboboxRoleNameU();
     ComboboxParkingPlaceU();
 });
 
@@ -584,25 +583,25 @@ function ComboboxParkingPlaceU() {
     });
 }
 
-//function ComboboxRoleNameU() {
-//    $.ajax({
-//        url: "/ManageUser/ComboboxRoleName",
-//        type: "GET",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            var html = '';
-//            var i = 1;
-//            $.each(result, function (key, item) {
-//                html += '<option value="' + i + '">' + item + '</option>';
-//                i++;
-//            });
-//            $("#cbRoleNameU").html(html);
-//            $("#cbRoleNameUEdit").html(html);
+function ComboboxRoleNameU() {
+    $.ajax({
+        url: "/ManageUser/ComboboxRoleName",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 1;
+            $.each(result, function (key, item) {
+                html += '<option value="' + i + '">' + item + '</option>';
+                i++;
+            });
+            $("#cbRoleNameU").html(html);
+            $("#cbRoleNameUEdit").html(html);
 
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
