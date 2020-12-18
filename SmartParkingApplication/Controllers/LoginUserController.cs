@@ -26,7 +26,7 @@ namespace SmartParkingApplication.Controllers
         public JsonResult ValidateUser(string username, string password)
         {
             
-            var data = from u in db.Users where u.UserName == username && u.PassWork == password  select u;
+            var data = from u in db.Accounts where u.UserName == username && u.PassWord == password  select u;
             if (data.Count() > 0)
             {
                 Session["UserName"] = username;
@@ -75,56 +75,15 @@ namespace SmartParkingApplication.Controllers
         // POST: LoginUser/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,Name,UserName,PassWork,DateOfBirth,Gender,UserAddress,IdentityCard,Phone,email,ContractSigningDate,ContractExpirationDate,RoleID,ParkingPlaceID,StatusOfWork")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.ParkingPlaceID = new SelectList(db.ParkingPlaces, "ParkingPlaceID", "NameOfParking", user.ParkingPlaceID);
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
-            return View(user);
-        }
+        
 
         // GET: LoginUser/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ParkingPlaceID = new SelectList(db.ParkingPlaces, "ParkingPlaceID", "NameOfParking", user.ParkingPlaceID);
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
-            return View(user);
-        }
+      
 
         // POST: LoginUser/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,Name,UserName,PassWork,DateOfBirth,Gender,UserAddress,IdentityCard,Phone,email,ContractSigningDate,ContractExpirationDate,RoleID,ParkingPlaceID,StatusOfWork")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ParkingPlaceID = new SelectList(db.ParkingPlaces, "ParkingPlaceID", "NameOfParking", user.ParkingPlaceID);
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
-            return View(user);
-        }
+     
 
         // GET: LoginUser/Delete/5
         public ActionResult Delete(int? id)
