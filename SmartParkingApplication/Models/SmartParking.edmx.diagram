@@ -27,12 +27,14 @@
         <AssociationConnector Association="SmartParkingsModel.FK__Transacti__Parki__5441852A" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__User__ParkingPla__5535A963" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK_Price_ParkingPlace" ManuallyRouted="false" />
-        <AssociationConnector Association="SmartParkingsModel.FK__User__RoleID__5629CD9C" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__UserSched__Sched__571DF1D5" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK_Transaction_UserI" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK_Transaction_UserO" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK__UserSched__UserI__5812160E" ManuallyRouted="false" />
         <AssociationConnector Association="SmartParkingsModel.FK_MonthlyTicket_ParkingPlace" />
+        <EntityTypeShape EntityType="SmartParkingsModel.Account" Width="1.5" PointX="9" PointY="18.5" />
+        <AssociationConnector Association="SmartParkingsModel.FK__Account__RoleID__7B5B524B" />
+        <AssociationConnector Association="SmartParkingsModel.FK_User_Account" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

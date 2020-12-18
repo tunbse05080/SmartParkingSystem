@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SmartParkingsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PassWord" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" />
+        </EntityType>
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="CardID" />
@@ -141,8 +150,6 @@
           </Key>
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
-          <Property Name="PassWork" Type="nvarchar" MaxLength="50" />
           <Property Name="DateOfBirth" Type="date" />
           <Property Name="Gender" Type="int" />
           <Property Name="UserAddress" Type="nvarchar" MaxLength="50" />
@@ -151,9 +158,9 @@
           <Property Name="email" Type="nvarchar" MaxLength="50" />
           <Property Name="ContractSigningDate" Type="date" />
           <Property Name="ContractExpirationDate" Type="date" />
-          <Property Name="RoleID" Type="int" />
           <Property Name="ParkingPlaceID" Type="int" />
           <Property Name="StatusOfWork" Type="int" />
+          <Property Name="AccountID" Type="int" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -163,6 +170,18 @@
           <Property Name="UserID" Type="int" />
           <Property Name="ScheduleID" Type="int" />
         </EntityType>
+        <Association Name="FK__Account__RoleID__7B5B524B">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Image__Transacti__656C112C">
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
           <End Role="Image" Type="Self.Image" Multiplicity="*" />
@@ -232,18 +251,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="ParkingPlaceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__User__RoleID__5629CD9C">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="RoleID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -331,7 +338,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SmartParkingsModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyIncomeStatement" EntityType="Self.MonthlyIncomeStatement" Schema="dbo" store:Type="Tables" />
@@ -346,6 +366,10 @@
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSchedule" EntityType="Self.UserSchedule" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Account__RoleID__7B5B524B" Association="Self.FK__Account__RoleID__7B5B524B">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
           <AssociationSet Name="FK__Image__Transacti__656C112C" Association="Self.FK__Image__Transacti__656C112C">
             <End Role="Transaction" EntitySet="Transaction" />
             <End Role="Image" EntitySet="Image" />
@@ -368,10 +392,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__User__ParkingPla__5535A963" Association="Self.FK__User__ParkingPla__5535A963">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK__User__RoleID__5629CD9C" Association="Self.FK__User__RoleID__5629CD9C">
-            <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK__UserSched__Sched__571DF1D5" Association="Self.FK__UserSched__Sched__571DF1D5">
@@ -401,6 +421,10 @@
           <AssociationSet Name="FK_Transaction_UserO" Association="Self.FK_Transaction_UserO">
             <End Role="User" EntitySet="User" />
             <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Account" Association="Self.FK_User_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -514,7 +538,7 @@
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="Accounts" Relationship="SmartParkingsModel.FK__Account__RoleID__7B5B524B" FromRole="Role" ToRole="Account" />
         </EntityType>
         <EntityType Name="Schedule">
           <Key>
@@ -564,8 +588,6 @@
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PassWork" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
           <Property Name="Gender" Type="Int32" />
           <Property Name="UserAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -574,14 +596,14 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ContractSigningDate" Type="DateTime" Precision="0" />
           <Property Name="ContractExpirationDate" Type="DateTime" Precision="0" />
-          <Property Name="RoleID" Type="Int32" />
           <Property Name="ParkingPlaceID" Type="Int32" />
           <Property Name="StatusOfWork" Type="Int32" />
           <NavigationProperty Name="ParkingPlace" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="User" ToRole="ParkingPlace" />
-          <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleID__5629CD9C" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_UserI" FromRole="User" ToRole="Transaction" />
           <NavigationProperty Name="Transactions1" Relationship="Self.FK_Transaction_UserO" FromRole="User" ToRole="Transaction" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__UserI__5812160E" FromRole="User" ToRole="UserSchedule" />
+          <Property Name="AccountID" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="SmartParkingsModel.FK_User_Account" FromRole="User" ToRole="Account" />
         </EntityType>
         <EntityType Name="UserSchedule">
           <Key>
@@ -689,18 +711,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__RoleID__5629CD9C">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="RoleID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__UserSched__Sched__571DF1D5">
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
           <End Role="UserSchedule" Type="Self.UserSchedule" Multiplicity="*" />
@@ -796,10 +806,6 @@
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="Price" EntitySet="Prices" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__RoleID__5629CD9C" Association="Self.FK__User__RoleID__5629CD9C">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="FK__UserSched__Sched__571DF1D5" Association="Self.FK__UserSched__Sched__571DF1D5">
             <End Role="Schedule" EntitySet="Schedules" />
             <End Role="UserSchedule" EntitySet="UserSchedules" />
@@ -820,6 +826,15 @@
             <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
             <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
           </AssociationSet>
+          <EntitySet Name="Accounts" EntityType="SmartParkingsModel.Account" />
+          <AssociationSet Name="FK__Account__RoleID__7B5B524B" Association="SmartParkingsModel.FK__Account__RoleID__7B5B524B">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Account" Association="SmartParkingsModel.FK_User_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_MonthlyTicket_ParkingPlace">
           <End Type="SmartParkingsModel.ParkingPlace" Role="ParkingPlace" Multiplicity="0..1" />
@@ -830,6 +845,41 @@
             </Principal>
             <Dependent Role="MonthlyTicket">
               <PropertyRef Name="ParkingPlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="SmartParkingsModel.FK__Account__RoleID__7B5B524B" FromRole="Account" ToRole="Role" />
+          <NavigationProperty Name="Users" Relationship="SmartParkingsModel.FK_User_Account" FromRole="Account" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__Account__RoleID__7B5B524B">
+          <End Type="SmartParkingsModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="SmartParkingsModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Account">
+          <End Type="SmartParkingsModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="SmartParkingsModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -984,10 +1034,9 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SmartParkingsModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="PassWork" ColumnName="PassWork" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="UserAddress" ColumnName="UserAddress" />
@@ -996,7 +1045,6 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="ContractSigningDate" ColumnName="ContractSigningDate" />
                 <ScalarProperty Name="ContractExpirationDate" ColumnName="ContractExpirationDate" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
                 <ScalarProperty Name="StatusOfWork" ColumnName="StatusOfWork" />
               </MappingFragment>
@@ -1008,6 +1056,16 @@
                 <ScalarProperty Name="UserScheduleID" ColumnName="UserScheduleID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="SmartParkingsModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

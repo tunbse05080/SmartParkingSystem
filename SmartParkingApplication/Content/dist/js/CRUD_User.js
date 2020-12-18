@@ -262,9 +262,7 @@ function Add() {
     //    return false;
     //}
     var empObj = {
-        UserName: $('#UserName').val(),
         Name: $('#FullName').val(),
-        PassWork: $('#PassWord').val(),
         DateOfBirth: $('#DateOfBirth').val(),
         Gender: $('#cbGender').val(),
         UserAddress: $('#Address').val(),
@@ -274,7 +272,7 @@ function Add() {
         ContractSigningDate: $('#ContractSigningDate').val(),
         ContractExpirationDate: $('#ContractExpirationDate').val(),
         StatusOfWork: 1,
-        RoleID: $('#cbRoleNameU').val(),
+        AccountID: $('#cbAccountAdd').val(),
         ParkingPlaceID: $('#cbparkingPlaceU').val(),
 
     };

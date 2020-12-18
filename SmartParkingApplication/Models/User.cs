@@ -24,8 +24,6 @@ namespace SmartParkingApplication.Models
     
         public int UserID { get; set; }
         public string Name { get; set; }
-        public string UserName { get; set; }
-        public string PassWork { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public Nullable<int> Gender { get; set; }
         public string UserAddress { get; set; }
@@ -34,17 +32,17 @@ namespace SmartParkingApplication.Models
         public string email { get; set; }
         public Nullable<System.DateTime> ContractSigningDate { get; set; }
         public Nullable<System.DateTime> ContractExpirationDate { get; set; }
-        public Nullable<int> RoleID { get; set; }
         public Nullable<int> ParkingPlaceID { get; set; }
         public Nullable<int> StatusOfWork { get; set; }
+        public Nullable<int> AccountID { get; set; }
     
         public virtual ParkingPlace ParkingPlace { get; set; }
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSchedule> UserSchedules { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

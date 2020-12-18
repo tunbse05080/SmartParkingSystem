@@ -12,18 +12,21 @@ namespace SmartParkingApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Account
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Account()
         {
-            this.Accounts = new HashSet<Account>();
+            this.Users = new HashSet<User>();
         }
     
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
+        public int AccountID { get; set; }
+        public string UserName { get; set; }
+        public string PassWord { get; set; }
+        public Nullable<int> RoleID { get; set; }
     
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -2103,6 +2103,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>SmartParking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Card.cs">
       <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>

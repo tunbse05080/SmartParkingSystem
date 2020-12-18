@@ -26,13 +26,22 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadData()
         {
-            var users = from r in db.Roles
-                        join u in db.Users on r.RoleID equals u.RoleID into table1
-                        from u in table1.DefaultIfEmpty()
-                        join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
-                        from p in table2.DefaultIfEmpty()
+            //var users = from r in db.Roles
+            //            join u in db.Users on r.RoleID equals u. into table1
+            //            from u in table1.DefaultIfEmpty()
+            //            join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
+            //            from p in table2.DefaultIfEmpty()
+            //            orderby u.UserID
+            //            select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
+
+            var users = (from u in db.Users
                         orderby u.UserID
-                        select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
+                        select new { 
+                            u.UserID, u.Name, u.DateOfBirth, 
+                            u.Gender, u.UserAddress, u.IdentityCard, 
+                            u.Phone, u.email, u.ContractSigningDate, 
+                            u.ContractExpirationDate, u.StatusOfWork, 
+                            u.ParkingPlace.NameOfParking, u.Account.Role.RoleName }).ToList();
 
             List<Object> list = new List<object>();
             foreach (var item in users)
@@ -61,7 +70,7 @@ namespace SmartParkingApplication.Controllers
                         statusOfwork = "Còn hợp đồng";
                         break;
                 }
-                var tr = new { UserID = item.UserID, UserName = item.UserName, Name = item.Name, DateOfBirth = datebirth, Gender = gender, UserAddress = item.UserAddress, IdentityCard = item.IdentityCard, Phone = item.Phone, email = item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, NameOfParking = item.NameOfParking, RoleName = item.RoleName};
+                var tr = new { item.UserID, item.Name, DateOfBirth = datebirth, Gender = gender, item.UserAddress, item.IdentityCard, item.Phone, item.email, ContractSigningDate = signdate, ContractExpirationDate = expdate, StatusOfWork = statusOfwork, item.NameOfParking, item.RoleName};
                 list.Add(tr);
             }
 
@@ -71,11 +80,11 @@ namespace SmartParkingApplication.Controllers
         // GET: Users/Details/5
         public JsonResult Details(int id)
         {
-            var employee = db.Users.Find(id);
+            var user = db.Users.Find(id);
             var gender = "";
             var dateOfBirth = "";
             var statusOfwork = "";
-            if (employee.Gender == 1)
+            if (user.Gender == 1)
             {
                 gender = "Nữ";
             }
@@ -83,7 +92,7 @@ namespace SmartParkingApplication.Controllers
             {
                 gender = "Nam";
             }
-            if (employee.StatusOfWork == 1)
+            if (user.StatusOfWork == 1)
             {
                 statusOfwork = "Đang trong HĐ";
             }
@@ -91,22 +100,22 @@ namespace SmartParkingApplication.Controllers
             {
                 statusOfwork = "Hết hạn HĐ";
             }
-            var status = employee.StatusOfWork;
-            dateOfBirth = employee.DateOfBirth.Value.ToString("MM/dd/yyyy");
-            var contractSigningDate = employee.ContractSigningDate.Value.ToString("MM/dd/yyyy");
-            var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { employee.UserID, employee.UserName, employee.Name, employee.UserAddress, employee.PassWork, gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, employee.ParkingPlace.NameOfParking, employee.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork , status};
+            var status = user.StatusOfWork;
+            dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
+            var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
+            var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
+            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, contractSigningDate, contractExpirationDate, statusOfwork , status};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DetailsGH(int id)
         {
-            var employee = db.Users.Find(id);
+            var user = db.Users.Find(id);
             var dateOfBirth = "";
-            dateOfBirth = employee.DateOfBirth.Value.ToString("MM/dd/yyyy");
-            var contractSigningDate = employee.ContractSigningDate.Value.ToString("MM/dd/yyyy");
-            var contractExpirationDate = employee.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { employee.UserID, employee.UserName, employee.Name, employee.UserAddress, employee.PassWork, employee.Gender, dateOfBirth, employee.Phone, employee.email, employee.IdentityCard, ParkingPlaceID = employee.ParkingPlace.ParkingPlaceID, RoleID = employee.Role.RoleID, contractSigningDate, contractExpirationDate, employee.StatusOfWork };
+            dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
+            var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
+            var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
+            var result = new { user.UserID, user.Name, user.UserAddress, user.Gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.ParkingPlaceID, user.Account.RoleID, contractSigningDate, contractExpirationDate, user.StatusOfWork };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -279,7 +288,6 @@ namespace SmartParkingApplication.Controllers
 
                 newRow["Họ và tên"] = item.Name;
                 newRow["Ngày Sinh"] = item.DateOfBirth;
-                newRow["Tên Tài Khoản"] = item.UserName;
                 newRow["Giới tính"] = item.Gender;
                 newRow["Địa chỉ"] = item.UserAddress;
                 newRow["Số điện thoại"] = item.Phone;
@@ -289,7 +297,7 @@ namespace SmartParkingApplication.Controllers
                 // newRow["Ngày hết HĐ"] = item.UserName;
                 newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
                 newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
-                newRow["Chức vụ"] = item.Role.RoleName;
+                newRow["Chức vụ"] = item.Account.Role.RoleName;
                 newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
                 // newRow["Số CMND"] = item.UserName;
                 //full fesh
@@ -320,7 +328,4 @@ namespace SmartParkingApplication.Controllers
             return Redirect("/ManageUser");
         }
     }
-
-
-
 }

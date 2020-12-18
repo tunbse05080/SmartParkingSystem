@@ -74,6 +74,7 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(new { dataSSP = list}, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult ParkingSSDetails(int id)
         {
             var tran = db.Transactions.Find(id);
