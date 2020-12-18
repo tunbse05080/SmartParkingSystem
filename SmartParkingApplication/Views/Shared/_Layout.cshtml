@@ -69,7 +69,14 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","ManageAccount")" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Quản lí tài khoản
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="@Url.Action("Index","ManageUser")" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
@@ -264,5 +271,6 @@
     <script src="~/Content/dist/js/CarDensityStatistic.js"></script>
     <script src="~/Content/dist/js/Dashboard.js"></script>
     <script src="~/Content/dist/js/HistoryParking.js"></script>
+    <script src="~/Content/dist/js/Account.js"></script>
 </body>
 </html>

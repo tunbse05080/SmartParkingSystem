@@ -146,6 +146,7 @@
     <Content Include="Content\dist\img\user6-128x128.jpg" />
     <Content Include="Content\dist\img\user7-128x128.jpg" />
     <Content Include="Content\dist\img\user8-128x128.jpg" />
+    <Content Include="Content\dist\js\Account.js" />
     <Content Include="Content\dist\js\adminlte.js" />
     <Content Include="Content\dist\js\adminlte.min.js" />
     <Content Include="Content\dist\js\CarDensityStatistic.js" />
@@ -2092,6 +2093,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\ManageAccountController.cs" />
     <Compile Include="Controllers\ManageCardController.cs" />
     <Compile Include="Controllers\ManageHistoryParkingController.cs" />
     <Compile Include="Controllers\ManagePPlaceController.cs" />
@@ -2197,6 +2199,7 @@
     <Content Include="Views\LoginUser\Index.cshtml" />
     <Content Include="Views\SettingPrice\Index.cshtml" />
     <Content Include="Views\ManageHistoryParking\Index.cshtml" />
+    <Content Include="Views\ManageAccount\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,11 +1,6 @@
 ﻿$(document).ready(function () {
     loadChartIncome();
     ComboboxNameParking();
-    if ($('#cbTypeOfTicket').val() == 0) {
-        $('#dvParking').hide();
-    } else {
-        $('#dvParking').show();
-    }
 });
 
 //Load Chart Income
