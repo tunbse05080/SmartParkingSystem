@@ -98,7 +98,7 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Load data report income follow parkingplace, date, workingShift
-        public JsonResult LoadDataIncomeReport(int id, DateTime dateTime,int workingShift)
+        public JsonResult LoadDataIncomeReport(int id, DateTime dateTime, int workingShift)
         {
             DateTime dateFrom = dateTime;
             DateTime dateTo = dateTime;
@@ -106,7 +106,6 @@ namespace SmartParkingApplication.Controllers
             switch (workingShift)
             {
                 case 0:
-                    dateFrom = dateTime.Add(TimeSpan.Parse("00:00:00"));
                     dateTo = dateTime.Add(TimeSpan.Parse("23:59:59"));
                     break;
                 case 1:
@@ -124,8 +123,11 @@ namespace SmartParkingApplication.Controllers
                     break;
             }
             var result = (from tr in db.Transactions
-                          where tr.ParkingPlaceID == id && tr.TimeOutv > dateFrom && tr.TimeOutv < dateTo
-                          select new { tr.User.Account.UserName, tr.User.Name, tr.TotalPrice }).ToList();
+                          where tr.ParkingPlaceID == id && tr.TimeOutv > dateFrom && tr.TimeOutv <= dateTo
+                          select new {tr.User.Account.UserName, tr.User.Name, tr.TotalPrice} into table1
+                          group table1 by table1.UserName into groupby
+                          select new { groupby.FirstOrDefault().UserName, groupby.FirstOrDefault().Name, totalPrice = groupby.Sum(x => x.TotalPrice)}).ToList();
+            //var result = db.Transactions.Where(tr => tr.ParkingPlaceID == id && tr.TimeOutv > dateFrom && tr.TimeOutv <= dateTo).GroupBy(tr => tr.UserOID).Select(tr => new { totalPrice = tr.Sum(b => b.TotalPrice).ToString(), Name = tr. });
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
