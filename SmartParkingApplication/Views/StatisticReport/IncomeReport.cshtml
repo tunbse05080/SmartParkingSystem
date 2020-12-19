@@ -32,42 +32,40 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <select class="form-control w-75" onchange="" id="cbNameParkingPlace">
+                                    <select class="form-control w-75" id="cbNameParkingPlaceReport">
                                     </select>
                                 </div>
                                 @*<div class="col-sm-2">
-                <select class="form-control w-75" onchange="" id="cbNameStaff">
-                </select>
-            </div>*@
+                                        <select class="form-control w-75" onchange="" id="cbNameStaff">
+                                        </select>
+                                    </div>*@
                                 <div class="col-sm-3">
-                                    <input class="form-control w-75" type="date" onclick="" id="timeWorking" value="2020-12-12" />
+                                    <input class="form-control w-75" type="date" id="timeWorking"/>
                                 </div>
                                 <div class="col-sm-3">
                                     @*<strong style="font-size:x-large">Ca làm việc</strong>*@
-                                    <select class="form-control w-75" onchange="" id="cbWorkShift">
-                                        <option>Ca 1 (6h - 14h)</option>
-                                        <option>Ca 2 (14h - 22h)</option>
-                                        <option>Ca 3 (22h - 6h)</option>
+                                    <select class="form-control w-75" id="cbWorkShift">
+                                        <option value="0">Cả ngày</option>
+                                        <option value="1">Ca 1 (6h - 14h)</option>
+                                        <option value="2">Ca 2 (14h - 22h)</option>
+                                        <option value="3">Ca 3 (22h - 6h)</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
-                                    <button class="btn btn-success" id="btnSearchReport">Search</button>
+                                    <button class="btn btn-success" id="btnSearchReport" onclick="LoadDataIncomeReport()">Search</button>
                                 </div>
-                            </div>
+                            </div><br />
                             <!-- table -->
                             <div class="row invoice-info">
-                                <table id="tbPrice" class="table table-avatar">
+                                <table id="tbIncomeReport" class="table table-avatar">
                                     <thead>
                                         <tr class="bg-green">
-                                            <th>Loại xe</th>
-                                            <th>Giá vé ngày</th>
-                                            <th>Giá vé block - đầu(vnd)</th>
-                                            <th>Giá vé block - tiếp(vnd)</th>
-                                            <th>Ngày áp dụng</th>
-                                            <th>Thao tác</th>
+                                            <th>Tên tài khoản</th>
+                                            <th>Tên nhân viên</th>
+                                            <th>Tổng tiền</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbodypr">
+                                    <tbody id="tbodyIR">
                                     </tbody>
                                 </table>
                             </div>

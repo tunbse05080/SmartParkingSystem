@@ -97,15 +97,37 @@ namespace SmartParkingApplication.Controllers
             return Json(new { listMotoDestiny, listCarDestiny }, JsonRequestBehavior.AllowGet);
         }
 
-        //Load Chart CarDensity
-        public JsonResult LoadDataIncomeReport(int idParking,int idStaff, DateTime date, int workingShift)
+        //Load data report income follow parkingplace, date, workingShift
+        public JsonResult LoadDataIncomeReport(int id, DateTime dateTime,int workingShift)
         {
-            List<Object> listMotoDestiny = new List<Object>();
-            //
-            var result = "";
+            DateTime dateFrom = dateTime;
+            DateTime dateTo = dateTime;
+
+            switch (workingShift)
+            {
+                case 0:
+                    dateFrom = dateTime.Add(TimeSpan.Parse("00:00:00"));
+                    dateTo = dateTime.Add(TimeSpan.Parse("23:59:59"));
+                    break;
+                case 1:
+                    dateFrom = dateTime.Add(TimeSpan.Parse("06:00:00"));
+                    dateTo = dateTime.Add(TimeSpan.Parse("14:00:00"));
+                    break;
+                case 2:
+                    dateFrom = dateTime.Add(TimeSpan.Parse("14:00:00"));
+                    dateTo = dateTime.Add(TimeSpan.Parse("22:00:00"));
+                    break;
+                case 3:
+                    dateFrom = dateTime.Add(TimeSpan.Parse("22:00:00"));
+                    dateTo = dateTime.Add(TimeSpan.Parse("06:00:00"));
+                    dateTo.AddDays(1);
+                    break;
+            }
+            var result = (from tr in db.Transactions
+                          where tr.ParkingPlaceID == id && tr.TimeOutv > dateFrom && tr.TimeOutv < dateTo
+                          select new { tr.User.Account.UserName, tr.User.Name, tr.TotalPrice }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
 
         //combobox Gender
         public JsonResult ComboboxNameParking()

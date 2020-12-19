@@ -93,7 +93,7 @@ function ComboboxNameParking() {
             $('#cbNameParkingPlaceDaily').html(html);
             $('#cbNameParkingPlaceBlock').html(html);
             $('#cbNameParkingPlaceMonthly').html(html);
-
+            $('#cbNameParkingPlaceReport').html(html);
 
         },
         error: function (errormessage) {
