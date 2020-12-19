@@ -2092,6 +2092,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginUsController.cs" />
     <Compile Include="Controllers\ManageAccountController.cs" />
     <Compile Include="Controllers\ManageCardController.cs" />
     <Compile Include="Controllers\ManageHistoryParkingController.cs" />
@@ -2191,14 +2192,13 @@
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
     <Content Include="Views\ManageStatistic\IncomeStatistic.cshtml" />
     <Content Include="Views\ManageStatistic\DensityStatistic.cshtml" />
-    <Content Include="Views\LoginUser\Create.cshtml" />
-    <Content Include="Views\LoginUser\Delete.cshtml" />
-    <Content Include="Views\LoginUser\Details.cshtml" />
-    <Content Include="Views\LoginUser\Edit.cshtml" />
-    <Content Include="Views\LoginUser\Index.cshtml" />
     <Content Include="Views\SettingPrice\Index.cshtml" />
     <Content Include="Views\ManageHistoryParking\Index.cshtml" />
     <Content Include="Views\ManageAccount\Index.cshtml" />
+    <Content Include="Views\LoginUs\Forgot.cshtml" />
+    <Content Include="Views\LoginUs\Index.cshtml" />
+    <Content Include="Views\Setting\Detail.cshtml" />
+    <Content Include="Views\Setting\de.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
