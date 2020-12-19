@@ -157,6 +157,7 @@
     <Content Include="Content\dist\js\Dashboard.js" />
     <Content Include="Content\dist\css\IconDashboard\ionicons.min.css" />
     <Content Include="Content\dist\js\HistoryParking.js" />
+    <Content Include="Content\dist\js\IncomeReport.js" />
     <Content Include="Content\dist\js\IncomeStatistic.js" />
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\css\Select2\select2.min.css" />
@@ -2097,7 +2098,7 @@
     <Compile Include="Controllers\ManageCardController.cs" />
     <Compile Include="Controllers\ManageHistoryParkingController.cs" />
     <Compile Include="Controllers\ManagePPlaceController.cs" />
-    <Compile Include="Controllers\ManageStatisticController.cs" />
+    <Compile Include="Controllers\StatisticReportController.cs" />
     <Compile Include="Controllers\ManageTicketController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
@@ -2190,8 +2191,8 @@
     <Content Include="Views\ManageUser\Editworkingcalendar.cshtml" />
     <Content Include="Views\ManagePPlace\ManageStatusParkingPlace.cshtml" />
     <Content Include="Views\ManagePPlace\ListParkingPlace.cshtml" />
-    <Content Include="Views\ManageStatistic\IncomeStatistic.cshtml" />
-    <Content Include="Views\ManageStatistic\DensityStatistic.cshtml" />
+    <Content Include="Views\StatisticReport\IncomeStatistic.cshtml" />
+    <Content Include="Views\StatisticReport\DensityStatistic.cshtml" />
     <Content Include="Views\SettingPrice\Index.cshtml" />
     <Content Include="Views\ManageHistoryParking\Index.cshtml" />
     <Content Include="Views\ManageAccount\Index.cshtml" />
@@ -2199,6 +2200,7 @@
     <Content Include="Views\LoginUs\Index.cshtml" />
     <Content Include="Views\Setting\Detail.cshtml" />
     <Content Include="Views\Setting\de.cshtml" />
+    <Content Include="Views\StatisticReport\IncomeReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
