@@ -244,6 +244,16 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult CreateUserSchedule(UserSchedule userSchedule)
+        {
+            if (ModelState.IsValid)
+            {
+                db.UserSchedules.Add(userSchedule);
+                db.SaveChanges();
+            }
+            return Json(userSchedule, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult CreateWorkingCalendar(Schedule schedule)
         {
             if (ModelState.IsValid)
