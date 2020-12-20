@@ -152,12 +152,37 @@ function CreateWorkingCalendar() {
 }
 
 function EditWorkingCalendar() {
+    var UserID = $('#cbUserNameEmpEdit').val();
+    if ($('checkboxDateEdit').checked == false || !$('checkboxDateEdit').checked) {
+        if ($('#cbWorkShiftEmpEdit').val() == 1) {
+            var scheObj = {
+                TimeStart: $('#DateApplyEdit').val() + " 06:00:00",
+                TimeEnd: $('#DateApplyEdit').val() + " 14:00:00",
+                Slot: $('#cbWorkShiftEmpEdit').val()
+            }
+        } else if ($('#cbWorkShiftEmpEdit').val() == 2) {
+            var scheObj = {
+                TimeStart: $('#DateApplyEdit').val() + " 14:00:00",
+                TimeEnd: $('#DateApplyEdit').val() + " 22:00:00",
+                Slot: $('#cbWorkShiftEmpEdit').val()
+            }
+        } else {
+            var scheObj = {
+                TimeStart: $('#DateApplyEdit').val() + " 22:00:00",
+                TimeEnd: $('#DateApplyEdit').val() + " 06:00:00",
+                Slot: $('#cbWorkShiftEmpEdit').val()
+            }
+        }
+    }
     $.ajax({
-        url: "/ManageUser/EditWorkingcalendar",
-        type: "GET",
+        url: "/ManageUser/CheckEditWorkingCalendar",
+        type: "POST",
+        data: JSON.stringify({ schedule: scheObj, UserID: UserID }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+            $('#myModalEditWorkingCalendar').modal('hide');
+            $('#calendarWork').fullCalendar('removeEvents');
             LoadDataCalendar();
         },
         error: function (errormessage) {
@@ -219,7 +244,7 @@ function getNameStaff(check) {
                 $('myModalCreateWorkingCalendar').modal('Show');
             } else {
                 $('#FullNameEmpEdit').val(result.Name);
-                $('#DateStart').val(loadDateNow());
+                $('#DateStartEdit').val(loadDateNow());
                 $('myModalEditWorkingCalendar').modal('Show');
             }
         },

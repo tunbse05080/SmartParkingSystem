@@ -264,6 +264,19 @@ namespace SmartParkingApplication.Controllers
             return Json(schedule, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult CheckEditWorkingCalendar(int UserID, Schedule schedule)
+        {
+            var dataSchedule = (from s in db.Schedules
+                                where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
+                                select new { s.ScheduleID }).FirstOrDefault();
+            var result = (from us in db.UserSchedules
+                          where us.ScheduleID == dataSchedule.ScheduleID
+                          select new { us.UserScheduleID, us.ScheduleID }).FirstOrDefault();
+            UserSchedule userSchedule = new UserSchedule { UserScheduleID = result.UserScheduleID, UserID = UserID, ScheduleID = result.ScheduleID };
+            EditWorkingcalendar(userSchedule);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         //Edit working calendar
         public JsonResult EditWorkingcalendar(UserSchedule userSchedule)
         {
