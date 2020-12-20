@@ -6,14 +6,13 @@
         dataType: "json",
         success: function (result) {
 
-            $('#ParkingPlaceIDd').val(result.ParkingPlaceID);
-            $('#NameOfParkingd').val(result.NameOfParking);
-            $('#Locationd').val(result.Location);
-            $('#NumberOfCardd').val(result.NumberOfCar);
-            $('#NumberOfMotoBiked').val(result.NumberOfMotoBike);
-            $('#NumberCarBlankd').val(result.NumberCarBlank);
-            $('#NumberMotoBikeBlankd').val(result.NumberMotoBikeBlank);
-            $('#StatusOfParkingPlaced').val(result.statusOfParking);
+            $('#email').val(result.email);
+            $('#DateOfBirth').val(result.DateOfBirth);
+            $('#Gender').val(result.Gender);
+            $('#Name').val(result.Name);
+            $('#Phone').val(result.Phone);
+            $('#UserAddress').val(result.UserAddress);
+            
 
 
 
