@@ -33,5 +33,13 @@ namespace SmartParkingApplication.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult SVDetails(int id,int accountID)
+        {
+            var sv = db.Users.Find(id,accountID);
+           
+
+            var result = new { sv.email, sv.DateOfBirth, sv.Gender, sv.Name, sv.Phone, sv.UserAddress };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
