@@ -63,7 +63,7 @@
                         <img src="~/Content/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Tên người dùng</a>
+                        <a  href="@Url.Action("SVDetails","Setting", new  { Name = @Session["UserName"].ToString(), id = @Session["idAccount"].ToString() })" class="d-block"><h5 id="abc">@Session["UserName"].ToString()|| @Session["idAccount"].ToString()</h5></a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -193,7 +193,7 @@
                             <!--End setting-->
                             <!--Log out-->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="@Url.Action("Index","LoginUs")" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Đăng xuất

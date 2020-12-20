@@ -1,6 +1,11 @@
-﻿function getSVDetailByID(UserID,AccountID) {
+﻿$(document).ready(function () {
+    getSVDetailByID();
+    
+});
+function getSVDetailByID() {
     $.ajax({
-        url: "/Setting/SVDetails/" + UserID, AccountID,
+        
+        url: "/Setting/SVDetails",
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -12,16 +17,13 @@
             $('#Name').val(result.Name);
             $('#Phone').val(result.Phone);
             $('#UserAddress').val(result.UserAddress);
-            
-
-
-
+     
 
             $('#myModalSVDetail').modal('show');
 
         },
         error: function (errormessage) {
-            alert("Exception:" + UserID + errormessage.responseText);
+            alert("Exception:" + AccountID + errormessage.responseText);
         }
     });
     return false;

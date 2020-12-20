@@ -159,6 +159,7 @@
     <Content Include="Content\dist\js\HistoryParking.js" />
     <Content Include="Content\dist\js\IncomeReport.js" />
     <Content Include="Content\dist\js\IncomeStatistic.js" />
+    <Content Include="Content\dist\js\SettingViewProfile.js" />
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\css\Select2\select2.min.css" />
     <Content Include="Content\dist\js\Select2\select2.min.js" />
@@ -2201,6 +2202,7 @@
     <Content Include="Views\Setting\Detail.cshtml" />
     <Content Include="Views\Setting\de.cshtml" />
     <Content Include="Views\StatisticReport\IncomeReport.cshtml" />
+    <Content Include="Views\Setting\SVDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
