@@ -15,9 +15,9 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
         }
-        public JsonResult LoadDataPrice(int page, String name, int pageSize = 5  )
+        public JsonResult LoadDataAccount(int accountID)
         {
-            var set = from s in db.Prices select new { s.PriceID,s.TypeOfvehicle,s.DayPrice,s.FirstBlock,s.NextBlock};
+            var set = from s in db.Users.Where(x => x.AccountID == accountID) select new { s.email,s.DateOfBirth,s.Gender,s.Name,s.Phone,s.UserAddress}; 
            
 
             List<Object> list = new List<object>();
@@ -25,14 +25,13 @@ namespace SmartParkingApplication.Controllers
             {
                
                
-                var tr = new { PriceID = item.PriceID, TypeOfvehicle = item.TypeOfvehicle, FirstBlock = item.FirstBlock,NextBlock = item.NextBlock };
+                var tr = new { email = item.email, DateOfBirth = item.DateOfBirth, Gender = item.Gender, Name = item.Name, Phone = item.Phone, UserAddress = item.UserAddress };
                 list.Add(tr);
             }
 
-            var totalRow = list.Count();
-            var result = list.Skip((page - 1) * pageSize).Take(pageSize);
+          
 
-            return Json(new { data = result, total = totalRow }, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
     }
 }
