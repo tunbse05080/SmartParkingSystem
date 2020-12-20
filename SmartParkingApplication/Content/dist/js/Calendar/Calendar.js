@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     LoadDataCalendar();
+    ComboboxUserName();
 });
 
 function getFormatDatetime(date) {
@@ -10,7 +11,6 @@ function getFormatDatetime(date) {
     var hh = day.getHours();
     var mm = day.getMinutes();
     var ss = day.getSeconds();
-    var tt = "";
     if (dd < 10) {
         dd = '0' + dd;
     }
@@ -71,21 +71,121 @@ function initCalendar() {
     calendar.render();
 }
 
-function AddWorkingCalendar() {
-
+function CreateWorkingCalendar() {
+    if ($('#cbWorkShiftEmp').val() == 1) {
+        var scheObj = {
+            TimeStart: $('#DateStart').val() + "06:00:00",
+            TimeEnd: $('#DateEnd').val() + "14:00:00",
+            Slot: $('#cbWorkShiftEmp').val()
+        }
+    } else if ($('#cbWorkShiftEmp').val() == 2) {
+        var scheObj = {
+            TimeStart: $('#DateStart').val() + "14:00:00",
+            TimeEnd: $('#DateEnd').val() + "22:00:00",
+            Slot: $('#cbWorkShiftEmp').val()
+        }
+    } else {
+        var scheObj = {
+            TimeStart: $('#DateStart').val() + "22:00:00",
+            TimeEnd: $('#DateEnd').val() + "06:00:00",
+            Slot: $('#cbWorkShiftEmp').val()
+        }
+    }
     $.ajax({
-        url: "/ManageUser/AddWorkingCalendar",
+        url: "/ManageUser/CreateWorkingCalendar",
+        type: "POST",
+        data: JSON.stringify(scheObj),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            LoadDataCalendar();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+function EditWorkingCalendar() {
+    $.ajax({
+        url: "/ManageUser/EditWorkingCalendar",
         type: "GET",
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
             LoadDataCalendar();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
         }
-    })
+    });
 }
 
-    /* initialize the external events
-     -----------------------------------------------------------------*/
+//get name staff base on AccountID
+function getNameStaff(check) {
+    if (check == 1) {
+        var id = $('#cbUserNameEmp').val();
+    } else {
+        var id = $('#cbUserNameEmpEdit').val();
+    }
+    if (!id) {
+        id = 3;
+    }
+    $.ajax({
+        url: "/ManageUser/GetNameStaff",
+        type: "POST",
+        data: JSON.stringify({ id: id }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            if (check == 1) {
+                $('#FullNameEmp').val(result.Name);
+                $('#DateStart').val(loadDateNow());
+                $('myModalCreateWorkingCalendar').modal('Show');
+            } else {
+                $('#FullNameEmpEdit').val(result.Name);
+                $('#DateStart').val(loadDateNow());
+                $('myModalEditWorkingCalendar').modal('Show');
+            }
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+function ComboboxUserName() {
+    $.ajax({
+        url: "/ManageUser/ComboboxUserName",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            $.each(result, function (key, item) {
+                html += '<option value="' + item.UserID + '">' + item.UserName + '</option>';
+            });
+            $("#cbUserNameEmp").html(html);
+            $('#cbUserNameEmp').val(null).trigger('change');
+            $("#cbUserNameEmp").select2({
+                placeholder: "Chọn tên tài khoản",
+                allowClear: true
+            });
+            $("#cbUserNameEmpEdit").html(html);
+            $('#cbUserNameEmpEdit').val(null).trigger('change');
+            $("#cbUserNameEmpEdit").select2({
+                placeholder: "Chọn tên tài khoản",
+                allowClear: true
+            });
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+/* initialize the external events
+ -----------------------------------------------------------------*/
     //function ini_events(ele) {
     //    ele.each(function () {
 

@@ -204,6 +204,23 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        //combobox UserName
+        public JsonResult ComboboxUserName()
+        {
+            var result = (from u in db.Users
+                          select new { u.UserID, u.Account.UserName }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        //get name of staff base on UserID
+        public JsonResult GetNameStaff(int id)
+        {
+            var result = (from u in db.Users
+                          where u.UserID == id
+                          select new { u.Name }).FirstOrDefault();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -227,10 +244,25 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //Edit working calendar
-        public ActionResult Editworkingcalendar()
+        public JsonResult CreateWorkingCalendar(Schedule schedule)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                db.Schedules.Add(schedule);
+                db.SaveChanges();
+            }
+            return Json(schedule, JsonRequestBehavior.AllowGet);
+        }
+
+        //Edit working calendar
+        public JsonResult EditWorkingcalendar(UserSchedule userSchedule)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(userSchedule).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(userSchedule,JsonRequestBehavior.AllowGet);
         }
 
         //Xuat file Exel User

@@ -542,6 +542,8 @@ function ComboboxParkingPlaceU() {
             });
             $("#cbparkingPlaceU").html(html);
             $("#cbparkingPlaceUEdit").html(html);
+            $("#cbparkingPlaceEmp").html(html);
+            $("#cbparkingPlaceEmpEdit").html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -572,3 +574,4 @@ function ComboboxRoleNameU() {
         }
     });
 }
+
