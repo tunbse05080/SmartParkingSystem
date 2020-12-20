@@ -37,7 +37,7 @@ namespace SmartParkingApplication.Controllers
         public JsonResult LoadDataStatusPP(int ParkingPlaceID)
         {
             
-            var trans = from t in db.Transactions.Where(x => x.ParkingPlaceID == ParkingPlaceID )
+            var trans = from t in db.Transactions.Where(x => x.ParkingPlaceID == ParkingPlaceID && x.TimeOutv == null)
                         join c in db.Cards on t.CardID equals c.CardID into table1
                         from c in table1.DefaultIfEmpty()
                         orderby t.CardID
