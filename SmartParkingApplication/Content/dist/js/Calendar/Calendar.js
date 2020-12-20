@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
     LoadDataCalendar();
     ComboboxUserName();
-    checkboxDate();
+    checkboxDate(1);
+    checkboxDate(2);
 });
 
 function getFormatDatetime(date) {
@@ -152,7 +153,7 @@ function CreateWorkingCalendar() {
 
 function EditWorkingCalendar() {
     $.ajax({
-        url: "/ManageUser/EditWorkingCalendar",
+        url: "/ManageUser/EditWorkingcalendar",
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -165,18 +166,33 @@ function EditWorkingCalendar() {
     });
 }
 
-function checkboxDate() {
-    var checkBox = document.getElementById("checkboxDate");
-    if (checkBox.checked == true) {
-        $('#dvDateApply').hide();
-        $('#dvDateStart').show();
-        $('#dvDateEnd').show();
-        $('myModalCreateWorkingCalendar').modal('Show');
+function checkboxDate(check) {
+    if (check == 1) {
+        var checkBox = document.getElementById("checkboxDate");
+        if (checkBox.checked == true) {
+            $('#dvDateApply').hide();
+            $('#dvDateStart').show();
+            $('#dvDateEnd').show();
+            $('myModalCreateWorkingCalendar').modal('Show');
+        } else {
+            $('#dvDateApply').show();
+            $('#dvDateStart').hide();
+            $('#dvDateEnd').hide();
+            $('myModalCreateWorkingCalendar').modal('Show');
+        }
     } else {
-        $('#dvDateApply').show();
-        $('#dvDateStart').hide();
-        $('#dvDateEnd').hide();
-        $('myModalCreateWorkingCalendar').modal('Show');
+        var checkBox = document.getElementById("checkboxDateEdit");
+        if (checkBox.checked == true) {
+            $('#dvDateApplyEdit').hide();
+            $('#dvDateStartEdit').show();
+            $('#dvDateEndEdit').show();
+            $('myModalEditWorkingCalendar').modal('Show');
+        } else {
+            $('#dvDateApplyEdit').show();
+            $('#dvDateStartEdit').hide();
+            $('#dvDateEndEdit').hide();
+            $('myModalEditWorkingCalendar').modal('Show');
+        }
     }
 }
 

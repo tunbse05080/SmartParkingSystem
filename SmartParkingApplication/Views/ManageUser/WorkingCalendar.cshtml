@@ -67,7 +67,7 @@
                                             <input type="text" class="form-control" id="FullNameEmp" placeholder="Tên đầy đủ" disabled />
                                         </div>
                                         <div class="form-group">
-                                            <input type="checkbox" id="checkboxDate" onclick="checkboxDate()"/>
+                                            <input type="checkbox" id="checkboxDate" onclick="checkboxDate(1)"/>
                                             <label for="checkboxDate"> Chọn nhiều ngày</label>
                                         </div>
                                         <div class="form-group" id="dvDateApply">
@@ -123,10 +123,18 @@
                                             <input type="text" class="form-control" id="FullNameEmpEdit" placeholder="Tên đầy đủ" disabled />
                                         </div>
                                         <div class="form-group">
+                                            <input type="checkbox" id="checkboxDateEdit" onclick="checkboxDate(2)" />
+                                            <label for="checkboxDateEdit"> Chọn nhiều ngày</label>
+                                        </div>
+                                        <div class="form-group" id="dvDateApplyEdit">
+                                            <label for="DateApply">Thời gian</label>
+                                            <input type="date" class="form-control" id="DateApplyEdit" placeholder="Thời gian" />
+                                        </div>
+                                        <div class="form-group" id="dvDateStartEdit">
                                             <label for="DateStart">Thời gian bắt đầu</label>
                                             <input type="text" class="form-control" id="DateStartEdit" placeholder="Thời gian bắt đầu" disabled />
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" id="dvDateEndEdit">
                                             <label for="DateEnd">Thời gian kết thúc</label>
                                             <input type="date" class="form-control" id="DateEndEdit" placeholder="Thời gian kết thúc" />
                                         </div>
