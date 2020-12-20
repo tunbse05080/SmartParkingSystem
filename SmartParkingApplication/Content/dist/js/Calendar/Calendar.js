@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     LoadDataCalendar();
     ComboboxUserName();
+    checkboxDate();
 });
 
 function getFormatDatetime(date) {
@@ -74,20 +75,20 @@ function initCalendar() {
 function CreateWorkingCalendar() {
     if ($('#cbWorkShiftEmp').val() == 1) {
         var scheObj = {
-            TimeStart: $('#DateStart').val() + "06:00:00",
-            TimeEnd: $('#DateEnd').val() + "14:00:00",
+            TimeStart: $('#DateStart').val() + " 06:00:00",
+            TimeEnd: $('#DateEnd').val() + " 14:00:00",
             Slot: $('#cbWorkShiftEmp').val()
         }
     } else if ($('#cbWorkShiftEmp').val() == 2) {
         var scheObj = {
-            TimeStart: $('#DateStart').val() + "14:00:00",
-            TimeEnd: $('#DateEnd').val() + "22:00:00",
+            TimeStart: $('#DateStart').val() + " 14:00:00",
+            TimeEnd: $('#DateEnd').val() + " 22:00:00",
             Slot: $('#cbWorkShiftEmp').val()
         }
     } else {
         var scheObj = {
-            TimeStart: $('#DateStart').val() + "22:00:00",
-            TimeEnd: $('#DateEnd').val() + "06:00:00",
+            TimeStart: $('#DateStart').val() + " 22:00:00",
+            TimeEnd: $('#DateEnd').val() + " 06:00:00",
             Slot: $('#cbWorkShiftEmp').val()
         }
     }
@@ -119,6 +120,21 @@ function EditWorkingCalendar() {
             alert(errormessage.responseText);
         }
     });
+}
+
+function checkboxDate() {
+    var checkBox = document.getElementById("checkboxDate");
+    if (checkBox.checked == true) {
+        $('#dvDateApply').hide();
+        $('#dvDateStart').show();
+        $('#dvDateEnd').show();
+        $('myModalCreateWorkingCalendar').modal('Show');
+    } else {
+        $('#dvDateApply').show();
+        $('#dvDateStart').hide();
+        $('#dvDateEnd').hide();
+        $('myModalCreateWorkingCalendar').modal('Show');
+    }
 }
 
 //get name staff base on AccountID
