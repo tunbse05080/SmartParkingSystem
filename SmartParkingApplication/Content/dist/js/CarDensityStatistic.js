@@ -9,7 +9,7 @@ function loadChartCarDensity() {
         idParking = 1;
     }
     $.ajax({
-        url: "/ManageStatistic/loadChartCarDensity",
+        url: "/StatisticReport/LoadChartCarDensity",
         type: "POST",
         contents: "application/json",
         data: { idParking: idParking},

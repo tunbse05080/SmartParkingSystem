@@ -149,18 +149,26 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("IncomeStatistic","ManageStatistic")" class="nav-link">
+                                    <a href="@Url.Action("IncomeStatistic","StatisticReport")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
-                                            Doanh thu
+                                            Thống kê doanh thu
                                         </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("DensityStatistic","ManageStatistic")" class="nav-link">
+                                    <a href="@Url.Action("DensityStatistic","StatisticReport")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
-                                            Mật độ xe
+                                            Thống kê mật độ xe
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("IncomeReport","StatisticReport")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Báo cáo doanh thu
                                         </p>
                                     </a>
                                 </li>
@@ -174,15 +182,16 @@
                                     Thiết lập giá vé
                                 </p>
                             </a>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index","Setting")" class="nav-link">
-                                <i class="nav-icon fas fa-cog"></i>
-                                <p>
-                                    Cài đặt
-                                </p>
-                            </a>
-                        </li> <!--End setting-->
-                        <!--Log out-->
+                            <!--<li class="nav-item">
+                                <a href="@Url.Action("Index","Setting")" class="nav-link">
+                                    <i class="nav-icon fas fa-cog"></i>
+                                    <p>
+                                        Cài đặt
+                                    </p>
+                                </a>
+                            </li>-->
+                            <!--End setting-->
+                            <!--Log out-->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -272,5 +281,7 @@
     <script src="~/Content/dist/js/Dashboard.js"></script>
     <script src="~/Content/dist/js/HistoryParking.js"></script>
     <script src="~/Content/dist/js/Account.js"></script>
+    <script src="~/Content/dist/js/IncomeReport.js"></script>
+    <script src="~/Content/dist/js/SettingViewProfile.js"></script>
 </body>
 </html>

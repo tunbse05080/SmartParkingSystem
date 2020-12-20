@@ -241,6 +241,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Transacti__UserO__7D439ABD">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="UserOID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__User__ParkingPla__5535A963">
           <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -387,6 +399,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__Transacti__Parki__5441852A" Association="Self.FK__Transacti__Parki__5441852A">
             <End Role="ParkingPlace" EntitySet="ParkingPlace" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__UserO__7D439ABD" Association="Self.FK__Transacti__UserO__7D439ABD">
+            <End Role="User" EntitySet="User" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
           <AssociationSet Name="FK__User__ParkingPla__5535A963" Association="Self.FK__User__ParkingPla__5535A963">

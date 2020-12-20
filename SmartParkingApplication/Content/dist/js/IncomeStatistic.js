@@ -19,7 +19,7 @@ function loadChartIncome() {
         $('#dvParking').show();
     }
     $.ajax({
-        url: "/ManageStatistic/LoadDataIncome",
+        url: "/StatisticReport/LoadDataIncome",
         type: "POST",
         contents: "application/json",
         data: { idParking: idParking, idTypeOfTicket: idTypeOfTicket},
@@ -78,7 +78,7 @@ function ChartIncome(result) {
 
 function ComboboxNameParking() {
     $.ajax({
-        url: "/ManageStatistic/ComboboxNameParking",
+        url: "/StatisticReport/ComboboxNameParking",
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -93,7 +93,7 @@ function ComboboxNameParking() {
             $('#cbNameParkingPlaceDaily').html(html);
             $('#cbNameParkingPlaceBlock').html(html);
             $('#cbNameParkingPlaceMonthly').html(html);
-
+            $('#cbNameParkingPlaceReport').html(html);
 
         },
         error: function (errormessage) {

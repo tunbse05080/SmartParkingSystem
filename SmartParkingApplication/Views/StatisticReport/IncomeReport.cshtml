@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "IncomeReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Báo cáo doanh thu</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Báo cáo doanh thu</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <select class="form-control w-75" id="cbNameParkingPlaceReport">
+                                    </select>
+                                </div>
+                                @*<div class="col-sm-2">
+                                        <select class="form-control w-75" onchange="" id="cbNameStaff">
+                                        </select>
+                                    </div>*@
+                                <div class="col-sm-3">
+                                    <input class="form-control w-75" type="date" id="timeWorking"/>
+                                </div>
+                                <div class="col-sm-3">
+                                    @*<strong style="font-size:x-large">Ca làm việc</strong>*@
+                                    <select class="form-control w-75" id="cbWorkShift">
+                                        <option value="0">Cả ngày</option>
+                                        <option value="1">Ca 1 (6h - 14h)</option>
+                                        <option value="2">Ca 2 (14h - 22h)</option>
+                                        <option value="3">Ca 3 (22h - 6h)</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn-success" id="btnSearchReport" onclick="LoadDataIncomeReport()">Search</button>
+                                </div>
+                            </div><br />
+                            <!-- table -->
+                            <div class="row invoice-info">
+                                <table id="tbIncomeReport" class="table table-avatar" style="width:600px">
+                                    <thead>
+                                        <tr class="bg-green">
+                                            <th>Tên tài khoản</th>
+                                            <th>Tên nhân viên</th>
+                                            <th>Tổng tiền(vnđ)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyIR">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
