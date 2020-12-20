@@ -1,26 +1,6 @@
-﻿//$(document).ready(function () {
-
-//});
-
-//function loadDataCalendar() {
-//    let eventsArr = [];
-//    let todoTable = document.getElementById("eventsTable");
-//    let trElem = todoTable.getElementsByTagName("tr");
-//    console.log(trElem);
-//    for (let tr of trElem) {
-//        console.log(tr);
-//        let tdElems = tr.getElementsByTagName("td");
-//        let eventObj = {
-//            title: tdElems[0].innerText,
-//            start: tdElems[1].innerText,
-//            end: tdElems[2].innerText
-//        }
-//        eventsArr.push(eventObj);
-//    }
-//    return eventsArr;
-//}
-var data = loadDataCalendar();
-var calendar = initCalendar();
+﻿$(document).ready(function () {
+    LoadDataCalendar();
+});
 
 function getFormatDatetime(date) {
     var day = new Date(parseInt(date.substr(6)));
@@ -46,33 +26,30 @@ function getFormatDatetime(date) {
     if (ss < 10) {
         ss = '0' + ss;
     }
-    if (hh > 12) {
-        tt = "PM";
-    } else {
-        tt = "AM";
-    }
-    var result = MM + '/' + dd + '/' + yyyy + ' ' + hh + ':' + mm + ':' + ss + ' ' + tt;
+    var result = yyyy + '-' + MM + '-' + dd + ' ' + hh + ':' + mm + ':' + ss;
     return result;
 }
 
+let evenArr = [];
+
 //load Data to Working Calendar
-function loadDataCalendar() {
-    let eventsArr = [];
+function LoadDataCalendar() {
     $.ajax({
-        url: "/ManageUser/loadDataCalendar",
+        url: "/ManageUser/LoadDataCalendar",
         type: "GET",
-        contentType: "application/json;charset=utf-8",
+        contentType: "application/json",
         dataType: "json",
         success: function (result) {
             $.each(result, function (key, item) {
-                let eventObj = {
+                let evenObj = {
+                    id: item.ScheduleID,
                     title: item.Name,
                     start: getFormatDatetime(item.TimeStart),
                     end: getFormatDatetime(item.TimeEnd)
                 }
-                eventsArr.push(eventObj);
+                evenArr.push(evenObj);
+                initCalendar();
             });
-            return eventsArr;
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -80,57 +57,32 @@ function loadDataCalendar() {
     });
 }
 
-//function loadDataCalendar() {
-//    let eventsArr = [];
-//    $.ajax({
-//        url: "/ManageUser/LoadData",
-//        type: "GET",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            var data = result.data;
-//            $.each(data, function (key, item) {
-//                let eventObj = {
-//                    title: data.Name,
-//                    start: data.timeStart,
-//                    end: data.timeFinish,
-//                }
-//                eventsArr.push(eventObj);
-//            });
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//    return eventsArr;
-//}
-
 function initCalendar() {
-    //$('#calendarWorking').fullCalendar({
-    //    initialView: 'dayGridMonth',
-    //    headerToolbar: {
-    //        left: 'prev,next today',
-    //        center: 'title',
-    //        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    //    },
-    //    events: eventsArr,
-    //});
-    //$('#calendarWorking').render();
-    var calendarEl = document.getElementById('calendarWorking');
-    let calendar = new FullCalendar.Calendar(calendarEl, {
+    var calendar1 = document.getElementById('calendarWork');
+    var calendar = new FullCalendar.Calendar(calendar1, {
         initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: eventsArr,
+        events: evenArr
     });
     calendar.render();
-    return calendar;
-    //$('#calendarWorking').show();
 }
 
+function AddWorkingCalendar() {
+
+    $.ajax({
+        url: "/ManageUser/AddWorkingCalendar",
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            LoadDataCalendar();
+        }
+    })
+}
 
     /* initialize the external events
      -----------------------------------------------------------------*/

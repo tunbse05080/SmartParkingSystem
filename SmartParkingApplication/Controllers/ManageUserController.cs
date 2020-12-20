@@ -219,20 +219,11 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
-        public JsonResult loadDataCalendar()
+        public JsonResult LoadDataCalendar()
         {
-            //List<Schedule> schedules = db.Schedules.ToList();
-            //List<User> users = db.Users.ToList();
-            //List<UserSchedule> userSchedules = db.UserSchedules.ToList();
-            //var result = from us in userSchedules
-            //             join u in users on us.UserID equals u.UserID into table
-            //             from u in table.DefaultIfEmpty()
-            //             join s in schedules on us.ScheduleID equals s.ScheduleID into table1
-            //             from s in table1.DefaultIfEmpty()
-            //             select new MultipleTablesJoinClass { userSchedule = us, user = u, schedule = s };
             List<Object> list = new List<object>();
             var result = (from us in db.UserSchedules
-                       select new { us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
+                       select new {us.ScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
