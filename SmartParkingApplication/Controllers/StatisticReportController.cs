@@ -97,12 +97,12 @@ namespace SmartParkingApplication.Controllers
             return Json(new { listMotoDestiny, listCarDestiny }, JsonRequestBehavior.AllowGet);
         }
 
-        //Load data report income follow parkingplace, date, workingShift
+        //Load data report income base on parkingplace, date, workingShift
         public JsonResult LoadDataIncomeReport(int id, DateTime dateTime, int workingShift)
         {
+            //dateTime.ToString("MM/dd/yyyy HH:mm:ss");
             DateTime dateFrom = dateTime;
             DateTime dateTo = dateTime;
-
             switch (workingShift)
             {
                 case 0:
@@ -114,16 +114,17 @@ namespace SmartParkingApplication.Controllers
                     break;
                 case 2:
                     dateFrom = dateTime.Add(TimeSpan.Parse("14:00:00"));
+                    
                     dateTo = dateTime.Add(TimeSpan.Parse("22:00:00"));
                     break;
                 case 3:
                     dateFrom = dateTime.Add(TimeSpan.Parse("22:00:00"));
                     dateTo = dateTime.Add(TimeSpan.Parse("06:00:00"));
-                    dateTo.AddDays(1);
+                    dateTo = dateTo.AddDays(1);
                     break;
             }
             var result = (from tr in db.Transactions
-                          where tr.ParkingPlaceID == id && tr.TimeOutv > dateFrom && tr.TimeOutv <= dateTo
+                          where tr.ParkingPlaceID == id && DateTime.Compare((DateTime)tr.TimeOutv, dateFrom) > 0 && DateTime.Compare((DateTime)tr.TimeOutv,dateTo) <= 0
                           select new {tr.User.Account.UserName, tr.User.Name, tr.TotalPrice} into table1
                           group table1 by table1.UserName into groupby
                           select new { groupby.FirstOrDefault().UserName, groupby.FirstOrDefault().Name, totalPrice = groupby.Sum(x => x.TotalPrice)}).ToList();

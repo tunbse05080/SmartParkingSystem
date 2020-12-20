@@ -5,6 +5,7 @@
 
 //Load Chart Income
 function LoadDataIncomeReport() {
+    $('#tbIncomeReport').DataTable().clear().destroy();
     var id1 = $('#cbNameParkingPlaceReport').val();
     var dateTime = $('#timeWorking').val();
     var workingShift1 = $('#cbWorkShift').val();
@@ -20,7 +21,7 @@ function LoadDataIncomeReport() {
                 html += '<tr>';
                 html += '<td>' + item.UserName + '</td>';
                 html += '<td>' + item.Name + '</td>';
-                html += '<td>' + item.TotalPrice + '</td>';
+                html += '<td>' + item.totalPrice + '</td>';
                 html += '</tr>';
             });
             $('#tbodyIR').html(html);
@@ -28,7 +29,7 @@ function LoadDataIncomeReport() {
             $("#tbIncomeReport").DataTable({
                 "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print"]
-            }).buttons().container().appendTo('#tbIncomeReport_wrapper .col-md-8:eq(0)');
+            }).buttons().container().appendTo('#tbIncomeReport_wrapper .col-md-6:eq(0)');
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
