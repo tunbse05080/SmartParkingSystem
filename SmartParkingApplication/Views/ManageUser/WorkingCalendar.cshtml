@@ -4,11 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    ViewData["Title"] = "Calendar";
-    var events = (IEnumerable<SmartParkingApplication.Models.MultipleTablesJoinClass>)ViewData["events"];
-}
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -35,16 +30,6 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <table id="eventsTable">
-                                @for (int i = 0;i<events.Count();i++)
-                                {
-                                    <tr>
-                                        <td>@events.ElementAt(i).user.Name</td>
-                                        <td>@events.ElementAt(i).schedule.TimeApply.Value.ToString("yyyy-MM-dd") @events.ElementAt(i).schedule.TimeStart</td>
-                                        <td>@events.ElementAt(i).schedule.TimeApply.Value.ToString("yyyy-MM-dd") @events.ElementAt(i).schedule.TimeFinish</td>
-                                    </tr>
-                                }
-                            </table>
                             <div id="calendarWorking">
                             </div>
                             <button style="width:150px;margin-top:10px" type="button" onclick="location.href='@Url.Action("Editworkingcalendar", "ManageUser")';return false;" class="btn btn-success float-right">Sửa lịch làm việc</button>

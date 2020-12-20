@@ -21,10 +21,9 @@ namespace SmartParkingApplication.Models
         }
     
         public int ScheduleID { get; set; }
-        public Nullable<System.TimeSpan> TimeStart { get; set; }
-        public Nullable<System.TimeSpan> TimeFinish { get; set; }
+        public Nullable<System.DateTime> TimeStart { get; set; }
         public Nullable<int> Slot { get; set; }
-        public Nullable<System.DateTime> TimeApply { get; set; }
+        public Nullable<System.DateTime> TimeEnd { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSchedule> UserSchedules { get; set; }

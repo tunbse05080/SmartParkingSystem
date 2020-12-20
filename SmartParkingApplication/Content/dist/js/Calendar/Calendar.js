@@ -1,22 +1,83 @@
-﻿
-let eventsArr = loadDataCalendar();
-let calendar = initCalendar();
+﻿//$(document).ready(function () {
+
+//});
+
+//function loadDataCalendar() {
+//    let eventsArr = [];
+//    let todoTable = document.getElementById("eventsTable");
+//    let trElem = todoTable.getElementsByTagName("tr");
+//    console.log(trElem);
+//    for (let tr of trElem) {
+//        console.log(tr);
+//        let tdElems = tr.getElementsByTagName("td");
+//        let eventObj = {
+//            title: tdElems[0].innerText,
+//            start: tdElems[1].innerText,
+//            end: tdElems[2].innerText
+//        }
+//        eventsArr.push(eventObj);
+//    }
+//    return eventsArr;
+//}
+var data = loadDataCalendar();
+var calendar = initCalendar();
+
+function getFormatDatetime(date) {
+    var day = new Date(parseInt(date.substr(6)));
+    var dd = day.getDate();
+    var MM = day.getMonth() + 1;
+    var yyyy = day.getFullYear();
+    var hh = day.getHours();
+    var mm = day.getMinutes();
+    var ss = day.getSeconds();
+    var tt = "";
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (MM < 10) {
+        MM = '0' + MM;
+    }
+    if (hh < 10) {
+        hh = '0' + hh;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    if (ss < 10) {
+        ss = '0' + ss;
+    }
+    if (hh > 12) {
+        tt = "PM";
+    } else {
+        tt = "AM";
+    }
+    var result = MM + '/' + dd + '/' + yyyy + ' ' + hh + ':' + mm + ':' + ss + ' ' + tt;
+    return result;
+}
+
+//load Data to Working Calendar
 function loadDataCalendar() {
     let eventsArr = [];
-    let todoTable = document.getElementById("eventsTable");
-    let trElem = todoTable.getElementsByTagName("tr");
-    console.log(trElem);
-    for (let tr of trElem) {
-        console.log(tr);
-        let tdElems = tr.getElementsByTagName("td");
-        let eventObj = {
-            title: tdElems[0].innerText,
-            start: tdElems[1].innerText,
-            end: tdElems[2].innerText
+    $.ajax({
+        url: "/ManageUser/loadDataCalendar",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $.each(result, function (key, item) {
+                let eventObj = {
+                    title: item.Name,
+                    start: getFormatDatetime(item.TimeStart),
+                    end: getFormatDatetime(item.TimeEnd)
+                }
+                eventsArr.push(eventObj);
+            });
+            return eventsArr;
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
         }
-        eventsArr.push(eventObj);
-    }
-    return eventsArr;
+    });
 }
 
 //function loadDataCalendar() {
@@ -45,6 +106,16 @@ function loadDataCalendar() {
 //}
 
 function initCalendar() {
+    //$('#calendarWorking').fullCalendar({
+    //    initialView: 'dayGridMonth',
+    //    headerToolbar: {
+    //        left: 'prev,next today',
+    //        center: 'title',
+    //        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    //    },
+    //    events: eventsArr,
+    //});
+    //$('#calendarWorking').render();
     var calendarEl = document.getElementById('calendarWorking');
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -57,6 +128,7 @@ function initCalendar() {
     });
     calendar.render();
     return calendar;
+    //$('#calendarWorking').show();
 }
 
 

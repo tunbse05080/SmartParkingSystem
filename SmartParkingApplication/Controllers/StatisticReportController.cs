@@ -100,7 +100,6 @@ namespace SmartParkingApplication.Controllers
         //Load data report income base on parkingplace, date, workingShift
         public JsonResult LoadDataIncomeReport(int id, DateTime dateTime, int workingShift)
         {
-            //dateTime.ToString("MM/dd/yyyy HH:mm:ss");
             DateTime dateFrom = dateTime;
             DateTime dateTo = dateTime;
             switch (workingShift)

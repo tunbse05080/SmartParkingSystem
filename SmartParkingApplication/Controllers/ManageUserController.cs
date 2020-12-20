@@ -216,31 +216,30 @@ namespace SmartParkingApplication.Controllers
         //Working calendar
         public ActionResult WorkingCalendar()
         {
-            List<Schedule> schedules = db.Schedules.ToList();
-            List<User> users = db.Users.ToList();
-            List<UserSchedule> userSchedules = db.UserSchedules.ToList();
-            ViewData["events"] = from us in userSchedules
-                                 join u in users on us.UserID equals u.UserID into table
-                                 from u in table.DefaultIfEmpty()
-                                 join s in schedules on us.ScheduleID equals s.ScheduleID into table1
-                                 from s in table1.DefaultIfEmpty()
-                                 select new MultipleTablesJoinClass { userSchedule = us, user = u, schedule = s };
-            return View(ViewData["events"]);
+            return View();
+        }
+
+        public JsonResult loadDataCalendar()
+        {
+            //List<Schedule> schedules = db.Schedules.ToList();
+            //List<User> users = db.Users.ToList();
+            //List<UserSchedule> userSchedules = db.UserSchedules.ToList();
+            //var result = from us in userSchedules
+            //             join u in users on us.UserID equals u.UserID into table
+            //             from u in table.DefaultIfEmpty()
+            //             join s in schedules on us.ScheduleID equals s.ScheduleID into table1
+            //             from s in table1.DefaultIfEmpty()
+            //             select new MultipleTablesJoinClass { userSchedule = us, user = u, schedule = s };
+            List<Object> list = new List<object>();
+            var result = (from us in db.UserSchedules
+                       select new { us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         //Edit working calendar
         public ActionResult Editworkingcalendar()
         {
-            List<Schedule> schedules = db.Schedules.ToList();
-            List<User> users = db.Users.ToList();
-            List<UserSchedule> userSchedules = db.UserSchedules.ToList();
-            ViewData["events"] = from us in userSchedules
-                                 join u in users on us.UserID equals u.UserID into table
-                                 from u in table.DefaultIfEmpty()
-                                 join s in schedules on us.ScheduleID equals s.ScheduleID into table1
-                                 from s in table1.DefaultIfEmpty()
-                                 select new MultipleTablesJoinClass { userSchedule = us, user = u, schedule = s };
-            return View(ViewData["events"]);
+            return View();
         }
 
         //Xuat file Exel User

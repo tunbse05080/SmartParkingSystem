@@ -37,7 +37,7 @@ function checkLoadData() {
     }
 }
 
-//load data price from table Price
+//load data price to table Price
 function loadDataPrice() {
     var ParkingPlaceID = $('#cbNameParkingPlaceD').val();
     if (ParkingPlaceID) {
@@ -75,7 +75,7 @@ function loadDataPrice() {
     });
 }
 
-//load data price monthly from table Price
+//load data price monthly to table Price
 function loadDataPriceMonthly() {
     var ParkingPlaceID = $('#cbNameParkingPlaceD').val();
     if (ParkingPlaceID) {

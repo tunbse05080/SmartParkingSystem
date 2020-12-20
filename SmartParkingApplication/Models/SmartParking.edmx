@@ -114,10 +114,9 @@
             <PropertyRef Name="ScheduleID" />
           </Key>
           <Property Name="ScheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TimeStart" Type="time" Precision="7" />
-          <Property Name="TimeFinish" Type="time" Precision="7" />
+          <Property Name="TimeStart" Type="datetime" />
+          <Property Name="TimeEnd" Type="datetime" />
           <Property Name="Slot" Type="int" />
-          <Property Name="TimeApply" Type="date" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -560,11 +559,10 @@
             <PropertyRef Name="ScheduleID" />
           </Key>
           <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TimeStart" Type="Time" Precision="7" />
-          <Property Name="TimeFinish" Type="Time" Precision="7" />
+          <Property Name="TimeStart" Type="DateTime" />
           <Property Name="Slot" Type="Int32" />
-          <Property Name="TimeApply" Type="DateTime" Precision="0" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="Schedule" ToRole="UserSchedule" />
+          <Property Name="TimeEnd" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1009,11 +1007,10 @@
           <EntitySetMapping Name="Schedules">
             <EntityTypeMapping TypeName="SmartParkingsModel.Schedule">
               <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
                 <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
-                <ScalarProperty Name="TimeFinish" ColumnName="TimeFinish" />
                 <ScalarProperty Name="Slot" ColumnName="Slot" />
-                <ScalarProperty Name="TimeApply" ColumnName="TimeApply" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
