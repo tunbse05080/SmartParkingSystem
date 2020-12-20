@@ -235,7 +235,7 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
         }
-
+        //load data to fullcalendar
         public JsonResult LoadDataCalendar()
         {
             List<Object> list = new List<object>();
@@ -243,7 +243,7 @@ namespace SmartParkingApplication.Controllers
                        select new {us.ScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
+        //create Userschedule
         public JsonResult CreateUserSchedule(UserSchedule userSchedule)
         {
             if (ModelState.IsValid)
@@ -253,7 +253,7 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(userSchedule, JsonRequestBehavior.AllowGet);
         }
-
+        //create schedule
         public JsonResult CreateWorkingCalendar(Schedule schedule)
         {
             if (ModelState.IsValid)
@@ -264,20 +264,25 @@ namespace SmartParkingApplication.Controllers
             return Json(schedule, JsonRequestBehavior.AllowGet);
         }
 
+        //check Userschedule base on schedule and update UserID in Userschedule
         public JsonResult CheckEditWorkingCalendar(int UserID, Schedule schedule)
         {
+            //find scheduleID by timeStart and timeEnd
             var dataSchedule = (from s in db.Schedules
                                 where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
                                 select new { s.ScheduleID }).FirstOrDefault();
+            //find Userschedule base on scheduleID
             var result = (from us in db.UserSchedules
                           where us.ScheduleID == dataSchedule.ScheduleID
                           select new { us.UserScheduleID, us.ScheduleID }).FirstOrDefault();
+            //create userschedule with new UserID
             UserSchedule userSchedule = new UserSchedule { UserScheduleID = result.UserScheduleID, UserID = UserID, ScheduleID = result.ScheduleID };
+            //Update userschedule
             EditWorkingcalendar(userSchedule);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //Edit working calendar
+        //Edit Userschedule
         public JsonResult EditWorkingcalendar(UserSchedule userSchedule)
         {
             if (ModelState.IsValid)
