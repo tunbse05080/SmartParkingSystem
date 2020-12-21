@@ -32,10 +32,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <button class="btn btn-success" id="btnCreateWC" data-toggle="modal" data-target="#myModalCreateWorkingCalendar">Tạo lịch làm việc</button>
+                                    <button class="btn btn-success" id="btnCreateWC" data-toggle="modal" data-target="#myModalCreateWorkingCalendar" onclick="clearBox(1);ComboboxUserName(1)">Tạo lịch làm việc</button>
                                 </div>
                                 <div class="col-sm-8">
-                                    <button class="btn btn-success" id="btnEditWC" data-toggle="modal" data-target="#myModalEditWorkingCalendar">Sửa lịch làm việc</button>
+                                    <button class="btn btn-success" id="btnEditWC" data-toggle="modal" data-target="#myModalEditWorkingCalendar" onclick="clearBox(2);ComboboxUserName(2)">Sửa lịch làm việc</button>
                                 </div><br /><br /><br />
                                 <div class="col-md-3">
                                     <select class="form-control" onchange="LoadDataCalendar()" id="cbparkingPlaceWorkingCalendar">
@@ -58,7 +58,7 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="cbparkingPlaceEmp">Bãi làm việc</label>
-                                            <select class="form-control" id="cbparkingPlaceEmp">
+                                            <select class="form-control" id="cbparkingPlaceEmp" onchange="ComboboxUserName(1)">
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="form-group" id="dvDateStart">
                                             <label for="DateStart">Thời gian bắt đầu</label>
-                                            <input type="text" class="form-control" id="DateStart" placeholder="Thời gian bắt đầu" disabled />
+                                            <input type="date" class="form-control" id="DateStart" placeholder="Thời gian bắt đầu" />
                                         </div>
                                         <div class="form-group" id="dvDateEnd">
                                             <label for="DateEnd">Thời gian kết thúc</label>
@@ -114,7 +114,7 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="cbparkingPlaceEmp">Bãi làm việc</label>
-                                            <select class="form-control" id="cbparkingPlaceEmpEdit">
+                                            <select class="form-control" id="cbparkingPlaceEmpEdit" onchange="ComboboxUserName(2)">
                                             </select>
                                         </div>
                                         <div class="form-group">

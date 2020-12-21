@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     LoadDataCalendar();
-    ComboboxUserName();
     checkboxDate(1);
     checkboxDate(2);
 });
@@ -34,13 +33,20 @@ function getFormatDatetime(date) {
 
 //load Data to Working Calendar
 function LoadDataCalendar() {
+    var ParkingPlaceID = $('#cbparkingPlaceWorkingCalendar').val();
+    if (ParkingPlaceID) {
+    } else {
+        ParkingPlaceID = 1;
+    }
     $.ajax({
         url: "/ManageUser/LoadDataCalendar",
-        type: "GET",
+        type: "POST",
+        data: JSON.stringify({ ParkingPlaceID: ParkingPlaceID}),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
             let evenArr = [];
+            //$('#calendarWork').fullCalendar('removeEvents');
             $.each(result, function (key, item) {
                 let evenObj = {
                     id: item.ScheduleID,
@@ -49,8 +55,9 @@ function LoadDataCalendar() {
                     end: getFormatDatetime(item.TimeEnd)
                 }
                 evenArr.push(evenObj);
-                initCalendar(evenArr);
+                
             });
+            initCalendar(evenArr);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -85,7 +92,6 @@ function CreateUserSchedule(Id) {
         dataType: "json",
         success: function (result) {
             $('#myModalCreateWorkingCalendar').modal('hide');
-            $('#calendarWork').fullCalendar('removeEvents');
             LoadDataCalendar();
         },
         error: function (errormessage) {
@@ -181,7 +187,6 @@ function EditWorkingCalendar() {
         dataType: "json",
         success: function (result) {
             $('#myModalEditWorkingCalendar').modal('hide');
-            $('#calendarWork').fullCalendar('removeEvents');
             LoadDataCalendar();
         },
         error: function (errormessage) {
@@ -189,7 +194,7 @@ function EditWorkingCalendar() {
         }
     });
 }
-
+//checkbox show to 
 function checkboxDate(check) {
     if (check == 1) {
         var checkBox = document.getElementById("checkboxDate");
@@ -253,10 +258,16 @@ function getNameStaff(check) {
     });
 }
 
-function ComboboxUserName() {
+function ComboboxUserName(check) {
+    if (check == 1) {
+        ParkingPlaceID = $('#cbparkingPlaceEmp').val();
+    } else {
+        ParkingPlaceID = $('#cbparkingPlaceEmpEdit').val();
+    }
     $.ajax({
         url: "/ManageUser/ComboboxUserName",
-        type: "GET",
+        type: "POST",
+        data: JSON.stringify({ ParkingPlaceID: ParkingPlaceID, check: check }),
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
@@ -264,23 +275,42 @@ function ComboboxUserName() {
             $.each(result, function (key, item) {
                 html += '<option value="' + item.UserID + '">' + item.UserName + '</option>';
             });
-            $("#cbUserNameEmp").html(html);
-            $('#cbUserNameEmp').val(null).trigger('change');
-            $("#cbUserNameEmp").select2({
-                placeholder: "Chọn tên tài khoản",
-                allowClear: true
-            });
-            $("#cbUserNameEmpEdit").html(html);
-            $('#cbUserNameEmpEdit').val(null).trigger('change');
-            $("#cbUserNameEmpEdit").select2({
-                placeholder: "Chọn tên tài khoản",
-                allowClear: true
-            });
+            if (check == 1) {
+                $("#cbUserNameEmp").html(html);
+                $('#cbUserNameEmp').val(null).trigger('change');
+                $("#cbUserNameEmp").select2({
+                    placeholder: "Chọn tên tài khoản",
+                    allowClear: true
+                });
+            } else {
+                $("#cbUserNameEmpEdit").html(html);
+                $('#cbUserNameEmpEdit').val(null).trigger('change');
+                $("#cbUserNameEmpEdit").select2({
+                    placeholder: "Chọn tên tài khoản",
+                    allowClear: true
+                });
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
         }
     });
+}
+
+function clearBox(check) {
+    if (check == 1) {
+        $('#cbUserNameEmp').val("");
+        $('#FullNameEmp').val("");
+        $('#DateApply').val("");
+        $('#DateStart').val("");
+        $('#DateEnd').val("");
+    } else {
+        $('#cbUserNameEmpEdit').val("");
+        $('#FullNameEmpEdit').val("");
+        $('#DateApplyEdit').val("");
+        $('#DateStartEdit').val("");
+        $('#DateEndEdit').val("");
+    }
 }
 
 /* initialize the external events

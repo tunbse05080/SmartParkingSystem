@@ -207,13 +207,14 @@ namespace SmartParkingApplication.Controllers
         }
 
         //combobox UserName
-        public JsonResult ComboboxUserName()
+        public JsonResult ComboboxUserName(int ParkingPlaceID)
         {
             var result = (from u in db.Users
+                          where u.ParkingPlaceID == ParkingPlaceID
                           select new { u.UserID, u.Account.UserName }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
+        
         //get name of staff base on UserID
         public JsonResult GetNameStaff(int id)
         {
@@ -238,10 +239,11 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
         //load data to fullcalendar
-        public JsonResult LoadDataCalendar()
+        public JsonResult LoadDataCalendar(int ParkingPlaceID)
         {
             List<Object> list = new List<object>();
             var result = (from us in db.UserSchedules
+                          where us.User.ParkingPlaceID == ParkingPlaceID
                        select new {us.ScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
