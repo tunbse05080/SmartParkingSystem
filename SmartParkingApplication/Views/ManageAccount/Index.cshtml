@@ -44,7 +44,8 @@
                             <table id="tbAccount" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Tên tài khoản</th>
+                                        <th>Tên nhân viên</th>
+                                        <th>Số CMND</th>
                                         <th>Chức vụ</th>
                                         <th>Trạng thái tài khoản</th>
                                         <th>Thao tác</th>
@@ -54,7 +55,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Tên tài khoản</th>
+                                        <th>Tên nhân viên</th>
+                                        <th>Số CMND</th>
                                         <th>Chức vụ</th>
                                         <th>Trạng thái tài khoản</th>
                                         <th>Thao tác</th>
@@ -72,58 +74,58 @@
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row">
-                                            <div class="form-group col-sm-4">
-                                                <label for="UserName">Tên tài khoản</label>
-                                                <input type="text" class="form-control" id="UserName" placeholder="Tên tài khoản" />
-                                            </div>
-                                            <div class="form-group col-sm-4">
-                                                <label for="PassWord">Mật khẩu</label>
-                                                <input type="text" class="form-control" id="PassWord" placeholder="Mật khẩu" />
-                                            </div>
-                                            <div class="form-group col-sm-4">
+                                        <div class="form-group" hidden>
+                                            <label for="UserIDAcc">Id</label>
+                                            <input type="text" class="form-control" id="UserIDAcc" placeholder="ID" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="UserName">Tên tài khoản</label>
+                                            <input type="text" class="form-control" id="UserNameAcc" placeholder="Tên tài khoản" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="PassWord">Mật khẩu</label>
+                                            <input type="text" class="form-control" id="PassWordAcc" placeholder="Mật khẩu" />
+                                        </div>
+                                        @*<div class="form-group">
                                                 <label for="FullName">Tên đầy đủ</label>
-                                                <input type="text" class="form-control" id="FullName" placeholder="Tên đầy đủ" />
+                                                <input type="text" class="form-control" id="FullNameAcc" placeholder="Tên đầy đủ" />
                                             </div>
-                                            <div class="form-group col-sm-4">
+                                            <div class="form-group">
                                                 <label for="DateOfBirth">Ngày Sinh</label>
-                                                <input type="date" class="form-control" id="DateOfBirth" placeholder="Ngày Sinh" />
+                                                <input type="text" class="form-control" id="DateOfBirthAcc" placeholder="Ngày Sinh" />
                                             </div>
-                                            <div class="form-group col-sm-4">
+                                            <div class="form-group">
                                                 <label for="Gender">Giới tính</label>
-                                                <select class="form-control" id="cbGender">
-                                                </select>
+                                                <input type="text" class="form-control" id="GenderAcc" placeholder="Giới tính" />
                                             </div>
-                                            <div class="form-group col-sm-4">
+                                            <div class="form-group">
                                                 <label for="Address">Địa chỉ</label>
-                                                <input type="text" class="form-control" id="Address" placeholder="Địa chỉ" />
+                                                <input type="text" class="form-control" id="AddressAcc" placeholder="Địa chỉ" />
                                             </div>
-                                            <div class="form-group col-sm-4">
+                                            <div class="form-group">
                                                 <label for="PhoneNumber">Số điện thoại</label>
-                                                <input type="text" class="form-control" id="PhoneNumber" placeholder="Số điện thoại" />
+                                                <input type="text" class="form-control" id="PhoneNumberAcc" placeholder="Số điện thoại" />
                                             </div>
-                                            <div class="form-group col-sm-4">
+                                            <div class="form-group">
                                                 <label for="Email">Email</label>
-                                                <input type="text" class="form-control" id="Email" placeholder="Email" />
+                                                <input type="text" class="form-control" id="EmailAcc" placeholder="Email" />
                                             </div>
-                                            <div class="form-group col-sm-4">
+                                            <div class="form-group">
                                                 <label for="IdentityCard">Số CMND</label>
-                                                <input type="text" class="form-control" id="IdentityCard" placeholder="Số CMND" />
-                                            </div>
-                                            <div class="form-group col-sm-4">
-                                                <label for="RoleName">Chức vụ</label>
-                                                <select class="form-control" id="cbRoleNameU">
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-sm-4">
+                                                <input type="text" class="form-control" id="IdentityCardAcc" placeholder="Số CMND" />
+                                            </div>*@
+                                        <div class="form-group">
+                                            <label for="RoleName">Chức vụ</label>
+                                            <select class="form-control" id="cbRoleNameAcc">
+                                            </select>
+                                        </div>
+                                        @*<div class="form-group">
                                                 <label for="ParkingPlace">Bãi làm việc</label>
-                                                <select class="form-control" id="cbparkingPlaceU">
-                                                </select>
-                                            </div>
-                                        </form>
+                                                <input type="text" class="form-control" id="ParkingPlaceAcc" placeholder="Email" />
+                                            </div>*@
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return AddAccount();">Đăng ký</button>
+                                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return AddAccount();">Thêm</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return CloseAdd()">Close</button>
                                     </div>
                                 </div>
@@ -139,13 +141,11 @@
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row">
-
-                                            <div class="form-group" hidden>
-                                                <label for="Id">Id</label>
-                                                <input type="text" class="form-control" id="AccountIDEdit" placeholder="Id" disabled />
-                                            </div>
-                                            <div class="form-group" hidden>
+                                        <div class="form-group">
+                                            <label for="Id">Id</label>
+                                            <input type="text" class="form-control" id="AccountIDEdit" placeholder="Id" disabled />
+                                        </div>
+                                        @*<div class="form-group" hidden>
                                                 <label for="AccountName">Tên tài khoản</label>
                                                 <input type="text" class="form-control" id="AccountNameEdit" placeholder="Tên tài khoản" />
                                             </div>
@@ -156,14 +156,13 @@
                                             <div class="form-group" hidden>
                                                 <label for="StatusOfWork">Trạng thái</label>
                                                 <input type="text" class="form-control" id="StatusAccountEdit" />
-                                            </div>
+                                            </div>*@
 
-                                            <div class="form-group" style="margin-left:10px;width:300px">
-                                                <label for="RoleName">Chức vụ</label>
-                                                <select class="form-control" id="cbRoleNameREdit">
-                                                </select>
-                                            </div>
-                                        </form>
+                                        <div class="form-group">
+                                            <label for="RoleName">Chức vụ</label>
+                                            <select class="form-control" id="cbRoleNameREdit">
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-success" id="btnUpdateRole" onclick="UpdateRole();">Đồng ý</button>
@@ -182,33 +181,29 @@
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row">
-                                            <div hidden>
-                                                <div class="form-group">
-                                                    <label for="Id">Id</label>
-                                                    <input type="text" class="form-control" id="AccountIDPasEdit" placeholder="Id" disabled />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="AccountName">Tên tài khoản</label>
-                                                    <input type="text" class="form-control" id="AccountNamePasEdit" placeholder="Tên tài khoản" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="PasswordEdit">Mật khẩu</label>
-                                                    <input type="text" class="form-control" id="PasswordPasEdit" placeholder="Mật khẩu" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="StatusOfWork">Trạng thái</label>
-                                                    <input type="text" class="form-control" id="StatusAccountPasEdit" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="RoleNamePasEdit">Chức vụ</label>
-                                                    <input type="text" class="form-control" id="RoleNamePasEdit" />
-                                                </div>
+                                        <div class="form-group">
+                                            <label for="Id">Id</label>
+                                            <input type="text" class="form-control" id="AccountIDPasEdit" placeholder="Id" />
+                                        </div>
+                                        @*<div class="form-group">
+                                                <label for="AccountName">Tên tài khoản</label>
+                                                <input type="text" class="form-control" id="AccountNamePasEdit" placeholder="Tên tài khoản" />
                                             </div>
-                                            <div class="form-group" style="margin-left:20px">
-                                                <label for="P">Bạn có muốn đặt lại mật khẩu?</label>
+                                            <div class="form-group">
+                                                <label for="PasswordEdit">Mật khẩu</label>
+                                                <input type="text" class="form-control" id="PasswordPasEdit" placeholder="Mật khẩu" />
                                             </div>
-                                        </form>
+                                            <div class="form-group">
+                                                <label for="StatusOfWork">Trạng thái</label>
+                                                <input type="text" class="form-control" id="StatusAccountPasEdit" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="RoleNamePasEdit">Chức vụ</label>
+                                                <input type="text" class="form-control" id="RoleNamePasEdit" />
+                                            </div>*@
+                                        <div class="form-group" style="margin-left:20px">
+                                            <label for="P">Bạn có muốn đặt lại mật khẩu?</label>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-success" id="btnUpdatePassword" onclick="UpdatePassword();">Đồng ý</button>
@@ -227,33 +222,29 @@
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row">
-                                            <div hidden>
-                                                <div class="form-group">
-                                                    <label for="Id">Id</label>
-                                                    <input type="text" class="form-control" id="AccountIDStatusEdit" placeholder="Id" disabled />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="AccountName">Tên tài khoản</label>
-                                                    <input type="text" class="form-control" id="AccountNameStatusEdit" placeholder="Tên tài khoản" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="PasswordEdit">Mật khẩu</label>
-                                                    <input type="text" class="form-control" id="PasswordStatusEdit" placeholder="Mật khẩu" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="StatusOfWork">Trạng thái</label>
-                                                    <input type="text" class="form-control" id="StatusAccountStatusEdit" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="RoleNameStatusEdit">Chức vụ</label>
-                                                    <input type="text" class="form-control" id="RoleNameStatusEdit" />
-                                                </div>
+                                        <div class="form-group">
+                                            <label for="Id">Id</label>
+                                            <input type="text" class="form-control" id="AccountIDStatusEdit" placeholder="Id" disabled />
+                                        </div>
+                                        @*<div class="form-group">
+                                                <label for="AccountName">Tên tài khoản</label>
+                                                <input type="text" class="form-control" id="AccountNameStatusEdit" placeholder="Tên tài khoản" />
                                             </div>
-                                            <div class="form-group" style="margin-left:20px">
-                                                <label for="Status">Bạn có muốn khóa tài khoản không?</label>
+                                            <div class="form-group">
+                                                <label for="PasswordEdit">Mật khẩu</label>
+                                                <input type="text" class="form-control" id="PasswordStatusEdit" placeholder="Mật khẩu" />
                                             </div>
-                                        </form>
+                                            <div class="form-group">
+                                                <label for="StatusOfWork">Trạng thái</label>
+                                                <input type="text" class="form-control" id="StatusAccountStatusEdit" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="RoleNameStatusEdit">Chức vụ</label>
+                                                <input type="text" class="form-control" id="RoleNameStatusEdit" />
+                                            </div>*@
+                                        <div class="form-group" style="margin-left:20px">
+                                            <label for="Status">Bạn có muốn khóa tài khoản không?</label>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-success" id="btnUpdateStatus" onclick="UpdateStatus();">Đồng ý</button>

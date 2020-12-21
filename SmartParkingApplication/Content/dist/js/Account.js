@@ -1,70 +1,98 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     LoadDataAccount();
 });
 
-//Function for getting data to fill in modal UpdateRole base on AccountID
-function getAccountModalRole(AccountID) {
-    $.ajax({
-        url: "/ManageAccount/Details/" + AccountID,
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#AccountIDEdit').val(result.AccountID);
-            $('#AccountNameEdit').val(result.UserName);
-            $('#PasswordEdit').val(result.PassWord);
-            $('#StatusAccountEdit').val(result.StatusOfAccount);
-            $('#cbRoleNameREdit').val(result.RoleID);
-            $('#myModalRoleAccountEdit').modal('show');
-        },
-        error: function (errormessage) {
-            alert("Exception:" + AccountID + errormessage.responseText);
-        }
-    });
+//fill UserID to modal CreateAccount
+function getModalAddAccount(UserID) {
+    $('#UserIDAcc').val(UserID);
+    $('#myModalAccount').modal('show');
 }
+
+//fill AccountID to modal UpdateRole
+function getAccountModalRole(AccountID) {
+    $('#AccountIDEdit').val(AccountID);
+    $('#myModalRoleAccountEdit').modal('show');
+}
+
+//fill AccountID to modal reset password
+function getAccountModalPassword(AccountID) {
+    $('#AccountIDPasEdit').val(AccountID);
+    $('#myModalPassAccountEdit').modal('show');
+}
+
+//fill AccountID to modal lock account
+function getAccountModalStatus(AccountID) {
+    $('#AccountIDStatusEdit').val(AccountID);
+    $('#myModalStatusAccountEdit').modal('show');
+}
+
+
+////Function for getting data to fill in modal UpdatePassword base on AccountID
+//function getAccountModalPassword(AccountID) {
+//    $.ajax({
+//        url: "/ManageAccount/Details/" + AccountID,
+//        type: "GET",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#AccountIDPasEdit').val(result.AccountID);
+//            $('#AccountNamePasEdit').val(result.UserName);
+//            $('#PasswordPasEdit').val(result.PassWord);
+//            $('#StatusAccountPasEdit').val(result.StatusOfAccount);
+//            $('#RoleNamePasEdit').val(result.RoleID);
+//            $('#myModalPassAccountEdit').modal('show');
+//        },
+//        error: function (errormessage) {
+//            alert("Exception:" + AccountID + errormessage.responseText);
+//        }
+//    });
+//}
+
+////Function for getting data to fill in modal UpdateStatus base on AccountID
+//function getAccountModalStatus(AccountID) {
+//    $.ajax({
+//        url: "/ManageAccount/Details/" + AccountID,
+//        type: "GET",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#AccountIDStatusEdit').val(result.AccountID);
+//            $('#AccountNameStatusEdit').val(result.UserName);
+//            $('#PasswordStatusEdit').val(result.PassWord);
+//            $('#StatusAccountStatusEdit').val(result.StatusOfAccount);
+//            $('#RoleNameStatusEdit').val(result.RoleID);
+//            $('#myModalStatusAccountEdit').modal('show');
+//        },
+//        error: function (errormessage) {
+//            alert("Exception:" + AccountID + errormessage.responseText);
+//        }
+//    });
+//}
 
 //Function for getting data to fill in modal UpdatePassword base on AccountID
-function getAccountModalPassword(AccountID) {
-    $.ajax({
-        url: "/ManageAccount/Details/" + AccountID,
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#AccountIDPasEdit').val(result.AccountID);
-            $('#AccountNamePasEdit').val(result.UserName);
-            $('#PasswordPasEdit').val(result.PassWord);
-            $('#StatusAccountPasEdit').val(result.StatusOfAccount);
-            $('#RoleNamePasEdit').val(result.RoleID);
-            $('#myModalPassAccountEdit').modal('show');
-        },
-        error: function (errormessage) {
-            alert("Exception:" + AccountID + errormessage.responseText);
-        }
-    });
-}
-
-//Function for getting data to fill in modal UpdateStatus base on AccountID
-function getAccountModalStatus(AccountID) {
-    $.ajax({
-        url: "/ManageAccount/Details/" + AccountID,
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#AccountIDStatusEdit').val(result.AccountID);
-            $('#AccountNameStatusEdit').val(result.UserName);
-            $('#PasswordStatusEdit').val(result.PassWord);
-            $('#StatusAccountStatusEdit').val(result.StatusOfAccount);
-            $('#RoleNameStatusEdit').val(result.RoleID);
-            $('#myModalStatusAccountEdit').modal('show');
-        },
-        error: function (errormessage) {
-            alert("Exception:" + AccountID + errormessage.responseText);
-        }
-    });
-}
+//function getAccountModalCreate(UserID) {
+//    $.ajax({
+//        url: "/ManageAccount/Details/" + UserID,
+//        type: "GET",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#UserIDAcc').val(result.AccountID);
+//            $('#FullNameAcc').val(result.UserName);
+//            $('#DateOfBirthAcc').val(result.PassWord);
+//            $('#GenderAcc').val(result.StatusOfAccount);
+//            $('#AddressAcc').val(result.RoleID);
+//            $('#PhoneNumberAcc').val(result.RoleID);
+//            $('#EmailAcc').val(result.RoleID);
+//            $('#IdentityCardAcc').val(result.RoleID);
+//            $('#ParkingPlaceAcc').val(result.RoleID);
+//            $('#myModalPassAccountEdit').modal('show');
+//        },
+//        error: function (errormessage) {
+//            alert("Exception:" + AccountID + errormessage.responseText);
+//        }
+//    });
+//}
 
 
 function LoadDataAccount() {
@@ -77,16 +105,21 @@ function LoadDataAccount() {
             var html = '';
             $.each(result, function (key, item) {
                 html += '<tr>';
-                html += '<td>' + item.UserName + '</td>';
+                html += '<td>' + item.Name + '</td>';
+                html += '<td>' + item.IdentityCard + '</td>';
                 html += '<td>' + item.RoleName + '</td>';
                 html += '<td>' + item.status + '</td>';
-                switch (item.StatusOfAccount) {
-                    case 0:
-                        html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalStatus(' + item.AccountID + ')">Khóa tài khoản</button></td>';
-                        break;
-                    case 1:
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.AccountID + ')"> Chi tiết</button></td>';
-                        break;
+                if (item.status == "Trống") {
+                    html += '<td><button class="btn btn-primary" onclick = "return getModalAddAccount(' + item.UserID + ')">Thêm tài khoản</button></td>';
+                } else {
+                    switch (item.StatusOfAccount) {
+                        case 0:
+                            html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalStatus(' + item.AccountID + ')">Khóa tài khoản</button></td>';
+                            break;
+                        case 1:
+                            html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.AccountID + ')"> Chi tiết</button></td>';
+                            break;
+                    }
                 }
                 html += '</tr>';
             });
@@ -103,80 +136,135 @@ function LoadDataAccount() {
     });
 }
 
-//Add Data Function
-function Add() {
-    var res = validate();
-    if (res == false) {
-        return false;
-    }
-    var empObj = {
-        Name: $('#FullName').val(),
-        DateOfBirth: $('#DateOfBirth').val(),
-        Gender: $('#cbGender').val(),
-        UserAddress: $('#Address').val(),
-        Phone: $('#PhoneNumber').val(),
-        email: $('#Email').val(),
-        IdentityCard: $('#IdentityCard').val(),
-        ContractSigningDate: $('#ContractSigningDate').val(),
-        ContractExpirationDate: $('#ContractExpirationDate').val(),
-        StatusOfWork: 1,
-        AccountID: $('#cbAccountAdd').val(),
-        ParkingPlaceID: $('#cbparkingPlaceU').val(),
+//Add Account for User
+//function AddAccountForUser(UserID,AccountID) {
+//    var res = validate();
+//    if (res == false) {
+//        return false;
+//    }
+//    var empObj = {
+//        UserID: UserID,
+//        Name: $('#FullNameAcc').val(),
+//        DateOfBirth: $('#DateOfBirthAcc').val(),
+//        Gender: $('#GenderAcc').val(),
+//        UserAddress: $('#AddressAcc').val(),
+//        Phone: $('#PhoneNumberAcc').val(),
+//        email: $('#EmailAcc').val(),
+//        IdentityCard: $('#IdentityCardAcc').val(),
+//        StatusOfWork: 1,
+//        AccountID: AccountID,
+//        ParkingPlaceID: $('#ParkingPlaceAcc').val(),
+//    };
+//    $.ajax({
+//        url: "/ManageAccount/AddAccountForUser",
+//        data: JSON.stringify(empObj),
+//        type: "POST",
+//        contentType: "application/json;charset=utf-8",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#myModalAccount').modal('hide');
+//            $('#tbAccount').DataTable().clear().destroy();
+//            LoadDataAccount();
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
 
-    };
-    $.ajax({
-        url: "/ManageUser/Create",
-        data: JSON.stringify(empObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            $('#myModalUser').modal('hide');
-            $('#tbUser').DataTable().clear().destroy();
-            loadData();
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
 
-//function for updating employee's record
-function Update() {
+function AddAccount() {
     //var res = validate();
     //if (res == false) {
     //    return false;
     //}
-    var empObj = {
-        UserID: $('#IdEdit').val(),
-        Name: $('#FullNameEdit').val(),
-        DateOfBirth: $('#DateOfBirthEdit').val(),
-        Gender: $('#cbGenderEdit').val(),
-        UserAddress: $('#AddressEdit').val(),
-        Phone: $('#PhoneNumberEdit').val(),
-        email: $('#EmailEdit').val(),
-        IdentityCard: $('#IdentityCardEdit').val(),
-        StatusOfWork: $('#StatusOfWorkingEdit').val(),
-        AccountID: $('#StatusOfWorkingEdit').val(),
-        ParkingPlaceID: $('#cbparkingPlaceUEdit').val(),
-
+    var UserID = $('#UserIDAcc').val();
+    var accObj = {
+        UserName: $('#UserNameAcc').val(),
+        PassWord: $('#PassWordAcc').val(),
+        RoleID: $('#cbRoleNameAcc').val(),
+        StatusOfAccount: 0
     };
     $.ajax({
-        url: "/ManageUser/Update",
-        data: JSON.stringify(empObj),
+        url: "/ManageAccount/CheckUserToAdd",
+        data: JSON.stringify({ account: accObj, UserID: UserID }),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#myModalUserEdit').modal('hide');
-            $('#tbUser').DataTable().clear().destroy();
-            loadData();
+            //AddAccountForUser(result.AccountID, result.UserID);
+            $('#myModalAccount').modal('hide');
+            $('#tbAccount').DataTable().clear().destroy();
+            LoadDataAccount();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
         }
     });
 }
+
+//Update role for account base on RoleID and AccountID
+function UpdateRole() {
+    var AccountID = $('#AccountIDEdit').val();
+    var RoleID = $('#cbRoleNameREdit').val();
+    $.ajax({
+        url: "/ManageAccount/CheckAccToUpdateRole",
+        data: JSON.stringify({ AccountID: AccountID, RoleID: RoleID }),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            //AddAccountForUser(result.AccountID, result.UserID);
+            $('#myModalRoleAccountEdit').modal('hide');
+            $('#tbAccount').DataTable().clear().destroy();
+            LoadDataAccount();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//Reset password for account base on AccountID
+function UpdatePassword() {
+    var AccountID = $('#AccountIDPasEdit').val();
+    $.ajax({
+        url: "/ManageAccount/CheckAccToResetPass",
+        data: JSON.stringify({ AccountID: AccountID }),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#myModalPassAccountEdit').modal('hide');
+            $('#tbAccount').DataTable().clear().destroy();
+            LoadDataAccount();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+//Update status for account base on AccountID
+function UpdateStatus() {
+    var AccountID = $('#AccountIDStatusEdit').val();
+    $.ajax({
+        url: "/ManageAccount/CheckAccToUpdateStatus",
+        data: JSON.stringify({ AccountID: AccountID }),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#myModalStatusAccountEdit').modal('hide');
+            $('#tbAccount').DataTable().clear().destroy();
+            LoadDataAccount();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
 
 //Valdidation using jquery
 function validateAccEdit() {

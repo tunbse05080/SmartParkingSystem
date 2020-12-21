@@ -227,42 +227,38 @@ function loadData() {
 }
 
 //Add Data Function
-//function Add() {
-//    //var res = validate();
-//    //if (res == false) {
-//    //    return false;
-//    //}
-//    var empObj = {
-//        Name: $('#FullName').val(),
-//        DateOfBirth: $('#DateOfBirth').val(),
-//        Gender: $('#cbGender').val(),
-//        UserAddress: $('#Address').val(),
-//        Phone: $('#PhoneNumber').val(),
-//        email: $('#Email').val(),
-//        IdentityCard: $('#IdentityCard').val(),
-//        ContractSigningDate: $('#ContractSigningDate').val(),
-//        ContractExpirationDate: $('#ContractExpirationDate').val(),
-//        StatusOfWork: 1,
-//        AccountID: $('#cbAccountAdd').val(),
-//        ParkingPlaceID: $('#cbparkingPlaceU').val(),
-
-//    };
-//    $.ajax({
-//        url: "/ManageUser/Create",
-//        data: JSON.stringify(empObj),
-//        type: "POST",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#myModalUser').modal('hide');
-//            $('#tbUser').DataTable().clear().destroy();
-//            loadData();
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
+function AddUser() {
+    //var res = validate();
+    //if (res == false) {
+    //    return false;
+    //}
+    var empObj = {
+        Name: $('#FullName').val(),
+        DateOfBirth: $('#DateOfBirth').val(),
+        Gender: $('#cbGender').val(),
+        UserAddress: $('#Address').val(),
+        Phone: $('#PhoneNumber').val(),
+        email: $('#Email').val(),
+        IdentityCard: $('#IdentityCard').val(),
+        StatusOfWork: 1,
+        ParkingPlaceID: $('#cbparkingPlaceU').val(),
+    };
+    $.ajax({
+        url: "/ManageUser/Create",
+        data: JSON.stringify(empObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#myModalUser').modal('hide');
+            $('#tbUser').DataTable().clear().destroy();
+            loadData();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
 
 //function for updating employee's record
 function Update() {
@@ -535,10 +531,8 @@ function ComboboxParkingPlaceU() {
         dataType: "json",
         success: function (result) {
             var html = '';
-            var i = 1;
             $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
+                html += '<option value="' + item.ParkingPlaceID + '">' + item.NameOfParking + '</option>';
             });
             $("#cbparkingPlaceU").html(html);
             $("#cbparkingPlaceUEdit").html(html);
@@ -559,14 +553,13 @@ function ComboboxRoleNameU() {
         dataType: "json",
         success: function (result) {
             var html = '';
-            var i = 1;
             $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
+                html += '<option value="' + item.RoleID + '">' + item.RoleName + '</option>';
             });
             $("#cbRoleNameU").html(html);
             $("#cbRoleNameUEdit").html(html);
             $("#cbRoleNameREdit").html(html);
+            $("#cbRoleNameAcc").html(html);
 
         },
         error: function (errormessage) {

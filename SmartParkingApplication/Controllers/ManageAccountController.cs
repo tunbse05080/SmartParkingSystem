@@ -19,35 +19,86 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadDataAccount()
         {
-            var accounts = (from a in db.Accounts
-                        select new { a.AccountID, a.Role.RoleName, a.UserName, a.StatusOfAccount }).ToList();
+            var result = (from u in db.Users
+                          select new { u.UserID, u.AccountID, u.Name, u.IdentityCard, u.Account.Role.RoleName, u.Account.StatusOfAccount }).ToList();
             List < Object > list = new List<object>();
-            foreach (var item in accounts)
+            foreach (var item in result)
             {
                 var status = "";
+                var RoleName = "";
+                if(item.StatusOfAccount == null)
+                {
+                    status = "Trống";
+                }
+                if(item.RoleName == null)
+                {
+                    RoleName = "Trống";
+                }
+                else
+                {
+                    RoleName = item.RoleName;
+                }
                 switch (item.StatusOfAccount)
                 {
                     case 0:
-                        status = "Active";
+                        status = "Đang hoạt động";
                         break;
                     case 1:
                         status = "Đã khóa";
                         break;
                 }
-                var tr = new { item.AccountID, item.UserName, item.RoleName, status, item.StatusOfAccount };
+                var tr = new {item.UserID, item.AccountID, item.Name, item.IdentityCard, RoleName, status, item.StatusOfAccount };
                 list.Add(tr);
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Users/Details/5
+        // GET: Account/Details/
         public JsonResult Details(int id)
         {
             var account = db.Accounts.Find(id);
             return Json(new { account.AccountID,account.UserName,account.PassWord,account.RoleID,account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Create(Account account)
+        //find user and add account for user
+        public JsonResult CheckUserToAdd(Account account, int UserID)
+        {
+            int accountID = Create(account);
+            User user = db.Users.Find(UserID);
+            user.AccountID = accountID;
+            UpdateUser(user);
+            return Json(new { user.UserID }, JsonRequestBehavior.AllowGet);
+        }
+
+        //find account to update role
+        public JsonResult CheckAccToUpdateRole(int AccountID, int RoleID)
+        {
+            Account account = db.Accounts.Find(AccountID);
+            account.RoleID = RoleID;
+            Update(account);
+            return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+        }
+
+        //find account to reset password
+        public JsonResult CheckAccToResetPass(int AccountID)
+        {
+            Account account = db.Accounts.Find(AccountID);
+            account.PassWord = "123456";
+            Update(account);
+            return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+        }
+
+        //find account to update status
+        public JsonResult CheckAccToUpdateStatus(int AccountID)
+        {
+            Account account = db.Accounts.Find(AccountID);
+            account.StatusOfAccount = 1;
+            Update(account);
+            return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+        }
+
+        //Create account
+        public int Create(Account account)
         {
             if (ModelState.IsValid)
             {
@@ -55,9 +106,21 @@ namespace SmartParkingApplication.Controllers
                 db.SaveChanges();
             }
 
-            return Json(account, JsonRequestBehavior.AllowGet);
+            return account.AccountID;
         }
 
+        //Update User
+        public JsonResult UpdateUser(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
+
+        //Update account
         public JsonResult Update(Account account)
         {
             if (ModelState.IsValid)

@@ -33,7 +33,7 @@ namespace SmartParkingApplication.Controllers
             //            from p in table2.DefaultIfEmpty()
             //            orderby u.UserID
             //            select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
-
+            
             var users = (from u in db.Users
                          where u.Account.Role.RoleID == 2
                         orderby u.UserID
@@ -193,14 +193,16 @@ namespace SmartParkingApplication.Controllers
         //combobox parking place user
         public JsonResult ComboboxParkingPlace()
         {
-            var list = db.ParkingPlaces.Select(u => u.NameOfParking).Distinct().ToList();
+            var list = from p in db.ParkingPlaces
+                       select new { p.ParkingPlaceID, p.NameOfParking };
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //combobox Rolename user
         public JsonResult ComboboxRoleName()
         {
-            var list = db.Roles.Select(u => u.RoleName).Distinct().ToList();
+            var list = from r in db.Roles
+                       select new { r.RoleID, r.RoleName };
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
