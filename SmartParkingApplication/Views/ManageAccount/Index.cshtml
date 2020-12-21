@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button type="button" data-toggle="modal" data-target="#myModalAccount" onclick="clearRegisterAccount();" class="btn btn-success">Đăng ký tài khoản</button>
+                                    <button type="button" data-toggle="modal" data-target="#myModalAccount" @*onclick="clearRegisterAccount();"*@ class="btn btn-success">Đăng ký tài khoản</button>
                                 </div>
                                 @*<div class="col-md-3">
                                         <button type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success">Lịch làm việc</button>
@@ -72,22 +72,22 @@
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row">
+                                        <form class="row" id="AddAccountForm">
                                             <div class="form-group col-sm-4">
                                                 <label for="UserName">Tên tài khoản</label>
-                                                <input type="text" class="form-control" id="UserName" placeholder="Tên tài khoản" />
+                                                <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Tên tài khoản" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="PassWord">Mật khẩu</label>
-                                                <input type="text" class="form-control" id="PassWord" placeholder="Mật khẩu" />
+                                                <input type="text" class="form-control" id="PassWord" name="PassWord" placeholder="Mật khẩu" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="FullName">Tên đầy đủ</label>
-                                                <input type="text" class="form-control" id="FullName" placeholder="Tên đầy đủ" />
+                                                <input type="text" class="form-control" id="FullName" name="FullName" placeholder="Tên đầy đủ" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="DateOfBirth">Ngày Sinh</label>
-                                                <input type="date" class="form-control" id="DateOfBirth" placeholder="Ngày Sinh" />
+                                                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" placeholder="Ngày Sinh" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="Gender">Giới tính</label>
@@ -96,19 +96,19 @@
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="Address">Địa chỉ</label>
-                                                <input type="text" class="form-control" id="Address" placeholder="Địa chỉ" />
+                                                <input type="text" class="form-control" id="Address" name="Address" placeholder="Địa chỉ" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="PhoneNumber">Số điện thoại</label>
-                                                <input type="text" class="form-control" id="PhoneNumber" placeholder="Số điện thoại" />
+                                                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Số điện thoại" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="Email">Email</label>
-                                                <input type="text" class="form-control" id="Email" placeholder="Email" />
+                                                <input type="text" class="form-control" id="Email" name="Email" placeholder="Email" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="IdentityCard">Số CMND</label>
-                                                <input type="text" class="form-control" id="IdentityCard" placeholder="Số CMND" />
+                                                <input type="text" class="form-control" id="IdentityCard" name="IdentityCard" placeholder="Số CMND" />
                                             </div>
                                             <div class="form-group col-sm-4">
                                                 <label for="RoleName">Chức vụ</label>
