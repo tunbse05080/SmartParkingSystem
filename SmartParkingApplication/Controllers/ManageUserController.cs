@@ -35,7 +35,7 @@ namespace SmartParkingApplication.Controllers
             //            select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
             
             var users = (from u in db.Users
-                         where u.Account.Role.RoleID == 2
+                         where u.Account.Role.RoleID == 1
                         orderby u.UserID
                         select new { 
                             u.UserID, u.Name, u.DateOfBirth, 

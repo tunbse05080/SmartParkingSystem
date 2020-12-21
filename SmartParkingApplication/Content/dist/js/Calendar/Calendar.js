@@ -244,11 +244,9 @@ function getNameStaff(check) {
         success: function (result) {
             if (check == 1) {
                 $('#FullNameEmp').val(result.Name);
-                $('#DateStart').val(loadDateNow());
                 $('myModalCreateWorkingCalendar').modal('Show');
             } else {
                 $('#FullNameEmpEdit').val(result.Name);
-                $('#DateStartEdit').val(loadDateNow());
                 $('myModalEditWorkingCalendar').modal('Show');
             }
         },
