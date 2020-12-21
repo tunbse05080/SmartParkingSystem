@@ -32,75 +32,7 @@ function getAccountModalUnlock(AccountID) {
     $('#myModalUnlockAccountEdit').modal('show');
 }
 
-
-////Function for getting data to fill in modal UpdatePassword base on AccountID
-//function getAccountModalPassword(AccountID) {
-//    $.ajax({
-//        url: "/ManageAccount/Details/" + AccountID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#AccountIDPasEdit').val(result.AccountID);
-//            $('#AccountNamePasEdit').val(result.UserName);
-//            $('#PasswordPasEdit').val(result.PassWord);
-//            $('#StatusAccountPasEdit').val(result.StatusOfAccount);
-//            $('#RoleNamePasEdit').val(result.RoleID);
-//            $('#myModalPassAccountEdit').modal('show');
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + AccountID + errormessage.responseText);
-//        }
-//    });
-//}
-
-////Function for getting data to fill in modal UpdateStatus base on AccountID
-//function getAccountModalStatus(AccountID) {
-//    $.ajax({
-//        url: "/ManageAccount/Details/" + AccountID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#AccountIDStatusEdit').val(result.AccountID);
-//            $('#AccountNameStatusEdit').val(result.UserName);
-//            $('#PasswordStatusEdit').val(result.PassWord);
-//            $('#StatusAccountStatusEdit').val(result.StatusOfAccount);
-//            $('#RoleNameStatusEdit').val(result.RoleID);
-//            $('#myModalStatusAccountEdit').modal('show');
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + AccountID + errormessage.responseText);
-//        }
-//    });
-//}
-
-//Function for getting data to fill in modal UpdatePassword base on AccountID
-//function getAccountModalCreate(UserID) {
-//    $.ajax({
-//        url: "/ManageAccount/Details/" + UserID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#UserIDAcc').val(result.AccountID);
-//            $('#FullNameAcc').val(result.UserName);
-//            $('#DateOfBirthAcc').val(result.PassWord);
-//            $('#GenderAcc').val(result.StatusOfAccount);
-//            $('#AddressAcc').val(result.RoleID);
-//            $('#PhoneNumberAcc').val(result.RoleID);
-//            $('#EmailAcc').val(result.RoleID);
-//            $('#IdentityCardAcc').val(result.RoleID);
-//            $('#ParkingPlaceAcc').val(result.RoleID);
-//            $('#myModalPassAccountEdit').modal('show');
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + AccountID + errormessage.responseText);
-//        }
-//    });
-//}
-
-
+//load Info user and account
 function LoadDataAccount() {
     $.ajax({
         url: "/ManageAccount/LoadDataAccount",
@@ -123,7 +55,7 @@ function LoadDataAccount() {
                             html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalLock(' + item.AccountID + ')">Khóa tài khoản</button></td>';
                             break;
                         case 1:
-                            html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.AccountID + ')"> Chi tiết</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalUnlock(' + item.AccountID + ')">Mở khóa tài khoản</button></td>';
+                            html += '<td><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalUnlock(' + item.AccountID + ')">Mở khóa tài khoản</button></td>';
                             break;
                     }
                 }
@@ -142,43 +74,7 @@ function LoadDataAccount() {
     });
 }
 
-//Add Account for User
-//function AddAccountForUser(UserID,AccountID) {
-//    var res = validate();
-//    if (res == false) {
-//        return false;
-//    }
-//    var empObj = {
-//        UserID: UserID,
-//        Name: $('#FullNameAcc').val(),
-//        DateOfBirth: $('#DateOfBirthAcc').val(),
-//        Gender: $('#GenderAcc').val(),
-//        UserAddress: $('#AddressAcc').val(),
-//        Phone: $('#PhoneNumberAcc').val(),
-//        email: $('#EmailAcc').val(),
-//        IdentityCard: $('#IdentityCardAcc').val(),
-//        StatusOfWork: 1,
-//        AccountID: AccountID,
-//        ParkingPlaceID: $('#ParkingPlaceAcc').val(),
-//    };
-//    $.ajax({
-//        url: "/ManageAccount/AddAccountForUser",
-//        data: JSON.stringify(empObj),
-//        type: "POST",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#myModalAccount').modal('hide');
-//            $('#tbAccount').DataTable().clear().destroy();
-//            LoadDataAccount();
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
-
-
+//send new obj account and userid to ManageAccount to update accountId in user
 function AddAccount() {
     //var res = validate();
     //if (res == false) {
