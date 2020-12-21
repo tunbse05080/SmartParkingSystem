@@ -120,7 +120,9 @@ function CreateWorkingCalendar() {
     //        Slot: $('#cbWorkShiftEmp').val()
     //    }
     //}
-    if ($('checkboxDate').checked == false || !$('checkboxDate').checked) {
+    var checkboxDate;
+    if ($('#checkboxDate').checked == false || !$('#checkboxDate').checked) {
+        checkboxDate = 0;
         if ($('#cbWorkShiftEmp').val() == 1) {
             var scheObj = {
                 TimeStart: $('#DateApply').val() + " 06:00:00",
@@ -140,11 +142,18 @@ function CreateWorkingCalendar() {
                 Slot: $('#cbWorkShiftEmp').val()
             }
         }
+    } else {
+        checkboxDate = 1;
+            var scheObj = {
+                TimeStart: $('#DateStart').val(),
+                TimeEnd: $('#DateEnd').val(),
+                Slot: $('#cbWorkShiftEmp').val()
+            }
     }
     $.ajax({
-        url: "/ManageUser/CreateWorkingCalendar",
+        url: "/ManageUser/GetTimeCreateCalendar",
         type: "POST",
-        data: JSON.stringify(scheObj),
+        data: JSON.stringify({ schedule: scheObj, checkboxDate: checkboxDate }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
@@ -158,7 +167,7 @@ function CreateWorkingCalendar() {
 
 function EditWorkingCalendar() {
     var UserID = $('#cbUserNameEmpEdit').val();
-    if ($('checkboxDateEdit').checked == false || !$('checkboxDateEdit').checked) {
+    if ($('#checkboxDateEdit').checked == false || !$('#checkboxDateEdit').checked) {
         if ($('#cbWorkShiftEmpEdit').val() == 1) {
             var scheObj = {
                 TimeStart: $('#DateApplyEdit').val() + " 06:00:00",

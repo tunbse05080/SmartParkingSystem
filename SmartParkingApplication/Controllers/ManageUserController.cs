@@ -247,6 +247,13 @@ namespace SmartParkingApplication.Controllers
                        select new {us.ScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetTimeCreateCalendar(Schedule schedule)
+        {
+            var result = "";
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         //create Userschedule
         public JsonResult CreateUserSchedule(UserSchedule userSchedule)
         {
