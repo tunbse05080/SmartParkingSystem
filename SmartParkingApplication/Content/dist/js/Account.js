@@ -21,9 +21,15 @@ function getAccountModalPassword(AccountID) {
 }
 
 //fill AccountID to modal lock account
-function getAccountModalStatus(AccountID) {
-    $('#AccountIDStatusEdit').val(AccountID);
-    $('#myModalStatusAccountEdit').modal('show');
+function getAccountModalLock(AccountID) {
+    $('#AccountIDLockAccEdit').val(AccountID);
+    $('#myModalLockAccountEdit').modal('show');
+}
+
+//fill AccountID to modal unlock account
+function getAccountModalUnlock(AccountID) {
+    $('#AccountIDUnlockAccEdit').val(AccountID);
+    $('#myModalUnlockAccountEdit').modal('show');
 }
 
 
@@ -114,10 +120,10 @@ function LoadDataAccount() {
                 } else {
                     switch (item.StatusOfAccount) {
                         case 0:
-                            html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalStatus(' + item.AccountID + ')">Khóa tài khoản</button></td>';
+                            html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalLock(' + item.AccountID + ')">Khóa tài khoản</button></td>';
                             break;
                         case 1:
-                            html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.AccountID + ')"> Chi tiết</button></td>';
+                            html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.AccountID + ')"> Chi tiết</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalUnlock(' + item.AccountID + ')">Mở khóa tài khoản</button></td>';
                             break;
                     }
                 }
@@ -246,16 +252,26 @@ function UpdatePassword() {
 }
 
 //Update status for account base on AccountID
-function UpdateStatus() {
-    var AccountID = $('#AccountIDStatusEdit').val();
+function UpdateStatus(status) {
+    if (status == 1) {
+        var AccountID = $('#AccountIDLockAccEdit').val();
+        var Status = 1;
+    } else {
+        var AccountID = $('#AccountIDUnlockAccEdit').val();
+        var Status = 0;
+    }
     $.ajax({
         url: "/ManageAccount/CheckAccToUpdateStatus",
-        data: JSON.stringify({ AccountID: AccountID }),
+        data: JSON.stringify({ AccountID: AccountID, Status: Status }),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#myModalStatusAccountEdit').modal('hide');
+            if (result.StatusOfAccount == 0) {
+                $('#myModalUnlockAccountEdit').modal('hide');
+            } else {
+                $('#myModalLockAccountEdit').modal('hide');
+            }
             $('#tbAccount').DataTable().clear().destroy();
             LoadDataAccount();
         },

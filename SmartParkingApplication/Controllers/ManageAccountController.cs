@@ -89,12 +89,12 @@ namespace SmartParkingApplication.Controllers
         }
 
         //find account to update status
-        public JsonResult CheckAccToUpdateStatus(int AccountID)
+        public JsonResult CheckAccToUpdateStatus(int AccountID, int Status)
         {
             Account account = db.Accounts.Find(AccountID);
-            account.StatusOfAccount = 1;
+            account.StatusOfAccount = Status;
             Update(account);
-            return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+            return Json(new { account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
         }
 
         //Create account
