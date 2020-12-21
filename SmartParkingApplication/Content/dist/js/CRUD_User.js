@@ -2,8 +2,8 @@
 $(document).ready(function () {
     loadData();
     ComboboxGender();
-    ComboboxRoleNameU();
-    ComboboxParkingPlaceU();
+    ComboboxRoleName();
+    ComboboxParkingPlace();
 });
 
 function loadDateNow() {
@@ -532,7 +532,7 @@ function ComboboxGender() {
 //    });
 //}
 
-function ComboboxParkingPlaceU() {
+function ComboboxParkingPlace() {
     $.ajax({
         url: "/ManageUser/ComboboxParkingPlace",
         type: "GET",
@@ -547,6 +547,8 @@ function ComboboxParkingPlaceU() {
             $("#cbparkingPlaceUEdit").html(html);
             $("#cbparkingPlaceEmp").html(html);
             $("#cbparkingPlaceEmpEdit").html(html);
+            $("#cbparkingPlaceWorkingCalendar").html(html);
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -554,7 +556,7 @@ function ComboboxParkingPlaceU() {
     });
 }
 
-function ComboboxRoleNameU() {
+function ComboboxRoleName() {
     $.ajax({
         url: "/ManageUser/ComboboxRoleName",
         type: "GET",

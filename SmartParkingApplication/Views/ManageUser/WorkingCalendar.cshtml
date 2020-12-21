@@ -34,10 +34,14 @@
                                 <div class="col-sm-4">
                                     <button class="btn btn-success" id="btnCreateWC" data-toggle="modal" data-target="#myModalCreateWorkingCalendar">Tạo lịch làm việc</button>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-8">
                                     <button class="btn btn-success" id="btnEditWC" data-toggle="modal" data-target="#myModalEditWorkingCalendar">Sửa lịch làm việc</button>
+                                </div><br /><br /><br />
+                                <div class="col-md-3">
+                                    <select class="form-control" onchange="LoadDataCalendar()" id="cbparkingPlaceWorkingCalendar">
+                                    </select>
                                 </div>
-                            </div>
+                            </div><br />
                             <div id="calendarWork">
                             </div>
                             @*<button style="width:150px;margin-top:10px" type="button" onclick="location.href='@Url.Action("Editworkingcalendar", "ManageUser")';return false;" class="btn btn-success float-right">Sửa lịch làm việc</button>*@

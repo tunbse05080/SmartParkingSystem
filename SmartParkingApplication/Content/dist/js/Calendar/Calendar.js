@@ -32,8 +32,6 @@ function getFormatDatetime(date) {
     return result;
 }
 
-let evenArr = [];
-
 //load Data to Working Calendar
 function LoadDataCalendar() {
     $.ajax({
@@ -42,6 +40,7 @@ function LoadDataCalendar() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+            let evenArr = [];
             $.each(result, function (key, item) {
                 let evenObj = {
                     id: item.ScheduleID,
@@ -50,7 +49,7 @@ function LoadDataCalendar() {
                     end: getFormatDatetime(item.TimeEnd)
                 }
                 evenArr.push(evenObj);
-                initCalendar();
+                initCalendar(evenArr);
             });
         },
         error: function (errormessage) {
@@ -59,7 +58,7 @@ function LoadDataCalendar() {
     });
 }
 
-function initCalendar() {
+function initCalendar(evenArr) {
     var calendar1 = document.getElementById('calendarWork');
     var calendar = new FullCalendar.Calendar(calendar1, {
         initialView: 'dayGridMonth',
