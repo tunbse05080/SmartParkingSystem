@@ -71,9 +71,11 @@ function getEditByID(EmployeeID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+            var str = result.dateOfBirth;
+            var test = str.split("/");
             $('#IdEdit').val(result.UserID);
             $('#FullNameEdit').val(result.Name);
-            $('#DateOfBirthEdit').val(result.dateOfBirth);
+            $('#DateOfBirthEdit').val(test[2] + '-' + test[0] + '-' + test[1]);
             $('#AddressEdit').val(result.UserAddress);
             $('#IdentityCardEdit').val(result.IdentityCard);
             $('#PhoneNumberEdit').val(result.Phone);
@@ -265,11 +267,11 @@ function loadData() {
 //}
 
 //function for updating employee's record
-function Update() {
-    //var res = validateUserEdit();
-    //if (res == false) {
-    //    return false;
-    //}
+function UpdateUser() {
+    var res = validateUserEdit();
+    if (res == false) {
+        return false;
+    }
     var empObj = {
         UserID: $('#IdEdit').val(),
         Name: $('#FullNameEdit').val(),
@@ -345,67 +347,74 @@ function clearTextBox() {
 
 //Valdidation using jquery
 function validateUserEdit() {
-    var isValid = true;
-    var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
-    var idcard = new RegExp('^[0-9]{9,}$');
-    var phone = new RegExp('^(09|03|07|08|05){1}([0-9]{8})$');
-    if ($.trim($('#FullNameEdit').val()) == "" || $.trim($('#FullNameEdit').val()).length < 4) {
-        $('#FullNameEdit').prop("title", "Tên đầy đủ > 4 ký tự.");
-        $('#FullNameEdit').css('border-color', 'Red');
-        isValid = false;
+    var htmlcss = {
+        'color': 'Red',
+        'display': 'block'
     }
-    else {
-        $('#FullNameEdit').prop("title", "");
-        $('#FullNameEdit').css('border-color', 'lightgrey');
-    }
-    if ($('#DateOfBirthEdit').val().length == 0) {
-        $('#DateOfBirthEdit').prop("title", "Chưa chọn ngày!");
-        $('#DateOfBirthEdit').css('border-color', 'Red');
-        isValid = false;
-    } else {
-        if (new Date($('#DateOfBirthEdit').val()) < new Date()) {
-            $('#DateOfBirthEdit').prop("title", "Nhỏ hơn ngày hiện tại!");
-            $('#DateOfBirthEdit').css('border-color', 'Red');
-            isValid = false;
-        } else {
-            $('#DateOfBirthEdit').css('border-color', 'lightgrey');
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
         }
-    }
-    if ($.trim($('#AddressEdit').val()) == "") {
-        $('#AddressEdit').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#AddressEdit').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#PhoneNumberEdit').val()) == "" || !phone.test($.trim($('#PhoneNumberEdit').val()))) {
-        $('#PhoneNumberEdit').prop("title", "Số điện thoại trống hoặc định dạng sai.");
-        $('#PhoneNumberEdit').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#PhoneNumberEdit').prop("title", "");
-        $('#PhoneNumberEdit').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#EmailEdit').val()) == "" || !email.test($.trim($('#EmailEdit').val()))) {
-        $('#EmailEdit').prop("title", "Email trống hoặc không đúng định dạng.");
-        $('#EmailEdit').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#EmailEdit').prop("title", "");
-        $('#EmailEdit').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#IdentityCardEdit').val()) == "" || !idcard.test($.trim($('#IdentityCardEdit').val()))) {
-        $('#IdentityCardEdit').prop("title", "CMND/CCCD trống hoặc sai định dạng.");
-        $('#IdentityCardEdit').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#IdentityCardEdit').prop("title", "")
-        $('#IdentityCardEdit').css('border-color', 'lightgrey');
-    }
-    return isValid;
+    });
+    $('#EditUserForm').validate({
+        rules: {
+            DateOfBirthEdit: {
+                required: true,
+                checkBDate: true
+            },
+            FullNameEdit: {
+                required: true,
+                checkAccFullName: true
+            },
+            AddressEdit: {
+                required: true,
+                checkAccAddress: true
+            },
+            PhoneNumberEdit: {
+                required: true,
+                checkAccPhoneNumber: true
+            },
+            EmailEdit: {
+                required: true,
+                email: true
+            },
+            IdentityCardEdit: {
+                required: true,
+                checkAccIdentityCard: true
+            }
+        },
+        messages: {
+            DateOfBirthEdit: {
+                required: '*Bắt buộc.'
+            },
+            FullNameEdit: {
+                required: '*Bắt buộc.'
+            },
+            AddressEdit: {
+                required: '*Bắt buộc.'
+            },
+            PhoneNumberEdit: {
+                required: '*Bắt buộc.'
+            },
+            EmailEdit: {
+                required: '*Bắt buộc.',
+                email: 'Email không đúng định dạng.'
+            },
+            IdentityCardEdit: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#EditUserForm').valid();
 }
 
 // gia han HĐ

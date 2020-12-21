@@ -142,7 +142,7 @@ function AddAccount() {
 }
 
 //function for updating employee's record
-function Update() {
+function UpdateAccount() {
     //var res = validate();
     //if (res == false) {
     //    return false;
