@@ -33,15 +33,25 @@ namespace SmartParkingApplication.Controllers
             //            from p in table2.DefaultIfEmpty()
             //            orderby u.UserID
             //            select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
-            
+
             var users = (from u in db.Users
                          where u.Account.Role.RoleID == 1
-                        orderby u.UserID
-                        select new { 
-                            u.UserID, u.Name, u.DateOfBirth, 
-                            u.Gender, u.UserAddress, u.IdentityCard, 
-                            u.Phone, u.email, u.StatusOfwork, 
-                            u.ParkingPlace.NameOfParking, u.Account.Role.RoleName, u.Account.StatusOfAccount }).ToList();
+                         orderby u.UserID
+                         select new
+                         {
+                             u.UserID,
+                             u.Name,
+                             u.DateOfBirth,
+                             u.Gender,
+                             u.UserAddress,
+                             u.IdentityCard,
+                             u.Phone,
+                             u.email,
+                             u.StatusOfwork,
+                             u.ParkingPlace.NameOfParking,
+                             u.Account.Role.RoleName,
+                             u.Account.StatusOfAccount
+                         }).ToList();
 
             List<Object> list = new List<object>();
             foreach (var item in users)
@@ -68,7 +78,7 @@ namespace SmartParkingApplication.Controllers
                         statusOfwork = "Không trong ca";
                         break;
                 }
-                var tr = new { item.UserID, item.Name, DateOfBirth = datebirth, Gender = gender, item.UserAddress, item.IdentityCard, item.Phone, item.email, StatusOfWork = statusOfwork, item.NameOfParking, item.RoleName, item.StatusOfAccount};
+                var tr = new { item.UserID, item.Name, DateOfBirth = datebirth, Gender = gender, item.UserAddress, item.IdentityCard, item.Phone, item.email, StatusOfWork = statusOfwork, item.NameOfParking, item.RoleName, item.StatusOfAccount };
                 list.Add(tr);
             }
 
@@ -102,7 +112,7 @@ namespace SmartParkingApplication.Controllers
             dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
             //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
             //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, user.StatusOfwork , statusOfwork, user.AccountID, user.Account.UserName, user.Gender, user.ParkingPlaceID};
+            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, user.StatusOfwork, statusOfwork, user.AccountID, user.Account.UserName, user.Gender, user.ParkingPlaceID };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -214,7 +224,7 @@ namespace SmartParkingApplication.Controllers
                           select new { u.UserID, u.Account.UserName }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
+
         //get name of staff base on UserID
         public JsonResult GetNameStaff(int id)
         {
@@ -244,44 +254,79 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             var result = (from us in db.UserSchedules
                           where us.User.ParkingPlaceID == ParkingPlaceID
-                       select new {us.ScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
+                          select new { us.ScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTimeCreateCalendar(Schedule schedule, bool checkboxDate)
+        public JsonResult GetTimeToCreateCalendar(Schedule schedule, int UserID)
         {
+            //get number day between dateStart and dateEnd
             TimeSpan timeSpan = (TimeSpan)(schedule.TimeEnd - schedule.TimeStart);
-            for(int i = 0;i < timeSpan.Days; i++)
+            //create UserSchedule for each date
+            for (int i = 0; i <= timeSpan.Days; i++)
             {
-                if(schedule.Slot == 1)
+                //declare timeStart and timeEnd
+                DateTime timeStart = DateTime.Now;
+                DateTime timeEnd = DateTime.Now;
+                if (schedule.Slot == 1)
                 {
-                    DateTime timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
-                    DateTime timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
+                    //set timeStart and timeEnd equal time shift 1
+                    timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
+                    timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
                 }
+                else if (schedule.Slot == 2)
+                {
+                    //set timeStart and timeEnd equal time shift 2
+                    timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
+                    timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("22:00:00");
+                }
+                else
+                {
+                    //set timeStart and timeEnd equal time shift 2
+                    timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("22:00:00");
+                    timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
+                }
+                //each for, timeStart increase 1
+                timeStart = timeStart.AddDays(i);
+                //each for, timeEnd increase 2 if shift 3
+                if (schedule.Slot == 3)
+                {
+                    timeEnd = timeEnd.AddDays(i + 1);
+                }
+                else
+                {
+                    timeEnd = timeEnd.AddDays(i);
+                }
+                Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
+                //create working schedule
+                int scheduleID = CreateWorkingCalendar(newSchedule);
+
+                UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
+                //create working schedule for user
+                CreateUserSchedule(newUS);
             }
             var result = "";
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         //create Userschedule
-        public JsonResult CreateUserSchedule(UserSchedule userSchedule)
+        public void CreateUserSchedule(UserSchedule userSchedule)
         {
             if (ModelState.IsValid)
             {
                 db.UserSchedules.Add(userSchedule);
                 db.SaveChanges();
             }
-            return Json(userSchedule, JsonRequestBehavior.AllowGet);
         }
         //create schedule
-        public JsonResult CreateWorkingCalendar(Schedule schedule)
+        public int CreateWorkingCalendar(Schedule schedule)
         {
             if (ModelState.IsValid)
             {
                 db.Schedules.Add(schedule);
                 db.SaveChanges();
             }
-            return Json(schedule, JsonRequestBehavior.AllowGet);
+            return schedule.ScheduleID;
         }
 
         //check Userschedule base on schedule and update UserID in Userschedule
@@ -310,7 +355,7 @@ namespace SmartParkingApplication.Controllers
                 db.Entry(userSchedule).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return Json(userSchedule,JsonRequestBehavior.AllowGet);
+            return Json(userSchedule, JsonRequestBehavior.AllowGet);
         }
 
         //Xuat file Exel User

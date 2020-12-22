@@ -41,7 +41,7 @@ function LoadDataCalendar() {
     $.ajax({
         url: "/ManageUser/LoadDataCalendar",
         type: "POST",
-        data: JSON.stringify({ ParkingPlaceID: ParkingPlaceID}),
+        data: JSON.stringify({ ParkingPlaceID: ParkingPlaceID }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
@@ -55,7 +55,7 @@ function LoadDataCalendar() {
                     end: getFormatDatetime(item.TimeEnd)
                 }
                 evenArr.push(evenObj);
-                
+
             });
             initCalendar(evenArr);
         },
@@ -79,26 +79,26 @@ function initCalendar(evenArr) {
     calendar.render();
 }
 
-function CreateUserSchedule(Id) {
-    var userScheObj = {
-        UserID: $('#cbUserNameEmp').val(),
-        ScheduleID: Id
-    }
-    $.ajax({
-        url: "/ManageUser/CreateUserSchedule",
-        type: "POST",
-        data: JSON.stringify(userScheObj),
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            $('#myModalCreateWorkingCalendar').modal('hide');
-            LoadDataCalendar();
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
+//function CreateUserSchedule(Id) {
+//    var userScheObj = {
+//        UserID: $('#cbUserNameEmp').val(),
+//        ScheduleID: Id
+//    }
+//    $.ajax({
+//        url: "/ManageUser/CreateUserSchedule",
+//        type: "POST",
+//        data: JSON.stringify(userScheObj),
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//            $('#myModalCreateWorkingCalendar').modal('hide');
+//            LoadDataCalendar();
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
 
 function CreateWorkingCalendar() {
     //if ($('#cbWorkShiftEmp').val() == 1) {
@@ -120,42 +120,45 @@ function CreateWorkingCalendar() {
     //        Slot: $('#cbWorkShiftEmp').val()
     //    }
     //}
+    var UserID = $('#cbUserNameEmp').val();
     var checkboxDate = document.getElementById("checkboxDate");
     if (checkboxDate.checked == false) {
-        if ($('#cbWorkShiftEmp').val() == 1) {
-            var scheObj = {
-                TimeStart: $('#DateApply').val() + " 06:00:00",
-                TimeEnd: $('#DateApply').val() + " 14:00:00",
-                Slot: $('#cbWorkShiftEmp').val()
-            }
-        } else if ($('#cbWorkShiftEmp').val() == 2) {
-            var scheObj = {
-                TimeStart: $('#DateApply').val() + " 14:00:00",
-                TimeEnd: $('#DateApply').val() + " 22:00:00",
-                Slot: $('#cbWorkShiftEmp').val()
-            }
-        } else {
-            var scheObj = {
-                TimeStart: $('#DateApply').val() + " 22:00:00",
-                TimeEnd: $('#DateApply').val() + " 06:00:00",
-                Slot: $('#cbWorkShiftEmp').val()
-            }
+        //if ($('#cbWorkShiftEmp').val() == 1) {
+        var scheObj = {
+            TimeStart: $('#DateApply').val(),
+            TimeEnd: $('#DateApply').val(),
+            Slot: $('#cbWorkShiftEmp').val()
         }
+        //} else if ($('#cbWorkShiftEmp').val() == 2) {
+        //    var scheObj = {
+        //        TimeStart: $('#DateApply').val() + " 14:00:00",
+        //        TimeEnd: $('#DateApply').val() + " 22:00:00",
+        //        Slot: $('#cbWorkShiftEmp').val()
+        //    }
+        //} else {
+        //    var scheObj = {
+        //        TimeStart: $('#DateApply').val() + " 22:00:00",
+        //        TimeEnd: $('#DateApply').val() + " 06:00:00",
+        //        Slot: $('#cbWorkShiftEmp').val()
+        //    }
+        //}
     } else {
-            var scheObj = {
-                TimeStart: $('#DateStart').val(),
-                TimeEnd: $('#DateEnd').val(),
-                Slot: $('#cbWorkShiftEmp').val()
-            }
+        var scheObj = {
+            TimeStart: $('#DateStart').val(),
+            TimeEnd: $('#DateEnd').val(),
+            Slot: $('#cbWorkShiftEmp').val()
+        }
     }
     $.ajax({
-        url: "/ManageUser/GetTimeCreateCalendar",
+        url: "/ManageUser/GetTimeToCreateCalendar",
         type: "POST",
-        data: JSON.stringify({ schedule: scheObj, checkboxDate: checkboxDate.checked }),
+        data: JSON.stringify({ schedule: scheObj, UserID: UserID }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            CreateUserSchedule(result.ScheduleID);
+            //CreateUserSchedule(result.ScheduleID);
+            $('#myModalCreateWorkingCalendar').modal('hide');
+            LoadDataCalendar();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
