@@ -34,8 +34,17 @@
                                 <div class="col-sm-4">
                                     <button class="btn btn-success" id="btnCreateWC" data-toggle="modal" data-target="#myModalCreateWorkingCalendar" onclick="clearBox(1);ComboboxUserName(1)">Tạo lịch làm việc</button>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-4">
                                     <button class="btn btn-success" id="btnEditWC" data-toggle="modal" data-target="#myModalEditWorkingCalendar" onclick="clearBox(2);ComboboxUserName(2)">Sửa lịch làm việc</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-success" id="btnExportCalendar" onclick="location.href='@Url.Action("ExportWorkingCalendar", "ManageUser")';return false;">Xuất lịch làm việc</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="cbExportCalendar">
+                                        <option>Tuần này</option>
+                                        <option>Tháng này</option>
+                                    </select>
                                 </div><br /><br /><br />
                                 <div class="col-md-3">
                                     <select class="form-control" onchange="LoadDataCalendar()" id="cbparkingPlaceWorkingCalendar">

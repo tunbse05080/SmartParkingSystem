@@ -397,38 +397,27 @@ namespace SmartParkingApplication.Controllers
             return Json(userSchedule, JsonRequestBehavior.AllowGet);
         }
 
-        //Xuat file Exel User
-        public ActionResult ExportListAlmostExpired()
+        //Export Working Calendar
+        
+        public ActionResult ExportWorkingCalendar()
         {
-            List<User> users = db.Users.ToList();
+            var MonthlyTicketUser = db.MonthlyTickets.ToList();
+            var parking = db.ParkingPlaces.ToList();
+            // var role = db.Roles.ToList();
             var alluser = new GridView();
             //===================================================
             DataTable dt = new DataTable();
             //Add Datacolumn
-            DataColumn workCol = dt.Columns.Add("Họ và tên", typeof(String));
+            DataColumn workCol = dt.Columns.Add("Tên chủ thẻ", typeof(String));
 
-            dt.Columns.Add("Tên Tài Khoản", typeof(String));
-            dt.Columns.Add("Ngày Sinh", typeof(String));
-            dt.Columns.Add("Giới tính", typeof(String));
-            dt.Columns.Add("Địa chỉ", typeof(String));
-            dt.Columns.Add("Số điện thoại", typeof(int));
+            dt.Columns.Add("Số CMND", typeof(String));
+            dt.Columns.Add("Số điện thoại", typeof(String));
             dt.Columns.Add("Email", typeof(String));
-            dt.Columns.Add("Số CMND", typeof(int));
-            dt.Columns.Add("Ngày Ký HĐ", typeof(String));
-            dt.Columns.Add("Ngày Hết HĐ", typeof(String));
-            // them ngay gia han
-            //dt.Columns.Add("Ngày Gia hạn", typeof(String));
+            dt.Columns.Add("Loại xe", typeof(String));
+            dt.Columns.Add("Ngày đăng kí", typeof(String));
+            dt.Columns.Add("Ngày hết hạn", typeof(String));
 
-
-
-            dt.Columns.Add("Chức vụ", typeof(String));
-            dt.Columns.Add("Bãi làm việc", typeof(String));
-
-
-            //Add in the datarow
-
-
-            foreach (var item in users)
+            foreach (var item in MonthlyTicketUser)
             {
                 DataRow newRow = dt.NewRow();
                 // newRow["Họ tên"] = item.UserName;
@@ -436,20 +425,31 @@ namespace SmartParkingApplication.Controllers
                 //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
                 //newRow["Học vấn"] = item.Name;
                 //newRow["Chuyên ngành"] = item.UserAddress;
-
-                newRow["Họ và tên"] = item.Name;
-                newRow["Ngày Sinh"] = item.DateOfBirth;
-                newRow["Giới tính"] = item.Gender;
-                newRow["Địa chỉ"] = item.UserAddress;
-                newRow["Số điện thoại"] = item.Phone;
-                newRow["Email"] = item.email;
+                string typeVehicle = "";
+                switch (item.TypeOfVehicle)
+                {
+                    case 0:
+                        typeVehicle = "Xe Máy";
+                        break;
+                    case 1:
+                        typeVehicle = "Ô tô";
+                        break;
+                }
+                newRow["Tên chủ thẻ"] = item.CusName;
                 newRow["Số CMND"] = item.IdentityCard;
-                // newRow["Ngày ký HĐ"] = item.UserName;
-                // newRow["Ngày hết HĐ"] = item.UserName;
+                newRow["Số điện thoại"] = item.Phone;
+                newRow["Email"] = item.Email;
+                newRow["Loại xe"] = typeVehicle;
+                newRow["Ngày đăng kí"] = item.RegisDate;
+                newRow["Ngày hết hạn"] = item.ExpiryDate;
+                //newRow["Số CMND"] = item.IdentityCard;
+                //// newRow["Ngày ký HĐ"] = item.UserName;
+                //// newRow["Ngày hết HĐ"] = item.UserName;
                 //newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
                 //newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
-                newRow["Chức vụ"] = item.Account.Role.RoleName;
-                newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
+                //newRow["Ngày Gia hạn"] = item.ContractRenewalDate;
+                //newRow["Chức vụ"] = item.Role.RoleName;
+                //newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
                 // newRow["Số CMND"] = item.UserName;
                 //full fesh
 
@@ -476,7 +476,7 @@ namespace SmartParkingApplication.Controllers
             Response.Output.Write(objStringWriter.ToString());
             Response.Flush();
             Response.End();
-            return Redirect("/ManageUser");
+            return Redirect("/ManageUser/WorkingCalendar");
         }
 
         //dispose

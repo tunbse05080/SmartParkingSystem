@@ -1,7 +1,6 @@
-﻿//$(document).ready(function () {
-//    LoadDataIncomeReport();
-//    //ComboboxStaffName();
-//});
+﻿$(document).ready(function () {
+    $('#timeWorking').val(loadDateNowformatdate());
+});
 
 //Load Chart Income
 function LoadDataIncomeReport() {

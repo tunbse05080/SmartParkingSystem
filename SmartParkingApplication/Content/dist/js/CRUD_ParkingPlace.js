@@ -85,7 +85,6 @@ function UpdatePP() {
     if (res == false) {
         return false;
     }
-    var statuspp = $('#cbStatusOfParking').val();
     
     var empPPObj = {
         ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
@@ -95,7 +94,7 @@ function UpdatePP() {
         NumberOfMotoBike: $('#NumberOfMotoBikeEdit').val(),
         NumberCarBlank: $('#NumberCarBlankEdit').val(),
         NumberMotoBikeBlank: $('#NumberMotoBikeBlankEdit').val(),
-        StatusOfParkingPlace: statuspp,
+        StatusOfParkingPlace: $('#StatusParkingPlaceEdit').val(),
     };
     $.ajax({
         url: "/ManagePPlace/UpdatePP",
@@ -131,7 +130,7 @@ function getPPByID(ParkingPlaceID) {
             $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
-            ComboboxStatusOfParking();
+            $('#StatusParkingPlaceEdit').val(result.StatusOfParkingPlace);
             $('#myModalUpdatePP').modal('show');
         },
         error: function (errormessage) {

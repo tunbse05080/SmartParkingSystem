@@ -185,7 +185,7 @@ namespace SmartParkingApplication.Controllers
                 statusOfParking = "Đang hoạt động";
             }
 
-                var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking };
+                var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking, parking.StatusOfParkingPlace };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
