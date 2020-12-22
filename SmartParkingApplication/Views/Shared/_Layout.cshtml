@@ -63,7 +63,7 @@
                         <img src="~/Content/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="@Url.Action("SVDetails","Setting", new  { Name = @Session["UserName"].ToString(), id = @Session["idAccount"].ToString() })" class="d-block">Tên người dùng<h5 id="abc">@Session["UserName"].ToString()</h5></a>
+                        <a href="@*@Url.Action("SVDetails","Setting", new  { Name = @Session["UserName"].ToString(), id = @Session["idAccount"].ToString() })*@" class="d-block">Tên người dùng@*<h5 id="abc">@Session["UserName"].ToString()</h5>*@</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -182,16 +182,7 @@
                                     Thiết lập giá vé
                                 </p>
                             </a>
-                            <!--<li class="nav-item">
-                                <a href="@Url.Action("Index","Setting")" class="nav-link">
-                                    <i class="nav-icon fas fa-cog"></i>
-                                    <p>
-                                        Cài đặt
-                                    </p>
-                                </a>
-                            </li>-->
-                            <!--End setting-->
-                            <!--Log out-->
+                           
                         <li class="nav-item">
                             <a href="@Url.Action("Index","LoginUs")" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>

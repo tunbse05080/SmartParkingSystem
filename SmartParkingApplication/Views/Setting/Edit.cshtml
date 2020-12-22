@@ -1,11 +1,11 @@
 ﻿@model SmartParkingApplication.Models.User
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Thông tin người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="content-wrapper">
-    <h2>Edit</h2>
+    <h2>Cập nhật thông tin người dùng</h2>
 
     @using (Html.BeginForm("Edit", "Setting", FormMethod.Post))
     {
@@ -50,14 +50,6 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.IdentityCard, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.IdentityCard, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.IdentityCard, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
                 @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
@@ -80,13 +72,11 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Cập nhật" class="btn btn-default" />
+                    <input type="submit" value="Cập nhật" class="btn btn-success" />
                 </div>
             </div>
         </div>
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+   
 </div>

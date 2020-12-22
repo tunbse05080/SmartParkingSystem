@@ -57,6 +57,7 @@ namespace SmartParkingApplication.Controllers
             if (ModelState.IsValid)
             {
                 var data = db.Users.Find(_post.UserID);
+                
                 data.email = _post.email;
                 data.DateOfBirth = _post.DateOfBirth;
                 data.UserAddress = _post.UserAddress;
