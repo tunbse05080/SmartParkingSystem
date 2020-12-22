@@ -4,7 +4,7 @@
 
 //fill UserID to modal CreateAccount
 function getModalAddAccount(UserID) {
-    CloseAdd();
+    clearForm();
     $('#UserIDAcc').val(UserID);
     $('#myModalAccount').modal('show');
 }
@@ -180,7 +180,7 @@ function UpdateStatus(status) {
 
 
 //clear form register account
-function CloseAdd() {
+function clearForm() {
     $('.help-block').remove();
     $('.form-control').val('');
     $('.form-control').css('border-color', 'lightgrey');
