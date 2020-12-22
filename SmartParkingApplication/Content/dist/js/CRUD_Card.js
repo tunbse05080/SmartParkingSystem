@@ -253,6 +253,14 @@ function getCardByID(CardID) {
                     $('#StatusCardUnLock').val(result.Status);
                     $('#myModalUnLock').modal('show');
                     break;
+                case "Đang sử dụng":
+                    $('#IdCardEdit').val(result.CardID);
+                    $('#CardNumberEdit').val(result.CardNumber);
+                    $('#DateCardEdit').val(result.date);
+                    $('#StatusCard').val(result.StatusNumber);
+                    $('#myModalUpdate').modal('show');
+                    $('#btnUpdateCard').show();
+                    break;
                 case "Thẻ Hỏng":
                     break;
             }

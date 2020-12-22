@@ -90,6 +90,9 @@ namespace SmartParkingApplication.Controllers
                     break;
                 case 3:
                     Status = "Đã Khóa";
+                    break;                
+                case 4:
+                    Status = "Đang sử dụng";
                     break;
             }
             var date = card.Date.Value.ToString("dd/MM/yyyy");
