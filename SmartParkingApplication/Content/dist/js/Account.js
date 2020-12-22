@@ -4,6 +4,7 @@
 
 //fill UserID to modal CreateAccount
 function getModalAddAccount(UserID) {
+    clearForm();
     $('#UserIDAcc').val(UserID);
     $('#myModalAccount').modal('show');
 }
@@ -76,10 +77,10 @@ function LoadDataAccount() {
 
 //send new obj account and userid to ManageAccount to update accountId in user
 function AddAccount() {
-    //var res = validate();
-    //if (res == false) {
-    //    return false;
-    //}
+    var res = validateAddAcc();
+    if (res == false) {
+        return false;
+    }
     var UserID = $('#UserIDAcc').val();
     var accObj = {
         UserName: $('#UserNameAcc').val(),
@@ -178,101 +179,67 @@ function UpdateStatus(status) {
 }
 
 
+//clear form register account
+function clearForm() {
+    $('.help-block').remove();
+    $('.form-control').val('');
+    $('.form-control').css('border-color', 'lightgrey');
+}
+
 //Valdidation using jquery
-function validateAccEdit() {
-    var isValid = true;
-    var email = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
+function validateAddAcc() {
     var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
-    var idcard = new RegExp('^[0-9]{9,}$');
-    var phone = new RegExp('^(09|03|07|08|05){1}([0-9]{8})$');
-    if ($.trim($('#UserName').val()) == "" || $.trim($('#UserName').val()).length < 4) {
-        $('#UserName').prop("title", "Tên tài khoản > 4 ký tự.");
-        $('#UserName').css('border-color', 'Red');
-        isValid = false;
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
     }
-    else {
-        $('#UserName').prop("title", "");
-        $('#UserName').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#PassWord').val()) == "" || !pwd.test($.trim($('#PassWord').val()))) {
-        $('#PassWord').prop("title", "Mật khấu >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)");
-        $('#PassWord').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#PassWord').prop("title", "");
-        $('#PassWord').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#FullName').val()) == "" || $.trim($('#FullName').val()).length < 4) {
-        $('#FullName').prop("title", "Tên đầy đủ > 4 ký tự.");
-        $('#FullName').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#FullName').prop("title", "");
-        $('#FullName').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#DateOfBirth').val()) == "") {
-        $('#DateOfBirth').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#DateOfBirth').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#Gender').val()) == "") {
-        $('#Gender').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#Gender').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#Address').val()) == "") {
-        $('#Address').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#Address').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#PhoneNumber').val()) == "" || !phone.test($.trim($('#PhoneNumber').val()))) {
-        $('#PhoneNumber').prop("title", "Số điện thoại trống hoặc định dạng sai.");
-        $('#PhoneNumber').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#PhoneNumber').prop("title", "");
-        $('#PhoneNumber').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#Email').val()) == "" || !email.test($.trim($('#Email').val()))) {
-        $('#Email').prop("title", "Email trống hoặc không đúng định dạng.");
-        $('#Email').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#Email').prop("title", "");
-        $('#Email').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#IdentityCard').val()) == "" || !idcard.test($.trim($('#IdentityCard').val()))) {
-        $('#IdentityCard').prop("title", "CMND/CCCD trống hoặc sai định dạng.");
-        $('#IdentityCard').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#IdentityCard').prop("title", "")
-        $('#IdentityCard').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#ParkingPlace').val()) == "") {
-        $('#ParkingPlace').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#ParkingPlace').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#RoleName').val()) == "") {
-        $('#RoleName').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#RoleName').css('border-color', 'lightgrey');
-    }
-    return isValid;
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkAccPassWord', function (value, element) {
+        return pwd.test(value);
+    }, 'Mật khấu >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)');
+    $.validator.addMethod('checkAccUserName', function (value, element) {
+        return $.trim(value).length > 4;
+    }, 'Tên tài khoản > 4 ký tự.');
+    //Set rule + message for input by name
+    $('#AddAccountForm').validate({
+        rules: {
+            UserNameAcc: {
+                required: true,
+                checkAccUserName: true
+            },
+            PassWordAcc: {
+                required: true,
+                checkAccPassWord: true
+            },
+            cbRoleNameAcc: {
+                required: true
+            }
+        },
+        messages: {
+            UserNameAcc: {
+                required: '*Bắt buộc.'
+            },
+            PassWordAcc: {
+                required: '*Bắt buộc.'
+            },
+            cbRoleNameAcc: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#AddAccountForm').valid();
 }

@@ -34,10 +34,10 @@
                                 <div class="col-md-3">
                                     <button type="button" data-toggle="modal" data-target="#myModalAccount" onclick="clearRegisterAccount();" class="btn btn-success">Đăng ký tài khoản</button>
                                 </div>-->
-                                @*<div class="col-md-3">
-                                        <button type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success">Lịch làm việc</button>
-                                    </div>*@
-                            <!--</div>
+                        @*<div class="col-md-3">
+                                <button type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success">Lịch làm việc</button>
+                            </div>*@
+                        <!--</div>
                         </div>-->
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -69,65 +69,67 @@
                         <div class="modal fade" id="myModalAccount" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Đăng ký tài khoản</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group" hidden>
-                                            <label for="UserIDAcc">Id</label>
-                                            <input type="text" class="form-control" id="UserIDAcc" placeholder="ID" />
+                                    <form id="AddAccountForm">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Đăng ký tài khoản</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="UserName">Tên tài khoản</label>
-                                            <input type="text" class="form-control" id="UserNameAcc" placeholder="Tên tài khoản" />
+                                        <div class="modal-body">
+                                            <div class="form-group" hidden>
+                                                <label for="UserIDAcc">Id</label>
+                                                <input type="text" class="form-control" id="UserIDAcc" placeholder="ID" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="UserName">Tên tài khoản</label>
+                                                <input type="text" class="form-control" id="UserNameAcc" name="UserNameAcc" placeholder="Tên tài khoản" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="PassWord">Mật khẩu</label>
+                                                <input type="text" class="form-control" id="PassWordAcc" name="PassWordAcc" placeholder="Mật khẩu" />
+                                            </div>
+                                            @*<div class="form-group">
+                                                    <label for="FullName">Tên đầy đủ</label>
+                                                    <input type="text" class="form-control" id="FullNameAcc" placeholder="Tên đầy đủ" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="DateOfBirth">Ngày Sinh</label>
+                                                    <input type="text" class="form-control" id="DateOfBirthAcc" placeholder="Ngày Sinh" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Gender">Giới tính</label>
+                                                    <input type="text" class="form-control" id="GenderAcc" placeholder="Giới tính" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Address">Địa chỉ</label>
+                                                    <input type="text" class="form-control" id="AddressAcc" placeholder="Địa chỉ" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="PhoneNumber">Số điện thoại</label>
+                                                    <input type="text" class="form-control" id="PhoneNumberAcc" placeholder="Số điện thoại" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Email">Email</label>
+                                                    <input type="text" class="form-control" id="EmailAcc" placeholder="Email" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="IdentityCard">Số CMND</label>
+                                                    <input type="text" class="form-control" id="IdentityCardAcc" placeholder="Số CMND" />
+                                                </div>*@
+                                            <div class="form-group">
+                                                <label for="RoleName">Chức vụ</label>
+                                                <select class="form-control" id="cbRoleNameAcc" name="cbRoleNameAcc">
+                                                </select>
+                                            </div>
+                                            @*<div class="form-group">
+                                                    <label for="ParkingPlace">Bãi làm việc</label>
+                                                    <input type="text" class="form-control" id="ParkingPlaceAcc" placeholder="Email" />
+                                                </div>*@
                                         </div>
-                                        <div class="form-group">
-                                            <label for="PassWord">Mật khẩu</label>
-                                            <input type="text" class="form-control" id="PassWordAcc" placeholder="Mật khẩu" />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="btnAdd" onclick="return AddAccount();">Thêm</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
-                                        @*<div class="form-group">
-                                                <label for="FullName">Tên đầy đủ</label>
-                                                <input type="text" class="form-control" id="FullNameAcc" placeholder="Tên đầy đủ" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="DateOfBirth">Ngày Sinh</label>
-                                                <input type="text" class="form-control" id="DateOfBirthAcc" placeholder="Ngày Sinh" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Gender">Giới tính</label>
-                                                <input type="text" class="form-control" id="GenderAcc" placeholder="Giới tính" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Address">Địa chỉ</label>
-                                                <input type="text" class="form-control" id="AddressAcc" placeholder="Địa chỉ" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="PhoneNumber">Số điện thoại</label>
-                                                <input type="text" class="form-control" id="PhoneNumberAcc" placeholder="Số điện thoại" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Email">Email</label>
-                                                <input type="text" class="form-control" id="EmailAcc" placeholder="Email" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="IdentityCard">Số CMND</label>
-                                                <input type="text" class="form-control" id="IdentityCardAcc" placeholder="Số CMND" />
-                                            </div>*@
-                                        <div class="form-group">
-                                            <label for="RoleName">Chức vụ</label>
-                                            <select class="form-control" id="cbRoleNameAcc">
-                                            </select>
-                                        </div>
-                                        @*<div class="form-group">
-                                                <label for="ParkingPlace">Bãi làm việc</label>
-                                                <input type="text" class="form-control" id="ParkingPlaceAcc" placeholder="Email" />
-                                            </div>*@
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return AddAccount();">Thêm</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return CloseAdd()">Close</button>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

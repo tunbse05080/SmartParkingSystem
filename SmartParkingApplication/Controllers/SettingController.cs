@@ -37,7 +37,7 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public ActionResult SVDetails(string Name, int id)
-        {
+        { 
 
             var result = db.Users.Where(x => x.AccountID == id).ToList();
 
