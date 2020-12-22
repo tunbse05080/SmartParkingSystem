@@ -46,7 +46,6 @@ function LoadDataCalendar() {
         dataType: "json",
         success: function (result) {
             let evenArr = [];
-            //$('#calendarWork').fullCalendar('removeEvents');
             $.each(result, function (key, item) {
                 let evenObj = {
                     id: item.ScheduleID,
@@ -74,78 +73,25 @@ function initCalendar(evenArr) {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: evenArr,
-        eventRender: function (info) {
-            // get your new title somehow
-            title: "Ca",
-        }
+        events: evenArr
+        //eventRender: function (info) {
+        //    // get your new title somehow
+        //    title: 'Ca'
+        //}
     });
     calendar.render();
 }
 
-//function CreateUserSchedule(Id) {
-//    var userScheObj = {
-//        UserID: $('#cbUserNameEmp').val(),
-//        ScheduleID: Id
-//    }
-//    $.ajax({
-//        url: "/ManageUser/CreateUserSchedule",
-//        type: "POST",
-//        data: JSON.stringify(userScheObj),
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#myModalCreateWorkingCalendar').modal('hide');
-//            LoadDataCalendar();
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
-
+//create working calendar
 function CreateWorkingCalendar() {
-    //if ($('#cbWorkShiftEmp').val() == 1) {
-    //    var scheObj = {
-    //        TimeStart: $('#DateStart').val() + " 06:00:00",
-    //        TimeEnd: $('#DateEnd').val() + " 14:00:00",
-    //        Slot: $('#cbWorkShiftEmp').val()
-    //    }
-    //} else if ($('#cbWorkShiftEmp').val() == 2) {
-    //    var scheObj = {
-    //        TimeStart: $('#DateStart').val() + " 14:00:00",
-    //        TimeEnd: $('#DateEnd').val() + " 22:00:00",
-    //        Slot: $('#cbWorkShiftEmp').val()
-    //    }
-    //} else {
-    //    var scheObj = {
-    //        TimeStart: $('#DateStart').val() + " 22:00:00",
-    //        TimeEnd: $('#DateEnd').val() + " 06:00:00",
-    //        Slot: $('#cbWorkShiftEmp').val()
-    //    }
-    //}
     var UserID = $('#cbUserNameEmp').val();
     var checkboxDate = document.getElementById("checkboxDate");
     if (checkboxDate.checked == false) {
-        //if ($('#cbWorkShiftEmp').val() == 1) {
         var scheObj = {
             TimeStart: $('#DateApply').val(),
             TimeEnd: $('#DateApply').val(),
             Slot: $('#cbWorkShiftEmp').val()
         }
-        //} else if ($('#cbWorkShiftEmp').val() == 2) {
-        //    var scheObj = {
-        //        TimeStart: $('#DateApply').val() + " 14:00:00",
-        //        TimeEnd: $('#DateApply').val() + " 22:00:00",
-        //        Slot: $('#cbWorkShiftEmp').val()
-        //    }
-        //} else {
-        //    var scheObj = {
-        //        TimeStart: $('#DateApply').val() + " 22:00:00",
-        //        TimeEnd: $('#DateApply').val() + " 06:00:00",
-        //        Slot: $('#cbWorkShiftEmp').val()
-        //    }
-        //}
     } else {
         var scheObj = {
             TimeStart: $('#DateStart').val(),
@@ -170,6 +116,7 @@ function CreateWorkingCalendar() {
     });
 }
 
+//edit working calendar
 function EditWorkingCalendar() {
     var UserID = $('#cbUserNameEmpEdit').val();
     if ($('#checkboxDateEdit').checked == false || !$('#checkboxDateEdit').checked) {

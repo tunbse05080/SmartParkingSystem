@@ -24,12 +24,12 @@ namespace SmartParkingApplication.Controllers
 
 
 
-                var data = db.Accounts.Where(s => s.UserName.Equals(username) && s.PassWord.Equals(password)).ToList();
+                var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password)).ToList();
                 if (data.Count() > 0)
                 {
                     //add session
-                    Session["UserName"] = data.FirstOrDefault().UserName;
-
+                    Session["UserName"] = data.FirstOrDefault().Account.UserName;
+                    Session["Name"] = data.FirstOrDefault().Name;
                     Session["idAccount"] = data.FirstOrDefault().AccountID;
                     return RedirectToAction("Index", "Home");
                 }
