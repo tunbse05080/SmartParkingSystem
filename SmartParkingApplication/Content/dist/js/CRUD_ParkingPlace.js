@@ -232,8 +232,11 @@ function validateAddPP() {
         }
     });
     //Set custom valid by rule
-    $.validator.addMethod('checkSlotVehicle', function (value, element) {
-        return numberSlot.test(value) && value > 499;
+    $.validator.addMethod('checkSlotCar', function (value, element) {
+        return numberSlot.test(value) && value > 99;
+    });
+    $.validator.addMethod('checkSlotMotorBike', function (value, element) {
+        return numberSlot.test(value) && value > 199;
     });
     $.validator.addMethod('checkPPAddress', function (value, element) {
         return $.trim(value).length > 4;
@@ -254,11 +257,11 @@ function validateAddPP() {
             },
             NumberOfCar: {
                 required: true,
-                checkSlotVehicle: true
+                checkSlotCar: true
             },
             NumberOfMotoBike: {
                 required: true,
-                checkSlotVehicle: true
+                checkSlotMotorBike: true
             }
         },
         messages: {
@@ -272,11 +275,11 @@ function validateAddPP() {
             },
             NumberOfCar: {
                 required: '*Bắt buộc.',
-                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+                checkSlotCar: 'Sức chứa là số ít nhất 100 chỗ'
             },
             NumberOfMotoBike: {
                 required: '*Bắt buộc.',
-                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+                checkSlotMotorBike: 'Sức chứa là số ít nhất 200 chỗ'
             }
         }
     });
@@ -305,13 +308,16 @@ function validateUpdatePP() {
     });
     //Set custom valid by rule
     $.validator.addMethod('checkBlankCar', function (value, element) {
-        return numberSlot.test(value) && value < (+$('#NumberOfCarEdit').val());
+        return numberSlot.test(value) && value <= (+$('#NumberOfCarEdit').val());
     });
     $.validator.addMethod('checkBlankMoterBike', function (value, element) {
-        return numberSlot.test(value) && value < (+$('#NumberOfMotoBikeEdit').val());
+        return numberSlot.test(value) && value <= (+$('#NumberOfMotoBikeEdit').val());
     });
-    $.validator.addMethod('checkSlotVehicle', function (value, element) {
-        return numberSlot.test(value) && value > 499;
+    $.validator.addMethod('checkSlotCar', function (value, element) {
+        return numberSlot.test(value) && value > 99;
+    });
+    $.validator.addMethod('checkSlotMotorBike', function (value, element) {
+        return numberSlot.test(value) && value > 199;
     });
     $.validator.addMethod('checkPPAddress', function (value, element) {
         return $.trim(value).length > 4;
@@ -332,11 +338,11 @@ function validateUpdatePP() {
             },
             NumberOfCarEdit: {
                 required: true,
-                checkSlotVehicle: true
+                checkSlotCar: true
             },
             NumberOfMotoBikeEdit: {
                 required: true,
-                checkSlotVehicle: true
+                checkSlotMotorBike: true
             },
             NumberCarBlankEdit: {
                 required: true,
@@ -358,11 +364,11 @@ function validateUpdatePP() {
             },
             NumberOfCarEdit: {
                 required: '*Bắt buộc.',
-                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+                checkSlotCar: 'Sức chứa là số ít nhất 100 chỗ'
             },
             NumberOfMotoBikeEdit: {
                 required: '*Bắt buộc.',
-                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+                checkSlotMotorBike: 'Sức chứa là số ít nhất 200 chỗ'
             },
             NumberCarBlankEdit: {
                 required: '*Bắt buộc.',
