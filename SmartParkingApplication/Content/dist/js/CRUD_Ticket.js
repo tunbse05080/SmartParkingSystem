@@ -216,19 +216,19 @@ function loadDataTicket() {
 
 //clear textbox in modal Register ticket
 function clearTextBoxTicket() {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     var date = loadDateNow();
+    var test = date.split('/');
     $('#IdTK').val("");
     $('#CusNameTK').val("");
     $('#IdentityCardTK').val("");
     $('#PhoneTK').val("");
     $('#EmailTK').val("");
     $('#LicensePlatesTK').val("");
-    $('#RegisDateTK').val("" + date);
-    $('#ExpiryDateTK').val("" + date);
+    $('#RegisDateTK').val(test[2] + '-' + test[0] + '-' + test[1]);
+    $('#ExpiryDateTK').val("");
     $('#cbCardNumberTK').val(null).trigger('change');
-    $('#btnAdd').show();
-    $('#btnUpdate').hide();
-
 }
 
 //Create MonthlyIncomeStatment
@@ -236,7 +236,7 @@ function CreateMonthlyIncome(id, totalPrice) {
     $.ajax({
         url: "/ManageTicket/CreateMonthlyIncome",
         type: "POST",
-        data: JSON.stringify({ id: id, totalPrice: totalPrice}),
+        data: JSON.stringify({ id: id, totalPrice: totalPrice }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
@@ -248,6 +248,10 @@ function CreateMonthlyIncome(id, totalPrice) {
 }
 
 function AddTicket() {
+    var res = validateAddTicket();
+    if (res == false) {
+        return false;
+    }
     var empTicketObj = {
         CusName: $('#CusNameTK').val(),
         IdentityCard: $('#IdentityCardTK').val(),
@@ -349,6 +353,10 @@ function UpdateReRegister() {
 
 //Edit info ticket
 function UpdateInfoTicket() {
+    var res = validateEditTicket();
+    if (res == false) {
+        return false;
+    }
     var empTicketObj = {
         MonthlyTicketID: $('#MonthlyTicketIdEdit').val(),
         CusName: $('#CusNameEdit').val(),
@@ -432,9 +440,7 @@ function getTicketByIDDetail(MonthlyTicketID) {
             $('#RegisDateDetail').val(result.RegisDate);
             $('#ExpiryDateDetail').val(result.ExpiryDate);
             $('#CardNumberDetail').val(result.cardNumber);
-
             $('#myModalDetailTicket').modal('show');
-
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
@@ -445,6 +451,8 @@ function getTicketByIDDetail(MonthlyTicketID) {
 
 //get ticket by id to fill modal EditTicket
 function getTicketByIDEdit(MonthlyTicketID) {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     $.ajax({
         url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
         type: "GET",
@@ -462,9 +470,7 @@ function getTicketByIDEdit(MonthlyTicketID) {
             $('#LicensePlatesEdit').val(result.LicensePlates);
             $('#RegisDateEdit').val(result.RegisDate);
             $('#ExpiryDateEdit').val(result.ExpiryDate);
-
             $('#myModalEditTicket').modal('show');
-
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
@@ -492,9 +498,7 @@ function getTicketByIDDropContract(MonthlyTicketID) {
             $('#RegisDateDC').val(result.RegisDate);
             $('#ExpiryDateDC').val(loadDateNow());
             $('#CardIDDC').val(result.cardId);
-
             $('#myModalDropContractTicket').modal('show');
-
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
@@ -524,8 +528,6 @@ function getTicketByIDETK(MonthlyTicketID) {
             $('#RegisDateETK').val(result.RegisDate);
             $('#ExpiryDateETk').val(DateETK(date));
             $('#CardIDETK').val(result.cardId);
-            
-
             $('#myModalExtendTicket').modal('show');
             $('#btnExtendTK').show();
         },
@@ -553,10 +555,11 @@ function getTicketReRegister(MonthlyTicketID) {
             $('#TypeOfVehicleRe').val(result.TypeOfVehicle);
             $('#LicensePlatesRe').val(result.LicensePlates);
             $('#ParkingPlaceIDRe').val(result.ParkingPlaceID);
-            $('#RegisDateRe').val(loadDateNow());
+            var date = loadDateNow();
+            var test = date.split('/');
+            $('#RegisDateRe').val(test[2] + '-' + test[0] + '-' + test[1]);
             $('#ExpiryDateRe').val(DateReRegisterTK(date));
             $('#CardIDRe').val(result.cardId);
-
             $('#myModalReRegisterTicket').modal('show');
         },
         error: function (errormessage) {
@@ -573,7 +576,7 @@ function GetPriceMonthlyExtendTK() {
     $.ajax({
         url: "/ManageTicket/GetPriceMonthly",
         type: "POST",
-        data: JSON.stringify({ typeOfVehicle: typeOfVehicle, parkingPlaceID: parkingPlaceID}),
+        data: JSON.stringify({ typeOfVehicle: typeOfVehicle, parkingPlaceID: parkingPlaceID }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
@@ -652,3 +655,192 @@ function clearETK() {
 //        }
 //    });
 //}
+
+//Valdidation using jquery
+function validateAddTicket() {
+    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\b)');
+    var idcard = new RegExp('[0-9]{9,}');
+    var plate = new RegExp('[0-9]{2}[A-Z]{1}[0-9]{5,6}');
+    //Díplay css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkOwnerName', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkIDCardT', function (value, element) {
+        return idcard.test(value);
+    });
+    $.validator.addMethod('checkPhoneT', function (value, element) {
+        return phone.test(value);
+    });
+    $.validator.addMethod('checkPlateT', function (value, element) {
+        return plate.test(value);
+    });
+    //Set rule for input by name
+    $('#FormAddTicket').validate({
+        rules: {
+            CusNameTK: {
+                required: true,
+                checkOwnerName: true
+            },
+            PhoneTK: {
+                required: true,
+                checkPhoneT: true
+            },
+            IdentityCardTK: {
+                required: true,
+                checkIDCardT: true
+            },
+            EmailTK: {
+                required: true,
+                email: true
+            },
+            LicensePlatesTK: {
+                required: true,
+                checkPlateT: true
+            },
+            cbTK: {
+                required: true
+            },
+            cbCardNumberTK: {
+                required: true
+            }
+        },
+        messages: {
+            CusNameTK: {
+                required: '*Bắt buộc.',
+                checkOwnerName: 'Tên chủ xe có ít nhất 5 kí tự!'
+            },
+            PhoneTK: {
+                required: '*Bắt buộc.',
+                checkPhoneT: 'Số điện thoại định dạng sai!'
+            },
+            IdentityCardTK: {
+                required: '*Bắt buộc.',
+                checkIDCardT: 'CMND/CCCD định dạng sai!'
+            },
+            EmailTK: {
+                required: '*Bắt buộc.',
+                email: 'Email định dạng sai!'
+            },
+            LicensePlatesTK: {
+                required: '*Bắt buộc.',
+                checkPlateT: 'Biển số định dạng sai!'
+            },
+            cbTK: {
+                required: '*Bắt buộc.'
+            },
+            cbCardNumberTK: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormAddTicket').valid();
+}
+
+function validateEditTicket() {
+    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\\b)');
+    var idcard = new RegExp('[0-9]{9,}');
+    var plate = new RegExp('[0-9]{2}[A-Z]{1}[0-9]{5,6}');
+    //Díplay css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkOwnerNameE', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkIDCardE', function (value, element) {
+        return idcard.test(value);
+    });
+    $.validator.addMethod('checkPhoneE', function (value, element) {
+        return phone.test(value);
+    });
+    $.validator.addMethod('checkPlateE', function (value, element) {
+        return plate.test(value);
+    });
+    //Set rule for input by name
+    $('#FormEditTicket').validate({
+        rules: {
+            CusNameEdit: {
+                required: true,
+                checkOwnerNameE: true
+            },
+            PhoneEdit: {
+                required: true,
+                checkPhoneE: true
+            },
+            IdentityCardEdit: {
+                required: true,
+                checkIDCardE: true
+            },
+            EmailEdit: {
+                required: true,
+                email: true
+            },
+            LicensePlatesEdit: {
+                required: true,
+                checkPlateE: true
+            },
+            cbCardNumberEdit: {
+                required: true
+            }
+        },
+        messages: {
+            CusNameEdit: {
+                required: '*Bắt buộc.',
+                checkOwnerNameE: 'Tên chủ xe có ít nhất 5 kí tự!'
+            },
+            PhoneEdit: {
+                required: '*Bắt buộc.',
+                checkPhoneE: 'Số điện thoại định dạng sai!'
+            },
+            IdentityCardEdit: {
+                required: '*Bắt buộc.',
+                checkIDCardE: 'CMND/CCCD định dạng sai!'
+            },
+            EmailEdit: {
+                required: '*Bắt buộc.',
+                email: 'Email định dạng sai!'
+            },
+            LicensePlatesEdit: {
+                required: '*Bắt buộc.',
+                checkPlateE: 'Biển số định dạng sai!'
+            },
+            cbCardNumberEdit: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormEditTicket').valid();
+}
