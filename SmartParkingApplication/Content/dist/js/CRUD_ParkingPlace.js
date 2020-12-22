@@ -311,6 +311,15 @@ function validateUpdatePP() {
     $.validator.addMethod('checkBlankMoterBike', function (value, element) {
         return numberSlot.test(value) && value < (+$('#NumberOfMotoBikeEdit').val());
     });
+    $.validator.addMethod('checkSlotVehicle', function (value, element) {
+        return numberSlot.test(value) && value > 499;
+    });
+    $.validator.addMethod('checkPPAddress', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkPPName', function (value, element) {
+        return $.trim(value).length > 4;
+    });
     //Set rule + message for input by name
     $('#FormEditPP').validate({
         rules: {
