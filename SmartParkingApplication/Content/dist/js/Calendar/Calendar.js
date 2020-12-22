@@ -119,25 +119,18 @@ function CreateWorkingCalendar() {
 //edit working calendar
 function EditWorkingCalendar() {
     var UserID = $('#cbUserNameEmpEdit').val();
-    if ($('#checkboxDateEdit').checked == false || !$('#checkboxDateEdit').checked) {
-        if ($('#cbWorkShiftEmpEdit').val() == 1) {
-            var scheObj = {
-                TimeStart: $('#DateApplyEdit').val() + " 06:00:00",
-                TimeEnd: $('#DateApplyEdit').val() + " 14:00:00",
-                Slot: $('#cbWorkShiftEmpEdit').val()
-            }
-        } else if ($('#cbWorkShiftEmpEdit').val() == 2) {
-            var scheObj = {
-                TimeStart: $('#DateApplyEdit').val() + " 14:00:00",
-                TimeEnd: $('#DateApplyEdit').val() + " 22:00:00",
-                Slot: $('#cbWorkShiftEmpEdit').val()
-            }
-        } else {
-            var scheObj = {
-                TimeStart: $('#DateApplyEdit').val() + " 22:00:00",
-                TimeEnd: $('#DateApplyEdit').val() + " 06:00:00",
-                Slot: $('#cbWorkShiftEmpEdit').val()
-            }
+    var checkboxDate = document.getElementById("checkboxDateEdit");
+    if (checkboxDate.checked == false) {
+        var scheObj = {
+            TimeStart: $('#DateApplyEdit').val(),
+            TimeEnd: $('#DateApplyEdit').val(),
+            Slot: $('#cbWorkShiftEmpEdit').val()
+        }
+    } else {
+        var scheObj = {
+            TimeStart: $('#DateStartEdit').val(),
+            TimeEnd: $('#DateEndEdit').val(),
+            Slot: $('#cbWorkShiftEmpEdit').val()
         }
     }
     $.ajax({

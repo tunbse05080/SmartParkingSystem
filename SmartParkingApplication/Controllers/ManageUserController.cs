@@ -258,6 +258,36 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        //get datetime by working shift
+        public List<DateTime> GetTimeByShift(Schedule schedule)
+        {
+            List<DateTime> list = new List<DateTime>();
+            //declare timeStart and timeEnd
+            DateTime timeStart = DateTime.Now;
+            DateTime timeEnd = DateTime.Now;
+            if (schedule.Slot == 1)
+            {
+                //set timeStart and timeEnd equal time shift 1
+                timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
+                timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
+            }
+            else if (schedule.Slot == 2)
+            {
+                //set timeStart and timeEnd equal time shift 2
+                timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
+                timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("22:00:00");
+            }
+            else
+            {
+                //set timeStart and timeEnd equal time shift 2
+                timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("22:00:00");
+                timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
+            }
+            list.Add(timeStart);
+            list.Add(timeEnd);
+            return list;
+        }
+
         public JsonResult GetTimeToCreateCalendar(Schedule schedule, int UserID)
         {
             //get number day between dateStart and dateEnd
@@ -268,27 +298,12 @@ namespace SmartParkingApplication.Controllers
                 //declare timeStart and timeEnd
                 DateTime timeStart = DateTime.Now;
                 DateTime timeEnd = DateTime.Now;
-                if (schedule.Slot == 1)
-                {
-                    //set timeStart and timeEnd equal time shift 1
-                    timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
-                    timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
-                }
-                else if (schedule.Slot == 2)
-                {
-                    //set timeStart and timeEnd equal time shift 2
-                    timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
-                    timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("22:00:00");
-                }
-                else
-                {
-                    //set timeStart and timeEnd equal time shift 2
-                    timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("22:00:00");
-                    timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
-                }
-                //each for, timeStart increase 1
+                List<DateTime> list = GetTimeByShift(schedule);
+                timeStart = list.First();
+                timeEnd = list.Last();
+                //each for, timeStart increase 1 day
                 timeStart = timeStart.AddDays(i);
-                //each for, timeEnd increase 2 if shift 3
+                //each for, timeEnd increase 2 days if shift 3
                 if (schedule.Slot == 3)
                 {
                     timeEnd = timeEnd.AddDays(i + 1);
