@@ -399,85 +399,85 @@ namespace SmartParkingApplication.Controllers
 
         //Export Working Calendar
         
-        public ActionResult ExportWorkingCalendar()
-        {
-            var MonthlyTicketUser = db.MonthlyTickets.ToList();
-            var parking = db.ParkingPlaces.ToList();
-            // var role = db.Roles.ToList();
-            var alluser = new GridView();
-            //===================================================
-            DataTable dt = new DataTable();
-            //Add Datacolumn
-            DataColumn workCol = dt.Columns.Add("Tên chủ thẻ", typeof(String));
+        //public ActionResult ExportWorkingCalendar()
+        //{
+        //    var schedule = db.Schedules.ToList();
+        //    var useschedule = db.UserSchedules.ToList();
+        //    // var role = db.Roles.ToList();
+        //    var alluser = new GridView();
+        //    //===================================================
+        //    DataTable dt = new DataTable();
+        //    //Add Datacolumn
+        //    DataColumn workCol = dt.Columns.Add("Tên chủ thẻ", typeof(String));
 
-            dt.Columns.Add("Số CMND", typeof(String));
-            dt.Columns.Add("Số điện thoại", typeof(String));
-            dt.Columns.Add("Email", typeof(String));
-            dt.Columns.Add("Loại xe", typeof(String));
-            dt.Columns.Add("Ngày đăng kí", typeof(String));
-            dt.Columns.Add("Ngày hết hạn", typeof(String));
+        //    dt.Columns.Add("Ca làm việc", typeof(String));
+        //    dt.Columns.Add("Số điện thoại", typeof(String));
+        //    dt.Columns.Add("Email", typeof(String));
+        //    dt.Columns.Add("Loại xe", typeof(String));
+        //    dt.Columns.Add("Ngày đăng kí", typeof(String));
+        //    dt.Columns.Add("Ngày hết hạn", typeof(String));
 
-            foreach (var item in MonthlyTicketUser)
-            {
-                DataRow newRow = dt.NewRow();
-                // newRow["Họ tên"] = item.UserName;
-                //newRow["Phòng ban"] = item.email;
-                //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
-                //newRow["Học vấn"] = item.Name;
-                //newRow["Chuyên ngành"] = item.UserAddress;
-                string typeVehicle = "";
-                switch (item.TypeOfVehicle)
-                {
-                    case 0:
-                        typeVehicle = "Xe Máy";
-                        break;
-                    case 1:
-                        typeVehicle = "Ô tô";
-                        break;
-                }
-                newRow["Tên chủ thẻ"] = item.CusName;
-                newRow["Số CMND"] = item.IdentityCard;
-                newRow["Số điện thoại"] = item.Phone;
-                newRow["Email"] = item.Email;
-                newRow["Loại xe"] = typeVehicle;
-                newRow["Ngày đăng kí"] = item.RegisDate;
-                newRow["Ngày hết hạn"] = item.ExpiryDate;
-                //newRow["Số CMND"] = item.IdentityCard;
-                //// newRow["Ngày ký HĐ"] = item.UserName;
-                //// newRow["Ngày hết HĐ"] = item.UserName;
-                //newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
-                //newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
-                //newRow["Ngày Gia hạn"] = item.ContractRenewalDate;
-                //newRow["Chức vụ"] = item.Role.RoleName;
-                //newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
-                // newRow["Số CMND"] = item.UserName;
-                //full fesh
+        //    foreach (var item in MonthlyTicketUser)
+        //    {
+        //        DataRow newRow = dt.NewRow();
+        //        // newRow["Họ tên"] = item.UserName;
+        //        //newRow["Phòng ban"] = item.email;
+        //        //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
+        //        //newRow["Học vấn"] = item.Name;
+        //        //newRow["Chuyên ngành"] = item.UserAddress;
+        //        string typeVehicle = "";
+        //        switch (item.TypeOfVehicle)
+        //        {
+        //            case 0:
+        //                typeVehicle = "Xe Máy";
+        //                break;
+        //            case 1:
+        //                typeVehicle = "Ô tô";
+        //                break;
+        //        }
+        //        newRow["Tên chủ thẻ"] = item.CusName;
+        //        newRow["Số CMND"] = item.IdentityCard;
+        //        newRow["Số điện thoại"] = item.Phone;
+        //        newRow["Email"] = item.Email;
+        //        newRow["Loại xe"] = typeVehicle;
+        //        newRow["Ngày đăng kí"] = item.RegisDate;
+        //        newRow["Ngày hết hạn"] = item.ExpiryDate;
+        //        //newRow["Số CMND"] = item.IdentityCard;
+        //        //// newRow["Ngày ký HĐ"] = item.UserName;
+        //        //// newRow["Ngày hết HĐ"] = item.UserName;
+        //        //newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
+        //        //newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
+        //        //newRow["Ngày Gia hạn"] = item.ContractRenewalDate;
+        //        //newRow["Chức vụ"] = item.Role.RoleName;
+        //        //newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
+        //        // newRow["Số CMND"] = item.UserName;
+        //        //full fesh
 
-                dt.Rows.Add(newRow);
-            }
+        //        dt.Rows.Add(newRow);
+        //    }
 
-            //====================================================
-            alluser.DataSource = dt;
-            // gv.DataSource = ds;
-            alluser.DataBind();
+        //    //====================================================
+        //    alluser.DataSource = dt;
+        //    // gv.DataSource = ds;
+        //    alluser.DataBind();
 
-            Response.ClearContent();
-            Response.Buffer = true;
+        //    Response.ClearContent();
+        //    Response.Buffer = true;
 
-            Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
-            Response.ContentType = "application/ms-excel";
+        //    Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
+        //    Response.ContentType = "application/ms-excel";
 
-            Response.Charset = "";
-            StringWriter objStringWriter = new StringWriter();
-            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+        //    Response.Charset = "";
+        //    StringWriter objStringWriter = new StringWriter();
+        //    HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
 
-            alluser.RenderControl(objHtmlTextWriter);
+        //    alluser.RenderControl(objHtmlTextWriter);
 
-            Response.Output.Write(objStringWriter.ToString());
-            Response.Flush();
-            Response.End();
-            return Redirect("/ManageUser/WorkingCalendar");
-        }
+        //    Response.Output.Write(objStringWriter.ToString());
+        //    Response.Flush();
+        //    Response.End();
+        //    return Redirect("/ManageUser/WorkingCalendar");
+        //}
 
         //dispose
         protected override void Dispose(bool disposing)

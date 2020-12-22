@@ -34,7 +34,6 @@ namespace SmartParkingApplication.Controllers
             List<double> listIncomeCar = new List<double>();
             for (int i = 0; i < 12; i++)
             {
-
                 if (idTypeOfTicket == 1)
                 {
                     //get income dataMoto of DailyTicket ( most nearly 12 months )
@@ -55,14 +54,14 @@ namespace SmartParkingApplication.Controllers
                 {
                     //get income dataMoto of MonthlyTicket ( most nearly 12 months )
                     var dataMoto = (from mi in db.MonthlyIncomeStatements
-                                    where (mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 0)
+                                    where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == idParking
                                     select new { mi.TotalPrice }).ToList();
                     var sumMoto = dataMoto.Select(s => s.TotalPrice).Sum();
                     listIncomeMoto.Add((double)sumMoto);
 
                     //get income dataCar of MonthlyTicket ( most nearly 12 months )
                     var dataCar = (from mi in db.MonthlyIncomeStatements
-                                   where (mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 1)
+                                   where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == idParking
                                    select new { mi.TotalPrice }).ToList();
                     var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
                     listIncomeCar.Add((double)sumCar);
