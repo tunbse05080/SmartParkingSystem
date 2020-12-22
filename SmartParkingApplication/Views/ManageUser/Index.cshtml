@@ -81,50 +81,52 @@
                         <div class="modal fade" id="myModalUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="FullName">Tên đầy đủ</label>
-                                            <input type="text" class="form-control" id="FullName" placeholder="Tên đầy đủ" />
+                                    <form id="FormAddUser">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="DateOfBirth">Ngày Sinh</label>
-                                            <input type="date" class="form-control" id="DateOfBirth" placeholder="Ngày Sinh" />
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="FullName">Tên đầy đủ</label>
+                                                <input type="text" class="form-control" id="FullName" name="FullName" placeholder="Tên đầy đủ" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DateOfBirth">Ngày Sinh</label>
+                                                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" placeholder="Ngày Sinh" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Gender">Giới tính</label>
+                                                <select class="form-control" id="cbGender" name="cbGender">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Address">Địa chỉ</label>
+                                                <input type="text" class="form-control" id="Address" name="Address" placeholder="Địa chỉ" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="PhoneNumber">Số điện thoại</label>
+                                                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Số điện thoại" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Email">Email</label>
+                                                <input type="text" class="form-control" id="Email" name="Email" placeholder="Email" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="IdentityCard">Số CMND</label>
+                                                <input type="text" class="form-control" id="IdentityCard" name="IdentityCard" placeholder="Số CMND" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ParkingPlace">Bãi làm việc</label>
+                                                <select class="form-control" id="cbparkingPlaceU" name="cbparkingPlaceU">
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="Gender">Giới tính</label>
-                                            <select class="form-control" id="cbGender">
-                                            </select>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="btnAdd" onclick="return AddUser();">Thêm</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return CloseAdd()">Close</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="Address">Địa chỉ</label>
-                                            <input type="text" class="form-control" id="Address" placeholder="Địa chỉ" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="PhoneNumber">Số điện thoại</label>
-                                            <input type="text" class="form-control" id="PhoneNumber" placeholder="Số điện thoại" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Email">Email</label>
-                                            <input type="text" class="form-control" id="Email" placeholder="Email" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="IdentityCard">Số CMND</label>
-                                            <input type="text" class="form-control" id="IdentityCard" placeholder="Số CMND" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="ParkingPlace">Bãi làm việc</label>
-                                            <select class="form-control" id="cbparkingPlaceU">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return AddUser();">Thêm</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return CloseAdd()">Close</button>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -138,19 +140,11 @@
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row" id="EditUserForm">
+                                        <form class="row" id="FormUserEdit">
                                             <div class="form-group col-sm-4" hidden>
                                                 <label for="Id">Id</label>
                                                 <input type="text" class="form-control" id="IdEdit" placeholder="Id" disabled />
                                             </div>
-                                            @*<div class="form-group col-sm-4">
-                                                    <label for="UserName">Tên tài khoản</label>
-                                                    <input type="text" class="form-control" id="UserNameEdit" placeholder="Tên tài khoản" />
-                                                </div>
-                                                <div class="form-group col-sm-4" hidden>
-                                                    <label for="PassWord">Mật khẩu</label>
-                                                    <input type="text" class="form-control" id="PassWordEdit" placeholder="Mật khẩu" />
-                                                </div>*@
                                             <div class="form-group col-sm-4">
                                                 <label for="FullName">Tên đầy đủ</label>
                                                 <input type="text" class="form-control" id="FullNameEdit" name="FullNameEdit" placeholder="Tên đầy đủ" />
@@ -180,23 +174,10 @@
                                                 <label for="IdentityCard">Số CMND</label>
                                                 <input type="text" class="form-control" id="IdentityCardEdit" name="IdentityCardEdit" placeholder="Số CMND" />
                                             </div>
-                                            @*<div class="form-group col-sm-4" hidden>
-                                                    <label for="ContractSigningDate">Ngày ký HĐ</label>
-                                                    <input type="text" class="form-control" id="ContractSigningDateEdit" placeholder="Ngày ký HĐ" />
-                                                </div>
-                                                <div class="form-group col-sm-4" hidden>
-                                                    <label for="ContractExpirationDate">Ngày hết HĐ</label>
-                                                    <input type="text" class="form-control" id="ContractExpirationDateEdit" placeholder="Ngày hết HĐ" />
-                                                </div>*@
                                             <div class="form-group col-sm-4" hidden>
                                                 <label for="StatusOfWork">Trạng thái</label>
                                                 <input type="text" class="form-control" id="StatusOfWorkingEdit" />
                                             </div>
-                                            @*<div class="form-group col-sm-4">
-                                                    <label for="RoleName">Chức vụ</label>
-                                                    <select class="form-control" id="cbRoleNameUEdit">
-                                                    </select>
-                                                </div>*@
                                             <div class="form-group col-sm-4">
                                                 <label for="ParkingPlace">Bãi làm việc</label>
                                                 <select class="form-control" id="cbparkingPlaceUEdit">
@@ -204,7 +185,7 @@
                                             </div>
                                             <div class="form-group col-sm-4" hidden>
                                                 <label for="AccountID">AccountID</label>
-                                                <input type="text" class="form-control" id="AccountID" placeholder="AccountID" />
+                                                <input type="text" class="form-control" id="AccountID" name="AccountID" placeholder="AccountID" />
                                             </div>
                                         </form>
                                     </div>
