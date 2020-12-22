@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace SmartParkingApplication.Controllers
 {
-    //[Authorize(Roles = "Quản lý")]
     public class SettingController : Controller
     {
         private SmartParkingsEntities db = new SmartParkingsEntities();
@@ -55,12 +54,16 @@ namespace SmartParkingApplication.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,UserAddress,DateOfBirth,email,Phone,IdentityCard")] User _post)
+        public ActionResult Edit([Bind(Include = "UserID,UserAddress,DateOfBirth,email,Phone,IdentityCard,Gender")] User _post)
         {
 
             if (ModelState.IsValid)
             {
                 var data = db.Users.Find(_post.UserID);
+                data.Gender = _post.Gender;
+              
+
+
                 data.IdentityCard = _post.IdentityCard;
                 data.Phone = _post.Phone;
                 data.email = _post.email;
