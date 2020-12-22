@@ -6,24 +6,6 @@ $(document).ready(function () {
     ComboboxParkingPlace();
 });
 
-function loadDateNowformatdate() {
-    // body...
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-
-    today = yyyy + '-' + mm + '-' + dd;
-    return today;
-}
-
 function loadDateNow() {
     // body...
     var today = new Date();
@@ -83,6 +65,8 @@ function DatePlus(datePlus) {
 
 //Function for getting data base on EmployeeID
 function getEditByID(EmployeeID) {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     $.ajax({
         url: "/ManageUser/Details/" + EmployeeID,
         type: "GET",
@@ -250,10 +234,10 @@ function loadData() {
 
 //Add Data Function
 function AddUser() {
-    //var res = validate();
-    //if (res == false) {
-    //    return false;
-    //}
+    var res = validateUserAdd();
+    if (res == false) {
+        return false;
+    }
     var empObj = {
         Name: $('#FullName').val(),
         DateOfBirth: $('#DateOfBirth').val(),
@@ -319,25 +303,10 @@ function UpdateUser() {
     });
 }
 
-function CloseAdd() {
-    $('#UserName').css('border-color', 'Grey');
-    $('#PassWord').css('border-color', 'Grey');
-    $('#FullName').css('border-color', 'Grey');
-    $('#DateOfBirth').css('border-color', 'Grey');
-    $('#Gender').css('border-color', 'Grey');
-    $('#Address').css('border-color', 'Grey');
-    $('#PhoneNumber').css('border-color', 'Grey');
-    $('#Email').css('border-color', 'Grey');
-    $('#IdentityCard').css('border-color', 'Grey');
-    $('#RoleName').css('border-color', 'Grey');
-    $('#ParkingPlace').css('border-color', 'Grey');
-    $('#ContractSigningDate').css('border-color', 'Grey');
-    $('#ContractExpirationDate').css('border-color', 'Grey');
-    $('#StatusOfWork').css('border-color', 'Grey');
-}
-
 //Function for clearing the textboxes
 function clearTextBox() {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     var date = loadDateNow();
     $('#Id').val("");
     $('#FullName').val("");
@@ -351,21 +320,24 @@ function clearTextBox() {
     $('#ContractSigningDate').val("" + date);
     $('#ContractExpirationDate').val("" + date);
     $('#cbStatusOfwork').val("");
-
-
-    $('#btnAdd').show();
-    $('#btnUpdate').hide();
-    //$('#Email').css('border-color', 'lightgrey');
-    //$('#IdentityCard').css('border-color', 'lightgrey');
-    //$('#State').css('border-color', 'lightgrey');
-    //$('#Country').css('border-color', 'lightgrey');
+    $('#FullName').css('border-color', 'Grey');
+    $('#DateOfBirth').css('border-color', 'Grey');
+    $('#cbGender').css('border-color', 'Grey');
+    $('#Address').css('border-color', 'Grey');
+    $('#PhoneNumber').css('border-color', 'Grey');
+    $('#Email').css('border-color', 'Grey');
+    $('#IdentityCard').css('border-color', 'Grey');
+    $('#cbparkingPlaceU').css('border-color', 'Grey');
+    $('#ContractSigningDate').css('border-color', 'Grey');
+    $('#ContractExpirationDate').css('border-color', 'Grey');
+    $('#cbStatusOfwork').css('border-color', 'Grey');
 }
 
 //Valdidation using jquery
 function validateUserEdit() {
+    //Díplay css of error message
     var htmlcss = {
-        'color': 'Red',
-        'display': 'block'
+        'color': 'Red'
     }
     $.validator.setDefaults({
         errorClass: 'help-block',
@@ -381,23 +353,40 @@ function validateUserEdit() {
             error.appendTo($(element).parent()).css(htmlcss);
         }
     });
-    $('#EditUserForm').validate({
+    //Set custom valid by rule
+    $.validator.addMethod('checkUserFullNameE', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkBDateE', function (value, element) {
+        return this.optional(element) || new Date(value) < new Date();
+    });
+    $.validator.addMethod('checkUserAddressE', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkUserPhoneE', function (value, element) {
+        return phone.test(value);
+    });
+    $.validator.addMethod('checkUserIDCardE', function (value, element) {
+        return idcard.test(value);
+    });
+    //Set rule for input by name
+    $('#FormUserEdit').validate({
         rules: {
             DateOfBirthEdit: {
                 required: true,
-                checkBDate: true
+                checkBDateE: true
             },
             FullNameEdit: {
                 required: true,
-                checkAccFullName: true
+                checkUserFullNameE: true
             },
             AddressEdit: {
                 required: true,
-                checkAccAddress: true
+                checkUserAddressE: true
             },
             PhoneNumberEdit: {
                 required: true,
-                checkAccPhoneNumber: true
+                checkUserPhoneE: true
             },
             EmailEdit: {
                 required: true,
@@ -405,33 +394,146 @@ function validateUserEdit() {
             },
             IdentityCardEdit: {
                 required: true,
-                checkAccIdentityCard: true
+                checkUserIDCardE: true
             }
         },
         messages: {
             DateOfBirthEdit: {
-                required: '*Bắt buộc.'
+                required: '*Bắt buộc.',
+                checkBDateE: 'Ngày phải nhỏ hơn hiện tại!'
             },
             FullNameEdit: {
-                required: '*Bắt buộc.'
+                required: '*Bắt buộc.',
+                checkUserFullNameE: 'Tên đầy đủ ít nhất 5 kí tự!'
             },
             AddressEdit: {
-                required: '*Bắt buộc.'
+                required: '*Bắt buộc.',
+                checkUserAddressE: 'Địa chỉ phải có ít nhất 5 kí tự!'
             },
             PhoneNumberEdit: {
-                required: '*Bắt buộc.'
+                required: '*Bắt buộc.',
+                checkUserPhoneE: 'Số điện thoại sai định dạng!'
             },
             EmailEdit: {
                 required: '*Bắt buộc.',
                 email: 'Email không đúng định dạng.'
             },
             IdentityCardEdit: {
+                required: '*Bắt buộc.',
+                checkUserIDCardE: 'CMND/CCCD sai định dạng!'
+            }
+        }
+    });
+    return $('#FormUserEdit').valid();
+}
+
+function validateUserAdd() {
+    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\\b)');
+    var idcard = new RegExp('[0-9]{9,}');
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkUserFullName', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkBDate', function (value, element) {
+        return this.optional(element) || new Date(value) < new Date();
+    });
+    $.validator.addMethod('checkUserAddress', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkUserPhone', function (value, element) {
+        return phone.test(value);
+    });
+    $.validator.addMethod('checkUserIDCard', function (value, element) {
+        return idcard.test(value);
+    });
+    //Set rule for input by name
+    $('#FormAddUser').validate({
+        rules: {
+            DateOfBirth: {
+                required: true,
+                checkBDate: true
+            },
+            FullName: {
+                required: true,
+                checkUserFullName: true
+            },
+            Address: {
+                required: true,
+                checkUserAddress: true
+            },
+            PhoneNumber: {
+                required: true,
+                checkUserPhone: true
+            },
+            Email: {
+                required: true,
+                email: true
+            },
+            IdentityCard: {
+                required: true,
+                checkUserIDCard: true
+            },
+            cbGender: {
+                required: true
+            },
+            cbparkingPlaceU: {
+                required: true
+            }
+        },
+        messages: {
+            DateOfBirth: {
+                required: '*Bắt buộc.',
+                checkBDate: 'Ngày phải nhỏ hơn hiện tại!'
+            },
+            FullName: {
+                required: '*Bắt buộc.',
+                checkUserFullName: 'Tên đầy đủ ít nhất 5 kí tự!'
+            },
+            Address: {
+                required: '*Bắt buộc.',
+                checkUserAddress: 'Địa chỉ ít nhất 5 kí tự!'
+            },
+            PhoneNumber: {
+                required: '*Bắt buộc.',
+                checkUserPhone: 'Số điện thoại sai định dạng!'
+            },
+            Email: {
+                required: '*Bắt buộc.',
+                email: 'Email sai định dạng!'
+            },
+            IdentityCard: {
+                required: '*Bắt buộc.',
+                checkUserIDCard: 'CMND/CCCD sai định dạng!'
+            },
+            cbGender: {
+                required: '*Bắt buộc.'
+            },
+            cbparkingPlaceU: {
                 required: '*Bắt buộc.'
             }
         }
     });
-    return $('#EditUserForm').valid();
+    return $('#FormAddUser').valid();
 }
+
 
 // gia han HĐ
 //function ContractGH() {
