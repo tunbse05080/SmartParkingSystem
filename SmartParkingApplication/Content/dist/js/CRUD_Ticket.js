@@ -658,7 +658,7 @@ function clearETK() {
 
 //Valdidation using jquery
 function validateAddTicket() {
-    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\b)');
+    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\\b)');
     var idcard = new RegExp('[0-9]{9,}');
     var plate = new RegExp('[0-9]{2}[A-Z]{1}[0-9]{5,6}');
     //Díplay css of error message

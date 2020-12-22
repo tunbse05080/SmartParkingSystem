@@ -136,10 +136,10 @@ function loadDataPriceMonthly() {
 
 //Update daily price
 function UpdateDailyPrice() {
-    //var res = validateUpdatePP();
-    //if (res == false) {
-    //    return false;
-    //}
+    var res = validateDailyPrice();
+    if (res == false) {
+        return false;
+    }
     var dayPrice = $('#DayPriceDailyTK').val();
     dayPrice = dayPrice.replace(" đ", "");
     var empPRObj = {
@@ -172,10 +172,10 @@ function UpdateDailyPrice() {
 
 //Update Monthly price
 function UpdateMonthlyPrice() {
-    //var res = validateUpdatePP();
-    //if (res == false) {
-    //    return false;
-    //}
+    var res = validateMonthlyPrice();
+    if (res == false) {
+        return false;
+    }
     var monthlyPrice = {
         TypeOfvehicle: $('#cbTypeOfvehicleMonthly').val(),
         MonthlyPrice: $('#MonthlyPriceTK').val(),
@@ -202,10 +202,10 @@ function UpdateMonthlyPrice() {
 
 //Update block price
 function UpdateBlockPrice() {
-    //var res = validateUpdatePP();
-    //if (res == false) {
-    //    return false;
-    //}
+    var res = validateBlockPrice();
+    if (res == false) {
+        return false;
+    }
     var empPRObj = {
         TypeOfvehicle: $('#cbTypeOfvehicleBlock').val(),
         DayPrice: 0,
@@ -232,6 +232,14 @@ function UpdateBlockPrice() {
             alert(errormessage.responseText);
         }
     });
+}
+
+//Set default value to cb price
+function setDefaultCbPrice() {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
+    clear();
+    $('#cbTypeOfTicketSP').val('');
 }
 
 //load modal price follow type ticket
@@ -263,7 +271,6 @@ function getDetailPriceByID(PriceID) {
             $('#TimeOfFirstBlock').val(result.TimeOfFirstBlock + " giờ");
             $('#TimeOfNextBlock').val(result.TimeOfNextBlock + " giờ");
             $('#TimeApply').val(result.TimeOfApply);
-
             $('#myModalDetailPrice').modal('show');
         },
         error: function (errormessage) {
@@ -295,10 +302,184 @@ function getDetailPriceMonthByID(PriceID) {
 //clear
 function clear() {
     $('#DayPriceDailyTK').val("");
-    $('#DayPriceBlockTK').val("");
+    $('#TimeOfApplyDailyTK').val("");
+    $('#MonthlyPriceTK').val("");
+    $('#TimeOfApplyMonthlyTK').val("");
     $('#FBlockPriceBlockTK').val("");
     $('#NBlockPriceBlockTK').val("");
     $('#TimeFBlockPriceBlockTK').val("");
     $('#TimeNBlockPriceBlockTK').val("");
     $('#cbTypeOfTicketSP').val("");
+}
+
+//Validate using Jquery
+function validateDailyPrice() {
+    var currency = new RegExp('\\d+');
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkDailyPrice', function (value, element) {
+        return currency.test(value);
+    });
+    //Set rule + message for input by name
+    $('#FormDailyPrice').validate({
+        rules: {
+            DayPriceDailyTK: {
+                required: true,
+                checkDailyPrice: true
+            },
+            TimeOfApplyDailyTK: {
+                required: true
+            }
+        },
+        messages: {
+            DayPriceDailyTK: {
+                required: '*Bắt buộc.',
+                checkDailyPrice: 'Giá phải là số!'
+            },
+            TimeOfApplyDailyTK: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormDailyPrice').valid();
+}
+
+function validateMonthlyPrice() {
+    var currency = new RegExp('\\d+');
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkMonthlyPrice', function (value, element) {
+        return currency.test(value);
+    });
+    //Set rule + message for input by name
+    $('#FormMonthlyPrice').validate({
+        rules: {
+            MonthlyPriceTK: {
+                required: true,
+                checkMonthlyPrice: true
+            },
+            TimeOfApplyMonthlyTK: {
+                required: true
+            }
+        },
+        messages: {
+            MonthlyPriceTK: {
+                required: '*Bắt buộc.',
+                checkMonthlyPrice: 'Giá phải là số!'
+            },
+            TimeOfApplyMonthlyTK: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormMonthlyPrice').valid();
+}
+
+function validateBlockPrice() {
+    var currency = new RegExp('\\d+');
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkBlockPrice', function (value, element) {
+        return currency.test(value);
+    });
+    $.validator.addMethod('checkBlockTime', function (value, element) {
+        return currency.test(value) && value > 0;
+    });
+    //Set rule + message for input by name
+    $('#FormBlockPrice').validate({
+        rules: {
+            FBlockPriceBlockTK: {
+                required: true,
+                checkBlockPrice: true
+            },
+            NBlockPriceBlockTK: {
+                required: true,
+                checkBlockPrice: true
+            },
+            TimeFBlockPriceBlockTK: {
+                required: true,
+                checkBlockTime: true
+            },
+            TimeNBlockPriceBlockTK: {
+                required: true,
+                checkBlockTime: true
+            },
+            TimeOfApplyBlockTK: {
+                required: true
+            }
+        },
+        messages: {
+            FBlockPriceBlockTK: {
+                required: '*Bắt buộc.',
+                checkBlockPrice: 'Giá phải là số!'
+            },
+            NBlockPriceBlockTK: {
+                required: '*Bắt buộc.',
+                checkBlockPrice: 'Giá phải là số!'
+            },
+            TimeFBlockPriceBlockTK: {
+                required: '*Bắt buộc.',
+                checkBlockTime: 'Thời gian là giờ lớn hơn 0!'
+            },
+            TimeNBlockPriceBlockTK: {
+                required: '*Bắt buộc.',
+                checkBlockTime: 'Thời gian là số lớn hơn 0!'
+            },
+            TimeOfApplyBlockTK: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormBlockPrice').valid();
 }
