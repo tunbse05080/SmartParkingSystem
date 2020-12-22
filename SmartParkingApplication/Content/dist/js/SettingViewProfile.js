@@ -1,7 +1,7 @@
-﻿$(document).ready(function () {
-    getSVDetailByID();
+﻿//$(document).ready(function () {
+//    getSVDetailByID();
     
-});
+//});
 function getSVDetailByID() {
     $.ajax({
         
