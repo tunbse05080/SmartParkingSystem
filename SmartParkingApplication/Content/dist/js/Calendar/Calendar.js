@@ -134,7 +134,7 @@ function EditWorkingCalendar() {
         }
     }
     $.ajax({
-        url: "/ManageUser/CheckEditWorkingCalendar",
+        url: "/ManageUser/GetTimeToUpdateCalendar",
         type: "POST",
         data: JSON.stringify({ schedule: scheObj, UserID: UserID }),
         contentType: "application/json",
