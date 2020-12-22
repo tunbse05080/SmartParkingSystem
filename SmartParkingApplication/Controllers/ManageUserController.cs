@@ -298,15 +298,32 @@ namespace SmartParkingApplication.Controllers
                     timeEnd = timeEnd.AddDays(i);
                 }
                 Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
-                //create working schedule
-                int scheduleID = CreateWorkingCalendar(newSchedule);
+                //check schedule exist or not
+                if (IsCreatedCalendar(newSchedule) == false)
+                {
+                    //create working schedule
+                    int scheduleID = CreateWorkingCalendar(newSchedule);
 
-                UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
-                //create working schedule for user
-                CreateUserSchedule(newUS);
+                    UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
+                    //create working schedule for user
+                    CreateUserSchedule(newUS);
+                }
             }
             var result = "";
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool IsCreatedCalendar(Schedule schedule)
+        {
+            bool check = false;
+            var result = (from s in db.Schedules
+                         where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
+                         select new { s.ScheduleID }).FirstOrDefault();
+            if(result != null)
+            {
+                check = true;
+            }
+            return check;
         }
 
         //create Userschedule

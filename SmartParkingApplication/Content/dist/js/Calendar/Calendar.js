@@ -74,7 +74,11 @@ function initCalendar(evenArr) {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: evenArr
+        events: evenArr,
+        eventRender: function (info) {
+            // get your new title somehow
+            title: "Ca",
+        }
     });
     calendar.render();
 }
