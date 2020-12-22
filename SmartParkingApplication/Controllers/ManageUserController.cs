@@ -24,16 +24,9 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
+        //load data User Staff
         public JsonResult LoadData()
         {
-            //var users = from r in db.Roles
-            //            join u in db.Users on r.RoleID equals u. into table1
-            //            from u in table1.DefaultIfEmpty()
-            //            join p in db.ParkingPlaces on u.ParkingPlaceID equals p.ParkingPlaceID into table2
-            //            from p in table2.DefaultIfEmpty()
-            //            orderby u.UserID
-            //            select new { u.UserID, u.UserName, u.Name, u.DateOfBirth, u.Gender, u.UserAddress, u.IdentityCard, u.Phone, u.email, u.ContractSigningDate, u.ContractExpirationDate, u.StatusOfWork, p.NameOfParking, r.RoleName };
-
             var users = (from u in db.Users
                          where u.Account.Role.RoleID == 1
                          orderby u.UserID
@@ -85,7 +78,7 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Users/Details/5
+        //detail info User
         public JsonResult Details(int id)
         {
             var user = db.Users.Find(id);
@@ -116,20 +109,7 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //public JsonResult DetailsGH(int id)
-        //{
-        //    var user = db.Users.Find(id);
-        //    var dateOfBirth = "";
-        //    dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
-        //    //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
-        //    //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-        //    var result = new { user.UserID, user.Name, user.UserAddress, user.Gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.ParkingPlaceID, user.Account.RoleID, user.StatusOfwork };
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
-
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //Create User
         public JsonResult Create(User user)
         {
             if (ModelState.IsValid)
@@ -141,6 +121,7 @@ namespace SmartParkingApplication.Controllers
             return Json(user, JsonRequestBehavior.AllowGet);
         }
 
+        //update User
         public JsonResult Update(User user)
         {
             if (ModelState.IsValid)
@@ -151,7 +132,6 @@ namespace SmartParkingApplication.Controllers
 
             return Json(user, JsonRequestBehavior.AllowGet);
         }
-
 
         //combobox Gender
         public JsonResult ComboboxGender()
@@ -175,7 +155,6 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
 
         // combobox status of work
         public JsonResult ComboboxStatusOfwork()
@@ -232,15 +211,6 @@ namespace SmartParkingApplication.Controllers
                           where u.UserID == id
                           select new { u.Name }).FirstOrDefault();
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         //Working calendar
@@ -315,7 +285,7 @@ namespace SmartParkingApplication.Controllers
                 }
                 Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
                 //check schedule exist or not
-                if (String.IsNullOrEmpty(IsCreatedSchedule(newSchedule).ToString()))
+                if (IsCreatedSchedule(newSchedule) == 0)
                 {
                     //create working schedule
                     int scheduleID = CreateWorkingCalendar(newSchedule);
@@ -355,14 +325,15 @@ namespace SmartParkingApplication.Controllers
                 }
                 Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
                 //check Schedule exist or not
-                if (!String.IsNullOrEmpty(IsCreatedSchedule(newSchedule).ToString()))
+                if (IsCreatedSchedule(newSchedule) != 0)
                 {
                     int scheduleID = IsCreatedSchedule(newSchedule);
-                    //find UserSchedule base on ScheduleID
-                    UserSchedule userSchedule = IsCreatedUserSchedule(scheduleID);
                     //check UserSchedule exist or not
-                    if (!String.IsNullOrEmpty(IsCreatedUserSchedule(scheduleID).ToString()))
+                    if (IsCreatedUserSchedule(scheduleID).UserScheduleID != 0)
                     {
+                        //find UserSchedule base on ScheduleID
+                        UserSchedule userSchedule = IsCreatedUserSchedule(scheduleID);
+                        userSchedule.UserID = UserID;
                         UpdateWorkingcalendar(userSchedule);
                     }
                 }
@@ -374,10 +345,14 @@ namespace SmartParkingApplication.Controllers
         //check Schedule exist or not if not return ScheduleID
         public int IsCreatedSchedule(Schedule schedule)
         {
+            int temp = 0;
             var result = (from s in db.Schedules
                          where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
                          select new { s.ScheduleID }).FirstOrDefault();
-            int temp = result.ScheduleID;
+            if(result != null)
+            {
+                temp = result.ScheduleID;
+            }
             return temp;
         }
 
@@ -421,24 +396,6 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(userSchedule, JsonRequestBehavior.AllowGet);
         }
-
-        ////check Userschedule base on schedule and update UserID in Userschedule
-        //public JsonResult CheckEditWorkingCalendar(int UserID, Schedule schedule)
-        //{
-        //    //find scheduleID by timeStart and timeEnd
-        //    var dataSchedule = (from s in db.Schedules
-        //                        where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
-        //                        select new { s.ScheduleID }).FirstOrDefault();
-        //    //find Userschedule base on scheduleID
-        //    var result = (from us in db.UserSchedules
-        //                  where us.ScheduleID == dataSchedule.ScheduleID
-        //                  select new { us.UserScheduleID, us.ScheduleID }).FirstOrDefault();
-        //    //create userschedule with new UserID
-        //    UserSchedule userSchedule = new UserSchedule { UserScheduleID = result.UserScheduleID, UserID = UserID, ScheduleID = result.ScheduleID };
-        //    //Update userschedule
-        //    EditWorkingcalendar(userSchedule);
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
 
         //Xuat file Exel User
         public ActionResult ExportListAlmostExpired()
@@ -520,6 +477,16 @@ namespace SmartParkingApplication.Controllers
             Response.Flush();
             Response.End();
             return Redirect("/ManageUser");
+        }
+
+        //dispose
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
