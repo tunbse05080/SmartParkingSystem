@@ -41,5 +41,30 @@ namespace SmartParkingApplication.Controllers
             ViewBag.name = result;
             return View();
         }
+        public ActionResult Edit(int id)
+        {
+            var user = db.Users.Where(x => x.UserID == id).FirstOrDefault();
+            return View(user);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "UserID,UserAddress,DateOfBirth,email")] User _post)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var data = db.Users.Find(_post.UserID);
+                data.email = _post.email;
+                data.DateOfBirth = _post.DateOfBirth;
+                data.UserAddress = _post.UserAddress;
+                db.Entry(data).State = EntityState.Modified;
+                db.SaveChanges();
+                // return Json(_post);
+                return RedirectToAction("Index", "Setting");
+            }
+            var dataEdit = db.Users.Where(s => s.UserID == _post.UserID).FirstOrDefault();
+            return View(dataEdit);
+
+        }
     }
 }
