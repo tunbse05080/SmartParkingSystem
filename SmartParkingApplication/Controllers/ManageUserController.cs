@@ -287,7 +287,8 @@ namespace SmartParkingApplication.Controllers
             list.Add(timeEnd);
             return list;
         }
-
+        
+        //get datetime and create schedule for user
         public JsonResult GetTimeToCreateCalendar(Schedule schedule, int UserID)
         {
             //get number day between dateStart and dateEnd
@@ -314,11 +315,10 @@ namespace SmartParkingApplication.Controllers
                 }
                 Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
                 //check schedule exist or not
-                if (IsCreatedCalendar(newSchedule) == false)
+                if (String.IsNullOrEmpty(IsCreatedSchedule(newSchedule).ToString()))
                 {
                     //create working schedule
                     int scheduleID = CreateWorkingCalendar(newSchedule);
-
                     UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
                     //create working schedule for user
                     CreateUserSchedule(newUS);
@@ -328,17 +328,67 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public bool IsCreatedCalendar(Schedule schedule)
+        //get datetime and update schedule for user
+        public JsonResult GetTimeToUpdateCalendar(Schedule schedule, int UserID)
         {
-            bool check = false;
+            //get number day between dateStart and dateEnd
+            TimeSpan timeSpan = (TimeSpan)(schedule.TimeEnd - schedule.TimeStart);
+            //update UserSchedule for each date
+            for (int i = 0; i <= timeSpan.Days; i++)
+            {
+                //declare timeStart and timeEnd
+                DateTime timeStart = DateTime.Now;
+                DateTime timeEnd = DateTime.Now;
+                List<DateTime> list = GetTimeByShift(schedule);
+                timeStart = list.First();
+                timeEnd = list.Last();
+                //each for, timeStart increase 1 day
+                timeStart = timeStart.AddDays(i);
+                //each for, timeEnd increase 2 days if shift 3
+                if (schedule.Slot == 3)
+                {
+                    timeEnd = timeEnd.AddDays(i + 1);
+                }
+                else
+                {
+                    timeEnd = timeEnd.AddDays(i);
+                }
+                Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
+                //check Schedule exist or not
+                if (!String.IsNullOrEmpty(IsCreatedSchedule(newSchedule).ToString()))
+                {
+                    int scheduleID = IsCreatedSchedule(newSchedule);
+                    //find UserSchedule base on ScheduleID
+                    UserSchedule userSchedule = IsCreatedUserSchedule(scheduleID);
+                    //check UserSchedule exist or not
+                    if (!String.IsNullOrEmpty(IsCreatedUserSchedule(scheduleID).ToString()))
+                    {
+                        UpdateWorkingcalendar(userSchedule);
+                    }
+                }
+            }
+            var result = "";
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        //check Schedule exist or not if not return ScheduleID
+        public int IsCreatedSchedule(Schedule schedule)
+        {
             var result = (from s in db.Schedules
                          where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
                          select new { s.ScheduleID }).FirstOrDefault();
-            if(result != null)
-            {
-                check = true;
-            }
-            return check;
+            int temp = result.ScheduleID;
+            return temp;
+        }
+
+        //check UserSchedule exist or not if not return UserSchedule
+        public UserSchedule IsCreatedUserSchedule(int ScheduleID)
+        {
+            var result = (from us in db.UserSchedules
+                         where us.ScheduleID == ScheduleID
+                         select new { us.UserScheduleID, us.ScheduleID }).FirstOrDefault();
+            UserSchedule userSchedule = new UserSchedule { UserScheduleID = result.UserScheduleID, ScheduleID = result.ScheduleID };
+            return userSchedule;
         }
 
         //create Userschedule
@@ -350,7 +400,7 @@ namespace SmartParkingApplication.Controllers
                 db.SaveChanges();
             }
         }
-        //create schedule
+        //create Schedule
         public int CreateWorkingCalendar(Schedule schedule)
         {
             if (ModelState.IsValid)
@@ -361,26 +411,8 @@ namespace SmartParkingApplication.Controllers
             return schedule.ScheduleID;
         }
 
-        //check Userschedule base on schedule and update UserID in Userschedule
-        public JsonResult CheckEditWorkingCalendar(int UserID, Schedule schedule)
-        {
-            //find scheduleID by timeStart and timeEnd
-            var dataSchedule = (from s in db.Schedules
-                                where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
-                                select new { s.ScheduleID }).FirstOrDefault();
-            //find Userschedule base on scheduleID
-            var result = (from us in db.UserSchedules
-                          where us.ScheduleID == dataSchedule.ScheduleID
-                          select new { us.UserScheduleID, us.ScheduleID }).FirstOrDefault();
-            //create userschedule with new UserID
-            UserSchedule userSchedule = new UserSchedule { UserScheduleID = result.UserScheduleID, UserID = UserID, ScheduleID = result.ScheduleID };
-            //Update userschedule
-            EditWorkingcalendar(userSchedule);
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        //Edit Userschedule
-        public JsonResult EditWorkingcalendar(UserSchedule userSchedule)
+        //Update UserSchedule
+        public JsonResult UpdateWorkingcalendar(UserSchedule userSchedule)
         {
             if (ModelState.IsValid)
             {
@@ -389,6 +421,24 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(userSchedule, JsonRequestBehavior.AllowGet);
         }
+
+        ////check Userschedule base on schedule and update UserID in Userschedule
+        //public JsonResult CheckEditWorkingCalendar(int UserID, Schedule schedule)
+        //{
+        //    //find scheduleID by timeStart and timeEnd
+        //    var dataSchedule = (from s in db.Schedules
+        //                        where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
+        //                        select new { s.ScheduleID }).FirstOrDefault();
+        //    //find Userschedule base on scheduleID
+        //    var result = (from us in db.UserSchedules
+        //                  where us.ScheduleID == dataSchedule.ScheduleID
+        //                  select new { us.UserScheduleID, us.ScheduleID }).FirstOrDefault();
+        //    //create userschedule with new UserID
+        //    UserSchedule userSchedule = new UserSchedule { UserScheduleID = result.UserScheduleID, UserID = UserID, ScheduleID = result.ScheduleID };
+        //    //Update userschedule
+        //    EditWorkingcalendar(userSchedule);
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         //Xuat file Exel User
         public ActionResult ExportListAlmostExpired()
