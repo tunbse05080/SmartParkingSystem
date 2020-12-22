@@ -102,7 +102,7 @@ namespace SmartParkingApplication.Controllers
             dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
             //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
             //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, user.StatusOfwork , statusOfwork, user.AccountID, user.Account.UserName};
+            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, user.StatusOfwork , statusOfwork, user.AccountID, user.Account.UserName, user.Gender, user.ParkingPlaceID};
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -248,8 +248,17 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTimeCreateCalendar(Schedule schedule)
+        public JsonResult GetTimeCreateCalendar(Schedule schedule, bool checkboxDate)
         {
+            TimeSpan timeSpan = (TimeSpan)(schedule.TimeEnd - schedule.TimeStart);
+            for(int i = 0;i < timeSpan.Days; i++)
+            {
+                if(schedule.Slot == 1)
+                {
+                    DateTime timeStart = (DateTime)schedule.TimeStart + TimeSpan.Parse("06:00:00");
+                    DateTime timeEnd = (DateTime)schedule.TimeStart + TimeSpan.Parse("14:00:00");
+                }
+            }
             var result = "";
             return Json(result, JsonRequestBehavior.AllowGet);
         }

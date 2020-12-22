@@ -77,11 +77,13 @@ function getEditByID(EmployeeID) {
             $('#FullNameEdit').val(result.Name);
             $('#DateOfBirthEdit').val(test[2] + '-' + test[0] + '-' + test[1]);
             $('#AddressEdit').val(result.UserAddress);
+            $('#cbGenderEdit').val(result.Gender);
             $('#IdentityCardEdit').val(result.IdentityCard);
             $('#PhoneNumberEdit').val(result.Phone);
             $('#EmailEdit').val(result.email);
             $('#StatusOfWorkingEdit').val(result.StatusOfwork);
             $('#AccountID').val(result.AccountID);
+            $('#cbparkingPlaceUEdit').val(result.ParkingPlaceID);
             $('#myModalUserEdit').modal('show');
             $('#btnUpdate').show();
         },

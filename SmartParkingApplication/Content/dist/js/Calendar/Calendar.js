@@ -120,9 +120,8 @@ function CreateWorkingCalendar() {
     //        Slot: $('#cbWorkShiftEmp').val()
     //    }
     //}
-    var checkboxDate;
-    if ($('#checkboxDate').checked == false || !$('#checkboxDate').checked) {
-        checkboxDate = 0;
+    var checkboxDate = document.getElementById("checkboxDate");
+    if (checkboxDate.checked == false) {
         if ($('#cbWorkShiftEmp').val() == 1) {
             var scheObj = {
                 TimeStart: $('#DateApply').val() + " 06:00:00",
@@ -143,7 +142,6 @@ function CreateWorkingCalendar() {
             }
         }
     } else {
-        checkboxDate = 1;
             var scheObj = {
                 TimeStart: $('#DateStart').val(),
                 TimeEnd: $('#DateEnd').val(),
@@ -153,7 +151,7 @@ function CreateWorkingCalendar() {
     $.ajax({
         url: "/ManageUser/GetTimeCreateCalendar",
         type: "POST",
-        data: JSON.stringify({ schedule: scheObj, checkboxDate: checkboxDate }),
+        data: JSON.stringify({ schedule: scheObj, checkboxDate: checkboxDate.checked }),
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
