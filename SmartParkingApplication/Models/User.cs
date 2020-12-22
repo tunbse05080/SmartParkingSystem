@@ -19,6 +19,7 @@ namespace SmartParkingApplication.Models
         {
             this.Transactions = new HashSet<Transaction>();
             this.Transactions1 = new HashSet<Transaction>();
+            this.Transactions2 = new HashSet<Transaction>();
             this.UserSchedules = new HashSet<UserSchedule>();
         }
     
@@ -34,13 +35,15 @@ namespace SmartParkingApplication.Models
         public Nullable<int> AccountID { get; set; }
         public Nullable<int> StatusOfwork { get; set; }
     
+        public virtual Account Account { get; set; }
         public virtual ParkingPlace ParkingPlace { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transaction> Transactions2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSchedule> UserSchedules { get; set; }
-        public virtual Account Account { get; set; }
     }
 }

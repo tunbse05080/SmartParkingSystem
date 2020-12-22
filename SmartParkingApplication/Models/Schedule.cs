@@ -22,12 +22,12 @@ namespace SmartParkingApplication.Models
     
         public int ScheduleID { get; set; }
         public Nullable<System.DateTime> TimeStart { get; set; }
-        public Nullable<int> Slot { get; set; }
         public Nullable<System.DateTime> TimeEnd { get; set; }
+        public Nullable<int> Slot { get; set; }
         public Nullable<int> ParkingPlaceID { get; set; }
     
+        public virtual ParkingPlace ParkingPlace { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSchedule> UserSchedules { get; set; }
-        public virtual ParkingPlace ParkingPlace { get; set; }
     }
 }

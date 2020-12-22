@@ -2156,9 +2156,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SmartParking.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>SmartParking.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Transaction.cs">
       <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>

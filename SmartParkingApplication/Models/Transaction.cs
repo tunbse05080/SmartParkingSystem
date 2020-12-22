@@ -38,5 +38,6 @@ namespace SmartParkingApplication.Models
         public virtual ParkingPlace ParkingPlace { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
+        public virtual User User2 { get; set; }
     }
 }

@@ -93,7 +93,7 @@ namespace SmartParkingApplication.Controllers
                     break;
             }
             var date = card.Date.Value.ToString("dd/MM/yyyy");
-            var result = new { card.CardID, card.CardNumber, date, Status};
+            var result = new { card.CardID, card.CardNumber, date, Status, StatusNumber = card.Status };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

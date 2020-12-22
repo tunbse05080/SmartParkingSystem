@@ -95,12 +95,11 @@ function UpdateCard() {
     if (res == false) {
         return false;
     }
-    var status = $('#cbxStatusCard').val();
     var empCardObj = {
         CardID: $('#IdCardEdit').val(),
         CardNumber: $('#CardNumberEdit').val(),
         Date: $('#DateCardEdit').val(),
-        Status: status,
+        Status: $('#StatusCard').val(),
     };
     $.ajax({
         url: "/ManageCard/UpdateCard",
@@ -194,7 +193,7 @@ function ReportCardBreak() {
     var empCardObj = {
         CardID: $('#IdCardBreak').val(),
         CardNumber: $('#CardNumberBreak').val(),
-        Date: $('#DateCardBreak').val(),
+        Date: moment($('#DateCardBreak').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'),
         Status: 2,
     };
     $.ajax({
