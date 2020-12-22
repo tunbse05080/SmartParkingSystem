@@ -41,7 +41,9 @@ namespace SmartParkingApplication.Controllers
 
             var result = db.Users.Where(x => x.AccountID == id).ToList();
 
-
+            var data = db.Accounts.Where(x => x.AccountID == id).ToList();
+            List<Object> list = new List<object>();
+            Session["a"] = data.FirstOrDefault().Role.RoleName;
             ViewBag.name = result;
             return View();
         }
