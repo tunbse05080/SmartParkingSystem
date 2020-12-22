@@ -234,6 +234,7 @@ function getCardByID(CardID) {
                     $('#IdCardEdit').val(result.CardID);
                     $('#CardNumberEdit').val(result.CardNumber);
                     $('#DateCardEdit').val(result.date);
+                    $('#DateCardEdit').val(result.date);
                     $('#myModalUpdate').modal('show');
                     $('#btnUpdateCard').show();
                     break;
