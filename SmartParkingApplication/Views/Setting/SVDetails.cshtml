@@ -74,13 +74,25 @@
                             </div><!-- /.card-header -->
                             <div class="card-body">
 
-
+                              @{ 
+                                  string gender = string.Empty;
+                                  switch (@name.Gender)
+                                  {
+                                      case 0:
+                                          gender = "Nữ";
+                                          break;
+                                      case 1:
+                                          gender = "Nam";
+                                          break;
+                                  }
+                              }
+                            @{ var datebirth = @name.DateOfBirth.ToString("dd/MM/yyyy");}
 
                                 <div class="tab-pane" id="settings">
 
                                     <form class="form-horizontal" id="myModalSVDetail">
                                         <div class="form-group row">
-                                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                                            <label for="inputName" class="col-sm-2 col-form-label">Họ và tên</label>
                                             <div class="col-sm-10">
                                                 <input type="email" value="@name.Name" class="form-control" placeholder="Name" disabled>
                                             </div>
@@ -92,27 +104,33 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputName2" class="col-sm-2 col-form-label">Phone</label>
+                                            <label for="inputName2" class="col-sm-2 col-form-label">Số điện thoại</label>
                                             <div class="col-sm-10">
                                                 <input type="text" value="@name.Phone" class="form-control" placeholder="Name" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputExperience" class="col-sm-2 col-form-label">Gender</label>
+                                            <label for="inputExperience" class="col-sm-2 col-form-label">Giới tính</label>
                                             <div class="col-sm-10">
-                                                <input class="form-control" value="@name.Gender" placeholder="Gender" disabled>
+                                                <input class="form-control" value="@gender" placeholder="Gender" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputSkills" class="col-sm-2 col-form-label">DateOfBirth</label>
+                                            <label for="inputSkills" class="col-sm-2 col-form-label">Ngày sinh</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" value="@name.DateOfBirth" placeholder="DateOfBirth" disabled>
+                                                <input type="text" class="form-control" value="@datebirth" placeholder="DateOfBirth" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="inputSkills" class="col-sm-2 col-form-label">Địa chỉ</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" value="@name.UserAddress" placeholder="UserAddress" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputSkills" class="col-sm-2 col-form-label">Số CMND</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" value="@name.IdentityCard" placeholder="Số CMND" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">

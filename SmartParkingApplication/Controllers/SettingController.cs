@@ -41,6 +41,7 @@ namespace SmartParkingApplication.Controllers
 
             var result = db.Users.Where(x => x.AccountID == id).ToList();
 
+
             ViewBag.name = result;
             return View();
         }
@@ -51,13 +52,14 @@ namespace SmartParkingApplication.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,UserAddress,DateOfBirth,email")] User _post)
+        public ActionResult Edit([Bind(Include = "UserID,UserAddress,DateOfBirth,email,Phone,IdentityCard")] User _post)
         {
 
             if (ModelState.IsValid)
             {
                 var data = db.Users.Find(_post.UserID);
-                
+                data.IdentityCard = _post.IdentityCard;
+                data.Phone = _post.Phone;
                 data.email = _post.email;
                 data.DateOfBirth = _post.DateOfBirth;
                 data.UserAddress = _post.UserAddress;
