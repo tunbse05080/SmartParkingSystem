@@ -60,9 +60,6 @@ function clearTextBoxCard() {
     $('#CardNumber').val("");
     $('#Date').val("" + date);
     $('#Status').val("");
-
-    $('#btnAdd').show();
-    $('#btnUpdate').hide();
 }
 
 function AddCard(number) {
