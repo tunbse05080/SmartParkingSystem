@@ -12,8 +12,10 @@ namespace SmartParkingApplication.Controllers
     {
         private SmartParkingsEntities db = new SmartParkingsEntities();
         // GET: Setting
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
+            var result = db.Users.Where(x=>x.UserID ==id);
+            ViewBag.name = result;
             return View();
         }
         public JsonResult LoadDataAccount(int accountID)
@@ -61,7 +63,7 @@ namespace SmartParkingApplication.Controllers
                 db.Entry(data).State = EntityState.Modified;
                 db.SaveChanges();
                 // return Json(_post);
-                return RedirectToAction("Index", "Setting");
+                return RedirectToAction("Index", "Setting", new{ id = _post.UserID } );
             }
             var dataEdit = db.Users.Where(s => s.UserID == _post.UserID).FirstOrDefault();
             return View(dataEdit);
