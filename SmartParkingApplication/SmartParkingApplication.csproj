@@ -2113,6 +2113,7 @@
     <Compile Include="Models\Card.cs">
       <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\Image.cs">
       <DependentUpon>SmartParking.tt</DependentUpon>
     </Compile>
@@ -2212,6 +2213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\CustomRoleProvider\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

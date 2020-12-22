@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace SmartParkingApplication.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class ManageCardController : Controller
     {
         // GET: ManageCard

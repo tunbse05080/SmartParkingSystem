@@ -78,14 +78,17 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index","ManageAccount")" class="nav-link">
-                                        <i class="nav-icon fas fa-user"></i>
-                                        <p>
-                                            Quản lý tài khoản
-                                        </p>
-                                    </a>
-                                </li>
+                                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Index", "ManageAccount")" class="nav-link">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>
+                                                Quản lý tài khoản
+                                            </p>
+                                        </a>
+                                    </li>
+                                }
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index","ManageUser")" class="nav-link">
                                         <i class="nav-icon fas fa-user"></i>
@@ -149,15 +152,19 @@
                                         </p>
                                     </a>
                                 </li>
-                                <!--Quản lí thẻ-->
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index","ManageCard")" class="nav-link">
-                                        <i class="nav-icon fas fa-credit-card"></i>
-                                        <p>
-                                            Quản lí thẻ
-                                        </p>
-                                    </a>
-                                </li> <!--End quản lí thẻ-->
+                                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <!--Quản lí thẻ-->
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Index", "ManageCard")" class="nav-link">
+                                            <i class="nav-icon fas fa-credit-card"></i>
+                                            <p>
+                                                Quản lí thẻ
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <!--End quản lí thẻ-->
+                                }
                                 <!--Thiết lập giá vé-->
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index","SettingPrice")" class="nav-link">
@@ -206,7 +213,7 @@
                             </ul>
                         </li> <!--End thống kê-->
                         <li class="nav-item">
-                            <a href="@Url.Action("Index","LoginUs")" class="nav-link">
+                            <a href="@Url.Action("Logout","LoginUs")" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Đăng xuất

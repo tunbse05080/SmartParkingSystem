@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace SmartParkingApplication.Controllers
 {
@@ -21,16 +22,15 @@ namespace SmartParkingApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
-
                 var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password)).ToList();
                 if (data.Count() > 0)
                 {
+                    string name = data.FirstOrDefault().Account.UserName; 
                     //add session
                     Session["UserName"] = data.FirstOrDefault().Account.UserName;
                     Session["Name"] = data.FirstOrDefault().Name;
                     Session["idAccount"] = data.FirstOrDefault().AccountID;
+                    FormsAuthentication.SetAuthCookie(name, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -40,6 +40,12 @@ namespace SmartParkingApplication.Controllers
                 }
             }
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "LoginUS");
         }
         public ActionResult ll()
         {
