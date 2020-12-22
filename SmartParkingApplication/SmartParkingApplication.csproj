@@ -2202,6 +2202,7 @@
     <Content Include="Views\Setting\de.cshtml" />
     <Content Include="Views\StatisticReport\IncomeReport.cshtml" />
     <Content Include="Views\Setting\SVDetails.cshtml" />
+    <Content Include="Views\Setting\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

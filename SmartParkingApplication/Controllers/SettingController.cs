@@ -1,6 +1,7 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,8 +12,10 @@ namespace SmartParkingApplication.Controllers
     {
         private SmartParkingsEntities db = new SmartParkingsEntities();
         // GET: Setting
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
+            var result = db.Users.Where(x=>x.UserID ==id);
+            ViewBag.name = result;
             return View();
         }
         public JsonResult LoadDataAccount(int accountID)
@@ -40,6 +43,32 @@ namespace SmartParkingApplication.Controllers
 
             ViewBag.name = result;
             return View();
+        }
+        public ActionResult Edit(int id)
+        {
+            var user = db.Users.Where(x => x.UserID == id).FirstOrDefault();
+            return View(user);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "UserID,UserAddress,DateOfBirth,email")] User _post)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var data = db.Users.Find(_post.UserID);
+                
+                data.email = _post.email;
+                data.DateOfBirth = _post.DateOfBirth;
+                data.UserAddress = _post.UserAddress;
+                db.Entry(data).State = EntityState.Modified;
+                db.SaveChanges();
+                // return Json(_post);
+                return RedirectToAction("Index", "Setting", new{ id = _post.UserID } );
+            }
+            var dataEdit = db.Users.Where(s => s.UserID == _post.UserID).FirstOrDefault();
+            return View(dataEdit);
+
         }
     }
 }
