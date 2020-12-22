@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace SmartParkingApplication.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    //[Authorize(Roles ="Admin")]
     public class ManageAccountController : Controller
     {
         private SmartParkingsEntities db = new SmartParkingsEntities();

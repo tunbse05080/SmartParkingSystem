@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace SmartParkingApplication.Controllers
 {
-    [Authorize(Roles = "Quản lý")]
+    //[Authorize(Roles = "Quản lý")]
     public class SettingPriceController : Controller
     {
         // GET: SettingPrice

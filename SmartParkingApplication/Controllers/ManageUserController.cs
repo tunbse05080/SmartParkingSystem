@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 
 namespace SmartParkingApplication.Controllers
 {
-    [Authorize(Roles = "Quản lý")]
+    //[Authorize(Roles = "Quản lý")]
     public class ManageUserController : Controller
     {
         private SmartParkingsEntities db = new SmartParkingsEntities();
