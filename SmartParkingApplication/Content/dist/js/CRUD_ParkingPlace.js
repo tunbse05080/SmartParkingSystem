@@ -117,6 +117,7 @@ function UpdatePP() {
 
 
 function getPPByID(ParkingPlaceID) {
+    clearTextBoxPP();
     $.ajax({
         url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
         type: "GET",
@@ -131,11 +132,7 @@ function getPPByID(ParkingPlaceID) {
             $('#NumberCarBlankEdit').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
             ComboboxStatusOfParking();
-
             $('#myModalUpdatePP').modal('show');
-           
-            $('#btnAddPP').hide();
-            $('#btnUpdatePP').show();
         },
         error: function (errormessage) {
             alert("Exception:" + ParkingPlaceID + errormessage.responseText);
@@ -150,7 +147,6 @@ function getPPDetailByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-
             $('#ParkingPlaceIDd').val(result.ParkingPlaceID);
             $('#NameOfParkingd').val(result.NameOfParking);
             $('#Locationd').val(result.Location);
@@ -159,12 +155,7 @@ function getPPDetailByID(ParkingPlaceID) {
             $('#NumberCarBlankd').val(result.NumberCarBlank);
             $('#NumberMotoBikeBlankd').val(result.NumberMotoBikeBlank);
             $('#StatusOfParkingPlaced').val(result.statusOfParking);
-
-
-
-
             $('#myModalDetailPP').modal('show');
-
         },
         error: function (errormessage) {
             alert("Exception:" + ParkingPlaceID + errormessage.responseText);
@@ -207,6 +198,8 @@ function AddPP() {
 
 
 function clearTextBoxPP() {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     ComboboxStatusOfParking();
     $('#Id').val("");
     $('#NameOfParking').val("");
@@ -216,78 +209,164 @@ function clearTextBoxPP() {
     $('#NumberCarBlank').val("");
     $('#NumberMotoBikeBlank').val("");
     $('#StatusOfParking').val("");
-
-
-
-    $('#btnAddPP').show();
-    $('#btnUpdatePP').hide();
 }
 
 //validate using Jquery
 function validateAddPP() {
-    var isValid = true;
     var numberSlot = new RegExp('^[0-9]{2,}$');
-    if ($.trim($('#NumberOfCar').val()) == "" || !numberSlot.test($.trim($('#NumberOfCar').val()))) {
-        $('#NumberOfCar').prop("title", "Sức chứa ô tô trống, sai định dạng(>2 số).");
-        $('#NumberOfCar').css('border-color', 'Red');
-        isValid = false;
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
     }
-    else {
-        $('#NumberOfCar').prop("title", "");
-        $('#NumberOfCar').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#NumberOfMotoBike').val()) == "" || !numberSlot.test($.trim($('#NumberOfMotoBike').val()))) {
-        $('#NumberOfMotoBike').prop("title", "Sức chứa xe máy trống hoặc sai định dạng(>2 số).");
-        $('#NumberOfMotoBike').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#NumberOfMotoBike').prop("title", "");
-        $('#NumberOfMotoBike').css('border-color', 'lightgrey');
-    }
-    return isValid;
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkSlotVehicle', function (value, element) {
+        return numberSlot.test(value) && value > 499;
+    });
+    $.validator.addMethod('checkPPAddress', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkPPName', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    //Set rule + message for input by name
+    $('#FormAddPP').validate({
+        rules: {
+            NameOfParking: {
+                required: true,
+                checkPPName: true
+            },
+            Location: {
+                required: true,
+                checkPPAddress: true
+            },
+            NumberOfCar: {
+                required: true,
+                checkSlotVehicle: true
+            },
+            NumberOfMotoBike: {
+                required: true,
+                checkSlotVehicle: true
+            }
+        },
+        messages: {
+            NameOfParking: {
+                required: '*Bắt buộc.',
+                checkPPName: 'Tên bãi có ít nhất 5 kí tự!'
+            },
+            Location: {
+                required: '*Bắt buộc.',
+                checkPPAddress: 'Địa chỉ có ít nhất 5 kí tự!'
+            },
+            NumberOfCar: {
+                required: '*Bắt buộc.',
+                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+            },
+            NumberOfMotoBike: {
+                required: '*Bắt buộc.',
+                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+            }
+        }
+    });
+    return $('#FormAddPP').valid();
 }
 
 function validateUpdatePP() {
-    var isValid = true;
     var numberSlot = new RegExp('^[0-9]{2,}$');
-    if ($.trim($('#NumberOfCarEdit').val()) == "" || !numberSlot.test($.trim($('#NumberOfCarEdit').val()))) {
-        $('#NumberOfCarEdit').prop("title", "Sức chứa ô tô trống hoặc sai định dạng(>2 số).");
-        $('#NumberOfCarEdit').css('border-color', 'Red');
-        isValid = false;
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
     }
-    else {
-        $('#NumberOfCarEdit').prop("title", "");
-        $('#NumberOfCarEdit').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#NumberOfMotoBikeEdit').val()) == "" || !numberSlot.test($.trim($('#NumberOfMotoBikeEdit').val()))) {
-        $('#NumberOfMotoBikeEdit').prop("title", "Sức chứa xe máy trống hoặc sai định dạng(>2 số).");
-        $('#NumberOfMotoBikeEdit').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#NumberOfMotoBikeEdit').prop("title", "");
-        $('#NumberOfMotoBikeEdit').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#NumberCarBlankEdit').val()) == "" || !numberSlot.test($.trim($('#NumberCarBlankEdit').val())) || + $('#NumberCarBlankEdit').val() > + $('#NumberOfCarEdit').val()) {
-        $('#NumberCarBlankEdit').prop("title", "Chỗ trống ô tô trống, sai định dạng(>2 số) hoặc lớn hơn sức chứa.");
-        $('#NumberCarBlankEdit').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#NumberCarBlankEdit').prop("title", "");
-        $('#NumberCarBlankEdit').css('border-color', 'lightgrey');
-    }
-    if ($.trim($('#NumberMotoBikeBlankEdit').val()) == "" || !numberSlot.test($.trim($('#NumberMotoBikeBlankEdit').val())) || + $('#NumberMotoBikeBlankEdit').val() > + $('#NumberOfMotoBikeEdit').val()) {
-        $('#NumberMotoBikeBlankEdit').prop("title", "Chỗ trống xe máy trống, sai định dạng(>2 số) hoặc lớn hơn sức chứa.");
-        $('#NumberMotoBikeBlankEdit').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        $('#NumberMotoBikeBlankEdit').prop("title", "");
-        $('#NumberMotoBikeBlankEdit').css('border-color', 'lightgrey');
-    }
-    return isValid;
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkBlankCar', function (value, element) {
+        return numberSlot.test(value) && value < (+$('#NumberOfCarEdit').val());
+    });
+    $.validator.addMethod('checkBlankMoterBike', function (value, element) {
+        return numberSlot.test(value) && value < (+$('#NumberOfMotoBikeEdit').val());
+    });
+    //Set rule + message for input by name
+    $('#FormEditPP').validate({
+        rules: {
+            NameOfParkingEdit: {
+                required: true,
+                checkPPName: true
+            },
+            LocationEdit: {
+                required: true,
+                checkPPAddress: true
+            },
+            NumberOfCarEdit: {
+                required: true,
+                checkSlotVehicle: true
+            },
+            NumberOfMotoBikeEdit: {
+                required: true,
+                checkSlotVehicle: true
+            },
+            NumberCarBlankEdit: {
+                required: true,
+                checkBlankCar: true
+            },
+            NumberMotoBikeBlankEdit: {
+                required: true,
+                checkBlankMoterBike: true
+            }
+        },
+        messages: {
+            NameOfParkingEdit: {
+                required: '*Bắt buộc.',
+                checkPPName: 'Tên bãi có ít nhất 5 kí tự!'
+            },
+            LocationEdit: {
+                required: '*Bắt buộc.',
+                checkPPAddress: 'Địa chỉ có ít nhất 5 kí tự!'
+            },
+            NumberOfCarEdit: {
+                required: '*Bắt buộc.',
+                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+            },
+            NumberOfMotoBikeEdit: {
+                required: '*Bắt buộc.',
+                checkSlotVehicle: 'Sức chứa là số ít nhất 500 chỗ'
+            },
+            NumberCarBlankEdit: {
+                required: '*Bắt buộc.',
+                checkBlankCar: 'Chỗ trống là số không lớn hơn sức chứa!'
+            },
+            NumberMotoBikeBlankEdit: {
+                required: '*Bắt buộc.',
+                checkBlankMoterBike: 'Chỗ trống là số không lớn hơn sức chứa!'
+            }
+        }
+    });
+    return $('#FormEditPP').valid();
 }
 //comboboxStatusOfParking
 function ComboboxStatusOfParking() {
