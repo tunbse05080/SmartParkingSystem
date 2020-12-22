@@ -7,6 +7,7 @@ using SmartParkingApplication.Models;
 
 namespace SmartParkingApplication.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         SmartParkingsEntities db = new SmartParkingsEntities();

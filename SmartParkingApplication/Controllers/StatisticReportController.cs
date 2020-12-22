@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace SmartParkingApplication.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class StatisticReportController : Controller
     {
         // GET: ManageStatistic

@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace SmartParkingApplication.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class ManageTicketController : Controller
     {
         // GET: ManageTicket

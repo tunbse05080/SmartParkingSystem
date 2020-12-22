@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace SmartParkingApplication.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class ManagePPlaceController : Controller
     {
         private SmartParkingsEntities db = new SmartParkingsEntities();
