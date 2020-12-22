@@ -98,7 +98,7 @@ function UpdateCard() {
     var empCardObj = {
         CardID: $('#IdCardEdit').val(),
         CardNumber: $('#CardNumberEdit').val(),
-        Date: $('#DateCardEdit').val(),
+        Date: moment($('#DateCardEdit').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'),
         Status: $('#StatusCard').val(),
     };
     $.ajax({
@@ -141,7 +141,7 @@ function UnlockCard() {
     var empCardObj = {
         CardID: $('#IdCardUnLock').val(),
         CardNumber: $('#CardNumberUnLock').val(),
-        Date: $('#DateCardUnLock').val(),
+        Date: moment($('#DateCardUnLock').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'),
         Status: 0,
     };
     $.ajax({
@@ -167,7 +167,7 @@ function LockCard() {
     var empCardObj = {
         CardID: $('#IdCardLock').val(),
         CardNumber: $('#CardNumberLock').val(),
-        Date: $('#DateCardLock').val(),
+        Date: moment($('#DateCardLock').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'),
         Status: 3,
     };
     $.ajax({
@@ -234,7 +234,7 @@ function getCardByID(CardID) {
                     $('#IdCardEdit').val(result.CardID);
                     $('#CardNumberEdit').val(result.CardNumber);
                     $('#DateCardEdit').val(result.date);
-                    $('#DateCardEdit').val(result.date);
+                    $('#StatusCard').val(result.StatusNumber);
                     $('#myModalUpdate').modal('show');
                     $('#btnUpdateCard').show();
                     break;
@@ -242,6 +242,7 @@ function getCardByID(CardID) {
                     $('#IdCardEdit').val(result.CardID);
                     $('#CardNumberEdit').val(result.CardNumber);
                     $('#DateCardEdit').val(result.date);
+                    $('#StatusCard').val(result.StatusNumber);
                     $('#myModalUpdate').modal('show');
                     $('#btnUpdateCard').show();
                     break;
