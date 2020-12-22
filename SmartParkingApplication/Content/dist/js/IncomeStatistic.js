@@ -13,11 +13,6 @@ function loadChartIncome() {
     if (!idTypeOfTicket) {
         idTypeOfTicket = 0;
     }
-    if ($('#cbTypeOfTicket').val() == 0) {
-        $('#dvParking').hide();
-    } else {
-        $('#dvParking').show();
-    }
     $.ajax({
         url: "/StatisticReport/LoadDataIncome",
         type: "POST",
@@ -60,7 +55,7 @@ function ChartIncome(result) {
                 enableMouseTracking: true
             },
             series: {
-                pointStart: Date.UTC(2020, 1, 1),
+                pointStart: Date.UTC(2020, 1),
                 pointInterval: 2635000000  // one month
             }
         },

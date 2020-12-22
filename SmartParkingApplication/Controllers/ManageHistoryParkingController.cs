@@ -35,10 +35,10 @@ namespace SmartParkingApplication.Controllers
                 switch (item.TypeOfTicket)
                 {
                     case 0:
-                        typeofTicket = "Vé Lượt";
+                        typeofTicket = "Vé Tháng";
                         break;
                     case 1:
-                        typeofTicket = "Vé Tháng";
+                        typeofTicket = "Vé Lượt";
                         break;
                 }
                 switch (item.TypeOfVerhicleTran)
