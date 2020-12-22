@@ -283,7 +283,7 @@ namespace SmartParkingApplication.Controllers
                 {
                     timeEnd = timeEnd.AddDays(i);
                 }
-                Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
+                Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot, ParkingPlaceID = schedule.ParkingPlaceID };
                 //check schedule exist or not
                 if (IsCreatedSchedule(newSchedule) == 0)
                 {
@@ -323,7 +323,7 @@ namespace SmartParkingApplication.Controllers
                 {
                     timeEnd = timeEnd.AddDays(i);
                 }
-                Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot };
+                Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot , ParkingPlaceID = schedule.ParkingPlaceID};
                 //check Schedule exist or not
                 if (IsCreatedSchedule(newSchedule) != 0)
                 {
@@ -347,7 +347,7 @@ namespace SmartParkingApplication.Controllers
         {
             int temp = 0;
             var result = (from s in db.Schedules
-                         where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0
+                         where DateTime.Compare((DateTime)s.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.TimeEnd, (DateTime)schedule.TimeEnd) == 0 && s.ParkingPlaceID == schedule.ParkingPlaceID
                          select new { s.ScheduleID }).FirstOrDefault();
             if(result != null)
             {

@@ -90,13 +90,15 @@ function CreateWorkingCalendar() {
         var scheObj = {
             TimeStart: $('#DateApply').val(),
             TimeEnd: $('#DateApply').val(),
-            Slot: $('#cbWorkShiftEmp').val()
+            Slot: $('#cbWorkShiftEmp').val(),
+            ParkingPlaceID: $('#cbparkingPlaceEmp').val()
         }
     } else {
         var scheObj = {
             TimeStart: $('#DateStart').val(),
             TimeEnd: $('#DateEnd').val(),
-            Slot: $('#cbWorkShiftEmp').val()
+            Slot: $('#cbWorkShiftEmp').val(),
+            ParkingPlaceID: $('#cbparkingPlaceEmp').val()
         }
     }
     $.ajax({
@@ -124,13 +126,15 @@ function EditWorkingCalendar() {
         var scheObj = {
             TimeStart: $('#DateApplyEdit').val(),
             TimeEnd: $('#DateApplyEdit').val(),
-            Slot: $('#cbWorkShiftEmpEdit').val()
+            Slot: $('#cbWorkShiftEmpEdit').val(),
+            ParkingPlaceID: $('#cbparkingPlaceEmpEdit').val()
         }
     } else {
         var scheObj = {
             TimeStart: $('#DateStartEdit').val(),
             TimeEnd: $('#DateEndEdit').val(),
-            Slot: $('#cbWorkShiftEmpEdit').val()
+            Slot: $('#cbWorkShiftEmpEdit').val(),
+            ParkingPlaceID: $('#cbparkingPlaceEmpEdit').val()
         }
     }
     $.ajax({

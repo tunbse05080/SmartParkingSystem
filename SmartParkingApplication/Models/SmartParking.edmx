@@ -107,7 +107,7 @@
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Schedule">
           <Key>
@@ -117,6 +117,7 @@
           <Property Name="TimeStart" Type="datetime" />
           <Property Name="TimeEnd" Type="datetime" />
           <Property Name="Slot" Type="int" />
+          <Property Name="ParkingPlaceID" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -213,6 +214,18 @@
             </Principal>
             <Dependent Role="MonthlyTicket">
               <PropertyRef Name="CardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Schedule__Parkin__03F0984C">
+          <End Role="ParkingPlace" Type="Self.ParkingPlace" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ParkingPlaceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -392,6 +405,10 @@
             <End Role="Card" EntitySet="Card" />
             <End Role="MonthlyTicket" EntitySet="MonthlyTicket" />
           </AssociationSet>
+          <AssociationSet Name="FK__Schedule__Parkin__03F0984C" Association="Self.FK__Schedule__Parkin__03F0984C">
+            <End Role="ParkingPlace" EntitySet="ParkingPlace" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
           <AssociationSet Name="FK__Transacti__CardI__534D60F1" Association="Self.FK__Transacti__CardI__534D60F1">
             <End Role="Card" EntitySet="Card" />
             <End Role="Transaction" EntitySet="Transaction" />
@@ -530,6 +547,7 @@
           <NavigationProperty Name="Users" Relationship="Self.FK__User__ParkingPla__5535A963" FromRole="ParkingPlace" ToRole="User" />
           <NavigationProperty Name="Prices" Relationship="Self.FK_Price_ParkingPlace" FromRole="ParkingPlace" ToRole="Price" />
           <NavigationProperty Name="MonthlyTickets" Relationship="SmartParkingsModel.FK_MonthlyTicket_ParkingPlace" FromRole="ParkingPlace" ToRole="MonthlyTicket" />
+          <NavigationProperty Name="Schedules" Relationship="SmartParkingsModel.FK__Schedule__Parkin__03F0984C" FromRole="ParkingPlace" ToRole="Schedule" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
@@ -551,7 +569,7 @@
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Accounts" Relationship="SmartParkingsModel.FK__Account__RoleID__7B5B524B" FromRole="Role" ToRole="Account" />
         </EntityType>
         <EntityType Name="Schedule">
@@ -559,10 +577,12 @@
             <PropertyRef Name="ScheduleID" />
           </Key>
           <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TimeStart" Type="DateTime" />
+          <Property Name="TimeStart" Type="DateTime" Precision="3" />
           <Property Name="Slot" Type="Int32" />
           <NavigationProperty Name="UserSchedules" Relationship="Self.FK__UserSched__Sched__571DF1D5" FromRole="Schedule" ToRole="UserSchedule" />
           <Property Name="TimeEnd" Type="DateTime" Precision="3" />
+          <Property Name="ParkingPlaceID" Type="Int32" />
+          <NavigationProperty Name="ParkingPlace" Relationship="SmartParkingsModel.FK__Schedule__Parkin__03F0984C" FromRole="Schedule" ToRole="ParkingPlace" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -846,6 +866,10 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK__Schedule__Parkin__03F0984C" Association="SmartParkingsModel.FK__Schedule__Parkin__03F0984C">
+            <End Role="ParkingPlace" EntitySet="ParkingPlaces" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_MonthlyTicket_ParkingPlace">
           <End Type="SmartParkingsModel.ParkingPlace" Role="ParkingPlace" Multiplicity="0..1" />
@@ -892,6 +916,18 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Schedule__Parkin__03F0984C">
+          <End Type="SmartParkingsModel.ParkingPlace" Role="ParkingPlace" Multiplicity="0..1" />
+          <End Type="SmartParkingsModel.Schedule" Role="Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingPlace">
+              <PropertyRef Name="ParkingPlaceID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ParkingPlaceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1007,6 +1043,7 @@
           <EntitySetMapping Name="Schedules">
             <EntityTypeMapping TypeName="SmartParkingsModel.Schedule">
               <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="ParkingPlaceID" ColumnName="ParkingPlaceID" />
                 <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
                 <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />

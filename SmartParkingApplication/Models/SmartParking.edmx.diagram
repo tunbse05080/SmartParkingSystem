@@ -35,6 +35,7 @@
         <EntityTypeShape EntityType="SmartParkingsModel.Account" Width="1.5" PointX="9" PointY="18.5" />
         <AssociationConnector Association="SmartParkingsModel.FK__Account__RoleID__7B5B524B" />
         <AssociationConnector Association="SmartParkingsModel.FK_User_Account" />
+        <AssociationConnector Association="SmartParkingsModel.FK__Schedule__Parkin__03F0984C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
