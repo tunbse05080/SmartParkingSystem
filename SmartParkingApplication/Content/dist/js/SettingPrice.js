@@ -337,6 +337,9 @@ function validateDailyPrice() {
     $.validator.addMethod('checkDailyPrice', function (value, element) {
         return currency.test(value);
     });
+    $.validator.addMethod('checkDailyApplyTime', function (value, element) {
+        return new Date(value) >= new Date();
+    });
     //Set rule + message for input by name
     $('#FormDailyPrice').validate({
         rules: {
@@ -345,7 +348,8 @@ function validateDailyPrice() {
                 checkDailyPrice: true
             },
             TimeOfApplyDailyTK: {
-                required: true
+                required: true,
+                checkDailyApplyTime: true
             }
         },
         messages: {
@@ -354,7 +358,8 @@ function validateDailyPrice() {
                 checkDailyPrice: 'Giá phải là số!'
             },
             TimeOfApplyDailyTK: {
-                required: '*Bắt buộc.'
+                required: '*Bắt buộc.',
+                checkDailyApplyTime: 'Phải lớn hơn ngày hiện tại!'
             }
         }
     });
@@ -385,6 +390,9 @@ function validateMonthlyPrice() {
     $.validator.addMethod('checkMonthlyPrice', function (value, element) {
         return currency.test(value);
     });
+    $.validator.addMethod('checkMonthlyApplyTime', function (value, element) {
+        return new Date(value) >= new Date();
+    });
     //Set rule + message for input by name
     $('#FormMonthlyPrice').validate({
         rules: {
@@ -393,7 +401,8 @@ function validateMonthlyPrice() {
                 checkMonthlyPrice: true
             },
             TimeOfApplyMonthlyTK: {
-                required: true
+                required: true,
+                checkMonthlyApplyTime: true
             }
         },
         messages: {
@@ -402,7 +411,8 @@ function validateMonthlyPrice() {
                 checkMonthlyPrice: 'Giá phải là số!'
             },
             TimeOfApplyMonthlyTK: {
-                required: '*Bắt buộc.'
+                required: '*Bắt buộc.',
+                checkMonthlyApplyTime: 'Phải lớn hơn ngày hiện tại!'
             }
         }
     });
@@ -436,6 +446,9 @@ function validateBlockPrice() {
     $.validator.addMethod('checkBlockTime', function (value, element) {
         return currency.test(value) && value > 0;
     });
+    $.validator.addMethod('checkBlockApplyTime', function (value, element) {
+        return new Date(value) >= new Date();
+    });
     //Set rule + message for input by name
     $('#FormBlockPrice').validate({
         rules: {
@@ -456,7 +469,8 @@ function validateBlockPrice() {
                 checkBlockTime: true
             },
             TimeOfApplyBlockTK: {
-                required: true
+                required: true,
+                checkBlockApplyTime: true
             }
         },
         messages: {
@@ -477,7 +491,8 @@ function validateBlockPrice() {
                 checkBlockTime: 'Thời gian là số lớn hơn 0!'
             },
             TimeOfApplyBlockTK: {
-                required: '*Bắt buộc.'
+                required: '*Bắt buộc.',
+                checkBlockApplyTime: 'Phải lớn hơn ngày hiện tại!'
             }
         }
     });
