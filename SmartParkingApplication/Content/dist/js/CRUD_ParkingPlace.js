@@ -18,8 +18,8 @@ function loadDataParkingPlace() {
                 html += '<td>' + item.NameOfParking + '</td>';
                 html += '<td>' + item.Location + '</td>';
                 html += '<td>' + item.NumberOfCar + '</td>';
-                html += '<td>' + item.NumberOfMotoBike + '</td>';
                 html += '<td>' + item.NumberCarBlank + '</td>';
+                html += '<td>' + item.NumberOfMotoBike + '</td>';
                 html += '<td>' + item.NumberMotoBikeBlank + '</td>';
                 html += '<td>' + item.StatusOfParkingPlace+ '</td>';
                 
