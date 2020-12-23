@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "HistoryParking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Lịch sử bãi đỗ</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Lịch sử bãi đỗ</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row" style="margin-bottom:20px">
+                                <strong style="font-size:x-large">Bãi đỗ:</strong>
+                                <div class="col-md-2">
+                                    <select class="form-control" id="cbNameParkingPlaceHistory">
+                                    </select>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <form id="FormHistory" class="row">
+                                    <div class="col-sm-1">
+                                        <a>Từ ngày: </a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input style="margin-top:-5px" class="w-75 form-control" type="datetime-local" id="TimeFromHis" name="TimeFromHis" @*onchange="loadDataHistoryParking()"*@ />
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a>Đến ngày: </a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input style="margin-top:-5px" class="w-75 form-control" type="datetime-local" id="TimeToHis" name="TimeToHis" @*onchange="loadDataHistoryParking()"*@ />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input style="margin-top:-5px" type="text" class="form-control" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button style="margin-top:-5px" class="btn btn-success" onclick="validateHistoryPP();loadDataHistoryParking();" id="btnSearchHistoryPP">Search</button>
+                                    </div>
+                                </form>
+                            </div><br /><br />
+                            <!-- table info price day and block -->
+                            <div class="row invoice-info">
+                                <table id="tbHistory" class="table table-avatar">
+                                    <thead>
+                                        <tr class="bg-green">
+                                            <th>Biển số xe</th>
+                                            <th>Thời gian vào</th>
+                                            <th>Thời gian ra</th>
+                                            <th>Số thẻ</th>
+                                            <th>Loại vé</th>
+                                            <th>Phí gửi(vnđ)</th>
+                                            <th>NV cổng vào</th>
+                                            <th>NV cổng ra</th>
+                                            @*<th>Thao tác</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyHis">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

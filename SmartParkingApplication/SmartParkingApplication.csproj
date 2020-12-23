@@ -2097,7 +2097,6 @@
     <Compile Include="Controllers\LoginUsController.cs" />
     <Compile Include="Controllers\ManageAccountController.cs" />
     <Compile Include="Controllers\ManageCardController.cs" />
-    <Compile Include="Controllers\ManageHistoryParkingController.cs" />
     <Compile Include="Controllers\ManagePPlaceController.cs" />
     <Compile Include="Controllers\StatisticReportController.cs" />
     <Compile Include="Controllers\ManageTicketController.cs" />
@@ -2192,7 +2191,6 @@
     <Content Include="Views\StatisticReport\IncomeStatistic.cshtml" />
     <Content Include="Views\StatisticReport\DensityStatistic.cshtml" />
     <Content Include="Views\SettingPrice\Index.cshtml" />
-    <Content Include="Views\ManageHistoryParking\Index.cshtml" />
     <Content Include="Views\ManageAccount\Index.cshtml" />
     <Content Include="Views\LoginUs\Forgot.cshtml" />
     <Content Include="Views\LoginUs\Index.cshtml" />
@@ -2201,6 +2199,7 @@
     <Content Include="Views\StatisticReport\IncomeReport.cshtml" />
     <Content Include="Views\Setting\SVDetails.cshtml" />
     <Content Include="Views\Setting\Edit.cshtml" />
+    <Content Include="Views\ManagePPlace\HistoryParking.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

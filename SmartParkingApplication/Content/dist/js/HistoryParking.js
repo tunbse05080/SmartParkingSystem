@@ -18,17 +18,19 @@ function loadDataHistoryParking() {
     }
     var timeTo = $('#TimeToHis').val();
     var timeFrom = $('#TimeFromHis').val();
-    var ParkingPlaceID = $('#cbNameParkingPlaceD').val();
+    var ParkingPlaceID = $('#cbNameParkingPlaceHistory').val();
+    var txtSearch = $('#txtSearchHistoryPP').val();
     if (ParkingPlaceID) {
         $('#tbHistory').DataTable().clear().destroy();
     } else {
         ParkingPlaceID = 1;
     }
     $.ajax({
-        url: "/ManageHistoryParking/LoadHistoryParking",
+        url: "/ManagePPlace/LoadHistoryParking",
         type: "POST",
-        contentType: "application/json;charset=utf-8",
-        data: JSON.stringify({ timeFrom: timeFrom, timeTo: timeTo, ParkingPlaceID: ParkingPlaceID }),
+        contentType: "application/json",
+        data: JSON.stringify({ timeFrom: timeFrom, timeTo: timeTo, ParkingPlaceID: ParkingPlaceID, txtSearchHistory: txtSearch }),
+
         dataType: "json",
         success: function (result) {
             var html = '';
