@@ -335,6 +335,8 @@ function clearTextBox() {
 
 //Valdidation using jquery
 function validateUserEdit() {
+    var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
+    var idcard = new RegExp('^[0-9]{9,}$');
     //Díplay css of error message
     var htmlcss = {
         'color': 'Red'
@@ -428,8 +430,8 @@ function validateUserEdit() {
 }
 
 function validateUserAdd() {
-    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\\b)');
-    var idcard = new RegExp('[0-9]{9,}');
+    var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
+    var idcard = new RegExp('^[0-9]{9,}$');
     //Display css of error message
     var htmlcss = {
         'color': 'Red'
