@@ -39,24 +39,26 @@
                                 </div>
                             </div><br />
                             <div class="row">
-                                <div class="col-sm-1">
-                                    <a>Từ ngày: </a>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input style="margin-top:-5px" class="w-75" type="datetime-local" id="TimeFromHis" @*onchange="loadDataHistoryParking()"*@ />
-                                </div>
-                                <div class="col-sm-1">
-                                    <a>Đến ngày: </a>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input style="margin-top:-5px" class="w-75" type="datetime-local" id="TimeToHis" @*onchange="loadDataHistoryParking()"*@ />
-                                </div>
-                                <div class="col-sm-2">
-                                    <input style="margin-top:-5px" type="text" class="form-control" id="txtSearchHistoryPP" placeholder="Nhập biển số" />
-                                </div>
-                                <div class="col-sm-2">
-                                    <button style="margin-top:-5px" class="btn btn-success" id="btnSearchHistoryPP">Search</button>
-                                </div>
+                                <form id="FormHistory" class="row">
+                                    <div class="col-sm-1">
+                                        <a>Từ ngày: </a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input style="margin-top:-5px" class="w-75 form-control" type="datetime-local" id="TimeFromHis" name="TimeFromHis" @*onchange="loadDataHistoryParking()"*@ />
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a>Đến ngày: </a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input style="margin-top:-5px" class="w-75 form-control" type="datetime-local" id="TimeToHis" name="TimeToHis" @*onchange="loadDataHistoryParking()"*@ />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input style="margin-top:-5px" type="text" class="form-control" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button style="margin-top:-5px" class="btn btn-success" onclick="validateHistoryPP()" id="btnSearchHistoryPP">Search</button>
+                                    </div>
+                                </form>
                             </div>
                             <!-- table info price day and block -->
                             <div class="row invoice-info">
