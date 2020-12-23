@@ -60,7 +60,7 @@
                         <div class="modal fade" id="myModalCreateWorkingCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
-                                    @*<form id="FormAddWC">*@
+                                    <form id="FormAddWC">
                                         <div class="modal-header">
                                             <h4 class="modal-title" id="myModalLabel">Tạo lịch làm việc</h4>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -81,7 +81,7 @@
                                                 <input type="text" class="form-control" id="FullNameEmp" placeholder="Tên đầy đủ" disabled />
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" id="checkboxDate" onclick="checkboxDate(1)" />
+                                                <input type="checkbox" id="checkboxDate" onclick="checkedDate(1)" />
                                                 <label for="checkboxDate"> Chọn nhiều ngày</label>
                                             </div>
                                             <div class="form-group" id="dvDateApply">
@@ -109,7 +109,7 @@
                                             <button type="button" class="btn btn-primary" id="btnCreateWC" onclick="return CreateWorkingCalendar();">Tạo</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
-                                    @*</form>*@
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                         <div class="modal fade" id="myModalEditWorkingCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
-                                    @*<form id="FormEditWC">*@
+                                    <form id="FormEditWC">
                                         <div class="modal-header">
                                             <h4 class="modal-title" id="myModalLabel">Sửa lịch làm việc</h4>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -139,7 +139,7 @@
                                                 <input type="text" class="form-control" id="FullNameEmpEdit" placeholder="Tên đầy đủ" disabled />
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" id="checkboxDateEdit" onclick="checkboxDate(2)" />
+                                                <input type="checkbox" id="checkboxDateEdit" onclick="checkedDate(2)" />
                                                 <label for="checkboxDateEdit"> Chọn nhiều ngày</label>
                                             </div>
                                             <div class="form-group" id="dvDateApplyEdit">
@@ -167,7 +167,7 @@
                                             <button type="button" class="btn btn-primary" id="btnUpdateWC" onclick="return EditWorkingCalendar();">Sửa</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
-                                    @*</form>*@
+                                    </form>
                                 </div>
                             </div>
                         </div>

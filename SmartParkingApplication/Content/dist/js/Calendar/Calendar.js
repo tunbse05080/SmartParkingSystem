@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     LoadDataCalendar();
-    checkboxDate(1);
-    checkboxDate(2);
+    checkedDate(1);
+    checkedDate(2);
 });
 
 function getFormatDatetime(date) {
@@ -84,6 +84,10 @@ function initCalendar(evenArr) {
 
 //create working calendar
 function CreateWorkingCalendar() {
+    var res = validateCreateCal();
+    if (res == false) {
+        return false;
+    }
     var UserID = $('#cbUserNameEmp').val();
     var checkboxDate = document.getElementById("checkboxDate");
     if (checkboxDate.checked == false) {
@@ -120,6 +124,10 @@ function CreateWorkingCalendar() {
 
 //edit working calendar
 function EditWorkingCalendar() {
+    var res = validateEditCal();
+    if (res == false) {
+        return false;
+    }
     var UserID = $('#cbUserNameEmpEdit').val();
     var checkboxDate = document.getElementById("checkboxDateEdit");
     if (checkboxDate.checked == false) {
@@ -153,10 +161,9 @@ function EditWorkingCalendar() {
     });
 }
 //checkbox show to 
-function checkboxDate(check) {
+function checkedDate(check) {
     if (check == 1) {
-        var checkBox = document.getElementById("checkboxDate");
-        if (checkBox.checked == true) {
+        if ($('#checkboxDate').is(':checked')) {
             $('#dvDateApply').hide();
             $('#dvDateStart').show();
             $('#dvDateEnd').show();
@@ -168,8 +175,7 @@ function checkboxDate(check) {
             $('myModalCreateWorkingCalendar').modal('Show');
         }
     } else {
-        var checkBox = document.getElementById("checkboxDateEdit");
-        if (checkBox.checked == true) {
+        if ($('#checkboxDateEdit').is(':checked')) {
             $('#dvDateApplyEdit').hide();
             $('#dvDateStartEdit').show();
             $('#dvDateEndEdit').show();
@@ -254,6 +260,8 @@ function ComboboxUserName(check) {
 }
 
 function clearBox(check) {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     if (check == 1) {
         $('#cbUserNameEmp').val("");
         $('#FullNameEmp').val("");
@@ -431,3 +439,142 @@ function clearBox(check) {
     //    // Remove event from text input
     //    $('#new-event').val('')
     //})
+
+//validate using jquery
+function validateCreateCal() {
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkDateApp', function (value, element) {
+        return new Date(value) > new Date();
+    });
+    $.validator.addMethod('checkDateStart', function (value, element) {
+        return new Date(value) > new Date() && new Date(value) < new Date($('#DateEnd').val());
+    });
+    $.validator.addMethod('checkDateEnd', function (value, element) {
+        return new Date(value) > new Date() && new Date(value) > new Date($('#DateStart').val());
+    });
+    //Set rule + message for input by name
+    $('#FormAddWC').validate({
+        rules: {
+            cbUserNameEmp: {
+                required: true
+            },
+            DateApply: {
+                required: true,
+                checkDateApp: true
+            },
+            DateStart: {
+                required: true,
+                checkDateStart: true
+            },
+            DateEnd: {
+                required: true,
+                checkDateEnd: true
+            }
+        },
+        messages: {
+            cbUserNameEmp: {
+                required: '*Bắt buộc.'
+            },
+            DateApply: {
+                required: '*Bắt buộc.',
+                checkDateApp: 'Lịch phải lớn hơn hiện tại!'
+            },
+            DateStart: {
+                required: '*Bắt buộc.',
+                checkDateStart: 'Phải lớn hơn hiện tại và nhỏ hơn thời gian kết thúc!'
+            },
+            DateEnd: {
+                required: '*Bắt buộc.',
+                checkDateEnd: 'Phải lớn hơn hiện tại và lớn hơn thời gian bắt đầu!'
+            }
+        }
+    });
+    return $('#FormAddWC').valid();
+}
+
+function validateEditCal() {
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkDateAppE', function (value, element) {
+        return new Date(value) > new Date();
+    });
+    $.validator.addMethod('checkDateStartE', function (value, element) {
+        return new Date(value) > new Date() && new Date(value) < new Date($('#DateEndEdit').val());
+    });
+    $.validator.addMethod('checkDateEndE', function (value, element) {
+        return new Date(value) > new Date() && new Date(value) > new Date($('#DateStartEdit').val());
+    });
+    //Set rule + message for input by name
+    $('#FormEditWC').validate({
+        rules: {
+            cbUserNameEmpEdit: {
+                required: true
+            },
+            DateApplyEdit: {
+                required: true,
+                checkDateAppE: true
+            },
+            DateStartEdit: {
+                required: true,
+                checkDateStartE: true
+            },
+            DateEndEdit: {
+                required: true,
+                checkDateEndE: true
+            }
+        },
+        messages: {
+            cbUserNameEmpEdit: {
+                required: '*Bắt buộc.'
+            },
+            DateApplyEdit: {
+                required: '*Bắt buộc.',
+                checkDateAppE: 'Lịch phải lớn hơn hiện tại!'
+            },
+            DateStartEdit: {
+                required: '*Bắt buộc.',
+                checkDateStartE: 'Phải lớn hơn hiện tại và nhỏ hơn thời gian kết thúc!'
+            },
+            DateEndEdit: {
+                required: '*Bắt buộc.',
+                checkDateEndE: 'Phải lớn hơn hiện tại và lớn hơn thời gian bắt đầu!'
+            }
+        }
+    });
+    return $('#FormEditWC').valid();
+}
