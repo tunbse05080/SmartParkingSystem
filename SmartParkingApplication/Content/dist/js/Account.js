@@ -131,9 +131,10 @@ function UpdateRole() {
 //Reset password for account base on AccountID
 function UpdatePassword() {
     var AccountID = $('#AccountIDPasEdit').val();
+    var Password = $('#AccountPasEdit').val();
     $.ajax({
         url: "/ManageAccount/CheckAccToResetPass",
-        data: JSON.stringify({ AccountID: AccountID }),
+        data: JSON.stringify({ AccountID: AccountID, Password: Password }),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",

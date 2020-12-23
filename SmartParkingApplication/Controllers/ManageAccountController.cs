@@ -81,10 +81,10 @@ namespace SmartParkingApplication.Controllers
         }
 
         //find account to reset password
-        public JsonResult CheckAccToResetPass(int AccountID)
+        public JsonResult CheckAccToResetPass(int AccountID, string Password)
         {
             Account account = db.Accounts.Find(AccountID);
-            account.PassWord = "123456";
+            account.PassWord = Password;
             Update(account);
             return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
         }
