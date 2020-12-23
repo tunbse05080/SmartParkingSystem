@@ -60,54 +60,56 @@
                         <div class="modal fade" id="myModalCreateWorkingCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Tạo lịch làm việc</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="cbparkingPlaceEmp">Bãi làm việc</label>
-                                            <select class="form-control" id="cbparkingPlaceEmp" onchange="ComboboxUserName(1)">
-                                            </select>
+                                    @*<form id="FormAddWC">*@
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Tạo lịch làm việc</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="cbUserName">Tên tài khoản</label><br />
-                                            <select class="form-control" id="cbUserNameEmp" onchange="getNameStaff(1)" style="width:516px">
-                                            </select>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="cbparkingPlaceEmp">Bãi làm việc</label>
+                                                <select class="form-control" id="cbparkingPlaceEmp" onchange="ComboboxUserName(1)">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cbUserName">Tên tài khoản</label><br />
+                                                <select class="form-control" id="cbUserNameEmp" name="cbUserNameEmp" onchange="getNameStaff(1)" style="width:516px">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="FullName">Tên đầy đủ</label>
+                                                <input type="text" class="form-control" id="FullNameEmp" placeholder="Tên đầy đủ" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="checkbox" id="checkboxDate" onclick="checkboxDate(1)" />
+                                                <label for="checkboxDate"> Chọn nhiều ngày</label>
+                                            </div>
+                                            <div class="form-group" id="dvDateApply">
+                                                <label for="DateApply">Thời gian</label>
+                                                <input type="date" class="form-control" id="DateApply" name="DateApply" placeholder="Thời gian" />
+                                            </div>
+                                            <div class="form-group" id="dvDateStart">
+                                                <label for="DateStart">Thời gian bắt đầu</label>
+                                                <input type="date" class="form-control" id="DateStart" name="DateStart" placeholder="Thời gian bắt đầu" />
+                                            </div>
+                                            <div class="form-group" id="dvDateEnd">
+                                                <label for="DateEnd">Thời gian kết thúc</label>
+                                                <input type="date" class="form-control" id="DateEnd" name="DateEnd" placeholder="Thời gian kết thúc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cbWorkShiftEmp">Ca làm việc</label>
+                                                <select class="form-control" id="cbWorkShiftEmp">
+                                                    <option value="1">Ca 1 (6h - 14h)</option>
+                                                    <option value="2">Ca 2 (14h - 22h)</option>
+                                                    <option value="3">Ca 3 (22h - 6h)</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="FullName">Tên đầy đủ</label>
-                                            <input type="text" class="form-control" id="FullNameEmp" placeholder="Tên đầy đủ" disabled />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="btnCreateWC" onclick="return CreateWorkingCalendar();">Tạo</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="checkbox" id="checkboxDate" onclick="checkboxDate(1)"/>
-                                            <label for="checkboxDate"> Chọn nhiều ngày</label>
-                                        </div>
-                                        <div class="form-group" id="dvDateApply">
-                                            <label for="DateApply">Thời gian</label>
-                                            <input type="date" class="form-control" id="DateApply" placeholder="Thời gian" />
-                                        </div>
-                                        <div class="form-group" id="dvDateStart">
-                                            <label for="DateStart">Thời gian bắt đầu</label>
-                                            <input type="date" class="form-control" id="DateStart" placeholder="Thời gian bắt đầu" />
-                                        </div>
-                                        <div class="form-group" id="dvDateEnd">
-                                            <label for="DateEnd">Thời gian kết thúc</label>
-                                            <input type="date" class="form-control" id="DateEnd" placeholder="Thời gian kết thúc" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cbWorkShiftEmp">Ca làm việc</label>
-                                            <select class="form-control" id="cbWorkShiftEmp">
-                                                <option value="1">Ca 1 (6h - 14h)</option>
-                                                <option value="2">Ca 2 (14h - 22h)</option>
-                                                <option value="3">Ca 3 (22h - 6h)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="btnCreateWC" onclick="return CreateWorkingCalendar();">Tạo</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return CloseCreateWC()">Close</button>
-                                    </div>
+                                    @*</form>*@
                                 </div>
                             </div>
                         </div>
@@ -116,54 +118,56 @@
                         <div class="modal fade" id="myModalEditWorkingCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Sửa lịch làm việc</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="cbparkingPlaceEmp">Bãi làm việc</label>
-                                            <select class="form-control" id="cbparkingPlaceEmpEdit" onchange="ComboboxUserName(2)">
-                                            </select>
+                                    @*<form id="FormEditWC">*@
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Sửa lịch làm việc</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="cbUserName">Tên tài khoản</label><br />
-                                            <select class="form-control" id="cbUserNameEmpEdit" onchange="getNameStaff(2)" style="width:516px">
-                                            </select>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="cbparkingPlaceEmp">Bãi làm việc</label>
+                                                <select class="form-control" id="cbparkingPlaceEmpEdit" onchange="ComboboxUserName(2)">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cbUserName">Tên tài khoản</label><br />
+                                                <select class="form-control" id="cbUserNameEmpEdit" name="cbUserNameEmpEdit" onchange="getNameStaff(2)" style="width:516px">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="FullName">Tên đầy đủ</label>
+                                                <input type="text" class="form-control" id="FullNameEmpEdit" placeholder="Tên đầy đủ" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="checkbox" id="checkboxDateEdit" onclick="checkboxDate(2)" />
+                                                <label for="checkboxDateEdit"> Chọn nhiều ngày</label>
+                                            </div>
+                                            <div class="form-group" id="dvDateApplyEdit">
+                                                <label for="DateApply">Thời gian</label>
+                                                <input type="date" class="form-control" id="DateApplyEdit" name="DateApplyEdit" placeholder="Thời gian" />
+                                            </div>
+                                            <div class="form-group" id="dvDateStartEdit">
+                                                <label for="DateStart">Thời gian bắt đầu</label>
+                                                <input type="date" class="form-control" id="DateStartEdit" name="DateStartEdit" placeholder="Thời gian bắt đầu" />
+                                            </div>
+                                            <div class="form-group" id="dvDateEndEdit">
+                                                <label for="DateEnd">Thời gian kết thúc</label>
+                                                <input type="date" class="form-control" id="DateEndEdit" name="DateEndEdit" placeholder="Thời gian kết thúc" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cbWorkShiftEmpEdit">Ca làm việc</label>
+                                                <select class="form-control" id="cbWorkShiftEmpEdit">
+                                                    <option value="1">Ca 1 (6h - 14h)</option>
+                                                    <option value="2">Ca 2 (14h - 22h)</option>
+                                                    <option value="3">Ca 3 (22h - 6h)</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="FullName">Tên đầy đủ</label>
-                                            <input type="text" class="form-control" id="FullNameEmpEdit" placeholder="Tên đầy đủ" disabled />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="btnUpdateWC" onclick="return EditWorkingCalendar();">Sửa</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="checkbox" id="checkboxDateEdit" onclick="checkboxDate(2)" />
-                                            <label for="checkboxDateEdit"> Chọn nhiều ngày</label>
-                                        </div>
-                                        <div class="form-group" id="dvDateApplyEdit">
-                                            <label for="DateApply">Thời gian</label>
-                                            <input type="date" class="form-control" id="DateApplyEdit" placeholder="Thời gian" />
-                                        </div>
-                                        <div class="form-group" id="dvDateStartEdit">
-                                            <label for="DateStart">Thời gian bắt đầu</label>
-                                            <input type="date" class="form-control" id="DateStartEdit" placeholder="Thời gian bắt đầu" />
-                                        </div>
-                                        <div class="form-group" id="dvDateEndEdit">
-                                            <label for="DateEnd">Thời gian kết thúc</label>
-                                            <input type="date" class="form-control" id="DateEndEdit" placeholder="Thời gian kết thúc" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cbWorkShiftEmpEdit">Ca làm việc</label>
-                                            <select class="form-control" id="cbWorkShiftEmpEdit">
-                                                <option value="1">Ca 1 (6h - 14h)</option>
-                                                <option value="2">Ca 2 (14h - 22h)</option>
-                                                <option value="3">Ca 3 (22h - 6h)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="btnUpdateWC" onclick="return EditWorkingCalendar();">Sửa</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return CloseEditWC()">Close</button>
-                                    </div>
+                                    @*</form>*@
                                 </div>
                             </div>
                         </div>
