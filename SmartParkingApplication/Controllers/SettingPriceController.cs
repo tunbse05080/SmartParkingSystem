@@ -25,6 +25,7 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<Object>();
             var result = (from p in db.Prices
                           where p.ParkingPlaceID == ParkingPlaceID
+                          orderby p.TimeOfApply descending
                           select new { p.PriceID, p.TypeOfvehicle, p.DayPrice, p.FirstBlock, p.NextBlock , p.TimeOfApply }).ToList();
             foreach (var item in result)
             {
@@ -49,6 +50,7 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<Object>();
             var result = (from p in db.MothlyPrices
                           where p.ParkingPlaceID == ParkingPlaceID
+                          orderby p.TimeOfApplyMontlhyPrice descending
                           select new { p.MonthlyPriceID, p.TypeOfvehicle, p.MonthlyPrice,p.TimeOfApplyMontlhyPrice }).ToList();
             foreach (var item in result)
             {
