@@ -162,6 +162,7 @@ function EditWorkingCalendar() {
 }
 //checkbox show to 
 function checkedDate(check) {
+    clearBox();
     if (check == 1) {
         if ($('#checkboxDate').is(':checked')) {
             $('#dvDateApply').hide();
