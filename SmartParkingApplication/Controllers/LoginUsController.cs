@@ -15,6 +15,8 @@ namespace SmartParkingApplication.Controllers
         public ActionResult Index()
         {
             return View();
+
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -35,8 +37,8 @@ namespace SmartParkingApplication.Controllers
                 }
                 else
                 {
-                   
-                    return RedirectToAction("Index", "LoginUs");
+                    ViewBag.ErrorMessage = "Đăng nhập lỗi";
+                    return RedirectToAction("Index");
                      //ViewBag.ErrorMessage = "Đăng nhập lỗi";
                 }
             }
@@ -45,6 +47,7 @@ namespace SmartParkingApplication.Controllers
 
         public ActionResult Logout()
         {
+            Session.Clear();
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "LoginUS");
         }
