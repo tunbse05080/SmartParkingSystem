@@ -3,7 +3,6 @@ $(document).ready(function () {
     loadDataTicket();
     ComboboxTicket();
     clearETK();
-
 });
 
 var CardId;
@@ -285,6 +284,10 @@ function AddTicket() {
 
 //Update Extend ticket
 function UpdateExtendTK() {
+    var res = validateExtendTK();
+    if (res == false) {
+        return false;
+    }
     var empTicketObj = {
         MonthlyTicketID: $('#MonthlyTicketETK').val(),
         CusName: $('#CusNameETK').val(),
@@ -319,6 +322,10 @@ function UpdateExtendTK() {
 
 //Update Re Register ticket
 function UpdateReRegister() {
+    var res = validateReRegister();
+    if (res == false) {
+        return false;
+    }
     var empTicketObj = {
         MonthlyTicketID: $('#MonthlyTicketIDRe').val(),
         CusName: $('#CusNameRe').val(),
@@ -509,6 +516,7 @@ function getTicketByIDDropContract(MonthlyTicketID) {
 
 //get ticket by id to fill modal Extend Contract Ticket
 function getTicketByIDETK(MonthlyTicketID) {
+    clearETK();
     $.ajax({
         url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
         type: "GET",
@@ -540,6 +548,8 @@ function getTicketByIDETK(MonthlyTicketID) {
 
 //get ticket by id to fill modal Re Register Contract ticket
 function getTicketReRegister(MonthlyTicketID) {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     $.ajax({
         url: "/ManageTicket/TicketDetails/" + MonthlyTicketID,
         type: "GET",
@@ -628,6 +638,8 @@ function GetPriceMonthlyReRegisterTK() {
 
 //clear modal ExtendTK
 function clearETK() {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     $('#cbETK').val("");
     $('#RegisDateETK').val("");
     $('#ExpiryDateETk').val("");
@@ -658,9 +670,9 @@ function clearETK() {
 
 //Valdidation using jquery
 function validateAddTicket() {
-    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\\b)');
-    var idcard = new RegExp('[0-9]{9,}');
-    var plate = new RegExp('[0-9]{2}[A-Z]{1}[0-9]{5,6}');
+    var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
+    var idcard = new RegExp('^[0-9]{9,}$');
+    var plate = new RegExp('^[0-9]{2}[A-Z]{1}[0-9]{5,6}$');
     //Díplay css of error message
     var htmlcss = {
         'color': 'Red'
@@ -692,6 +704,9 @@ function validateAddTicket() {
     $.validator.addMethod('checkPlateT', function (value, element) {
         return plate.test(value);
     });
+    $.validator.addMethod('checkRegisDateTK', function (value, element) {
+        return new Date(value) > new Date();
+    });
     //Set rule for input by name
     $('#FormAddTicket').validate({
         rules: {
@@ -720,6 +735,10 @@ function validateAddTicket() {
             },
             cbCardNumberTK: {
                 required: true
+            },
+            RegisDateTK: {
+                required: true,
+                checkRegisDateTK: true
             }
         },
         messages: {
@@ -748,16 +767,96 @@ function validateAddTicket() {
             },
             cbCardNumberTK: {
                 required: '*Bắt buộc.'
+            },
+            RegisDateTK: {
+                required: '*Bắt buộc.',
+                checkRegisDateTK: 'Phải lớn hơn ngày hiện tại!'
             }
         }
     });
     return $('#FormAddTicket').valid();
 }
 
+function validateReRegister() {
+    //Díplay css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkReRegis', function (value, element) {
+        return new Date(value) > new Date();
+    });
+    //Set rule for input by name
+    $('#FormReRegis').validate({
+        rules: {
+            RegisDateRe: {
+                required: true,
+                checkReRegis: true
+            }
+        },
+        messages: {
+            RegisDateRe: {
+                required: '*Bắt buộc.',
+                checkReRegis: 'Ngày phải lớn hơn hiện tại!'
+            }
+        }
+    });
+    return $('#FormReRegis').valid();
+}
+
+function validateExtendTK() {
+    //Díplay css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set rule for input by name
+    $('#FormExTK').validate({
+        rules: {
+            cbETK: {
+                required: true
+            }
+        },
+        messages: {
+            cbETK: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormExTK').valid();
+}
+
 function validateEditTicket() {
-    var phone = new RegExp('((09|03|07|08|05)+([0-9]{8})\\b)');
-    var idcard = new RegExp('[0-9]{9,}');
-    var plate = new RegExp('[0-9]{2}[A-Z]{1}[0-9]{5,6}');
+    var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
+    var idcard = new RegExp('^[0-9]{9,}$');
+    var plate = new RegExp('^[0-9]{2}[A-Z]{1}[0-9]{5,6}$');
     //Díplay css of error message
     var htmlcss = {
         'color': 'Red'
