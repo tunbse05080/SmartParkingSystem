@@ -673,7 +673,7 @@ function ComboboxParkingPlace() {
 
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            //alert(errormessage.responseText);
         }
     });
 }
