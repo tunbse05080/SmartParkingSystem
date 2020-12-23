@@ -35,8 +35,9 @@ namespace SmartParkingApplication.Controllers
                 }
                 else
                 {
-                   ModelState.AddModelError ("","Đăng nhập lỗi ");
-                   return RedirectToAction("Index", "LoginUs");
+                   
+                    return RedirectToAction("Index", "LoginUs");
+                     //ViewBag.ErrorMessage = "Đăng nhập lỗi";
                 }
             }
             return View();

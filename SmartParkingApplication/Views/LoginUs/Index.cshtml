@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="~/Content//dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page" style="background-image: url('/Content/dist/img/bãi-đậu-xe-2-2.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover;">
-
+    
     <div class="login-box">
         <div class="login-logo">
             <a class="h2" style="background-color: #007bff; color: white;">SmartParking Systems</a>
@@ -40,7 +40,7 @@
                     <form action="" method="post">
                         <div class="input-group mb-3">
                             @*<input type="text" class="form-control" placeholder="Email">*@
-                            @Html.TextBoxFor(m => m.UserName, "", new { @type = "text", @class = "form-control", @placeholder = "Tên Đăng Nhập" })
+                            @Html.TextBoxFor(m => m.UserName, "", new { @type = "text",@required = true,@min = 5, @class = "form-control", @placeholder = "Tên Đăng Nhập" })
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="input-group mb-3">
                             @*<input type="password" class="form-control" placeholder="Password">*@
-                            @Html.PasswordFor(m => m.PassWord, new { @type = "password", @class = "form-control", @placeholder = "Password" })
+                            @Html.PasswordFor(m => m.PassWord, new { @type = "password",@*@pattern = "(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})",*@ @required= true, @class = "form-control", @placeholder = "Password" })
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -186,7 +186,9 @@
         });
         </script>*@
 
+    <script>
 
+    </script>
 
 </body>
 </html>
