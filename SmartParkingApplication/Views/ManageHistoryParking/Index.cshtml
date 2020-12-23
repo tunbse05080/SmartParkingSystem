@@ -39,12 +39,24 @@
                                 </div>
                             </div><br />
                             <div class="row">
-                                <form autocomplete="off">
-                                    <div class="flex-row d-flex justify-content-center" style="padding-left:150px;padding-bottom:20px">
-                                        <a>Từ ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-01T07:30" id="TimeFromHis" onchange="loadDataHistoryParking()"/>
-                                        <a style="margin-left:20px">Đến ngày: </a><input style="margin-left:10px;margin-top:-5px" type="datetime-local" value="2020-12-30T07:30" id="TimeToHis" onchange="loadDataHistoryParking()"/>
-                                    </div>
-                                </form>
+                                <div class="col-sm-1">
+                                    <a>Từ ngày: </a>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input style="margin-top:-5px" class="w-75" type="datetime-local" id="TimeFromHis" @*onchange="loadDataHistoryParking()"*@ />
+                                </div>
+                                <div class="col-sm-1">
+                                    <a>Đến ngày: </a>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input style="margin-top:-5px" class="w-75" type="datetime-local" id="TimeToHis" @*onchange="loadDataHistoryParking()"*@ />
+                                </div>
+                                <div class="col-sm-2">
+                                    <input style="margin-top:-5px" type="text" class="form-control" id="txtSearchHistoryPP" placeholder="Nhập biển số" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <button style="margin-top:-5px" class="btn btn-success" id="btnSearchHistoryPP">Search</button>
+                                </div>
                             </div>
                             <!-- table info price day and block -->
                             <div class="row invoice-info">
