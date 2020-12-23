@@ -38,11 +38,13 @@ namespace SmartParkingApplication.Controllers
                 else
                 {
                     ViewBag.ErrorMessage = "Đăng nhập lỗi";
+                   
                     return RedirectToAction("Index");
-                     //ViewBag.ErrorMessage = "Đăng nhập lỗi";
+                    //ViewBag.ErrorMessage = "Đăng nhập lỗi";
                 }
+                
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Logout()
