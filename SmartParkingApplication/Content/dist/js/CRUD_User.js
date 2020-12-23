@@ -282,7 +282,7 @@ function UpdateUser() {
         email: $('#EmailEdit').val(),
         IdentityCard: $('#IdentityCardEdit').val(),
         StatusOfWork: $('#StatusOfWorkingEdit').val(),
-        AccountID: $('#StatusOfWorkingEdit').val(),
+        AccountID: $('#AccountID').val(),
         ParkingPlaceID: $('#cbparkingPlaceUEdit').val(),
 
     };
