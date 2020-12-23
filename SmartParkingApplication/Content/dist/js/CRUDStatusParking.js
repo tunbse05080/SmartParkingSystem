@@ -1,7 +1,12 @@
 ﻿//load page
 $(document).ready(function () {
     loadDataStatusParking();
+    setInterval(function () {
+        table.ajax.reload();
+    }, 30000);
 });
+
+var table;
 
 //Load Data function
 function loadDataStatusParking() {
@@ -35,7 +40,7 @@ function loadDataStatusParking() {
                     html += '</tr>';
                 });
                 $('#tbodyStatusPP').html(html);
-                var table = $('#tbStatusPP').DataTable({
+                table = $('#tbStatusPP').DataTable({
                     "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
                     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 }).buttons().container().appendTo('#tbStatusPP_wrapper .col-md-6:eq(0)');
