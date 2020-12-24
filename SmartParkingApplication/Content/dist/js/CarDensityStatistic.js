@@ -34,7 +34,7 @@ function loadChartCarDensityAll() {
         dataType: "json",
         success: function (result) {
             var html = '';
-            $.each(result.listData, function (key, item) {
+            $.each(result, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.NameOfParking + '</td>';
                 html += '<td>' + item.dataMoto + '</td>';

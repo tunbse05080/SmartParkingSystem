@@ -35,46 +35,110 @@ namespace SmartParkingApplication.Controllers
         //Load Chart IncomeStatistic
         public JsonResult LoadDataIncome(int idParking, int idTypeOfTicket)
         {
-            List<double> listIncomeMoto = new List<double>();
-            List<double> listIncomeCar = new List<double>();
+            List<Object> list = new List<object>();
             for (int i = 0; i < 12; i++)
             {
                 if (idTypeOfTicket == 1)
                 {
+                    DateTime dateTime = DateTime.Now.AddMonths(-i);
                     //get income dataMoto of DailyTicket ( most nearly 12 months )
                     var dataMoto = (from tr in db.Transactions
                                     where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking) && (tr.TypeOfTicket == 1)
                                     select new { tr.TotalPrice }).ToList();
                     var sumMoto = dataMoto.Select(s => s.TotalPrice).Sum();
-                    listIncomeMoto.Add((double)sumMoto);
 
                     //get income dataCar of DailyTicket ( most nearly 12 months )
                     var dataCar = (from tr in db.Transactions
                                    where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking) && (tr.TypeOfTicket == 1)
                                    select new { tr.TotalPrice }).ToList();
                     var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
-                    listIncomeCar.Add((double)sumCar);
+                    Object data = new { dateTime.Month, sumCar, sumMoto };
+                    list.Add(data);
                 }
                 else
                 {
+                    DateTime dateTime = DateTime.Now.AddMonths(-i);
                     //get income dataMoto of MonthlyTicket ( most nearly 12 months )
                     var dataMoto = (from mi in db.MonthlyIncomeStatements
                                     where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == idParking
                                     select new { mi.TotalPrice }).ToList();
                     var sumMoto = dataMoto.Select(s => s.TotalPrice).Sum();
-                    listIncomeMoto.Add((double)sumMoto);
 
                     //get income dataCar of MonthlyTicket ( most nearly 12 months )
                     var dataCar = (from mi in db.MonthlyIncomeStatements
                                    where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == idParking
                                    select new { mi.TotalPrice }).ToList();
                     var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
-                    listIncomeCar.Add((double)sumCar);
+                    Object data = new { dateTime.Month, sumCar, sumMoto };
+                    list.Add(data);
                 }
             }
-            listIncomeMoto.Reverse();
-            listIncomeCar.Reverse();
-            return Json(new { listIncomeMoto, listIncomeCar }, JsonRequestBehavior.AllowGet);
+            list.Reverse();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        //Load Chart CarDensity
+        public JsonResult LoadDataIncomeAll(int choice)
+        {
+            var result = (from tr in db.ParkingPlaces
+                          select new { tr.ParkingPlaceID, tr.NameOfParking }).ToList();
+            List<Object> list = new List<object>();
+            if (choice == 0)
+            {
+                foreach (var item in result)
+                {
+
+                    var dataMotoDailyTK = (from tr in db.Transactions
+                                           where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                           select new { tr.TotalPrice }).ToList();
+
+                    var dataCarDailyTK = (from tr in db.Transactions
+                                          where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                          select new { tr.TotalPrice }).ToList();
+
+                    var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                             where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                             select new { mi.TotalPrice }).ToList();
+
+                    var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                            where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                            select new { mi.TotalPrice }).ToList();
+
+                    var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
+                    var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
+
+                    Object data = new { item.NameOfParking, sumMoto, sumCar };
+                    list.Add(data);
+                }
+            }
+            else
+            {
+                foreach (var item in result)
+                {
+                    var dataMotoDailyTK = (from tr in db.Transactions
+                                           where tr.TimeOutv.Value.Year == DateTime.Now.Year && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                           select new { tr.TotalPrice }).ToList();
+
+                    var dataCarDailyTK = (from tr in db.Transactions
+                                          where tr.TimeOutv.Value.Year == DateTime.Now.Year && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                          select new { tr.TotalPrice }).ToList();
+
+                    var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                             where mi.PaymentDate.Value.Year == DateTime.Now.Year && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                             select new { mi.TotalPrice }).ToList();
+
+                    var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                            where mi.PaymentDate.Value.Year == DateTime.Now.Year && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                            select new { mi.TotalPrice }).ToList();
+
+                    var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
+                    var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
+
+                    Object data = new { item.NameOfParking, sumMoto, sumCar };
+                    list.Add(data);
+                }
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //Load Chart CarDensity
@@ -88,7 +152,6 @@ namespace SmartParkingApplication.Controllers
                 var dataMoto = (from tr in db.Transactions
                                 where (tr.TimeIn.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking)
                                 select new { tr.TypeOfVerhicleTran, tr.TimeIn.Value.Month }).ToList();
-
 
                 //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
                 var dataCar = (from tr in db.Transactions
@@ -139,7 +202,7 @@ namespace SmartParkingApplication.Controllers
                     list.Add(data);
                 }
             }
-            return Json(new { listData = list}, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //Load data report income base on parkingplace, date, workingShift

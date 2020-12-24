@@ -1,7 +1,25 @@
 ﻿$(document).ready(function () {
     loadChartIncome();
+    loadChartIncomeAll();
     ComboboxNameParking();
+    KindOfStatisticIncome();
+    ChartIncomeAll();
 });
+
+function KindOfStatisticIncome() {
+    if ($('#cbKindOfStatisticIncome').val() == 0) {
+        $('#eachParkingIncome').hide();
+        $('#ChartIncome').hide();
+        $('#dvChartIncomeAll').show();
+        $('#cbChoiceTimeIncome').show();
+
+    } else {
+        $('#eachParkingIncome').show();
+        $('#ChartIncome').show();
+        $('#dvChartIncomeAll').hide();
+        $('#cbChoiceTimeIncome').hide();
+    }
+}
 
 //Load Chart Income
 function loadChartIncome() {
@@ -20,7 +38,20 @@ function loadChartIncome() {
         data: { idParking: idParking, idTypeOfTicket: idTypeOfTicket},
         dataType: "json",
         success: function (result) {
-            ChartIncome(result);
+            var html = '';
+            $.each(result, function (key, item) {
+                html += '<tr>';
+                html += '<td>Tháng' + item.Month + '</td>';
+                html += '<td>' + item.sumMoto + '</td>';
+                html += '<td>' + item.sumCar + '</td>';
+                html += '</tr>';
+            });
+            $('#tbodyChartIncome').html(html);
+            $('#tbChartIncome').DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "buttons": ["copy", "csv", "excel", "pdf"]
+            }).buttons().container().appendTo('#tbChartIncome_wrapper .col-md-6:eq(0)');
+            ChartIncome()
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -28,8 +59,11 @@ function loadChartIncome() {
     });
 }
 
-function ChartIncome(result) {
+function ChartIncome() {
     Highcharts.chart('ChartIncome', {
+        data: {
+            table: 'tbChartIncome'
+        },
         chart: {
             type: 'column'
         },
@@ -38,38 +72,77 @@ function ChartIncome(result) {
         },
         xAxis: {
             title: {
-                text: '12 tháng gần nhất'
-            },
-            type: 'datetime',
+                text: 'Các tháng'
+            }
         },
         yAxis: {
+            allowDecimals: false,
             title: {
-                text: 'Doanh Thu'
+                text: 'Doanh thu'
             }
         },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: true
-            },
-            series: {
-                pointStart: Date.UTC(2020, 1),
-                pointInterval: 2635000000  // one month
-            }
-        },
-        series: [{
-            name: 'Ô tô',
-            data: result.listIncomeCar,
-
-        }, {
-            name: 'Xe máy',
-            data: result.listIncomeMoto,
-
-        }],
     });
 }
+
+//Load Chart Income all parking
+function loadChartIncomeAll() {
+    var choice = $('#cbChoiceTimeIncome').val();
+    if (!choice) {
+        choice = 0;
+    }
+    $.ajax({
+        url: "/StatisticReport/LoadDataIncomeAll",
+        type: "POST",
+        contents: "application/json",
+        data: { choice: choice },
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            $.each(result, function (key, item) {
+                html += '<tr>';
+                html += '<td>' + item.NameOfParking + '</td>';
+                html += '<td>' + item.sumMoto + '</td>';
+                html += '<td>' + item.sumCar + '</td>';
+                html += '</tr>';
+            });
+            $('#tbodyChartIncomeAll').html(html);
+            $('#tbChartIncomeAll').DataTable({
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "buttons": ["copy", "csv", "excel", "pdf"]
+            }).buttons().container().appendTo('#tbChartIncomeAll_wrapper .col-md-6:eq(0)');
+            ChartIncomeAll()
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+function ChartIncomeAll() {
+    Highcharts.chart('ChartIncomeAll', {
+        data: {
+            table: 'tbChartIncomeAll'
+        },
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Biểu đồ doanh thu'
+        },
+        xAxis: {
+            title: {
+                text: 'Tên bãi đỗ'
+            }
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: 'Doanh thu'
+            }
+        },
+    });
+}
+
 
 function ComboboxNameParking() {
     $.ajax({

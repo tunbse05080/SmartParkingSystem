@@ -30,25 +30,67 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div>
+                            <div id="KindOfIncomeStatistic">
+                                <strong style="font-size:x-large">Chọn loại thống kê</strong>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="cbKindOfStatisticIncome" onchange="KindOfStatisticIncome();loadChartIncome()">
+                                            <option value="0">Tất cả bãi đỗ</option>
+                                            <option value="1">Từng bãi đỗ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="cbChoiceTimeIncome" onchange="loadChartIncomeAll()">
+                                            <option value="0">Trong tháng này</option>
+                                            <option value="1">Trong năm này</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="eachParkingIncome">
                                 <strong style="font-size:x-large">Bãi đỗ</strong>
                                 <select class="form-control w-50" onchange="loadChartIncome()" id="cbNameParkingPlace">
                                 </select>
-                            </div><br />
-                            <div>
+                                <br />
                                 <strong style="font-size:x-large">Loại vé</strong>
                                 <select class="form-control w-50" onchange="loadChartIncome()" id="cbTypeOfTicket">
                                     <option value="0">Vé tháng</option>
                                     <option value="1">Vé ngày</option>
                                 </select>
                             </div><br />
-                            <div>
-                                <button class="btn btn-success" id="btnExportIncome12Monthlys">Xuất báo cáo</button>
-                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div id="ChartIncome"></div>
+                            <div class="row" id="dvChartIncome" hidden>
+                                <div class="col-sm-6">
+                                    <table id="tbChartIncome" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Tháng</th>
+                                                <th>Doanh thu xe máy</th>
+                                                <th>Doanh thu ô tô</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody" id="tbodyChartIncome"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" id="dvChartIncomeAll">
+                                <div class="col-sm-6">
+                                    <table id="tbChartIncomeAll" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên bãi đỗ</th>
+                                                <th>Doanh thu xe máy</th>
+                                                <th>Doanh thu ô tô</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody" id="tbodyChartIncomeAll"></tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-6" id="ChartIncomeAll"></div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
