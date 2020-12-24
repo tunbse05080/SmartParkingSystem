@@ -223,6 +223,8 @@ function CheckChange() {
 }
 
 function getCardByID(CardID) {
+    $('.help-block').remove();
+    $('.form-control').css('border-color', 'lightgrey');
     $.ajax({
         url: "/ManageCard/CardDetails/" + CardID,
         type: "GET",
@@ -314,34 +316,44 @@ function getReportCardBreakByID(CardID) {
 }
 
 //Valdidation using jquery
-function validateAddCard() {
-    var isValid = true;
-    var rfidCard = new RegExp('^[0-9]{10,}$');
-    if ($.trim($('#CardNumber').val()) == "" || !rfidCard.test($.trim($('#CardNumber').val()))) {
-        $('#CardNumber').prop("title", "Số thẻ trống hoặc sai định dạng(>9 số).");
-        $('#CardNumber').css('border-color', 'Red');
-        isValid = false;
-    }
-    else {
-        isValid = true;
-        $('#CardNumber').prop("title", "");
-        $('#CardNumber').css('border-color', 'lightgrey');
-    }
-    return isValid;
-}
-
 function validateUpdateCard() {
-    var isValid = true;
     var rfidCard = new RegExp('^[0-9]{10,}$');
-    if ($.trim($('#CardNumberEdit').val()) == "" || !rfidCard.test($.trim($('#CardNumberEdit').val()))) {
-        $('#CardNumberEdit').prop("title", "Số thẻ trống hoặc sai định dạng(>9 số).");
-        $('#CardNumberEdit').css('border-color', 'Red');
-        isValid = false;
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
     }
-    else {
-        isValid = true;
-        $('#CardNumberEdit').prop("title", "");
-        $('#CardNumberEdit').css('border-color', 'lightgrey');
-    }
-    return isValid;
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkCardEdit', function (value, element) {
+        return rfidCard.test(value);
+    });
+    //Set rule + message for input by name
+    $('#FormEditCard').validate({
+        rules: {
+            CardNumberEdit: {
+                required: true,
+                checkCardEdit: true
+            }
+        },
+        messages: {
+            CardNumberEdit: {
+                required: '*Bắt buộc.',
+                checkCardEdit: 'Số thẻ sai định dạng(>9 số).'
+            }
+        }
+    });
+    return $('#FormEditCard').valid();
 }
