@@ -1,9 +1,13 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace SmartParkingApplication.Controllers
 {
@@ -76,25 +80,65 @@ namespace SmartParkingApplication.Controllers
         //Load Chart CarDensity
         public JsonResult LoadChartCarDensity(int idParking)
         {
-            List<double> listMotoDestiny = new List<double>();
-            List<double> listCarDestiny = new List<double>();
+            List<Object> list = new List<Object>();
             for (int i = 0; i < 12; i++)
             {
+                DateTime dateTime = DateTime.Now.AddMonths(-i);
                 //get density dataMoto base on ParkingPlace ID ( most nearly 12 months )
                 var dataMoto = (from tr in db.Transactions
-                                where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking)
-                                select new { tr.TypeOfVerhicleTran }).ToList();
-                listMotoDestiny.Add(dataMoto.Count());
+                                where (tr.TimeIn.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking)
+                                select new { tr.TypeOfVerhicleTran, tr.TimeIn.Value.Month }).ToList();
+
 
                 //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
                 var dataCar = (from tr in db.Transactions
-                               where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking)
+                               where (tr.TimeIn.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking)
                                select new { tr.TypeOfVerhicleTran }).ToList();
-                listCarDestiny.Add(dataCar.Count());
+                Object data = new { dateTime.Month, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                list.Add(data);
             }
-            listMotoDestiny.Reverse();
-            listCarDestiny.Reverse();
-            return Json(new { listMotoDestiny, listCarDestiny }, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        //Load Chart CarDensity
+        public JsonResult LoadChartCarDensityAll(int choice)
+        {
+            var result = (from tr in db.ParkingPlaces
+                          select new { tr.ParkingPlaceID, tr.NameOfParking }).ToList();
+            List<Object> list = new List<object>();
+            if (choice == 0)
+            {
+                foreach (var item in result)
+                {
+                    //number moto come in of each parking on current monthly
+                    var dataMoto = (from tr in db.Transactions
+                                    where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.TimeIn.Value.Month == DateTime.Now.Month && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 0
+                                    select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                    //number car come in of each parking on current monthly
+                    var dataCar = (from tr in db.Transactions
+                                   where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.TimeIn.Value.Month == DateTime.Now.Month && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
+                                   select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                    var data = new { item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                    list.Add(data);
+                }
+            }
+            else
+            {
+                foreach (var item in result)
+                {
+                    //number moto come in of each parking on current year
+                    var dataMoto = (from tr in db.Transactions
+                                    where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 0
+                                    select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                    //number car come in of each parking on current year
+                    var dataCar = (from tr in db.Transactions
+                                   where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
+                                   select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                    var data = new { item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                    list.Add(data);
+                }
+            }
+            return Json(new { listData = list}, JsonRequestBehavior.AllowGet);
         }
 
         //Load data report income base on parkingplace, date, workingShift
@@ -113,7 +157,7 @@ namespace SmartParkingApplication.Controllers
                     break;
                 case 2:
                     dateFrom = dateTime.Add(TimeSpan.Parse("14:00:00"));
-                    
+
                     dateTo = dateTime.Add(TimeSpan.Parse("22:00:00"));
                     break;
                 case 3:
@@ -123,10 +167,10 @@ namespace SmartParkingApplication.Controllers
                     break;
             }
             var result = (from tr in db.Transactions
-                          where tr.ParkingPlaceID == id && DateTime.Compare((DateTime)tr.TimeOutv, dateFrom) > 0 && DateTime.Compare((DateTime)tr.TimeOutv,dateTo) <= 0
-                          select new {tr.User.Account.UserName, tr.User.Name, tr.TotalPrice} into table1
+                          where tr.ParkingPlaceID == id && DateTime.Compare((DateTime)tr.TimeOutv, dateFrom) > 0 && DateTime.Compare((DateTime)tr.TimeOutv, dateTo) <= 0
+                          select new { tr.User.Account.UserName, tr.User.Name, tr.TotalPrice } into table1
                           group table1 by table1.UserName into groupby
-                          select new { groupby.FirstOrDefault().UserName, groupby.FirstOrDefault().Name, totalPrice = groupby.Sum(x => x.TotalPrice)}).ToList();
+                          select new { groupby.FirstOrDefault().UserName, groupby.FirstOrDefault().Name, totalPrice = groupby.Sum(x => x.TotalPrice) }).ToList();
             //var result = db.Transactions.Where(tr => tr.ParkingPlaceID == id && tr.TimeOutv > dateFrom && tr.TimeOutv <= dateTo).GroupBy(tr => tr.UserOID).Select(tr => new { totalPrice = tr.Sum(b => b.TotalPrice).ToString(), Name = tr. });
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -146,6 +190,94 @@ namespace SmartParkingApplication.Controllers
         //                select new { p.UserID, p.Account.UserName }).ToList();
 
         //    return Json(list, JsonRequestBehavior.AllowGet);
+        //}
+        public List<double> ListIncome12Monthlys()
+        {
+            List<double> listMotoDestiny = new List<double>();
+            List<double> listCarDestiny = new List<double>();
+            for (int i = 0; i < 12; i++)
+            {
+                //get density dataMoto base on ParkingPlace ID ( most nearly 12 months )
+                var dataMoto = (from tr in db.Transactions
+                                where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0)
+                                select new { tr.TypeOfVerhicleTran }).ToList();
+                listMotoDestiny.Add(dataMoto.Count());
+
+                //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
+                var dataCar = (from tr in db.Transactions
+                               where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1)
+                               select new { tr.TypeOfVerhicleTran }).ToList();
+                listCarDestiny.Add(dataCar.Count());
+            }
+            listMotoDestiny.Reverse();
+            listCarDestiny.Reverse();
+            return null;
+        }
+
+
+        //public ActionResult ExportIncome12Monthlys()
+        //{
+        //    var schedule = db.Schedules.ToList();
+        //    var useschedule = db.UserSchedules.ToList();
+        //    // var role = db.Roles.ToList();
+        //    var alluser = new GridView();
+        //    //===================================================
+        //    DataTable dt = new DataTable();
+        //    //Add Datacolumn
+        //    DataColumn workCol = dt.Columns.Add("Tên chủ thẻ", typeof(String));
+
+        //    dt.Columns.Add("Ca làm việc", typeof(String));
+        //    dt.Columns.Add("Số điện thoại", typeof(String));
+        //    dt.Columns.Add("Email", typeof(String));
+        //    dt.Columns.Add("Loại xe", typeof(String));
+        //    dt.Columns.Add("Ngày đăng kí", typeof(String));
+        //    dt.Columns.Add("Ngày hết hạn", typeof(String));
+
+        //    foreach (var item in Schedule)
+        //    {
+        //        DataRow newRow = dt.NewRow();
+        //        string typeVehicle = "";
+        //        switch (item.TypeOfVehicle)
+        //        {
+        //            case 0:
+        //                typeVehicle = "Xe Máy";
+        //                break;
+        //            case 1:
+        //                typeVehicle = "Ô tô";
+        //                break;
+        //        }
+        //        newRow["Tên chủ thẻ"] = item.CusName;
+        //        newRow["Số CMND"] = item.IdentityCard;
+        //        newRow["Số điện thoại"] = item.Phone;
+        //        newRow["Email"] = item.Email;
+        //        newRow["Loại xe"] = typeVehicle;
+        //        newRow["Ngày đăng kí"] = item.RegisDate;
+        //        newRow["Ngày hết hạn"] = item.ExpiryDate;
+
+        //        dt.Rows.Add(newRow);
+        //    }
+
+        //    //====================================================
+        //    alluser.DataSource = dt;
+        //    // gv.DataSource = ds;
+        //    alluser.DataBind();
+
+        //    Response.ClearContent();
+        //    Response.Buffer = true;
+
+        //    Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
+        //    Response.ContentType = "application/ms-excel";
+
+        //    Response.Charset = "";
+        //    StringWriter objStringWriter = new StringWriter();
+        //    HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+
+        //    alluser.RenderControl(objHtmlTextWriter);
+
+        //    Response.Output.Write(objStringWriter.ToString());
+        //    Response.Flush();
+        //    Response.End();
+        //    return Redirect("/StatisticReport/IncomeStatistic");
         //}
     }
 }

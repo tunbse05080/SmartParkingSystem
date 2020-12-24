@@ -31,7 +31,7 @@ function loadChartIncome() {
 function ChartIncome(result) {
     Highcharts.chart('ChartIncome', {
         chart: {
-            type: 'line'
+            type: 'column'
         },
         title: {
             text: 'Biểu đồ doanh thu'

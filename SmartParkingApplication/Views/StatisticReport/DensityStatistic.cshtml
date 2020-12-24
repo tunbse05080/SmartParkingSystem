@@ -30,7 +30,24 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div>
+                            <div id="KindOfStatistic">
+                                <strong style="font-size:x-large">Chọn loại thống kê</strong>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="cbKindOfStatisticDensity" onchange="KindOfStatisticDensity();loadChartCarDensity()">
+                                            <option value="0">Tất cả bãi đỗ</option>
+                                            <option value="1">Từng bãi đỗ trong 12 tháng</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="cbChoiceTimeDensity" onchange="loadChartCarDensityAll()">
+                                            <option value="0">Trong tháng này</option>
+                                            <option value="1">Trong năm này</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="eachParking">
                                 <strong style="font-size:x-large">Bãi đỗ</strong>
                                 <select class="form-control w-50" onchange="loadChartCarDensity()" id="cbNameParkingPlaceD">
                                 </select>
@@ -39,6 +56,49 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div id="ChartCarDensity" style="min-width:310px; height:400px;margin:0 auto"></div>
+                            <div class="row" id="dvChartCarDensity" hidden>
+                                <div class="col-sm-6">
+                                    <table id="tbChartCarDensity" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Tháng</th>
+                                                <th>Số lượt xe máy</th>
+                                                <th>Số lượt ô tô</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody" id="tbodyChartCarDensity"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Tháng</th>
+                                                <th>Số lượt xe máy</th>
+                                                <th>Số lượt ô tô</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" id="dvChartCarDensityAll">
+                                <div class="col-sm-6">
+                                    <table id="tbChartCarDensityAll" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên bãi đỗ</th>
+                                                <th>Số lượt xe máy</th>
+                                                <th>Số lượt ô tô</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody" id="tbodyChartCarDensityAll"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Tên bãi đỗ</th>
+                                                <th>Số lượt xe máy</th>
+                                                <th>Số lượt ô tô</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="col-sm-6" id="ChartCarDensityAll"></div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
