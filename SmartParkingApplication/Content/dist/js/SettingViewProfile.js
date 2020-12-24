@@ -5,12 +5,11 @@
 function getSVDetailByID() {
     $.ajax({
         
-        url: "/Setting/SVDetails",
+        url: "/Setting/Details",
         type: "GET",
-        contentType: "application/json",
+        contentType: "application/json" + UserID,
         dataType: "json",
         success: function (result) {
-
             $('#email').val(result.email);
             $('#DateOfBirth').val(result.DateOfBirth);
             $('#Gender').val(result.Gender);
@@ -19,11 +18,11 @@ function getSVDetailByID() {
             $('#UserAddress').val(result.UserAddress);
      
 
-            $('#myModalSVDetail').modal('show');
+           
 
         },
         error: function (errormessage) {
-            alert("Exception:" + AccountID + errormessage.responseText);
+            alert("Exception:" + UserID + errormessage.responseText);
         }
     });
     return false;

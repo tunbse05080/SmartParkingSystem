@@ -78,5 +78,34 @@ namespace SmartParkingApplication.Controllers
             return View(dataEdit);
 
         }
+        public JsonResult Details(int id)
+        {
+            var user = db.Users.Find(id);
+            var gender = "";
+            var dateOfBirth = "";
+            var statusOfwork = "";
+            if (user.Gender == 1)
+            {
+                gender = "Nữ";
+            }
+            else
+            {
+                gender = "Nam";
+            }
+            if (user.StatusOfwork == 0)
+            {
+                statusOfwork = "Đang trong ca";
+            }
+            else
+            {
+                statusOfwork = "Không trong ca";
+            }
+            var status = user.StatusOfwork;
+            dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
+            //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
+            //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
+            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, user.StatusOfwork, statusOfwork, user.AccountID, user.Account.UserName, user.Gender, user.ParkingPlaceID };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
