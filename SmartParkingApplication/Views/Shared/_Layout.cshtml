@@ -69,39 +69,40 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Quản lí nhân viên
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Index", "ManageAccount")" class="nav-link">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>
-                                                Quản lý tài khoản
-                                            </p>
-                                        </a>
-                                    </li>
-                                }
-                                @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Index", "ManageUser")" class="nav-link">
-                                            <i class="nav-icon fas fa-user"></i>
-                                            <p>
-                                                Thông tin nhân viên
-                                            </p>
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </li>
+
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "ManageAccount")" class="nav-link">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Quản lý tài khoản
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "ManageUser")" class="nav-link">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Quản lý nhân viên
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("WorkingCalendar", "ManageUser")" class="nav-link">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Quản lý lịch làm việc
+                                    </p>
+                                </a>
+                            </li>
+                        }
 
                         <!--Quản lí bãi đỗ-->
                         @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
@@ -179,63 +180,64 @@
                                 @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
                                 {
                                     <!--Thiết lập giá vé-->
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index", "SettingPrice")" class="nav-link">
-                                        <i class="nav-icon fas fa-dollar-sign"></i>
-                                        <p>
-                                            Thiết lập giá vé
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Index", "SettingPrice")" class="nav-link">
+                                            <i class="nav-icon fas fa-dollar-sign"></i>
+                                            <p>
+                                                Thiết lập giá vé
+                                            </p>
+                                        </a>
+                                    </li>
                                 }
                             </ul>
                         </li> <!--End quản lí vé-->
                         @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
                         {
                             <!--Thống kê-->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>
-                                    Thống kê và báo cáo
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("IncomeStatistic", "StatisticReport")" class="nav-link">
-                                        <i class="nav-icon fas fa-chart-bar"></i>
-                                        <p>
-                                            Thống kê doanh thu
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("DensityStatistic", "StatisticReport")" class="nav-link">
-                                        <i class="nav-icon fas fa-chart-bar"></i>
-                                        <p>
-                                            Thống kê mật độ xe
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("WorkingShiftStatistic", "StatisticReport")" class="nav-link">
-                                        <i class="nav-icon fas fa-chart-bar"></i>
-                                        <p>
-                                            Thống kê ca làm việc
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("IncomeReport", "StatisticReport")" class="nav-link">
-                                        <i class="nav-icon fas fa-chart-bar"></i>
-                                        <p>
-                                            Báo cáo doanh thu
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> <!--End thống kê-->
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <p>
+                                        Thống kê và báo cáo
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("IncomeStatistic", "StatisticReport")" class="nav-link">
+                                            <i class="nav-icon fas fa-chart-bar"></i>
+                                            <p>
+                                                Thống kê doanh thu
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("DensityStatistic", "StatisticReport")" class="nav-link">
+                                            <i class="nav-icon fas fa-chart-bar"></i>
+                                            <p>
+                                                Thống kê mật độ xe
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("WorkingShiftStatistic", "StatisticReport")" class="nav-link">
+                                            <i class="nav-icon fas fa-chart-bar"></i>
+                                            <p>
+                                                Thống kê ca làm việc
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("IncomeReport", "StatisticReport")" class="nav-link">
+                                            <i class="nav-icon fas fa-chart-bar"></i>
+                                            <p>
+                                                Báo cáo doanh thu
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--End thống kê-->
                         }
                         <li class="nav-item">
                             <a href="@Url.Action("Logout","LoginUs")" class="nav-link">

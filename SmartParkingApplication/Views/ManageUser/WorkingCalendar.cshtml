@@ -34,18 +34,18 @@
                                 <div class="col-sm-4">
                                     <button class="btn btn-success" id="btnCreateWC" data-toggle="modal" data-target="#myModalCreateWorkingCalendar" onclick="clearBox(1);ComboboxUserName(1)">Tạo lịch làm việc</button>
                                 </div>
-                                <div class="col-sm-4">
+                                @*<div class="col-sm-4">
                                     <button class="btn btn-success" id="btnEditWC" data-toggle="modal" data-target="#myModalEditWorkingCalendar" onclick="clearBox(2);ComboboxUserName(2)">Sửa lịch làm việc</button>
-                                </div>
+                                </div>*@
                                 @*<div class="col-sm-2">
-                                        <button class="btn btn-success" id="btnExportCalendar" onclick="location.href='@Url.Action("ExportWorkingCalendar", "ManageUser")';return false;">Xuất lịch làm việc</button>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <select class="form-control" id="cbExportCalendar">
-                                            <option>Tuần này</option>
-                                            <option>Tháng này</option>
-                                        </select>
-                                    </div>*@
+                    <button class="btn btn-success" id="btnExportCalendar" onclick="location.href='@Url.Action("ExportWorkingCalendar", "ManageUser")';return false;">Xuất lịch làm việc</button>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" id="cbExportCalendar">
+                        <option>Tuần này</option>
+                        <option>Tháng này</option>
+                    </select>
+                </div>*@
                                 <br /><br /><br />
                                 <div class="col-md-3">
                                     <select class="form-control" onchange="LoadDataCalendar()" id="cbparkingPlaceWorkingCalendar">
@@ -116,7 +116,7 @@
                         </div>
 
                         <!-- The Modal Edit Working Calendar-->
-                        <div class="modal fade" id="myModalEditWorkingCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <!--<div class="modal fade" id="myModalEditWorkingCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
                                     <form id="FormEditWC">
@@ -162,6 +162,39 @@
                                                     <option value="2">Ca 2 (14h - 22h)</option>
                                                     <option value="3">Ca 3 (22h - 6h)</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="btnUpdateWC" onclick="return EditWorkingCalendar();">Sửa</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!-- The Modal Edit Working Calendar-->
+                        <div class="modal fade" id="myModalEditWorkingCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width:110%">
+                                    <form>
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Sửa lịch làm việc</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="FullName">ID</label>
+                                                <input type="text" class="form-control" id="IdEditWorkingCalendar" placeholder="ID" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cbUserName">Tên tài khoản</label><br />
+                                                <select class="form-control" id="cbUserNameEmpEdit" name="cbUserNameEmpEdit" onchange="getNameStaff(2)" style="width:516px">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="FullName">Tên đầy đủ</label>
+                                                <input type="text" class="form-control" id="FullNameEmpEdit" placeholder="Tên đầy đủ" disabled />
                                             </div>
                                         </div>
                                         <div class="modal-footer">
