@@ -3,7 +3,6 @@
     loadChartIncomeAll();
     ComboboxNameParking();
     KindOfStatisticIncome();
-    ChartIncomeAll();
 });
 
 function KindOfStatisticIncome() {
@@ -47,11 +46,7 @@ function loadChartIncome() {
                 html += '</tr>';
             });
             $('#tbodyChartIncome').html(html);
-            $('#tbChartIncome').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf"]
-            }).buttons().container().appendTo('#tbChartIncome_wrapper .col-md-6:eq(0)');
-            ChartIncome()
+            ChartIncome();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

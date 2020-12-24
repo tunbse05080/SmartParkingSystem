@@ -27,10 +27,10 @@ namespace SmartParkingApplication.Controllers
         //Load total income of each Vehicle in the most nearly 12 months
         public JsonResult loadChartDashboard()
         {
-            List<double> listIncomeMoto = new List<double>();
-            List<double> listIncomeCar = new List<double>();
+            List<Object> list = new List<object>();
             for (int i = 0; i < 12; i++)
             {
+                DateTime dateTime = DateTime.Now.AddMonths(-i);
                 //get income dataMoto of DailyTicket ( most nearly 12 months )
                 var dataMotoDailyTK = (from tr in db.Transactions
                                 where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.TypeOfTicket == 1)
@@ -53,14 +53,11 @@ namespace SmartParkingApplication.Controllers
 
                 var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
                 var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
-
-                listIncomeMoto.Add((double)sumMoto);
-                listIncomeCar.Add((double)sumCar);
-
+                Object data = new { dateTime.Month, sumMoto, sumCar };
+                list.Add(data);
             }
-            listIncomeMoto.Reverse();
-            listIncomeCar.Reverse();
-            return Json(new { listIncomeMoto, listIncomeCar }, JsonRequestBehavior.AllowGet);
+            list.Reverse();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //Get total income of all vehicle in current month

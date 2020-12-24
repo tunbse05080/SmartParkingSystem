@@ -103,10 +103,6 @@ function loadChartCarDensity() {
                 html += '</tr>';
             });
             $('#tbodyChartCarDensity').html(html);
-            $('#tbChartCarDensity').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf"]
-            }).buttons().container().appendTo('#tbChartCarDensity_wrapper .col-md-6:eq(0)');
             ChartCarDensity();
         },
         error: function (errormessage) {

@@ -11,7 +11,16 @@ function loadChartDashboard() {
         contents: "application/json",
         dataType: "json",
         success: function (result) {
-            ChartIncomeTotal(result);
+            var html = '';
+            $.each(result, function (key, item) {
+                html += '<tr>';
+                html += '<td>Tháng' + item.Month + '</td>';
+                html += '<td>' + item.sumMoto + '</td>';
+                html += '<td>' + item.sumCar + '</td>';
+                html += '</tr>';
+            });
+            $('#tbodyChartIncomeTotal').html(html);
+            ChartIncomeTotal()
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -20,45 +29,27 @@ function loadChartDashboard() {
 }
 
 //Draw chart income total
-function ChartIncomeTotal(result) {
+function ChartIncomeTotal() {
     Highcharts.chart('ChartIncomeTotal', {
+        data: {
+            table: 'tbChartIncomeTotal'
+        },
         chart: {
-            type: 'line'
+            type: 'column'
         },
         title: {
             text: 'Biểu đồ doanh thu'
         },
         xAxis: {
             title: {
-                text: '12 tháng gần nhất'
-            },
-            type: 'datetime',
+                text: 'Các tháng'
+            }
         },
         yAxis: {
+            allowDecimals: false,
             title: {
-                text: 'Doanh Thu'
+                text: 'Doanh thu'
             }
         },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: true
-            },
-            series: {
-                pointStart: Date.UTC(2020, 1, 1),
-                pointInterval: 2635000000  // one month
-            }
-        },
-        series: [{
-            name: 'Ô tô',
-            data: result.listIncomeCar,
-
-        }, {
-            name: 'Xe máy',
-            data: result.listIncomeMoto,
-
-        }],
     });
 }
