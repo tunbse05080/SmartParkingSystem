@@ -97,7 +97,7 @@ function loadChartCarDensity() {
             var html = '';
             $.each(result, function (key, item) {
                 html += '<tr>';
-                html += '<td>' + item.Month + '</td>';
+                html += '<td>Tháng' + item.Month + '</td>';
                 html += '<td>' + item.dataMoto + '</td>';
                 html += '<td>' + item.dataCar + '</td>';
                 html += '</tr>';
@@ -127,7 +127,6 @@ function ChartCarDensity() {
             text: 'Biểu đồ mật độ xe'
         },
         xAxis: {
-            allowDecimals: false,
             title: {
                 text: 'Các tháng'
             }

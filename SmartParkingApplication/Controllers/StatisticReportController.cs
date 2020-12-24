@@ -97,6 +97,7 @@ namespace SmartParkingApplication.Controllers
                 Object data = new { dateTime.Month, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
                 list.Add(data);
             }
+            list.Reverse();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
