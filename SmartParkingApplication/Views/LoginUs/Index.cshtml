@@ -53,7 +53,8 @@
                             {
                                 @type = "password",@*@pattern = "(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})",*@ @required = true,
                                 @class = "form-control",
-                                @placeholder = "Password"
+                                @placeholder = "Password",
+                                @id = "pwd"
                             })
                             @if (@ViewBag.ErrorMessage != null)
                             {
@@ -62,7 +63,7 @@
 
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
+                                    <span class="fas fa-eye" id="iconPwd"></span>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +198,17 @@
         </script>*@
 
     <script>
-
+        $("#iconPwd").click(function () {
+            if ($('#iconPwd').attr('class') == 'fas fa-eye') {
+                $('#iconPwd').removeClass('fas fa-eye');
+                $('#iconPwd').addClass('fas fa-eye-slash');
+                $('#pwd').prop('type', 'text');
+            } else {
+                $('#iconPwd').removeClass('fas fa-eye-slash');
+                $('#iconPwd').addClass('fas fa-eye');
+                $('#pwd').prop('type', 'password');
+            }
+        });
     </script>
 
 </body>
