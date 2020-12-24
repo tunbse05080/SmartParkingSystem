@@ -33,22 +33,22 @@ namespace SmartParkingApplication.Controllers
                 DateTime dateTime = DateTime.Now.AddMonths(-i);
                 //get income dataMoto of DailyTicket ( most nearly 12 months )
                 var dataMotoDailyTK = (from tr in db.Transactions
-                                where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.TypeOfTicket == 1)
+                                where tr.TimeOutv.Value.Year == dateTime.Year && tr.TimeOutv.Value.Month == dateTime.Month && (tr.TypeOfVerhicleTran == 0) && (tr.TypeOfTicket == 1)
                                 select new { tr.TotalPrice }).ToList();
 
                 //get income dataCar of DailyTicket ( most nearly 12 months )
                 var dataCarDailyTK = (from tr in db.Transactions
-                               where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.TypeOfTicket == 1)
+                               where tr.TimeOutv.Value.Year == dateTime.Year && tr.TimeOutv.Value.Month == dateTime.Month && (tr.TypeOfVerhicleTran == 1) && (tr.TypeOfTicket == 1)
                                select new { tr.TotalPrice }).ToList();
 
                 //get income dataMoto of MonthlyTicket ( most nearly 12 months )
                 var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 0)
+                                where mi.PaymentDate.Value.Year == dateTime.Year && mi.PaymentDate.Value.Month == dateTime.Month && (mi.MonthlyTicket.TypeOfVehicle == 0)
                                 select new { mi.TotalPrice }).ToList();
 
                 //get income dataCar of MonthlyTicket ( most nearly 12 months )
                 var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                               where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 1)
+                               where mi.PaymentDate.Value.Year == dateTime.Year && mi.PaymentDate.Value.Month == dateTime.Month && (mi.MonthlyTicket.TypeOfVehicle == 1)
                                select new { mi.TotalPrice }).ToList();
 
                 var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
@@ -66,22 +66,22 @@ namespace SmartParkingApplication.Controllers
             int data;
             //get income dataMoto of DailyTicket ( the current month )
             var dataMotoDailyTK = (from tr in db.Transactions
-                                   where (tr.TimeOutv.Value.Month == DateTime.Now.Month) && (tr.TypeOfVerhicleTran == 0) && (tr.TypeOfTicket == 1)
+                                   where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 0) && (tr.TypeOfTicket == 1)
                                    select new { tr.TotalPrice }).ToList();
 
             //get income dataCar of DailyTicket ( the current month )
             var dataCarDailyTK = (from tr in db.Transactions
-                                  where (tr.TimeOutv.Value.Month == DateTime.Now.Month) && (tr.TypeOfVerhicleTran == 1) && (tr.TypeOfTicket == 1)
+                                  where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 1) && (tr.TypeOfTicket == 1)
                                   select new { tr.TotalPrice }).ToList();
 
             //get income dataMoto of MonthlyTicket ( the current month )
             var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                     where (mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month) && (mi.MonthlyTicket.TypeOfVehicle == 0)
+                                     where mi.MonthlyTicket.RegisDate.Value.Year == DateTime.Now.Year && mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 0)
                                      select new { mi.TotalPrice }).ToList();
 
             //get income dataCar of MonthlyTicket ( the current month )
             var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                    where (mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month) && (mi.MonthlyTicket.TypeOfVehicle == 1)
+                                    where mi.MonthlyTicket.RegisDate.Value.Year == DateTime.Now.Year && mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 1)
                                     select new { mi.TotalPrice }).ToList();
 
             var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();

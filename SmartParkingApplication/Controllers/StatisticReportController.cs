@@ -43,13 +43,13 @@ namespace SmartParkingApplication.Controllers
                     DateTime dateTime = DateTime.Now.AddMonths(-i);
                     //get income dataMoto of DailyTicket ( most nearly 12 months )
                     var dataMoto = (from tr in db.Transactions
-                                    where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking) && (tr.TypeOfTicket == 1)
+                                    where tr.TimeOutv.Value.Year == dateTime.Year && tr.TimeOutv.Value.Month == dateTime.Month && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking) && (tr.TypeOfTicket == 1)
                                     select new { tr.TotalPrice }).ToList();
                     var sumMoto = dataMoto.Select(s => s.TotalPrice).Sum();
 
                     //get income dataCar of DailyTicket ( most nearly 12 months )
                     var dataCar = (from tr in db.Transactions
-                                   where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking) && (tr.TypeOfTicket == 1)
+                                   where tr.TimeOutv.Value.Year == dateTime.Year && tr.TimeOutv.Value.Month == dateTime.Month && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking) && (tr.TypeOfTicket == 1)
                                    select new { tr.TotalPrice }).ToList();
                     var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
                     Object data = new { dateTime.Month, sumCar, sumMoto };
@@ -60,13 +60,13 @@ namespace SmartParkingApplication.Controllers
                     DateTime dateTime = DateTime.Now.AddMonths(-i);
                     //get income dataMoto of MonthlyTicket ( most nearly 12 months )
                     var dataMoto = (from mi in db.MonthlyIncomeStatements
-                                    where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == idParking
+                                    where mi.PaymentDate.Value.Year == dateTime.Year && mi.PaymentDate.Value.Month == dateTime.Month && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == idParking
                                     select new { mi.TotalPrice }).ToList();
                     var sumMoto = dataMoto.Select(s => s.TotalPrice).Sum();
 
                     //get income dataCar of MonthlyTicket ( most nearly 12 months )
                     var dataCar = (from mi in db.MonthlyIncomeStatements
-                                   where (mi.PaymentDate.Value.Month == DateTime.Now.Month - i) && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == idParking
+                                   where mi.PaymentDate.Value.Year == dateTime.Year && mi.PaymentDate.Value.Month == dateTime.Month && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == idParking
                                    select new { mi.TotalPrice }).ToList();
                     var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
                     Object data = new { dateTime.Month, sumCar, sumMoto };
@@ -150,12 +150,12 @@ namespace SmartParkingApplication.Controllers
                 DateTime dateTime = DateTime.Now.AddMonths(-i);
                 //get density dataMoto base on ParkingPlace ID ( most nearly 12 months )
                 var dataMoto = (from tr in db.Transactions
-                                where (tr.TimeIn.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking)
+                                where tr.TimeIn.Value.Year == dateTime.Year && tr.TimeIn.Value.Month == dateTime.Month  && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == idParking)
                                 select new { tr.TypeOfVerhicleTran, tr.TimeIn.Value.Month }).ToList();
 
                 //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
                 var dataCar = (from tr in db.Transactions
-                               where (tr.TimeIn.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking)
+                               where tr.TimeIn.Value.Year == dateTime.Year && tr.TimeIn.Value.Month == dateTime.Month && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking)
                                select new { tr.TypeOfVerhicleTran }).ToList();
                 Object data = new { dateTime.Month, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
                 list.Add(data);
@@ -201,6 +201,21 @@ namespace SmartParkingApplication.Controllers
                     var data = new { item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
                     list.Add(data);
                 }
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult LoadDataWorkingShift(string nameStaff)
+        {
+            List<Object> list = new List<Object>();
+            for (int i = 0; i < 12; i++)
+            {
+                DateTime dateTime = DateTime.Now.AddMonths(-i);
+                var result = (from us in db.UserSchedules
+                            where us.User.Account.UserName == nameStaff && us.Schedule.TimeStart.Value.Year == dateTime.Year && us.Schedule.TimeStart.Value.Month == dateTime.Month
+                              select new { us.UserScheduleID }).ToList();
+                Object data = new { dateTime.Month, total = result.Count() };
+                list.Add(data);
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -255,28 +270,28 @@ namespace SmartParkingApplication.Controllers
 
         //    return Json(list, JsonRequestBehavior.AllowGet);
         //}
-        public List<double> ListIncome12Monthlys()
-        {
-            List<double> listMotoDestiny = new List<double>();
-            List<double> listCarDestiny = new List<double>();
-            for (int i = 0; i < 12; i++)
-            {
-                //get density dataMoto base on ParkingPlace ID ( most nearly 12 months )
-                var dataMoto = (from tr in db.Transactions
-                                where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0)
-                                select new { tr.TypeOfVerhicleTran }).ToList();
-                listMotoDestiny.Add(dataMoto.Count());
+        //public List<double> ListIncome12Monthlys()
+        //{
+        //    List<double> listMotoDestiny = new List<double>();
+        //    List<double> listCarDestiny = new List<double>();
+        //    for (int i = 0; i < 12; i++)
+        //    {
+        //        //get density dataMoto base on ParkingPlace ID ( most nearly 12 months )
+        //        var dataMoto = (from tr in db.Transactions
+        //                        where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0)
+        //                        select new { tr.TypeOfVerhicleTran }).ToList();
+        //        listMotoDestiny.Add(dataMoto.Count());
 
-                //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
-                var dataCar = (from tr in db.Transactions
-                               where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1)
-                               select new { tr.TypeOfVerhicleTran }).ToList();
-                listCarDestiny.Add(dataCar.Count());
-            }
-            listMotoDestiny.Reverse();
-            listCarDestiny.Reverse();
-            return null;
-        }
+        //        //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
+        //        var dataCar = (from tr in db.Transactions
+        //                       where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1)
+        //                       select new { tr.TypeOfVerhicleTran }).ToList();
+        //        listCarDestiny.Add(dataCar.Count());
+        //    }
+        //    listMotoDestiny.Reverse();
+        //    listCarDestiny.Reverse();
+        //    return null;
+        //}
 
 
         //public ActionResult ExportIncome12Monthlys()
