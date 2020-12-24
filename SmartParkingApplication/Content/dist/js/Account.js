@@ -17,6 +17,7 @@ function getAccountModalRole(AccountID) {
 
 //fill AccountID to modal reset password
 function getAccountModalPassword(AccountID) {
+    clearForm();
     $('#AccountIDPasEdit').val(AccountID);
     $('#myModalPassAccountEdit').modal('show');
 }
@@ -130,6 +131,10 @@ function UpdateRole() {
 
 //Reset password for account base on AccountID
 function UpdatePassword() {
+    var res = validateEditPwd();
+    if (res == false) {
+        return false;
+    }
     var AccountID = $('#AccountIDPasEdit').val();
     var Password = $('#AccountPasEdit').val();
     $.ajax({
@@ -189,7 +194,7 @@ function clearForm() {
 
 //Valdidation using jquery
 function validateAddAcc() {
-    var pwd = new RegExp('(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+    var pwd = new RegExp('((?!.*[\\s])(?=.*[A-Z])(?=.*[\\\\\!\@\#\$\&\*\+\-\/\[\\]\{\}\~\`\,\.\?\'\"\:\;\%\^\(\)\_\=\|])(?=.*\\d).{6,})');
     //Display css of error message
     var htmlcss = {
         'color': 'Red'
@@ -243,4 +248,45 @@ function validateAddAcc() {
         }
     });
     return $('#AddAccountForm').valid();
+}
+
+function validateEditPwd() {
+    var pwd = new RegExp('((?!.*[\\s])(?=.*[A-Z])(?=.*[\\\\\!\@\#\$\&\*\+\-\/\[\\]\{\}\~\`\,\.\?\'\"\:\;\%\^\(\)\_\=\|])(?=.*\\d).{6,})');
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkAccPassWordE', function (value, element) {
+        return pwd.test(value);
+    }, 'Mật khấu >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)');
+    //Set rule + message for input by name
+    $('#FormEditPwd').validate({
+        rules: {
+            AccountPasEdit: {
+                required: true,
+                checkAccPassWordE: true
+            }
+        },
+        messages: {
+            AccountPasEdit: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormEditPwd').valid();
 }
