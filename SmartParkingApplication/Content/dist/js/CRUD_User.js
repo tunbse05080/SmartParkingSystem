@@ -673,6 +673,7 @@ function ComboboxParkingPlace() {
             $("#cbparkingPlaceEmpEdit").html(html);
             $("#cbparkingPlaceWorkingCalendar").html(html);
             $("#cbNameParkingPlaceHistory").html(html);
+            $("#cbparkingPlaceWS").html(html);
         },
         error: function (errormessage) {
             //alert(errormessage.responseText);

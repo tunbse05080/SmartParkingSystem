@@ -222,10 +222,16 @@ function getNameStaff(check) {
 }
 
 function ComboboxUserName(check) {
+    var ParkingPlaceID;
     if (check == 1) {
         ParkingPlaceID = $('#cbparkingPlaceEmp').val();
-    } else {
+    } else if (check == 2) {
         ParkingPlaceID = $('#cbparkingPlaceEmpEdit').val();
+    } else {
+        ParkingPlaceID = $('#cbparkingPlaceWS').val();
+    }
+    if (!ParkingPlaceID) {
+        ParkingPlaceID = 1;
     }
     $.ajax({
         url: "/ManageUser/ComboboxUserName",
@@ -245,10 +251,17 @@ function ComboboxUserName(check) {
                     placeholder: "Chọn tên tài khoản",
                     allowClear: true
                 });
-            } else {
+            } else if (check == 2) {
                 $("#cbUserNameEmpEdit").html(html);
                 $('#cbUserNameEmpEdit').val(null).trigger('change');
                 $("#cbUserNameEmpEdit").select2({
+                    placeholder: "Chọn tên tài khoản",
+                    allowClear: true
+                });
+            } else {
+                $('#cbUserNameWS').html(html);
+                $('#cbUserNameWS').val(null).trigger('change');
+                $("#cbUserNameWS").select2({
                     placeholder: "Chọn tên tài khoản",
                     allowClear: true
                 });

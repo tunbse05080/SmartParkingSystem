@@ -200,7 +200,7 @@ namespace SmartParkingApplication.Controllers
         public JsonResult ComboboxUserName(int ParkingPlaceID)
         {
             var result = (from u in db.Users
-                          where u.ParkingPlaceID == ParkingPlaceID
+                          where u.ParkingPlaceID == ParkingPlaceID && u.Account.RoleID == 1
                           select new { u.UserID, u.Account.UserName }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }

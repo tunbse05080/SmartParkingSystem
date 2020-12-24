@@ -32,6 +32,11 @@ namespace SmartParkingApplication.Controllers
             return View();
         }
 
+        public ActionResult WorkingShiftStatistic()
+        {
+            return View();
+        }
+
         //Load Chart IncomeStatistic
         public JsonResult LoadDataIncome(int idParking, int idTypeOfTicket)
         {
@@ -205,18 +210,20 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult LoadDataWorkingShift(string nameStaff)
+        //count number shift of staff follow username ( most nearly 12 months )
+        public JsonResult LoadDataWorkingShift(int id)
         {
             List<Object> list = new List<Object>();
             for (int i = 0; i < 12; i++)
             {
                 DateTime dateTime = DateTime.Now.AddMonths(-i);
                 var result = (from us in db.UserSchedules
-                            where us.User.Account.UserName == nameStaff && us.Schedule.TimeStart.Value.Year == dateTime.Year && us.Schedule.TimeStart.Value.Month == dateTime.Month
+                            where us.User.Account.AccountID == id && us.Schedule.TimeStart.Value.Year == dateTime.Year && us.Schedule.TimeStart.Value.Month == dateTime.Month
                               select new { us.UserScheduleID }).ToList();
                 Object data = new { dateTime.Month, total = result.Count() };
                 list.Add(data);
             }
+            list.Reverse();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

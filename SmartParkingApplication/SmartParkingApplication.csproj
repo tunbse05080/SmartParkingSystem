@@ -173,6 +173,7 @@
     <Content Include="Content\dist\js\CRUD_ParkingPlace.js" />
     <Content Include="Content\dist\js\jsbootrap.js" />
     <Content Include="Content\dist\js\JSLogin.js" />
+    <Content Include="Content\dist\js\WorkingShiftStatistic.js" />
     <Content Include="Content\LoginCss.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
@@ -2202,6 +2203,7 @@
     <Content Include="Views\Setting\SVDetails.cshtml" />
     <Content Include="Views\Setting\Edit.cshtml" />
     <Content Include="Views\ManagePPlace\HistoryParking.cshtml" />
+    <Content Include="Views\StatisticReport\WorkingShiftStatistic.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
