@@ -357,8 +357,11 @@ namespace SmartParkingApplication.Controllers
         {
             UserSchedule userSchedule = db.UserSchedules.Find(id);
             userSchedule.UserID = userid;
-            UserSchedule userScheduleUpdated = UpdateWorkingcalendar(userSchedule);
-            return Json(userScheduleUpdated.UserScheduleID, JsonRequestBehavior.AllowGet);
+            if (checkUserSchedule(userid, userSchedule.Schedule) == true)
+            {
+                UpdateWorkingcalendar(userSchedule);
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public int IsCreatedSchedule(Schedule schedule)
@@ -377,7 +380,7 @@ namespace SmartParkingApplication.Controllers
         public bool checkUserSchedule(int UserID, Schedule schedule)
         {
             var result = (from s in db.UserSchedules
-                          where DateTime.Compare((DateTime)s.Schedule.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.Schedule.TimeEnd, (DateTime)schedule.TimeEnd) == 0 && s.Schedule.ParkingPlaceID == schedule.ParkingPlaceID && s.UserID == UserID
+                          where DateTime.Compare((DateTime)s.Schedule.TimeStart, (DateTime)schedule.TimeStart) == 0 && DateTime.Compare((DateTime)s.Schedule.TimeEnd, (DateTime)schedule.TimeEnd) == 0 && s.UserID == UserID
                           select new { s.UserScheduleID }).FirstOrDefault();
                          
             if(result != null) {
@@ -420,14 +423,13 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Update UserSchedule
-        public UserSchedule UpdateWorkingcalendar(UserSchedule userSchedule)
+        public void UpdateWorkingcalendar(UserSchedule userSchedule)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(userSchedule).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return userSchedule;
         }
 
         //Export Working Calendar
