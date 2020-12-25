@@ -225,7 +225,7 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             var result = (from us in db.UserSchedules
                           where us.User.ParkingPlaceID == ParkingPlaceID
-                          select new { us.ScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
+                          select new { us.UserScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -357,8 +357,8 @@ namespace SmartParkingApplication.Controllers
         {
             UserSchedule userSchedule = db.UserSchedules.Find(id);
             userSchedule.UserID = userid;
-            UpdateWorkingcalendar(userSchedule);
-            return Json("",JsonRequestBehavior.AllowGet);
+            UserSchedule userScheduleUpdated = UpdateWorkingcalendar(userSchedule);
+            return Json(userScheduleUpdated.UserScheduleID, JsonRequestBehavior.AllowGet);
         }
 
         public int IsCreatedSchedule(Schedule schedule)
@@ -420,14 +420,14 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Update UserSchedule
-        public JsonResult UpdateWorkingcalendar(UserSchedule userSchedule)
+        public UserSchedule UpdateWorkingcalendar(UserSchedule userSchedule)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(userSchedule).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return Json(userSchedule, JsonRequestBehavior.AllowGet);
+            return userSchedule;
         }
 
         //Export Working Calendar
