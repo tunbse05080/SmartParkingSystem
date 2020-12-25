@@ -27,3 +27,24 @@ function getSVDetailByID() {
     });
     return false;
 }
+function ComboboxGender() {
+    $.ajax({
+        url: "/ManageUser/ComboboxGender",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            var html = '';
+            var i = 0;
+            $.each(result, function (key, item) {
+                html += '<option value="' + i + '">' + item + '</option>';
+                i++;
+            });
+            $("#cbGender").html(html);
+            $("#cbGenderEdit").html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
