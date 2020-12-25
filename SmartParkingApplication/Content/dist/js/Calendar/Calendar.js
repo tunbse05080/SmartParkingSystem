@@ -48,7 +48,7 @@ function LoadDataCalendar() {
             let evenArr = [];
             $.each(result, function (key, item) {
                 let evenObj = {
-                    id: item.UserScheduleID,
+                    id: item.ScheduleID,
                     title: item.Name,
                     start: getFormatDatetime(item.TimeStart),
                     end: getFormatDatetime(item.TimeEnd)

@@ -194,7 +194,7 @@ function clearForm() {
 
 //Valdidation using jquery
 function validateAddAcc() {
-    var pwd = new RegExp('((?!.*[\\s])(?=.*[A-Z])(?=.*[\\\\\!\@\#\$\&\*\+\-\/\[\\]\{\}\~\`\,\.\?\'\"\:\;\%\^\(\)\_\=\|])(?=.*\\d).{6,})');
+    var pwd = new RegExp('((?!.*[\\s])(?=.*[A-Z])(?=.*[a-z])(?=.*[\\\\\!\@\#\$\&\*\+\-\/\[\\]\{\}\~\`\,\.\?\'\"\:\;\%\^\(\)\_\=\|])(?=.*\\d).{6,})');
     //Display css of error message
     var htmlcss = {
         'color': 'Red'
@@ -251,7 +251,7 @@ function validateAddAcc() {
 }
 
 function validateEditPwd() {
-    var pwd = new RegExp('((?!.*[\\s])(?=.*[A-Z])(?=.*[\\\\\!\@\#\$\&\*\+\-\/\[\\]\{\}\~\`\,\.\?\'\"\:\;\%\^\(\)\_\=\|])(?=.*\\d).{6,})');
+    var pwd = new RegExp('((?!.*[\\s])(?=.*[A-Z])(?=.*[a-z])(?=.*[\\\\\!\@\#\$\&\*\+\-\/\[\\]\{\}\~\`\,\.\?\'\"\:\;\%\^\(\)\_\=\|])(?=.*\\d).{6,})');
     //Display css of error message
     var htmlcss = {
         'color': 'Red'
