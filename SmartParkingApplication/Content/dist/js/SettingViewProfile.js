@@ -48,3 +48,33 @@ function ComboboxGender() {
         }
     });
 }
+function UpdateUserView() {
+
+    var empObj = {
+        UserID: $('#IdEdit').val(),
+        Name: $('#FullNameEdit').val(),
+        DateOfBirth: $('#DateOfBirthEdit').val(),
+        Gender: $('#cbGenderEdit').val(),
+        UserAddress: $('#AddressEdit').val(),
+        Phone: $('#PhoneNumberEdit').val(),
+        email: $('#EmailEdit').val(),
+        IdentityCard: $('#IdentityCardEdit').val(),
+        StatusOfWork: $('#StatusOfWorkingEdit').val(),
+        AccountID: $('#AccountID').val(),
+        ParkingPlaceID: $('#cbparkingPlaceUEdit').val(),
+
+    };
+    $.ajax({
+        url: "/ManageUser/Update",
+        data: JSON.stringify(empObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
