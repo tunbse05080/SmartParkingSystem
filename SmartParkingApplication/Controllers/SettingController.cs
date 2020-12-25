@@ -77,6 +77,16 @@ namespace SmartParkingApplication.Controllers
             return View(dataEdit);
 
         }
-      
+        public JsonResult Update(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
     }
 }
