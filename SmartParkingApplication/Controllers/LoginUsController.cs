@@ -18,13 +18,14 @@ namespace SmartParkingApplication.Controllers
 
             
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(string username, string password)
         {
             if (ModelState.IsValid)
             {
-                var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password)).ToList();
+                var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password)&& s.Account.RoleID != 1).ToList();
                 if (data.Count() > 0)
                 {
                     string name = data.FirstOrDefault().Account.UserName; 
@@ -33,13 +34,14 @@ namespace SmartParkingApplication.Controllers
                     Session["Name"] = data.FirstOrDefault().Name;
                     Session["idAccount"] = data.FirstOrDefault().AccountID;
                     FormsAuthentication.SetAuthCookie(name, false);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ViewBag.ErrorMessage = "Đăng nhập lỗi";
+
                    
-                    return RedirectToAction("Index");
                     //ViewBag.ErrorMessage = "Đăng nhập lỗi";
                 }
                 

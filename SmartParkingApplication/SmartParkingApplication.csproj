@@ -2204,6 +2204,7 @@
     <Content Include="Views\Setting\Edit.cshtml" />
     <Content Include="Views\ManagePPlace\HistoryParking.cshtml" />
     <Content Include="Views\StatisticReport\WorkingShiftStatistic.cshtml" />
+    <Content Include="Views\Setting\UpdateUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

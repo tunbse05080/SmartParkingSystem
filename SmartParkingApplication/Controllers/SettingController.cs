@@ -14,7 +14,7 @@ namespace SmartParkingApplication.Controllers
         // GET: Setting
         public ActionResult Index(int id)
         {
-            var result = db.Users.Where(x=>x.UserID ==id);
+            var result = db.Users.Where(x => x.UserID == id);
             ViewBag.name = result;
             return View();
         }
@@ -37,7 +37,7 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public ActionResult SVDetails(string Name, int id)
-        { 
+        {
 
             var result = db.Users.Where(x => x.AccountID == id).ToList();
 
@@ -54,58 +54,29 @@ namespace SmartParkingApplication.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,UserAddress,DateOfBirth,email,Phone,IdentityCard,Gender")] User _post)
+        public ActionResult Edit([Bind(Include = "UserID,UserAddress,email,Phone,IdentityCard")] User _post)
         {
 
             if (ModelState.IsValid)
             {
                 var data = db.Users.Find(_post.UserID);
-                data.Gender = _post.Gender;
-              
+                
 
 
                 data.IdentityCard = _post.IdentityCard;
                 data.Phone = _post.Phone;
                 data.email = _post.email;
-                data.DateOfBirth = _post.DateOfBirth;
+              
                 data.UserAddress = _post.UserAddress;
                 db.Entry(data).State = EntityState.Modified;
                 db.SaveChanges();
                 // return Json(_post);
-                return RedirectToAction("Index", "Setting", new{ id = _post.UserID } );
+                return RedirectToAction("Index", "Setting", new { id = _post.UserID });
             }
             var dataEdit = db.Users.Where(s => s.UserID == _post.UserID).FirstOrDefault();
             return View(dataEdit);
 
         }
-        public JsonResult Details(int id)
-        {
-            var user = db.Users.Find(id);
-            var gender = "";
-            var dateOfBirth = "";
-            var statusOfwork = "";
-            if (user.Gender == 1)
-            {
-                gender = "Nữ";
-            }
-            else
-            {
-                gender = "Nam";
-            }
-            if (user.StatusOfwork == 0)
-            {
-                statusOfwork = "Đang trong ca";
-            }
-            else
-            {
-                statusOfwork = "Không trong ca";
-            }
-            var status = user.StatusOfwork;
-            dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
-            //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
-            //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, user.Account.Role.RoleName, user.StatusOfwork, statusOfwork, user.AccountID, user.Account.UserName, user.Gender, user.ParkingPlaceID };
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+      
     }
 }

@@ -34,6 +34,8 @@ namespace SmartParkingApplication.Models
         public Nullable<int> ParkingPlaceID { get; set; }
         public Nullable<int> AccountID { get; set; }
         public Nullable<int> StatusOfwork { get; set; }
+
+       
     
         public virtual Account Account { get; set; }
         public virtual ParkingPlace ParkingPlace { get; set; }
