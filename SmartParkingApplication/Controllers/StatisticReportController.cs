@@ -147,7 +147,6 @@ namespace SmartParkingApplication.Controllers
                     list.Add(data);
                 }
             }
-           
             list.Add(new { name = "Tổng tiền", sumMoto =  totalMoto, sumCar = totalCar, totalAll = totalMoto + totalCar });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -181,6 +180,8 @@ namespace SmartParkingApplication.Controllers
             var result = (from tr in db.ParkingPlaces
                           select new { tr.ParkingPlaceID, tr.NameOfParking }).ToList();
             List<Object> list = new List<object>();
+            var totalMoto = 0;
+            var totalCar = 0;
             if (choice == 0)
             {
                 foreach (var item in result)
@@ -193,7 +194,9 @@ namespace SmartParkingApplication.Controllers
                     var dataCar = (from tr in db.Transactions
                                    where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.TimeIn.Value.Month == DateTime.Now.Month && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
                                    select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
-                    var data = new { item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                    var data = new { name = item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                    totalMoto += dataMoto.Count();
+                    totalCar += dataCar.Count();
                     list.Add(data);
                 }
             }
@@ -209,10 +212,13 @@ namespace SmartParkingApplication.Controllers
                     var dataCar = (from tr in db.Transactions
                                    where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
                                    select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
-                    var data = new { item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                    var data = new { name = item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                    totalMoto += dataMoto.Count();
+                    totalCar += dataCar.Count();
                     list.Add(data);
                 }
             }
+            list.Add(new { name = "Tổng lượt xe", dataMoto = totalMoto, dataCar = totalCar });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

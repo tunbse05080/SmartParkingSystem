@@ -34,16 +34,27 @@ function loadChartCarDensityAll() {
         dataType: "json",
         success: function (result) {
             var html = '';
+            var htmlHide = '';
             $.each(result, function (key, item) {
                 html += '<tr>';
-                html += '<td>' + item.NameOfParking + '</td>';
+                html += '<td>' + item.name + '</td>';
                 html += '<td>' + item.dataMoto + '</td>';
                 html += '<td>' + item.dataCar + '</td>';
                 html += '</tr>';
+                if (item.name != "Tổng lượt xe") {
+                    htmlHide += '<tr>';
+                    htmlHide += '<td>' + item.name + '</td>';
+                    htmlHide += '<td>' + item.dataMoto + '</td>';
+                    htmlHide += '<td>' + item.dataCar + '</td>';
+                    htmlHide += '</tr>';
+                }
             });
+            //table hide
+            $('#tbodyChartCarDensityAllHide').html(htmlHide);
+
             $('#tbodyChartCarDensityAll').html(html);
             $('#tbChartCarDensityAll').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": false, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf"]
             }).buttons().container().appendTo('#tbChartCarDensityAll_wrapper .col-md-6:eq(0)');
             ChartCarDensityAll();
@@ -54,11 +65,10 @@ function loadChartCarDensityAll() {
     });
 }
 
-
 function ChartCarDensityAll() {
     Highcharts.chart('ChartCarDensityAll', {
         data: {
-            table: 'tbChartCarDensityAll'
+            table: 'tbChartCarDensityAllHide'
         },
         chart: {
             type: 'column'
