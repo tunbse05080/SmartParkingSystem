@@ -63,10 +63,6 @@ function clearTextBoxCard() {
 }
 
 function AddCard(number) {
-    var res = validateAddCard();
-    if (res == false) {
-        return false;
-    }
     var empCardObj = {
         CardNumber: number,
         Date: $('#Date').val(),
@@ -215,10 +211,11 @@ function ReportCardBreak() {
 }
 
 function CheckChange() {
-    var temp = '0000000000';
-    if ($('#CardNumber').val().length >= temp.length) {
-        var data = $('#CardNumber').val().substring(0, 10);
-        AddCard(data);
+    var res = validateAddCard();
+    if (res == false) {
+        return false
+    } else {
+        AddCard($('#CardNumber').val());
     }
 }
 
@@ -356,4 +353,46 @@ function validateUpdateCard() {
         }
     });
     return $('#FormEditCard').valid();
+}
+
+function validateAddCard() {
+    var rfidCard = new RegExp('^[0-9]{10,}$');
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkCardAdd', function (value, element) {
+        return rfidCard.test(value);
+    });
+    //Set rule + message for input by name
+    $('#FormAddCard').validate({
+        rules: {
+            CardNumber: {
+                required: true,
+                checkCardAdd: true
+            }
+        },
+        messages: {
+            CardNumber: {
+                required: '*Bắt buộc.',
+                checkCardAdd: 'Số thẻ sai định dạng(>9 số).'
+            }
+        }
+    });
+    return $('#FormAddCard').valid();
 }

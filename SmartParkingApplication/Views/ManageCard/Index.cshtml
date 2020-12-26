@@ -76,31 +76,33 @@
                         <div class="modal fade" id="myModalCard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width:110%">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Thêm thẻ </h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="Id">Id</label>
-                                            <input type="text" class="form-control" id="CardID" placeholder="Id" disabled />
+                                    <form id="FormAddCard">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Thêm thẻ </h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="CardNumber">Số thẻ</label>
-                                            <input type="text" class="form-control" id="CardNumber" placeholder="Số thẻ" oninput="return CheckChange()"/>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="Id">Id</label>
+                                                <input type="text" class="form-control" id="CardID" placeholder="Id" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="CardNumber">Số thẻ</label>
+                                                <input type="text" class="form-control" id="CardNumber" name="CardNumber" placeholder="Số thẻ" oninput="return CheckChange()" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Date">Ngày nhập</label>
+                                                <input type="text" class="form-control" id="Date" placeholder="Ngày nhập" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Status">Trạng thái thẻ</label>
+                                                <input type="text" class="form-control" id="Status" placeholder="Chưa sử dụng" disabled />
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="Date">Ngày nhập</label>
-                                            <input type="text" class="form-control" id="Date" placeholder="Ngày nhập" disabled />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="Status">Trạng thái thẻ</label>
-                                            <input type="text" class="form-control" id="Status" placeholder="Chưa sử dụng" disabled />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
