@@ -144,53 +144,42 @@
                             <!--End quản lí bãi đỗ-->
                         }
                         <!--Quản lí vé-->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-ticket-alt"></i>
-                                <p>
-                                    Quản lí vé và thẻ
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
-                                {
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Index", "ManageTicket")" class="nav-link">
-                                            <i class="nav-icon fas fa-ticket-alt"></i>
-                                            <p>
-                                                Quản lí vé
-                                            </p>
-                                        </a>
-                                    </li>
-                                }
-                                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                                {
-                                    <!--Quản lí thẻ-->
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Index", "ManageCard")" class="nav-link">
-                                            <i class="nav-icon fas fa-credit-card"></i>
-                                            <p>
-                                                Quản lí thẻ
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <!--End quản lí thẻ-->
-                                }
-                                @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
-                                {
-                                    <!--Thiết lập giá vé-->
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Index", "SettingPrice")" class="nav-link">
-                                            <i class="nav-icon fas fa-dollar-sign"></i>
-                                            <p>
-                                                Thiết lập giá vé
-                                            </p>
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </li> <!--End quản lí vé-->
+                        @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "ManageTicket")" class="nav-link">
+                                    <i class="nav-icon fas fa-ticket-alt"></i>
+                                    <p>
+                                        Quản lí vé
+                                    </p>
+                                </a>
+                            </li><!--End quản lí vé-->
+                        }
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <!--Quản lí thẻ-->
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "ManageCard")" class="nav-link">
+                                    <i class="nav-icon fas fa-credit-card"></i>
+                                    <p>
+                                        Quản lí thẻ
+                                    </p>
+                                </a>
+                            </li>
+                            <!--End quản lí thẻ-->
+                        }
+                        @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
+                        {
+                            <!--Thiết lập giá vé-->
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "SettingPrice")" class="nav-link">
+                                    <i class="nav-icon fas fa-dollar-sign"></i>
+                                    <p>
+                                        Thiết lập giá vé
+                                    </p>
+                                </a>
+                            </li>
+                        }
                         @if (Request.IsAuthenticated && User.IsInRole("Quản lý"))
                         {
                             <!--Thống kê-->

@@ -309,50 +309,6 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //get datetime and update schedule for user
-        //public JsonResult GetTimeToUpdateCalendar(Schedule schedule, int UserID)
-        //{
-        //    //get number day between dateStart and dateEnd
-        //    TimeSpan timeSpan = (TimeSpan)(schedule.TimeEnd - schedule.TimeStart);
-        //    //update UserSchedule for each date
-        //    for (int i = 0; i <= timeSpan.Days; i++)
-        //    {
-        //        //declare timeStart and timeEnd
-        //        DateTime timeStart = DateTime.Now;
-        //        DateTime timeEnd = DateTime.Now;
-        //        List<DateTime> list = GetTimeByShift(schedule);
-        //        timeStart = list.First();
-        //        timeEnd = list.Last();
-        //        //each for, timeStart increase 1 day
-        //        timeStart = timeStart.AddDays(i);
-        //        //each for, timeEnd increase 2 days if shift 3
-        //        if (schedule.Slot == 3)
-        //        {
-        //            timeEnd = timeEnd.AddDays(i + 1);
-        //        }
-        //        else
-        //        {
-        //            timeEnd = timeEnd.AddDays(i);
-        //        }
-        //        Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot , ParkingPlaceID = schedule.ParkingPlaceID};
-        //        //check Schedule exist or not
-        //        if (IsCreatedSchedule(newSchedule) != 0)
-        //        {
-        //            int scheduleID = IsCreatedSchedule(newSchedule);
-        //            //check UserSchedule exist or not
-        //            if (IsCreatedUserSchedule(scheduleID).UserScheduleID != 0)
-        //            {
-        //                //find UserSchedule base on ScheduleID
-        //                UserSchedule userSchedule = IsCreatedUserSchedule(scheduleID);
-        //                userSchedule.UserID = UserID;
-        //                UpdateWorkingcalendar(userSchedule);
-        //            }
-        //        }
-        //    }
-        //    var result = "";
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
-
         public JsonResult UpdateWorkingShift(int id, int userid)
         {
             UserSchedule userSchedule = db.UserSchedules.Find(id);

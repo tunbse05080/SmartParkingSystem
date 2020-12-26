@@ -218,7 +218,7 @@ namespace SmartParkingApplication.Controllers
             {
                 DateTime dateTime = DateTime.Now.AddMonths(-i);
                 var result = (from us in db.UserSchedules
-                            where us.User.Account.AccountID == id && us.Schedule.TimeStart.Value.Year == dateTime.Year && us.Schedule.TimeStart.Value.Month == dateTime.Month
+                            where us.User.UserID == id && us.Schedule.TimeStart.Value.Year == dateTime.Year && us.Schedule.TimeStart.Value.Month == dateTime.Month
                               select new { us.UserScheduleID }).ToList();
                 Object data = new { dateTime.Month, total = result.Count() };
                 list.Add(data);
