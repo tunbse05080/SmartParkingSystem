@@ -34,7 +34,7 @@ function loadChartIncome() {
         url: "/StatisticReport/LoadDataIncome",
         type: "POST",
         contents: "application/json",
-        data: { idParking: idParking, idTypeOfTicket: idTypeOfTicket},
+        data: { idParking: idParking, idTypeOfTicket: idTypeOfTicket },
         dataType: "json",
         success: function (result) {
             var html = '';
@@ -93,6 +93,7 @@ function loadChartIncomeAll() {
         dataType: "json",
         success: function (result) {
             var html = '';
+            var htmlHide = '';
             $.each(result, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.name + '</td>';
@@ -100,13 +101,24 @@ function loadChartIncomeAll() {
                 html += '<td>' + item.sumCar + '</td>';
                 html += '<td>' + item.totalAll + '</td>';
                 html += '</tr>';
+                if (item.name != "Tổng tiền") {
+                    //tbody hide
+                    htmlHide += '<tr>';
+                    htmlHide += '<td>' + item.name + '</td>';
+                    htmlHide += '<td>' + item.sumMoto + '</td>';
+                    htmlHide += '<td>' + item.sumCar + '</td>';
+                    htmlHide += '</tr>';
+                }
             });
+            //table hide
+            $('#tbodyChartIncomeAllHide').html(htmlHide);
+
             $('#tbodyChartIncomeAll').html(html);
             $('#tbChartIncomeAll').DataTable({
                 "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": false, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf"]
             }).buttons().container().appendTo('#tbChartIncomeAll_wrapper .col-md-6:eq(0)');
-            ChartIncomeAll()
+            ChartIncomeAll();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -114,10 +126,10 @@ function loadChartIncomeAll() {
     });
 }
 
-function ChartIncomeAll(length) {
+function ChartIncomeAll() {
     Highcharts.chart('ChartIncomeAll', {
         data: {
-            table: 'tbChartIncomeAll'
+            table: 'tbChartIncomeAllHide'
         },
         chart: {
             type: 'column'

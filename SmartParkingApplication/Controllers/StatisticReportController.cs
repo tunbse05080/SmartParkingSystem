@@ -141,7 +141,8 @@ namespace SmartParkingApplication.Controllers
 
                     var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
                     var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
-
+                    totalMoto += (int)sumMoto;
+                    totalCar += (int)sumCar;
                     Object data = new { name = item.NameOfParking, sumMoto, sumCar, totalAll = sumMoto + sumCar };
                     list.Add(data);
                 }
