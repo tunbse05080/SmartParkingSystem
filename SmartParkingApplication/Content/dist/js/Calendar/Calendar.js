@@ -127,6 +127,10 @@ function CreateWorkingCalendar() {
 
 
 function EditWorkingCalendar() {
+    var res = validateEditCal();
+    if (res == false) {
+        return false;
+    }
     var id = $('#IdEditWorkingCalendar').val();
     var userid = $('#cbUserNameEmpEdit').val();
     $.ajax({
@@ -566,50 +570,16 @@ function validateEditCal() {
             error.appendTo($(element).parent()).css(htmlcss);
         }
     });
-    //Set custom valid by rule
-    $.validator.addMethod('checkDateAppE', function (value, element) {
-        return new Date(value) > new Date();
-    });
-    $.validator.addMethod('checkDateStartE', function (value, element) {
-        return new Date(value) > new Date() && new Date(value) < new Date($('#DateEndEdit').val());
-    });
-    $.validator.addMethod('checkDateEndE', function (value, element) {
-        return new Date(value) > new Date() && new Date(value) > new Date($('#DateStartEdit').val());
-    });
     //Set rule + message for input by name
     $('#FormEditWC').validate({
         rules: {
             cbUserNameEmpEdit: {
                 required: true
-            },
-            DateApplyEdit: {
-                required: true,
-                checkDateAppE: true
-            },
-            DateStartEdit: {
-                required: true,
-                checkDateStartE: true
-            },
-            DateEndEdit: {
-                required: true,
-                checkDateEndE: true
             }
         },
         messages: {
             cbUserNameEmpEdit: {
                 required: '*Bắt buộc.'
-            },
-            DateApplyEdit: {
-                required: '*Bắt buộc.',
-                checkDateAppE: 'Lịch phải lớn hơn hiện tại!'
-            },
-            DateStartEdit: {
-                required: '*Bắt buộc.',
-                checkDateStartE: 'Phải lớn hơn hiện tại và nhỏ hơn thời gian kết thúc!'
-            },
-            DateEndEdit: {
-                required: '*Bắt buộc.',
-                checkDateEndE: 'Phải lớn hơn hiện tại và lớn hơn thời gian bắt đầu!'
             }
         }
     });
