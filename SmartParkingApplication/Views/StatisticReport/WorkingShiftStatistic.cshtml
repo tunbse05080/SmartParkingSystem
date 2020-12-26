@@ -30,19 +30,38 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong style="font-size:x-large">Bãi đỗ</strong>
-                            <select class="form-control w-25" onchange="ComboboxUserName(3)" id="cbparkingPlaceWS">
-                            </select><br />
-                            <strong style="font-size:x-large">Nhân viên</strong><br />
-                            <select class="form-control w-25" onchange="loadChartWorkingShift()" id="cbUserNameWS">
-                            </select><br />
+                            @*<div id="KindOfWorkingShiftStatistic">
+                                <strong style="font-size:x-large">Chọn loại thống kê</strong>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="cbKindOfStatisticWorkingShift" onchange="KindOfStatisticWorkingShift();loadChartWorkingShift()">
+                                            <option value="0">Tất cả nhân viên</option>
+                                            <option value="1">Từng nhân viên</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="cbChoiceTimeWorkingShift" onchange="loadChartWorkingShiftAll()">
+                                            <option value="0">Trong tháng này</option>
+                                            <option value="1">Trong năm này</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>*@
+                            @*<div id="eachParkingWorkingShift">*@
+                                <strong style="font-size:x-large">Bãi đỗ</strong>
+                                <select class="form-control w-25" onchange="ComboboxUserName(3)" id="cbparkingPlaceWS">
+                                </select><br />
+                                <strong style="font-size:x-large">Nhân viên</strong><br />
+                                <select class="form-control w-25" onchange="loadChartWorkingShift()" id="cbUserNameWS">
+                                </select><br />
+                            @*</div>*@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div id="ChartWorkingShift"></div>
-                            <div class="row" id="dvChartWorkingShift" hidden>
+                            <div class="row" id="dvChartWorkingShift">
                                 <div class="col-sm-6">
-                                    <table id="tbChartWorkingShift" class="table table-bordered table-hover">
+                                    <table id="tbChartWorkingShift" class="table table-bordered table-hover" hidden>
                                         <thead>
                                             <tr>
                                                 <th>Tháng</th>
@@ -53,6 +72,20 @@
                                     </table>
                                 </div>
                             </div>
+                            @*<div id="dvChartWorkingShiftAll">
+                                <table id="tbChartWorkingShiftAll" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên Nhân viên</th>
+                                            @foreach(var item in ViewData["12Monthlys"] as List<string>)
+                                            {
+                                                <th>@item.ToString()</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody" id="tbodyChartWorkingShiftAll"></tbody>
+                                </table>
+                            </div>*@
                         </div>
                         <!-- /.card-body -->
                     </div>

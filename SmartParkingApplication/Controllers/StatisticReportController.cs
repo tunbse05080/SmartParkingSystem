@@ -34,6 +34,14 @@ namespace SmartParkingApplication.Controllers
 
         public ActionResult WorkingShiftStatistic()
         {
+            //List<string> list = new List<string>();
+            //for(int i = 0; i < 12; i++)
+            //{
+            //    DateTime dateTime = DateTime.Now.AddMonths(-i);
+            //    list.Add("Tháng " + dateTime.Month);
+            //}
+            //list.Reverse();
+            //ViewData["12Monthlys"] = list;
             return View();
         }
 
@@ -238,6 +246,31 @@ namespace SmartParkingApplication.Controllers
             list.Reverse();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+
+        ////count number shift of all staff ( most nearly 12 months )
+        //public JsonResult LoadDataWorkingShiftAll()
+        //{
+        //    var allStaff = (from u in db.Users
+        //                        where u.Account.StatusOfAccount == 0 && u.Account.RoleID == 1
+        //                        select new { u.UserID, u.Name }).ToList();
+        //    List<Object> listAll = new List<Object>();
+        //    foreach (var item in allStaff)
+        //    {
+        //        List<Object> list = new List<Object>();
+        //        for (int i = 0; i < 12; i++)
+        //        {
+        //            DateTime dateTime = DateTime.Now.AddMonths(-i);
+        //            var result = (from us in db.UserSchedules
+        //                          where us.User.UserID == item.UserID && us.Schedule.TimeStart.Value.Year == dateTime.Year && us.Schedule.TimeStart.Value.Month == dateTime.Month
+        //                          select new { us.UserScheduleID }).ToList();
+        //            Object data = new { item.Name, total = result.Count() };
+        //            list.Add(data);
+        //        }
+        //        list.Reverse();
+        //        listAll.Add(list);
+        //    }
+        //    return Json(listAll, JsonRequestBehavior.AllowGet);
+        //}
 
         //Load data report income base on parkingplace, date, workingShift
         public JsonResult LoadDataIncomeReport(int id, DateTime dateTime, int workingShift)
