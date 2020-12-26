@@ -95,14 +95,15 @@ function loadChartIncomeAll() {
             var html = '';
             $.each(result, function (key, item) {
                 html += '<tr>';
-                html += '<td>' + item.NameOfParking + '</td>';
+                html += '<td>' + item.name + '</td>';
                 html += '<td>' + item.sumMoto + '</td>';
                 html += '<td>' + item.sumCar + '</td>';
+                html += '<td>' + item.totalAll + '</td>';
                 html += '</tr>';
             });
             $('#tbodyChartIncomeAll').html(html);
             $('#tbChartIncomeAll').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": false, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf"]
             }).buttons().container().appendTo('#tbChartIncomeAll_wrapper .col-md-6:eq(0)');
             ChartIncomeAll()

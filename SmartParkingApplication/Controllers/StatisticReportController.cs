@@ -88,6 +88,8 @@ namespace SmartParkingApplication.Controllers
             var result = (from tr in db.ParkingPlaces
                           select new { tr.ParkingPlaceID, tr.NameOfParking }).ToList();
             List<Object> list = new List<object>();
+            var totalMoto = 0;
+            var totalCar = 0;
             if (choice == 0)
             {
                 foreach (var item in result)
@@ -111,8 +113,9 @@ namespace SmartParkingApplication.Controllers
 
                     var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
                     var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
-
-                    Object data = new { item.NameOfParking, sumMoto, sumCar };
+                    totalMoto += (int)sumMoto;
+                    totalCar += (int)sumCar;
+                    Object data = new { name = item.NameOfParking, sumMoto, sumCar, totalAll = sumMoto + sumCar };
                     list.Add(data);
                 }
             }
@@ -139,10 +142,12 @@ namespace SmartParkingApplication.Controllers
                     var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
                     var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
 
-                    Object data = new { item.NameOfParking, sumMoto, sumCar };
+                    Object data = new { name = item.NameOfParking, sumMoto, sumCar, totalAll = sumMoto + sumCar };
                     list.Add(data);
                 }
             }
+           
+            list.Add(new { name = "Tổng tiền", sumMoto =  totalMoto, sumCar = totalCar, totalAll = totalMoto + totalCar });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

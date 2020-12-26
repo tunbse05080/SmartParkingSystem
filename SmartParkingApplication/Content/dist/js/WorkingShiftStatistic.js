@@ -21,6 +21,7 @@ function loadChartWorkingShift() {
                 html += '<tr>';
                 html += '<td>Tháng' + item.Month + '</td>';
                 html += '<td>' + item.total + '</td>';
+                html += '<td>' + item.totalAll + '</td>';
                 html += '</tr>';
             });
             $('#tbodyChartWorkingShift').html(html);
