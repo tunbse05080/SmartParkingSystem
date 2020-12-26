@@ -114,7 +114,7 @@ function loadChartIncomeAll() {
     });
 }
 
-function ChartIncomeAll() {
+function ChartIncomeAll(length) {
     Highcharts.chart('ChartIncomeAll', {
         data: {
             table: 'tbChartIncomeAll'
