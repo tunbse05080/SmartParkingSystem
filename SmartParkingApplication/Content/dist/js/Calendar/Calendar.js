@@ -78,6 +78,7 @@ function initCalendar(evenArr) {
             ComboboxUserName(2);
             $('#IdEditWorkingCalendar').val(info.event.id);
             $('#FullNameEmp').val("");
+            clearForm();
             $('#myModalEditWorkingCalendar').modal("show");
             LoadDataCalendar();
         }
