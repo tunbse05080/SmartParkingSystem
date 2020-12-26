@@ -3,7 +3,20 @@
     loadChartIncomeAll();
     ComboboxNameParking();
     KindOfStatisticIncome();
+    checkChoiceDateIncome();
 });
+
+function checkChoiceDateIncome() {
+    if ($('#checkboxDateIncome').is(':checked')) {
+        $('#dvChoiceCurrentMY').hide();
+        $('#dvfromDateIncome').show();
+        $('#dvtoDateIncome').show();
+    } else {
+        $('#dvChoiceCurrentMY').show();
+        $('#dvfromDateIncome').hide();
+        $('#dvtoDateIncome').hide();
+    }
+}
 
 function KindOfStatisticIncome() {
     if ($('#cbKindOfStatisticIncome').val() == 0) {
@@ -11,12 +24,12 @@ function KindOfStatisticIncome() {
         $('#ChartIncome').hide();
         $('#dvChartIncomeAll').show();
         $('#cbChoiceTimeIncome').show();
-
     } else {
         $('#eachParkingIncome').show();
         $('#ChartIncome').show();
         $('#dvChartIncomeAll').hide();
         $('#cbChoiceTimeIncome').hide();
+        $('#dvChoiceDateIncome').hide();
     }
 }
 

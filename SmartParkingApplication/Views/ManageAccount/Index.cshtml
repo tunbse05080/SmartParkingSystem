@@ -30,15 +30,15 @@
                 <div class="col-12">
                     <div class="card">
                         <!--<div class="card-header">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <button type="button" data-toggle="modal" data-target="#myModalAccount" onclick="clearRegisterAccount();" class="btn btn-success">Đăng ký tài khoản</button>
-                                </div>-->
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" data-toggle="modal" data-target="#myModalAccount" onclick="clearRegisterAccount();" class="btn btn-success">Đăng ký tài khoản</button>
+            </div>-->
                         @*<div class="col-md-3">
-                                <button type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success">Lịch làm việc</button>
-                            </div>*@
+            <button type="button" onclick="location.href='@Url.Action("WorkingCalendar", "ManageUser")';return false;" class="btn btn-success">Lịch làm việc</button>
+        </div>*@
                         <!--</div>
-                        </div>-->
+    </div>-->
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="tbAccount" class="table table-bordered table-hover">
@@ -87,43 +87,11 @@
                                                 <label for="PassWord">Mật khẩu</label>
                                                 <input type="text" class="form-control" id="PassWordAcc" name="PassWordAcc" placeholder="Mật khẩu" />
                                             </div>
-                                            @*<div class="form-group">
-                                                    <label for="FullName">Tên đầy đủ</label>
-                                                    <input type="text" class="form-control" id="FullNameAcc" placeholder="Tên đầy đủ" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="DateOfBirth">Ngày Sinh</label>
-                                                    <input type="text" class="form-control" id="DateOfBirthAcc" placeholder="Ngày Sinh" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Gender">Giới tính</label>
-                                                    <input type="text" class="form-control" id="GenderAcc" placeholder="Giới tính" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Address">Địa chỉ</label>
-                                                    <input type="text" class="form-control" id="AddressAcc" placeholder="Địa chỉ" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="PhoneNumber">Số điện thoại</label>
-                                                    <input type="text" class="form-control" id="PhoneNumberAcc" placeholder="Số điện thoại" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Email">Email</label>
-                                                    <input type="text" class="form-control" id="EmailAcc" placeholder="Email" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="IdentityCard">Số CMND</label>
-                                                    <input type="text" class="form-control" id="IdentityCardAcc" placeholder="Số CMND" />
-                                                </div>*@
                                             <div class="form-group">
                                                 <label for="RoleName">Chức vụ</label>
                                                 <select class="form-control" id="cbRoleNameAcc" name="cbRoleNameAcc">
                                                 </select>
                                             </div>
-                                            @*<div class="form-group">
-                                                    <label for="ParkingPlace">Bãi làm việc</label>
-                                                    <input type="text" class="form-control" id="ParkingPlaceAcc" placeholder="Email" />
-                                                </div>*@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" id="btnAdd" onclick="return AddAccount();">Thêm</button>
@@ -148,17 +116,17 @@
                                             <input type="text" class="form-control" id="AccountIDEdit" placeholder="Id" />
                                         </div>
                                         @*<div class="form-group" hidden>
-                                                <label for="AccountName">Tên tài khoản</label>
-                                                <input type="text" class="form-control" id="AccountNameEdit" placeholder="Tên tài khoản" />
-                                            </div>
-                                            <div class="form-group" hidden>
-                                                <label for="PasswordEdit">Mật khẩu</label>
-                                                <input type="text" class="form-control" id="PasswordEdit" placeholder="Mật khẩu" />
-                                            </div>
-                                            <div class="form-group" hidden>
-                                                <label for="StatusOfWork">Trạng thái</label>
-                                                <input type="text" class="form-control" id="StatusAccountEdit" />
-                                            </div>*@
+                            <label for="AccountName">Tên tài khoản</label>
+                            <input type="text" class="form-control" id="AccountNameEdit" placeholder="Tên tài khoản" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="PasswordEdit">Mật khẩu</label>
+                            <input type="text" class="form-control" id="PasswordEdit" placeholder="Mật khẩu" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="StatusOfWork">Trạng thái</label>
+                            <input type="text" class="form-control" id="StatusAccountEdit" />
+                        </div>*@
 
                                         <div class="form-group">
                                             <label for="RoleName">Chức vụ</label>
@@ -216,21 +184,21 @@
                                             <input type="text" class="form-control" id="AccountIDLockAccEdit" placeholder="Id" disabled />
                                         </div>
                                         @*<div class="form-group">
-                                                <label for="AccountName">Tên tài khoản</label>
-                                                <input type="text" class="form-control" id="AccountNameStatusEdit" placeholder="Tên tài khoản" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="PasswordEdit">Mật khẩu</label>
-                                                <input type="text" class="form-control" id="PasswordStatusEdit" placeholder="Mật khẩu" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="StatusOfWork">Trạng thái</label>
-                                                <input type="text" class="form-control" id="StatusAccountStatusEdit" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="RoleNameStatusEdit">Chức vụ</label>
-                                                <input type="text" class="form-control" id="RoleNameStatusEdit" />
-                                            </div>*@
+                            <label for="AccountName">Tên tài khoản</label>
+                            <input type="text" class="form-control" id="AccountNameStatusEdit" placeholder="Tên tài khoản" />
+                        </div>
+                        <div class="form-group">
+                            <label for="PasswordEdit">Mật khẩu</label>
+                            <input type="text" class="form-control" id="PasswordStatusEdit" placeholder="Mật khẩu" />
+                        </div>
+                        <div class="form-group">
+                            <label for="StatusOfWork">Trạng thái</label>
+                            <input type="text" class="form-control" id="StatusAccountStatusEdit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="RoleNameStatusEdit">Chức vụ</label>
+                            <input type="text" class="form-control" id="RoleNameStatusEdit" />
+                        </div>*@
                                         <div class="form-group">
                                             <label for="Status">Bạn có muốn khóa tài khoản không?</label>
                                         </div>
@@ -257,21 +225,21 @@
                                             <input type="text" class="form-control" id="AccountIDUnlockAccEdit" placeholder="Id" disabled />
                                         </div>
                                         @*<div class="form-group">
-                                                <label for="AccountName">Tên tài khoản</label>
-                                                <input type="text" class="form-control" id="AccountNameStatusEdit" placeholder="Tên tài khoản" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="PasswordEdit">Mật khẩu</label>
-                                                <input type="text" class="form-control" id="PasswordStatusEdit" placeholder="Mật khẩu" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="StatusOfWork">Trạng thái</label>
-                                                <input type="text" class="form-control" id="StatusAccountStatusEdit" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="RoleNameStatusEdit">Chức vụ</label>
-                                                <input type="text" class="form-control" id="RoleNameStatusEdit" />
-                                            </div>*@
+                            <label for="AccountName">Tên tài khoản</label>
+                            <input type="text" class="form-control" id="AccountNameStatusEdit" placeholder="Tên tài khoản" />
+                        </div>
+                        <div class="form-group">
+                            <label for="PasswordEdit">Mật khẩu</label>
+                            <input type="text" class="form-control" id="PasswordStatusEdit" placeholder="Mật khẩu" />
+                        </div>
+                        <div class="form-group">
+                            <label for="StatusOfWork">Trạng thái</label>
+                            <input type="text" class="form-control" id="StatusAccountStatusEdit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="RoleNameStatusEdit">Chức vụ</label>
+                            <input type="text" class="form-control" id="RoleNameStatusEdit" />
+                        </div>*@
                                         <div class="form-group">
                                             <label for="Status">Bạn có muốn mở khóa tài khoản không?</label>
                                         </div>

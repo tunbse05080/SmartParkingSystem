@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     LoadDataAccount();
 });
 
@@ -76,12 +77,14 @@ function LoadDataAccount() {
     });
 }
 
+var checkExist;
 //send new obj account and userid to ManageAccount to update accountId in user
 function AddAccount() {
     var res = validateAddAcc();
     if (res == false) {
         return false;
     }
+    checkExist = true;
     var UserID = $('#UserIDAcc').val();
     var accObj = {
         UserName: $('#UserNameAcc').val(),
@@ -96,10 +99,18 @@ function AddAccount() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            //AddAccountForUser(result.AccountID, result.UserID);
-            $('#myModalAccount').modal('hide');
-            $('#tbAccount').DataTable().clear().destroy();
-            LoadDataAccount();
+            if (result == true) {
+                //$('#myModalDupUserName').modal("show");
+                validateAddAcc();
+                checkExist = false;
+                return false;
+            } else {
+                checkExist = true;
+                $('#myModalAccount').modal("hide");
+                $('#tbAccount').DataTable().clear().destroy();
+                LoadDataAccount();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -184,6 +195,29 @@ function UpdateStatus(status) {
     });
 }
 
+//var checkExist;
+//// check username of account exist or not 
+//function checkUserNameExist() {
+//    var UserNameAcc = $('#UserNameAcc').val();
+//    $.ajax({
+//        url: "/ManageAccount/checkUserNameExist",
+//        type: "POST",
+//        data: JSON.stringify({ UserNameAcc: UserNameAcc }),
+//        contentType: "application/json",
+//        dataType: "json",
+//        async: false,
+//        success: function (result) {
+//            if (result.UserName) {
+//                checkExist = true;
+//            } else {
+//                checkExist = false;
+//            }
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
 
 //clear form register account
 function clearForm() {
@@ -199,6 +233,7 @@ function validateAddAcc() {
     var htmlcss = {
         'color': 'Red'
     }
+    //checkUserNameExist();
     $.validator.setDefaults({
         errorClass: 'help-block',
         highlight: function (element) {
@@ -220,12 +255,17 @@ function validateAddAcc() {
     $.validator.addMethod('checkAccUserName', function (value, element) {
         return $.trim(value).length > 4;
     }, 'Tên tài khoản > 4 ký tự.');
+
+    $.validator.addMethod('checkAccUserNameExist', function (value, element) {
+        return checkExist != true;
+    }, 'Tên tài khoản đã tồn tại.');
     //Set rule + message for input by name
     $('#AddAccountForm').validate({
         rules: {
             UserNameAcc: {
                 required: true,
-                checkAccUserName: true
+                checkAccUserName: true,
+                checkAccUserNameExist: true
             },
             PassWordAcc: {
                 required: true,
@@ -233,7 +273,8 @@ function validateAddAcc() {
             },
             cbRoleNameAcc: {
                 required: true
-            }
+            },
+
         },
         messages: {
             UserNameAcc: {

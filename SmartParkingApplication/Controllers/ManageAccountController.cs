@@ -61,14 +61,22 @@ namespace SmartParkingApplication.Controllers
             return Json(new { account.AccountID,account.UserName,account.PassWord,account.RoleID,account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
         }
 
-        //find user and add account for user
+        //check username exist or not if exist find user and add account for user
         public JsonResult CheckUserToAdd(Account account, int UserID)
         {
-            int accountID = Create(account);
-            User user = db.Users.Find(UserID);
-            user.AccountID = accountID;
-            UpdateUser(user);
-            return Json(new { user.UserID }, JsonRequestBehavior.AllowGet);
+            var check = true;
+            var result = (from a in db.Accounts
+                          where a.UserName.ToLower().Equals(account.UserName.ToLower())
+                          select new { a.UserName }).FirstOrDefault();
+            if(result == null)
+            {
+                int accountID = Create(account);
+                User user = db.Users.Find(UserID);
+                user.AccountID = accountID;
+                UpdateUser(user);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
         }
 
         //find account to update role
@@ -131,6 +139,14 @@ namespace SmartParkingApplication.Controllers
             }
 
             return Json(account, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult checkUserNameExist(string UserNameAcc)
+        {
+            var result = (from a in db.Accounts
+                          where a.UserName.ToLower().Equals(UserNameAcc.ToLower())
+                          select new { a.UserName }).FirstOrDefault();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
