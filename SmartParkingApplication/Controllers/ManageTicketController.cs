@@ -275,9 +275,9 @@ namespace SmartParkingApplication.Controllers
         public JsonResult ComboboxTicket()
         {
             var typeOfVehicles = new { motobike = "Xe máy", car = "Ô tô" };
-            var numberCards = from c in db.Cards
+            var numberCards = (from c in db.Cards
                               where c.Status == 0
-                              select new { c.CardNumber,c.CardID };
+                              select new { c.CardNumber,c.CardID }).ToList();
             return Json( new { numberCards , typeOfVehicles } , JsonRequestBehavior.AllowGet);
         }
 

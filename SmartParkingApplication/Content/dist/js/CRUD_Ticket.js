@@ -401,7 +401,9 @@ function UpdateInfoTicket() {
                 return false;
             } else {
                 checkLicensePlateExistUpdate = false;
+                UpdateCardByID($('#cbCardNumberEdit').val());
                 $('#tbTicket').DataTable().clear().destroy();
+                ComboboxTicket();
                 loadDataTicket();
                 $('#myModalEditTicket').modal('hide');
             }
