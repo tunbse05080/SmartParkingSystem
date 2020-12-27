@@ -69,7 +69,42 @@ namespace SmartParkingApplication.Controllers
             var total = list.Count();
             return Json(new { dataTicket = list, total }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult Create(MonthlyTicket ticket)
+
+        //check license plate exist or not if not exist update info monthly ticket
+        public JsonResult CheckExistLicensePlatesToUpdate(MonthlyTicket monthlyTicket)
+        {
+            var check = true;
+            var result = (from m in db.MonthlyTickets
+                          where m.LicensePlates == monthlyTicket.LicensePlates && m.ParkingPlaceID == monthlyTicket.ParkingPlaceID
+                          select new { m.LicensePlates }).FirstOrDefault();
+            var result2 = (from m in db.MonthlyTickets
+                           where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
+                           select new { m.LicensePlates }).FirstOrDefault();
+            if (result == null || result2.LicensePlates == monthlyTicket.LicensePlates)
+            {
+                UpdateTicket(monthlyTicket);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
+        }
+
+        //check license plate exist or not if not exist add monthly ticket
+        public JsonResult CheckExistLicensePlatesToAdd(MonthlyTicket monthlyTicket)
+        {
+            var check = true;
+            var result = (from m in db.MonthlyTickets
+                          where m.LicensePlates == monthlyTicket.LicensePlates && m.ParkingPlaceID == monthlyTicket.ParkingPlaceID
+                          select new { m.LicensePlates }).FirstOrDefault();
+            MonthlyTicket ticket = new MonthlyTicket();
+            if (result == null)
+            {
+                ticket = Create(monthlyTicket);
+                check = false;
+            }
+            return Json(new { check, ticket.MonthlyTicketID } , JsonRequestBehavior.AllowGet);
+        }
+
+        public MonthlyTicket Create(MonthlyTicket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +112,7 @@ namespace SmartParkingApplication.Controllers
                 db.SaveChanges();
             }
 
-            return Json(ticket, JsonRequestBehavior.AllowGet);
+            return ticket;
         }
 
         protected override void Dispose(bool disposing)
@@ -110,7 +145,6 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult UpdateTicket(MonthlyTicket ticket)
         {
-            //MonthlyTicket ticket = GetTicket(data);
             if (ModelState.IsValid)
             {
                 db.Entry(ticket).State = EntityState.Modified;

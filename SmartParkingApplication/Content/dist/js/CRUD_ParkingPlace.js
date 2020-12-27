@@ -52,40 +52,13 @@ function loadDataParkingPlace() {
 
 }
 
-//function getTicketByID(ParkingPlaceID) {
-//    $.ajax({
-//        url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#ParkingPlaceIDEdit').val(result.ParkingPlaceID);
-//            $('#NameOfParkingEdit').val(result.NameOfParking);
-//            $('#LocationEdit').val(result.Location);
-//            $('#NumberOfSlotEdit').val(result.NumberOfSlot);
-//            $('#NumberOfCarEdit').val(result.NumberOfCar);
-//            $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
-//            $('#NumberCarBlankEdit').val(result.NumberCarBlank);
-//            $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
-            
-
-//            $('#myModalPPUpdate').modal('show');
-//            $('#btnUpdatePP').modal('show');
-
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + ParkingPlaceID + errormessage.responseText);
-//        }
-//    });
-//    return false;
-//}
-
+var checkExistNameParkingUpdate;
 function UpdatePP() {
     var res = validateUpdatePP();
     if (res == false) {
         return false;
     }
-    
+    checkExistNameParkingUpdate = true;
     var empPPObj = {
         ParkingPlaceID: $('#ParkingPlaceIDEdit').val(),
         NameOfParking: $('#NameOfParkingEdit').val(),
@@ -97,15 +70,23 @@ function UpdatePP() {
         StatusOfParkingPlace: $('#StatusParkingPlaceEdit').val(),
     };
     $.ajax({
-        url: "/ManagePPlace/UpdatePP",
+        url: "/ManagePPlace/CheckNameParkingExistToUpdate",
         data: JSON.stringify(empPPObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPPlace').DataTable().clear().destroy();
-            loadDataParkingPlace();
-            $('#myModalUpdatePP').modal('hide');
+            
+            if (result == true) {
+                validateUpdatePP();
+                checkExistNameParkingUpdate = false;
+                return false;
+            } else {
+                checkExistNameParkingUpdate = false;
+                $('#tbPPlace').DataTable().clear().destroy();
+                loadDataParkingPlace();
+                $('#myModalUpdatePP').modal('hide');
+            }
 
         },
         error: function (errormessage) {
@@ -163,12 +144,13 @@ function getPPDetailByID(ParkingPlaceID) {
     return false;
 }
 
-
+var checkExistNameParking;
 function AddPP() {
     var res = validateAddPP();
     if (res == false) {
         return false;
     }
+    checkExistNameParking = true;
     var empPPObj = {
         NameOfParking: $('#NameOfParking').val(),
         Location: $('#Location').val(),
@@ -179,15 +161,22 @@ function AddPP() {
         StatusOfParkingPlace: 1,
     };
     $.ajax({
-        url: "/ManagePPlace/Create",
+        url: "/ManagePPlace/CheckNameParkingExistToAdd",
         data: JSON.stringify(empPPObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPPlace').DataTable().clear().destroy();
-            loadDataParkingPlace();
-            $('#myModalPP').modal('hide');
+            if (result == true) {
+                validateAddPP();
+                checkExistNameParking = false;
+                return false;
+            } else {
+                checkExistNameParking = false;
+                $('#tbPPlace').DataTable().clear().destroy();
+                loadDataParkingPlace();
+                $('#myModalPP').modal('hide');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -244,12 +233,16 @@ function validateAddPP() {
     $.validator.addMethod('checkPPName', function (value, element) {
         return $.trim(value).length > 4;
     });
+    $.validator.addMethod('checkPPNameExist', function (value, element) {
+        return checkExistNameParking != true;
+    },'Tên bãi đỗ đã tồn tại');
     //Set rule + message for input by name
     $('#FormAddPP').validate({
         rules: {
             NameOfParking: {
                 required: true,
-                checkPPName: true
+                checkPPName: true,
+                checkPPNameExist: true
             },
             Location: {
                 required: true,
@@ -325,12 +318,19 @@ function validateUpdatePP() {
     $.validator.addMethod('checkPPName', function (value, element) {
         return $.trim(value).length > 4;
     });
+    $.validator.addMethod('checkPPNameUpdateExist', function (value, element) {
+        return checkExistNameParkingUpdate != true;
+    },'Tên bãi đỗ đã tồn tại.');
+    ////$.validator.addMethod('checkPPNameExist', function (value, element) {
+    ////    return checkExistNameParking != true;
+    ////});
     //Set rule + message for input by name
     $('#FormEditPP').validate({
         rules: {
             NameOfParkingEdit: {
                 required: true,
-                checkPPName: true
+                checkPPName: true,
+                checkPPNameUpdateExist: true
             },
             LocationEdit: {
                 required: true,
@@ -403,6 +403,7 @@ function ComboboxStatusOfParking() {
         }
     });
 }
+
 function getLockParkingByID(ParkingPlaceID) {
     $.ajax({
         url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
