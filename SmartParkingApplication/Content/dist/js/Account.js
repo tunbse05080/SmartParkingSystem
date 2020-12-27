@@ -100,7 +100,6 @@ function AddAccount() {
         dataType: "json",
         success: function (result) {
             if (result == true) {
-                //$('#myModalDupUserName').modal("show");
                 validateAddAcc();
                 checkExist = false;
                 return false;
@@ -110,7 +109,6 @@ function AddAccount() {
                 $('#tbAccount').DataTable().clear().destroy();
                 LoadDataAccount();
             }
-
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -194,30 +192,6 @@ function UpdateStatus(status) {
         }
     });
 }
-
-//var checkExist;
-//// check username of account exist or not 
-//function checkUserNameExist() {
-//    var UserNameAcc = $('#UserNameAcc').val();
-//    $.ajax({
-//        url: "/ManageAccount/checkUserNameExist",
-//        type: "POST",
-//        data: JSON.stringify({ UserNameAcc: UserNameAcc }),
-//        contentType: "application/json",
-//        dataType: "json",
-//        async: false,
-//        success: function (result) {
-//            if (result.UserName) {
-//                checkExist = true;
-//            } else {
-//                checkExist = false;
-//            }
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
 
 //clear form register account
 function clearForm() {
