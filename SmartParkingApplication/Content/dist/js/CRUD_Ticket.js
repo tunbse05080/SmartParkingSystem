@@ -17,7 +17,7 @@ function checkboxChangeCard() {
         $('#dvOldCard').hide();
         $('#dvcbCardNumber').show();
     } else {
-        $('#dvOldCard').show();
+        $('#dvOldCard').hide();
         $('#dvcbCardNumber').hide();
     }
 }
