@@ -112,7 +112,7 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateCardByNumber(string idCard)
+        public JsonResult UpdateCardByID(string idCard)
         {
             int id = Int32.Parse(idCard);
             Card result = db.Cards.AsNoTracking().Where(c => c.CardID == id).FirstOrDefault();

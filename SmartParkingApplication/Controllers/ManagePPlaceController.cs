@@ -248,6 +248,24 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        //check name parking place exist or not if not exist, update parking
+        public JsonResult CheckNameParkingExistToUpdate(ParkingPlace parkingPlace)
+        {
+            var check = true;
+            var result = (from p in db.ParkingPlaces
+                          where p.NameOfParking.ToLower().Equals(parkingPlace.NameOfParking.ToLower())
+                          select new { p.NameOfParking }).FirstOrDefault();
+            var result2 = (from p in db.ParkingPlaces
+                           where p.ParkingPlaceID == parkingPlace.ParkingPlaceID
+                           select new { p.NameOfParking }).FirstOrDefault();
+            if (result == null || result2.NameOfParking == parkingPlace.NameOfParking)
+            {
+                UpdatePP(parkingPlace);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult UpdatePP(ParkingPlace parking)
         {
             if (ModelState.IsValid)
@@ -257,16 +275,28 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(parking, JsonRequestBehavior.AllowGet);
         }
+        //check name parking place exist or not if not exist, add parking
+        public JsonResult CheckNameParkingExistToAdd(ParkingPlace parkingPlace)
+        {
+            var check = true;
+            var result = (from p in db.ParkingPlaces
+                          where p.NameOfParking.ToLower().Equals(parkingPlace.NameOfParking.ToLower())
+                          select new { p.NameOfParking }).FirstOrDefault();
+            if(result == null)
+            {
+                Create(parkingPlace);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
+        }
 
-        public JsonResult Create(ParkingPlace parking)
+        public void Create(ParkingPlace parking)
         {
             if (ModelState.IsValid)
             {
                 db.ParkingPlaces.Add(parking);
                 db.SaveChanges();
             }
-
-            return Json(parking, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

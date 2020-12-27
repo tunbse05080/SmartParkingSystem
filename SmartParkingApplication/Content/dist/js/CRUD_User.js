@@ -232,12 +232,14 @@ function loadData() {
     });
 }
 
+var checkExistIdentityCard;
 //Add Data Function
 function AddUser() {
     var res = validateUserAdd();
     if (res == false) {
         return false;
     }
+    checkExistIdentityCard = true;
     var empObj = {
         Name: $('#FullName').val(),
         DateOfBirth: $('#DateOfBirth').val(),
@@ -250,15 +252,22 @@ function AddUser() {
         ParkingPlaceID: $('#cbparkingPlaceU').val(),
     };
     $.ajax({
-        url: "/ManageUser/Create",
+        url: "/ManageUser/CheckIdentityCardToAdd",
         data: JSON.stringify(empObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#myModalUser').modal('hide');
-            $('#tbUser').DataTable().clear().destroy();
-            loadData();
+            if (result == true) {
+                validateUserAdd();
+                checkExistIdentityCard = false;
+                return false;
+            } else {
+                checkExistIdentityCard = true;
+                $('#myModalUser').modal('hide');
+                $('#tbUser').DataTable().clear().destroy();
+                loadData();
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -266,12 +275,14 @@ function AddUser() {
     });
 }
 
+var checkExistIdentityCardEdit;
 //function for updating employee's record
 function UpdateUser() {
     var res = validateUserEdit();
     if (res == false) {
         return false;
     }
+    checkExistIdentityCardEdit = true;
     var empObj = {
         UserID: $('#IdEdit').val(),
         Name: $('#FullNameEdit').val(),
@@ -287,15 +298,22 @@ function UpdateUser() {
 
     };
     $.ajax({
-        url: "/ManageUser/Update",
+        url: "/ManageUser/CheckIdentityCardToUpdate",
         data: JSON.stringify(empObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#myModalUserEdit').modal('hide');
-            $('#tbUser').DataTable().clear().destroy();
-            loadData();
+            if (result == true) {
+                validateUserEdit();
+                checkExistIdentityCardEdit = false;
+                return false;
+            } else {
+                checkExistIdentityCardEdit = false;
+                $('#myModalUserEdit').modal('hide');
+                $('#tbUser').DataTable().clear().destroy();
+                loadData();
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -371,6 +389,9 @@ function validateUserEdit() {
     $.validator.addMethod('checkUserIDCardE', function (value, element) {
         return idcard.test(value);
     });
+    $.validator.addMethod('checkUserIDCardEExist', function (value, element) {
+        return checkExistIdentityCardEdit != true;
+    },'Chứng minh nhân dân đã tồn tại.');
     //Set rule for input by name
     $('#FormUserEdit').validate({
         rules: {
@@ -396,7 +417,8 @@ function validateUserEdit() {
             },
             IdentityCardEdit: {
                 required: true,
-                checkUserIDCardE: true
+                checkUserIDCardE: true,
+                checkUserIDCardEExist: true
             }
         },
         messages: {
@@ -457,15 +479,18 @@ function validateUserAdd() {
     $.validator.addMethod('checkBDate', function (value, element) {
         return this.optional(element) || new Date(value) < new Date();
     });
-    $.validator.addMethod('checkUserAddress', function (value, element) {
+    $.validator.addMethod('checkUserAddress', function (value) {
         return $.trim(value).length > 4;
     });
-    $.validator.addMethod('checkUserPhone', function (value, element) {
+    $.validator.addMethod('checkUserPhone', function (value) {
         return phone.test(value);
     });
-    $.validator.addMethod('checkUserIDCard', function (value, element) {
+    $.validator.addMethod('checkUserIDCard', function (value) {
         return idcard.test(value);
     });
+    $.validator.addMethod('checkUserIDCardExist', function (value) {
+        return checkExistIdentityCard != true;
+    },'Chứng minh nhân dân đã tồn tại.');
     //Set rule for input by name
     $('#FormAddUser').validate({
         rules: {
@@ -491,7 +516,8 @@ function validateUserAdd() {
             },
             IdentityCard: {
                 required: true,
-                checkUserIDCard: true
+                checkUserIDCard: true,
+                checkUserIDCardExist: true
             },
             cbGender: {
                 required: true

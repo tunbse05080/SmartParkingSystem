@@ -123,11 +123,11 @@ function UpdateCard() {
     });
 }
 
-//get detail card base on CardNumber
-function UpdateCardByNumber(CardID) {
+//Change status card when add ticket success
+function UpdateCardByID(CardID) {
     var idC = CardID;
     $.ajax({
-        url: "/ManageCard/UpdateCardByNumber",
+        url: "/ManageCard/UpdateCardByID",
         data: "{ idCard :" + idC + "}",
         type: "POST",
         contentType: "application/json",

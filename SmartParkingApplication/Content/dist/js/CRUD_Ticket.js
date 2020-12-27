@@ -246,11 +246,13 @@ function CreateMonthlyIncome(id, totalPrice) {
     });
 }
 
+var checkLicensePlateExist;
 function AddTicket() {
     var res = validateAddTicket();
     if (res == false) {
         return false;
     }
+    checkLicensePlateExist = true;
     var empTicketObj = {
         CusName: $('#CusNameTK').val(),
         IdentityCard: $('#IdentityCardTK').val(),
@@ -264,17 +266,24 @@ function AddTicket() {
         CardID: $('#cbCardNumberTK').val()
     };
     $.ajax({
-        url: "/ManageTicket/Create",
+        url: "/ManageTicket/CheckExistLicensePlatesToAdd",
         data: JSON.stringify(empTicketObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbTicket').DataTable().clear().destroy();
-            UpdateCardByNumber($('#cbCardNumberTK').val());
-            CreateMonthlyIncome(result.MonthlyTicketID, $('#priceTK').val());
-            loadDataTicket();
-            $('#myModalTicket').modal('hide');
+            if (result.check == true) {
+                validateAddTicket();
+                checkLicensePlateExist = false;
+                return false;
+            } else {
+                checkLicensePlateExist = false;
+                $('#tbTicket').DataTable().clear().destroy();
+                UpdateCardByID($('#cbCardNumberTK').val());
+                CreateMonthlyIncome(result.MonthlyTicketID, $('#priceTK').val());
+                loadDataTicket();
+                $('#myModalTicket').modal('hide');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -358,12 +367,14 @@ function UpdateReRegister() {
     });
 }
 
+var checkLicensePlateExistUpdate;
 //Edit info ticket
 function UpdateInfoTicket() {
     var res = validateEditTicket();
     if (res == false) {
         return false;
     }
+    checkLicensePlateExistUpdate = true;
     var empTicketObj = {
         MonthlyTicketID: $('#MonthlyTicketIdEdit').val(),
         CusName: $('#CusNameEdit').val(),
@@ -378,15 +389,24 @@ function UpdateInfoTicket() {
         CardID: $('#cbCardNumberEdit').val(),
     };
     $.ajax({
-        url: "/ManageTicket/UpdateTicket",
+        url: "/ManageTicket/CheckExistLicensePlatesToUpdate",
         data: JSON.stringify(empTicketObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbTicket').DataTable().clear().destroy();
-            loadDataTicket();
-            $('#myModalEditTicket').modal('hide');
+            if (result == true) {
+                validateEditTicket();
+                checkLicensePlateExistUpdate = false;
+                return false;
+            } else {
+                checkLicensePlateExistUpdate = false;
+                UpdateCardByID($('#cbCardNumberEdit').val());
+                $('#tbTicket').DataTable().clear().destroy();
+                ComboboxTicket();
+                loadDataTicket();
+                $('#myModalEditTicket').modal('hide');
+            }
 
         },
         error: function (errormessage) {
@@ -707,6 +727,9 @@ function validateAddTicket() {
     $.validator.addMethod('checkRegisDateTK', function (value, element) {
         return new Date(value) > new Date();
     });
+    $.validator.addMethod('checkPlateTExist', function (value, element) {
+        return checkLicensePlateExist != true;
+    }, 'Biển số đã đăng ký trong bãi này.');
     //Set rule for input by name
     $('#FormAddTicket').validate({
         rules: {
@@ -728,7 +751,8 @@ function validateAddTicket() {
             },
             LicensePlatesTK: {
                 required: true,
-                checkPlateT: true
+                checkPlateT: true,
+                checkPlateTExist: true
             },
             cbTK: {
                 required: true
@@ -888,6 +912,9 @@ function validateEditTicket() {
     $.validator.addMethod('checkPlateE', function (value, element) {
         return plate.test(value);
     });
+    $.validator.addMethod('checkPlateEExist', function (value, element) {
+        return checkLicensePlateExistUpdate != true;
+    }, 'Biển số đã tồn tại trong bãi.');
     //Set rule for input by name
     $('#FormEditTicket').validate({
         rules: {
@@ -909,7 +936,8 @@ function validateEditTicket() {
             },
             LicensePlatesEdit: {
                 required: true,
-                checkPlateE: true
+                checkPlateE: true,
+                checkPlateEExist: true
             },
             cbCardNumberEdit: {
                 required: true

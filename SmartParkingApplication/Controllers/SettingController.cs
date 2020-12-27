@@ -26,13 +26,9 @@ namespace SmartParkingApplication.Controllers
             List<Object> list = new List<object>();
             foreach (var item in set)
             {
-
-
                 var tr = new { email = item.email, DateOfBirth = item.DateOfBirth, Gender = item.Gender, Name = item.Name, Phone = item.Phone, UserAddress = item.UserAddress };
                 list.Add(tr);
             }
-
-
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
