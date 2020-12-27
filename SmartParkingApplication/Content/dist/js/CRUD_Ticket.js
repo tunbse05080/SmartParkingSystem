@@ -495,7 +495,7 @@ function getTicketByIDDetail(MonthlyTicketID) {
             $('#MonthlyTicketIdDetail').val(result.MonthlyTicketID);
             $('#CusNameDetail').val(result.CusName);
             $('#IdentityCardDetail').val(result.IdentityCard);
-            $('#PhoneDetail').val(result.Phone);
+            $('#PhoneDetail').val('0' + result.Phone);
             $('#EmailDetail').val(result.Email);
             $('#TypeOfVehicleDetail').val(result.typeOfVehicle);
             $('#ParkingPlaceNameDetail').val(result.NameOfParking);
@@ -526,7 +526,7 @@ function getTicketByIDEdit(MonthlyTicketID) {
             $('#MonthlyTicketIdEdit').val(result.MonthlyTicketID);
             $('#CusNameEdit').val(result.CusName);
             $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneEdit').val(result.Phone);
+            $('#PhoneEdit').val('0' + result.Phone);
             $('#EmailEdit').val(result.Email);
             $('#ParkingPlaceEdit').val(result.ParkingPlaceID);
             $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);

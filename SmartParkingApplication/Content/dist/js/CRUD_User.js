@@ -81,7 +81,7 @@ function getEditByID(EmployeeID) {
             $('#AddressEdit').val(result.UserAddress);
             $('#cbGenderEdit').val(result.Gender);
             $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneNumberEdit').val(result.Phone);
+            $('#PhoneNumberEdit').val('0' + result.Phone);
             $('#EmailEdit').val(result.email);
             $('#StatusOfWorkingEdit').val(result.StatusOfwork);
             $('#AccountID').val(result.AccountID);
@@ -140,7 +140,7 @@ function getDetailByID(EmployeeID) {
             $('#GenderD').val(result.gender);
             $('#AddressD').val(result.UserAddress);
             $('#IdentityCardD').val(result.IdentityCard);
-            $('#PhoneNumberD').val(result.Phone);
+            $('#PhoneNumberD').val('0' + result.Phone);
             $('#EmailD').val(result.email);
             $('#StatusOfWorkD').val(result.statusOfwork);
             $('#AccountName').val(result.UserName);
@@ -199,7 +199,7 @@ function loadData() {
             $.each(result, function (key, item) {
                 html += '<tr>';
                 html += '<td>' + item.Name + '</td>';
-                html += '<td>' + item.Phone + '</td>';
+                html += '<td>' + + '0' + item.Phone + '</td>';
                 html += '<td>' + item.email + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
                 html += '<td>' + item.StatusOfWork + '</td>';     
