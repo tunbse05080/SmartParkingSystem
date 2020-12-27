@@ -5,7 +5,9 @@
     "\\SmartParkingApplication",
     "\\SmartParkingApplication\\Content",
     "\\SmartParkingApplication\\Content\\dist",
+    "\\SmartParkingApplication\\Content\\dist\\img",
     "\\SmartParkingApplication\\Content\\dist\\js"
   ],
+  "SelectedNode": "\\SmartParkingApplication\\Content\\dist\\img\\avatar5.png",
   "PreviewInSolutionExplorer": false
 }
