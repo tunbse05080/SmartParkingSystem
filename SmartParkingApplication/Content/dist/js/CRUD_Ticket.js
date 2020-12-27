@@ -367,6 +367,41 @@ function UpdateReRegister() {
     });
 }
 
+//Change status to using card when add ticket success
+function UpdateCardByID(CardID) {
+    var idC = CardID;
+    $.ajax({
+        url: "/ManageCard/UpdateCardByID",
+        data: "{ idCard :" + idC + "}",
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+////Change status to not using of old card when update ticket success
+//function UpdateOldCardByID(MonthlyTicketID) {
+//    var MonthlyTicketID = MonthlyTicketID;
+//    $.ajax({
+//        url: "/ManageCard/UpdateOldCardByID",
+//        data: "{ MonthlyTicketID :" + MonthlyTicketID + "}",
+//        type: "POST",
+//        contentType: "application/json",
+//        dataType: "json",
+//        success: function (result) {
+//        },
+//        error: function (errormessage) {
+//            alert(errormessage.responseText);
+//        }
+//    });
+//}
+
+
 var checkLicensePlateExistUpdate;
 //Edit info ticket
 function UpdateInfoTicket() {
@@ -401,6 +436,7 @@ function UpdateInfoTicket() {
                 return false;
             } else {
                 checkLicensePlateExistUpdate = false;
+                //UpdateOldCardByID($('#MonthlyTicketIdEdit').val());
                 UpdateCardByID($('#cbCardNumberEdit').val());
                 $('#tbTicket').DataTable().clear().destroy();
                 ComboboxTicket();

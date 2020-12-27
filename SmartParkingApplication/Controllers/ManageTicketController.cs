@@ -80,8 +80,14 @@ namespace SmartParkingApplication.Controllers
             var result2 = (from m in db.MonthlyTickets
                            where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
                            select new { m.LicensePlates }).FirstOrDefault();
+            var cardID = (from m in db.MonthlyTickets
+                          where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
+                          select new { m.CardID }).FirstOrDefault();
+            Card card = db.Cards.Find(cardID.CardID);
+            card.Status = 0;
             if (result == null || result2.LicensePlates == monthlyTicket.LicensePlates)
             {
+                UpdateOldCard(card);
                 UpdateTicket(monthlyTicket);
                 check = false;
             }
@@ -151,6 +157,15 @@ namespace SmartParkingApplication.Controllers
                 db.SaveChanges();
             }
             return Json(ticket, JsonRequestBehavior.AllowGet);
+        }
+
+        public void UpdateOldCard(Card card)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(card).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         //Create MonthlyIncomeStatement

@@ -123,23 +123,6 @@ function UpdateCard() {
     });
 }
 
-//Change status card when add ticket success
-function UpdateCardByID(CardID) {
-    var idC = CardID;
-    $.ajax({
-        url: "/ManageCard/UpdateCardByID",
-        data: "{ idCard :" + idC + "}",
-        type: "POST",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
 //Unlock card
 function UnlockCard() {
     var empCardObj = {
