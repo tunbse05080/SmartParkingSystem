@@ -228,7 +228,11 @@ function CheckChange() {
         if ($('#CardNumber').val().length == 10) {
             var data = $('#CardNumber').val().substring(0, 10);
             AddCard(data);
-            clearTextBoxCard();
+            if (checkExistCard == false) {
+                clearTextBoxCard();
+            }
+        } else {
+            validateAddCard();
         }
     }
 }
@@ -370,7 +374,7 @@ function validateUpdateCard() {
 }
 
 function validateAddCard() {
-    var rfidCard = new RegExp('^[0-9]{10,}$');
+    var rfidCard = new RegExp('^[0-9]{10}$');
     //Display css of error message
     var htmlcss = {
         'color': 'Red'
@@ -409,7 +413,7 @@ function validateAddCard() {
         messages: {
             CardNumber: {
                 required: '*Bắt buộc.',
-                checkCardAdd: 'Số thẻ sai định dạng(>9 số).'
+                checkCardAdd: 'Số thẻ sai định dạng(10 số).'
             }
         }
     });
