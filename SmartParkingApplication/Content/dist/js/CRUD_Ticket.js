@@ -271,7 +271,7 @@ function AddTicket() {
         dataType: "json",
         success: function (result) {
             $('#tbTicket').DataTable().clear().destroy();
-            UpdateCardByNumber($('#cbCardNumberTK').val());
+            UpdateCardByID($('#cbCardNumberTK').val());
             CreateMonthlyIncome(result.MonthlyTicketID, $('#priceTK').val());
             loadDataTicket();
             $('#myModalTicket').modal('hide');

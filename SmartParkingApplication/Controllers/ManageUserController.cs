@@ -110,16 +110,47 @@ namespace SmartParkingApplication.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        //check Identity Card exist or not if not exist, create user
+        public JsonResult CheckIdentityCardToAdd(User user)
+        {
+            var check = true;
+            var result = (from u in db.Users
+                          where u.IdentityCard == user.IdentityCard
+                          select new { u.IdentityCard }).FirstOrDefault();
+            if(result == null)
+            {
+                Create(user);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
+        }
+
+        //check Identity Card exist or not if not exist, update user
+        public JsonResult CheckIdentityCardToUpdate(User user)
+        {
+            var check = true;
+            var result = (from u in db.Users
+                          where u.IdentityCard == user.IdentityCard
+                          select new { u.IdentityCard }).FirstOrDefault();
+            var result2 = (from u in db.Users
+                           where u.UserID == user.UserID
+                           select new { u.IdentityCard }).FirstOrDefault();
+            if (result == null || result2.IdentityCard == user.IdentityCard)
+            {
+                Update(user);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
+        }
+
         //Create User
-        public JsonResult Create(User user)
+        public void Create(User user)
         {
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
                 db.SaveChanges();
             }
-
-            return Json(user, JsonRequestBehavior.AllowGet);
         }
 
         //update User
