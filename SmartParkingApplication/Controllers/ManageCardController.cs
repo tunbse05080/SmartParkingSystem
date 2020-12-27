@@ -52,15 +52,27 @@ namespace SmartParkingApplication.Controllers
             return Json(new { dataCard = list, total}, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Create(Card card)
+        public JsonResult CheckCardToAdd(Card card)
+        {
+            var check = true;
+            var result = (from c in db.Cards
+                          where c.CardNumber == card.CardNumber
+                          select new { c.CardNumber }).FirstOrDefault();
+            if(result == null)
+            {
+                Create(card);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
+        }
+
+        public void Create(Card card)
         {
             if (ModelState.IsValid)
             {
                 db.Cards.Add(card);
                 db.SaveChanges();
             }
-
-            return Json(card, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
@@ -123,7 +135,6 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(card, JsonRequestBehavior.AllowGet);
         }
-
 
     }
 

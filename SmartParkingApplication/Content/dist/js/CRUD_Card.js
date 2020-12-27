@@ -62,6 +62,7 @@ function clearTextBoxCard() {
     $('#Status').val("");
 }
 
+var checkExistCard;
 function AddCard(number) {
     var empCardObj = {
         CardNumber: number,
@@ -69,16 +70,23 @@ function AddCard(number) {
         Status: 0,
     };
     $.ajax({
-        url: "/ManageCard/Create",
+        url: "/ManageCard/CheckCardToAdd",
         data: JSON.stringify(empCardObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbCard').DataTable().clear().destroy();
-            loadDataCard();
-            $('#CardNumber').val("");
-            $('#myModalCard').modal('show');
+            if (result == true) {
+                validateAddCard();
+                checkExistCard = false;
+                return false;
+            } else {
+                checkExistCard = true;
+                $('#tbCard').DataTable().clear().destroy();
+                loadDataCard();
+                $('#CardNumber').val("");
+                $('#myModalCard').modal('show');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -211,11 +219,21 @@ function ReportCardBreak() {
 }
 
 function CheckChange() {
+    checkExistCard = false;
     var res = validateAddCard();
     if (res == false) {
-        return false
+        return false;
     } else {
-        AddCard($('#CardNumber').val());
+        checkExistCard = true;
+        if ($('#CardNumber').val().length == 10) {
+            var data = $('#CardNumber').val().substring(0, 10);
+            AddCard(data);
+            if (checkExistCard == false) {
+                clearTextBoxCard();
+            }
+        } else {
+            validateAddCard();
+        }
     }
 }
 
@@ -356,7 +374,7 @@ function validateUpdateCard() {
 }
 
 function validateAddCard() {
-    var rfidCard = new RegExp('^[0-9]{10,}$');
+    var rfidCard = new RegExp('^[0-9]{10}$');
     //Display css of error message
     var htmlcss = {
         'color': 'Red'
@@ -379,18 +397,23 @@ function validateAddCard() {
     $.validator.addMethod('checkCardAdd', function (value, element) {
         return rfidCard.test(value);
     });
+
+    $.validator.addMethod('checkCardAddExist', function (value, element) {
+        return checkExistCard != true;
+    },'Số thẻ đã tồn tại.');
     //Set rule + message for input by name
     $('#FormAddCard').validate({
         rules: {
             CardNumber: {
                 required: true,
-                checkCardAdd: true
+                checkCardAdd: true,
+                checkCardAddExist: true
             }
         },
         messages: {
             CardNumber: {
                 required: '*Bắt buộc.',
-                checkCardAdd: 'Số thẻ sai định dạng(>9 số).'
+                checkCardAdd: 'Số thẻ sai định dạng(10 số).'
             }
         }
     });
