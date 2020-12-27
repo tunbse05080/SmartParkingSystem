@@ -16,10 +16,6 @@ function getSVDetailByID() {
             $('#Name').val(result.Name);
             $('#Phone').val(result.Phone);
             $('#UserAddress').val(result.UserAddress);
-     
-
-           
-
         },
         error: function (errormessage) {
             alert("Exception:" + UserID + errormessage.responseText);
@@ -77,4 +73,78 @@ function UpdateUserView() {
             alert(errormessage.responseText);
         }
     });
+}
+
+//Valdidation using jquery
+function validateProfileEdit() {
+    var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
+    var idcard = new RegExp('^[0-9]{9,}$');
+    //Díplay css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkProAddress', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkProPhone', function (value, element) {
+        return phone.test(value);
+    });
+    $.validator.addMethod('checkProIDCard', function (value, element) {
+        return idcard.test(value);
+    });
+    //Set rule for input by name
+    $('#FormEditProfile').validate({
+        rules: {
+            UserAddress: {
+                required: true,
+                checkProAddress: true
+            },
+            Phone: {
+                required: true,
+                checkProPhone: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            IdentityCard: {
+                required: true,
+                checkProIDCard: true
+            }
+        },
+        messages: {
+            UserAddress: {
+                required: '*Bắt buộc.',
+                checkProAddress: 'Địa chỉ có ít nhất 5 kí tự!'
+            },
+            Phone: {
+                required: '*Bắt buộc.',
+                checkProPhone: 'Số điện thoại sai định dạng!'
+            },
+            email: {
+                required: '*Bắt buộc.',
+                email: 'Email sai định dạng!'
+            },
+            IdentityCard: {
+                required: '*Bắt buộc.',
+                checkProIDCard: 'CMND/CCCD sai định dạng!'
+            }
+        }
+    });
+    return $('#FormEditProfile').valid();
 }
