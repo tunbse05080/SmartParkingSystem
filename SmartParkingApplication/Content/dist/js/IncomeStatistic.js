@@ -3,20 +3,20 @@
     loadChartIncomeAll();
     ComboboxNameParking();
     KindOfStatisticIncome();
-    checkChoiceDateIncome();
+    //checkChoiceDateIncome();
 });
 
-function checkChoiceDateIncome() {
-    if ($('#checkboxDateIncome').is(':checked')) {
-        $('#dvChoiceCurrentMY').hide();
-        $('#dvfromDateIncome').show();
-        $('#dvtoDateIncome').show();
-    } else {
-        $('#dvChoiceCurrentMY').show();
-        $('#dvfromDateIncome').hide();
-        $('#dvtoDateIncome').hide();
-    }
-}
+//function checkChoiceDateIncome() {
+//    if ($('#checkboxDateIncome').is(':checked')) {
+//        $('#dvChoiceCurrentMY').hide();
+//        $('#dvfromDateIncome').show();
+//        $('#dvtoDateIncome').show();
+//    } else {
+//        $('#dvChoiceCurrentMY').show();
+//        $('#dvfromDateIncome').hide();
+//        $('#dvtoDateIncome').hide();
+//    }
+//}
 
 function KindOfStatisticIncome() {
     if ($('#cbKindOfStatisticIncome').val() == 0) {
