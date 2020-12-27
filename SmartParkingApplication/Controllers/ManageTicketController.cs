@@ -84,10 +84,19 @@ namespace SmartParkingApplication.Controllers
                           where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
                           select new { m.CardID }).FirstOrDefault();
             Card card = db.Cards.Find(cardID.CardID);
-            card.Status = 0;
+            
             if (result == null || result2.LicensePlates == monthlyTicket.LicensePlates)
             {
+                if(cardID.CardID != monthlyTicket.CardID)
+                {
+                    card.Status = 0;
+                }
+                else
+                {
+                    card.Status = 1;
+                }
                 UpdateOldCard(card);
+                //monthlyTicket.Card.Status = 1;
                 UpdateTicket(monthlyTicket);
                 check = false;
             }

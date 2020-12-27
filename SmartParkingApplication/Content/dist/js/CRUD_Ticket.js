@@ -2,6 +2,7 @@
 $(document).ready(function () {
     loadDataTicket();
     ComboboxTicket();
+    checkboxChangeCard();
     clearETK();
 });
 
@@ -11,6 +12,15 @@ var temp = {
     ExpiryDate: ""
 };
 
+function checkboxChangeCard() {
+    if ($('#checkboxChange').is(':checked')) {
+        $('#dvOldCard').hide();
+        $('#dvcbCardNumber').show();
+    } else {
+        $('#dvOldCard').show();
+        $('#dvcbCardNumber').hide();
+    }
+}
 
 //get endDate contract in modal extend ticket from comboboxDate
 function DateETK(monthExtend) {
@@ -188,7 +198,7 @@ function loadDataTicket() {
                 }
                 switch (status) {
                     case "Còn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ')" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Dừng HĐ</button></td>';
+                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ');checkboxChangeCard();" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Dừng HĐ</button></td>';
                         break;
                     case "Hết hạn HĐ":
                         html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketReRegister(' + item.MonthlyTicketID + ')" >Ký lại HĐ</button></td>';
@@ -384,23 +394,6 @@ function UpdateCardByID(CardID) {
     });
 }
 
-////Change status to not using of old card when update ticket success
-//function UpdateOldCardByID(MonthlyTicketID) {
-//    var MonthlyTicketID = MonthlyTicketID;
-//    $.ajax({
-//        url: "/ManageCard/UpdateOldCardByID",
-//        data: "{ MonthlyTicketID :" + MonthlyTicketID + "}",
-//        type: "POST",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
-
 
 var checkLicensePlateExistUpdate;
 //Edit info ticket
@@ -408,6 +401,13 @@ function UpdateInfoTicket() {
     var res = validateEditTicket();
     if (res == false) {
         return false;
+    }
+    var checkbox = document.getElementById("checkboxChange");
+    var cardID;
+    if (checkbox.checked == true) {
+        cardID = $('#cbCardNumberEdit').val();
+    } else {
+        cardID = $('#CardNumberOld').val();
     }
     checkLicensePlateExistUpdate = true;
     var empTicketObj = {
@@ -421,7 +421,7 @@ function UpdateInfoTicket() {
         LicensePlates: $('#LicensePlatesEdit').val(),
         RegisDate: $('#RegisDateEdit').val(),
         ExpiryDate: $('#ExpiryDateEdit').val(),
-        CardID: $('#cbCardNumberEdit').val(),
+        CardID: cardID,
     };
     $.ajax({
         url: "/ManageTicket/CheckExistLicensePlatesToUpdate",
@@ -437,7 +437,9 @@ function UpdateInfoTicket() {
             } else {
                 checkLicensePlateExistUpdate = false;
                 //UpdateOldCardByID($('#MonthlyTicketIdEdit').val());
-                UpdateCardByID($('#cbCardNumberEdit').val());
+                if (checkbox.checked == true) {
+                    UpdateCardByID($('#cbCardNumberEdit').val());
+                }
                 $('#tbTicket').DataTable().clear().destroy();
                 ComboboxTicket();
                 loadDataTicket();
@@ -531,6 +533,7 @@ function getTicketByIDEdit(MonthlyTicketID) {
             $('#ParkingPlaceEdit').val(result.ParkingPlaceID);
             $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
             $('#LicensePlatesEdit').val(result.LicensePlates);
+            $('#CardNumberOld').val(result.cardId);
             $('#RegisDateEdit').val(result.RegisDate);
             $('#ExpiryDateEdit').val(result.ExpiryDate);
             $('#myModalEditTicket').modal('show');

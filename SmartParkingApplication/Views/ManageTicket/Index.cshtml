@@ -568,6 +568,14 @@
                                                 <input type="text" class="form-control" id="LicensePlatesEdit" name="LicensePlatesEdit" placeholder="Biển số xe" />
                                             </div>
                                             <div class="form-group">
+                                                <input type="checkbox" id="checkboxChange" onclick="checkboxChangeCard()" />
+                                                <label for="checkboxChange"> Chọn thẻ khác</label>
+                                            </div>
+                                            <div class="form-group" id="dvOldCard">
+                                                <label for="CardNumberOld">Số thẻ</label>
+                                                <input type="text" class="form-control" id="CardNumberOld" name="CardNumberOld" placeholder="CardNumberOld" disabled />
+                                            </div>
+                                            <div class="form-group" id="dvcbCardNumber">
                                                 <label for="CardNumber">Số thẻ</label>
                                                 <select class="form-control" id="cbCardNumberEdit" name="cbCardNumberEdit" style="width:516px">
                                                 </select>
