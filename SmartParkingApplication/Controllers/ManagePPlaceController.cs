@@ -35,30 +35,30 @@ namespace SmartParkingApplication.Controllers
                 NumberMotoBikeBlank = x.NumberMotoBikeBlank,
                 ToTalDaGuiXemay = x.NumberOfMotoBike - x.NumberMotoBikeBlank,
                 NumberCarlank = x.NumberCarBlank,
-               
 
-            }).ToList(), JsonRequestBehavior.AllowGet) ;
+
+            }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoadDataStatusPP(int ParkingPlaceID)
         {
-            
+
             var trans = from t in db.Transactions.Where(x => x.ParkingPlaceID == ParkingPlaceID && x.TimeOutv == null)
                         join c in db.Cards on t.CardID equals c.CardID into table1
                         from c in table1.DefaultIfEmpty()
                         orderby t.CardID
-                        select new {t.TransactionID, t.LicensePlates, t.TimeIn, t.TypeOfTicket, c.CardNumber,t.TypeOfVerhicleTran };
+                        select new { t.TransactionID, t.LicensePlates, t.TimeIn, t.TypeOfTicket, c.CardNumber, t.TypeOfVerhicleTran };
 
             List<Object> list = new List<object>();
             foreach (var item in trans)
             {
                 var timeIn = item.TimeIn.Value.ToString("dd/MM/yyyy HH:mm:ss tt");
-                
+
                 string typeofTicket = string.Empty;
-                string typeofVe= string.Empty;
+                string typeofVe = string.Empty;
                 switch (item.TypeOfTicket)
                 {
-                    case 0: 
+                    case 0:
                         typeofTicket = "Vé Lượt";
                         break;
                     case 1:
@@ -78,11 +78,12 @@ namespace SmartParkingApplication.Controllers
                 var tr = new { TransactionID = item.TransactionID, LicensePlates = item.LicensePlates, TimeIn = timeIn, TypeOfTicket = typeofTicket, CardNumber = item.CardNumber, TypeOfVerhicleTran = typeofVe };
                 list.Add(tr);
             }
-            return Json(new { dataSSP = list}, JsonRequestBehavior.AllowGet);
+            return Json(new { dataSSP = list }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoadHistoryParking(int ParkingPlaceID, DateTime timeFrom, DateTime timeTo, string txtSearchHistory)
         {
+
             var trans = (from t in db.Transactions
                          where t.ParkingPlaceID == ParkingPlaceID && t.TimeOutv != null && DateTime.Compare((DateTime)t.TimeIn, timeFrom) >= 0 && DateTime.Compare((DateTime)t.TimeOutv, timeTo) <= 0 && t.LicensePlates.Contains(txtSearchHistory)
                          join c in db.Cards on t.CardID equals c.CardID into table1
@@ -138,7 +139,7 @@ namespace SmartParkingApplication.Controllers
         {
             var tran = db.Transactions.Find(id);
             var typeTicket = "";
-            
+
             if (tran.TypeOfTicket == 1)
             {
                 typeTicket = "Vé Tháng";
@@ -158,9 +159,9 @@ namespace SmartParkingApplication.Controllers
                 typeVE = "Xe máy";
             }
             var TimeIn = tran.TimeIn.Value.ToString("MM/dd/yyyy hh:mm:ss");
-            
 
-            var result = new {tran.TransactionID,tran.LicensePlates,TimeIn, typeTicket, tran.Card.CardNumber,typeVE,tran.TotalPrice};
+
+            var result = new { tran.TransactionID, tran.LicensePlates, TimeIn, typeTicket, tran.Card.CardNumber, typeVE, tran.TotalPrice };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -178,7 +179,7 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult loadDataParkingPlace()
         {
-            var parking = from p in db.ParkingPlaces select new {p.ParkingPlaceID, p.NameOfParking,p.Location,p.NumberOfCar,p.NumberOfMotoBike,p.NumberCarBlank,p.NumberMotoBikeBlank,p.StatusOfParkingPlace};
+            var parking = from p in db.ParkingPlaces select new { p.ParkingPlaceID, p.NameOfParking, p.Location, p.NumberOfCar, p.NumberOfMotoBike, p.NumberCarBlank, p.NumberMotoBikeBlank, p.StatusOfParkingPlace };
             //if (!string.IsNullOrEmpty(namepp))
             //{
             //    parking = parking.Where(x => x.NameOfParking.Contains(namepp));
@@ -239,12 +240,12 @@ namespace SmartParkingApplication.Controllers
             {
                 statusOfParking = "Dừng hoạt động";
             }
-            else 
+            else
             {
                 statusOfParking = "Đang hoạt động";
             }
 
-                var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking, parking.StatusOfParkingPlace };
+            var result = new { parking.ParkingPlaceID, parking.NameOfParking, parking.Location, parking.NumberOfCar, parking.NumberOfMotoBike, parking.NumberCarBlank, parking.NumberMotoBikeBlank, statusOfParking, parking.StatusOfParkingPlace };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -282,7 +283,7 @@ namespace SmartParkingApplication.Controllers
             var result = (from p in db.ParkingPlaces
                           where p.NameOfParking.ToLower().Equals(parkingPlace.NameOfParking.ToLower())
                           select new { p.NameOfParking }).FirstOrDefault();
-            if(result == null)
+            if (result == null)
             {
                 Create(parkingPlace);
                 check = false;
@@ -332,7 +333,7 @@ namespace SmartParkingApplication.Controllers
         {
             var list = db.ParkingPlaces.Select(u => u.NameOfParking).Distinct().ToList();
             List<string> result = new List<string>();
-           
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
     }

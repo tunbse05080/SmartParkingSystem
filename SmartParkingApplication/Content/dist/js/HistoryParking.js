@@ -1,6 +1,6 @@
 ﻿//load page
 //$(document).ready(function () {
-    //getDayFirstInLastOut();
+//    getDayFirstInLastOut();
 //    loadDataHistoryParking();
 //});
 
@@ -12,16 +12,17 @@
 
 //Load Data function
 function loadDataHistoryParking() {
-    var res = validateHistoryPP();
-    if (res == false) {
-        return false;
-    }
+    ////var res = validateHistoryPP();
+    //if (res == false) {
+    //    return false;
+    //}
+    $('#tbHistory').DataTable().clear().destroy();
     var timeTo = $('#TimeToHis').val();
     var timeFrom = $('#TimeFromHis').val();
     var ParkingPlaceID = $('#cbNameParkingPlaceHistory').val();
     var txtSearch = $('#txtSearchHistoryPP').val();
     if (ParkingPlaceID) {
-        $('#tbHistory').DataTable().clear().destroy();
+
     } else {
         ParkingPlaceID = 1;
     }
@@ -30,7 +31,6 @@ function loadDataHistoryParking() {
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ timeFrom: timeFrom, timeTo: timeTo, ParkingPlaceID: ParkingPlaceID, txtSearchHistory: txtSearch }),
-
         dataType: "json",
         success: function (result) {
             var html = '';
@@ -50,7 +50,7 @@ function loadDataHistoryParking() {
             });
             $('#tbodyHis').html(html);
             $('#tbHistory').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": false, "ordering": true, "info": true, retrieve: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#tbHistory_wrapper .col-md-6:eq(0)');
         },
@@ -107,60 +107,66 @@ function loadDataHistoryParking() {
 //}
 
 //clear text
-function clearTextHis() {
-    $('.help-block').remove();
-    $('.form-control').css('border-color', 'lightgrey');
-}
+//function clearTextHis() {
+//    $('.help-block').remove();
+//    $('.form-control').css('border-color', 'lightgrey');
+//}
 
-//validate using jquery
-function validateHistoryPP() {
-    //Display css of error message
-    var htmlcss = {
-        'color': 'Red'
-    }
-    $.validator.setDefaults({
-        errorClass: 'help-block',
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-            $(element).css('border-color', 'Red');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-            $(element).css('border-color', 'lightgrey');
-        },
-        errorPlacement: function (error, element) {
-            error.appendTo($(element).parent()).css(htmlcss);
-        }
-    });
-    //Set custom valid by rule
-    $.validator.addMethod('checkTimeFH', function (value, element) {
-        return new Date(value) < new Date($('#TimeToHis').val());
-    });
-    $.validator.addMethod('checkTimeTH', function (value, element) {
-        return new Date(value) > new Date($('#TimeFromHis').val());
-    });
-    //Set rule + message for input by name
-    $('#FormHistory').validate({
-        rules: {
-            TimeFromHis: {
-                required: true,
-                checkTimeFH: true
-            },
-            TimeToHis: {
-                required: true,
-                checkTimeTH: true
-            }
-        },
-        messages: {
-            TimeFromHis: {
-                required: '*Bắt buộc.',
-                checkTimeFH: 'Phải nhỏ hơn "Đến ngày"!'
-            },
-            TimeToHis: {
-                required: '*Bắt buộc.',
-                checkTimeTH: 'Phải lớn hơn "Từ ngày"!'
-            }
-        }
-    });
-    return $('#FormHistory').valid();
-}
+////validate using jquery
+//function validateHistoryPP() {
+//    //Display css of error message
+//    var htmlcss = {
+//        'color': 'Red'
+//    }
+//    $.validator.setDefaults({
+//        errorClass: 'help-block',
+//        highlight: function (element) {
+//            $(element).closest('.form-group').addClass('has-error');
+//            $(element).css('border-color', 'Red');
+//        },
+//        unhighlight: function (element) {
+//            $(element).closest('.form-group').removeClass('has-error');
+//            $(element).css('border-color', 'lightgrey');
+//        },
+//        errorPlacement: function (error, element) {
+//            error.appendTo($(element).parent()).css(htmlcss);
+//        }
+//    });
+//    //Set custom valid by rule
+//    $.validator.addMethod('checkTimeFH', function (value, element) {
+//        return new Date(value) < new Date($('#TimeToHis').val());
+//    });
+//    $.validator.addMethod('checkTimeTH', function (value, element) {
+//        return new Date(value) > new Date($('#TimeFromHis').val());
+//    });
+//    //Set rule + message for input by name
+//    $('#FormHistory').validate({
+//        rules: {
+//            TimeFromHis: {
+//                required: true,
+//                checkTimeFH: true
+//            },
+//            TimeToHis: {
+//                required: true,
+//                checkTimeTH: true
+//            },
+//            txtSearchHistoryPP: {
+//                required: true
+//            }
+//        },
+//        messages: {
+//            TimeFromHis: {
+//                required: '*Bắt buộc.',
+//                checkTimeFH: 'Phải nhỏ hơn "Đến ngày"!'
+//            },
+//            TimeToHis: {
+//                required: '*Bắt buộc.',
+//                checkTimeTH: 'Phải lớn hơn "Từ ngày"!'
+//            },
+//            txtSearchHistoryPP: {
+//                required: '*Bắt buộc.'
+//            }
+//        }
+//    });
+//    return $('#FormHistory').valid();
+//}
