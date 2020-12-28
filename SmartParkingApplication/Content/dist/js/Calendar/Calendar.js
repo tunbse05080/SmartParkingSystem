@@ -48,7 +48,7 @@ function LoadDataCalendar() {
             let evenArr = [];
             $.each(result, function (key, item) {
                 let evenObj = {
-                    id: item.ScheduleID,
+                    id: item.UserScheduleID,
                     title: item.Name,
                     start: getFormatDatetime(item.TimeStart),
                     end: getFormatDatetime(item.TimeEnd)
@@ -64,6 +64,7 @@ function LoadDataCalendar() {
     });
 }
 
+var IdEditWorkingCalendarD;
 function initCalendar(evenArr) {
     var calendar1 = document.getElementById('calendarWork');
     var calendar = new FullCalendar.Calendar(calendar1, {
@@ -76,7 +77,8 @@ function initCalendar(evenArr) {
         events: evenArr,
         eventClick: function (info) {
             ComboboxUserName(2);
-            $('#IdEditWorkingCalendar').val(info.event.id);
+            //$('#IdEditWorkingCalendarD').val(info.event.id);
+            IdEditWorkingCalendarD = info.event.id;
             $('#FullNameEmp').val("");
             clearForm();
             $('#myModalEditWorkingCalendar').modal("show");
@@ -128,11 +130,12 @@ function CreateWorkingCalendar() {
 
 
 function EditWorkingCalendar() {
-    var res = validateEditCal();
-    if (res == false) {
-        return false;
-    }
-    var id = $('#IdEditWorkingCalendar').val();
+    //var res = validateEditCal();
+    //if (res == false) {
+    //    return false;
+    //}
+    var id = IdEditWorkingCalendarD;
+    //var id = $('#IdEditWorkingCalendar').val();
     var userid = $('#cbUserNameEmpEdit').val();
     $.ajax({
         url: "/ManageUser/UpdateWorkingShift",
