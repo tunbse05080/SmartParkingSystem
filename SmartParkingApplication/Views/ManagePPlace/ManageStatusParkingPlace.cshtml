@@ -8,55 +8,39 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 <script>
-    $(document).ready(function () {
+    function loadTableList() {
+        var ParkingPlaceID = $('#cbxListParking').val();
+        $.ajax({
+            type: 'GET',
+            data: { ParkingPlaceID: ParkingPlaceID },
+            url: '@Url.Action("loadtTableMotor", "ManagePPlace")',
+            success: function (result) {
+                var html = "";
+                for (var i = 0; i < result.length; i++) {
+                    html += '<tr><td> Xe Máy </td>';
 
-        $('#cbxListParking').on('change', function () {
-            var ParkingPlaceID = $('#cbxListParking').val();
-            setInterval(function () {
-                $.ajax({
-                type: 'GET',
-                data: { ParkingPlaceID: ParkingPlaceID },
-                url: '@Url.Action("loadtTableMotor", "ManagePPlace")',
-                success: function (result) {
+                    html += '<td>' + result[i].ToTalDaGuiXemay + '</td>';
+                    html += '<td>' + result[i].NumberMotoBikeBlank + '</td>';
 
-                    var html = "";
-                    for (var i = 0; i < result.length; i++) {
-                        html += '<tr>';
-                        html += '<td> Xe Máy </td>';
+                    html += '</tr>';
+                    html += '<tr>';
+                    html += '<td> Ô tô </td>';
 
+                    html += '<td>' + result[i].ToTalDaGuiOto + '</td>';
+                    html += '<td>' + result[i].NumberCarlank + '</td>';
 
-                        html += '<td>' + result[i].ToTalDaGuiXemay + '</td>'
-                        html += '<td>' + result[i].NumberMotoBikeBlank + '</td>'
-
-
-                        html += '</tr>';
-                        html += '<tr>';
-                        html += '<td> Ô tô </td>';
-
-
-                        html += '<td>' + result[i].ToTalDaGuiOto + '</td>'
-                        html += '<td>' + result[i].NumberCarlank + '</td>'
-
-                        html += '</tr>';
-
-                    }
-                    $('#tableList').html(html);
-
-
-                    //var html = '';
-                    //for (var i = 0; i < result.length; i++ ) {
-                    //    html += '<tr>';
-                    //    html += '<td>' + result[i].ParkingPlaceID + '</td>';
-                    //    html += '<td>' + result[i].NameOfParking + '</td>';
-                    //    html += '</tr>';
-
-                },
-
-
-                })
-            }, 10000);
-             });
-    });
+                    html += '</tr>';
+                }
+                $('#tableList').html(html);
+            },
+            error: function (errormessage) {
+                if (timeFrom == null && timeTo == null) {
+                } else {
+                    alert(errormessage.responseText);
+                }
+            }
+        });
+    }
 </script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -88,7 +72,7 @@
                                     <tr>
                                         <td>Bãi Đỗ</td>
                                         <td>
-                                            <select class="form-control" id="cbxListParking">
+                                            <select class="form-control" id="cbxListParking" onchange="runInterval()">
                                                 <option value="-1">Select Parking</option>
                                                 @foreach (var list in ViewBag.listParkingPlace)
                                                 {
@@ -96,7 +80,7 @@
                                                     {
                                                         <option value="@list.ParkingPlaceID"> @list.NameOfParking </option>
                                                     }
-                                                    
+
                                                 }
                                             </select>
                                         </td>
@@ -106,20 +90,20 @@
                             </form>
 
                             <div class="row invoice-info">
-                                <table class="table table-avatar">
+                                <table class="table table-avatar"  id="tableList">
                                     <thead>
                                         <tr class="bg-green">
 
                                             <th>Loại Xe</th>
                                             <th>Đã gửi</th>
                                             <th>Chỗ trống</th>
-                                          
+
                                         </tr>
                                     </thead>
-                                    <tbody id="tableList">
+                                    <tbody>
                                     </tbody>
-                                    
-                                    
+
+
 
                                 </table>
                             </div>
@@ -132,7 +116,7 @@
                                     <tr>
                                         <th>Biển số</th>
                                         <th>Thời gian vào</th>
-                                        
+
                                         <th>Hình thức vé</th>
                                         <th>Số thẻ</th>
                                         <th>Loại xe</th>
@@ -145,7 +129,7 @@
                                     <tr>
                                         <th>Biển số</th>
                                         <th>Thời gian vào</th>
-                                        
+
                                         <th>Hình thức vé</th>
                                         <th>Số thẻ</th>
                                         <th>Loại xe</th>
@@ -175,7 +159,7 @@
                                                     <label for="PassWork">Thời gian vào</label>
                                                     <input type="text" class="form-control" id="TimeInd" placeholder="Mật khẩu" disabled />
                                                 </div>
-                                               
+
                                                 <div class="form-group col-sm-4">
                                                     <label for="Loại vé">Loại vé</label>
                                                     <input type="text" class="form-control" id="TypeOfTicketd" placeholder="Loại vé" disabled />
@@ -186,7 +170,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-4">
                                                     <label for="Gender">Loại xe</label>
-                                                    <input type="text" class="form-control" id="TypeOfVe"  placeholder="Loại xe" disabled />
+                                                    <input type="text" class="form-control" id="TypeOfVe" placeholder="Loại xe" disabled />
                                                 </div>
 
                                             </form>
