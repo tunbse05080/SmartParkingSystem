@@ -22,17 +22,24 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
 </head>
+
 <body class="hold-transition login-page" style="background-image: url('/Content/dist/img/bãi-đậu-xe-2-2.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover;">
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <a  class="h2">SmartParking System</a>
             </div>
+            @using (Html.BeginForm())
+            {
             <div class="card-body">
+                @if (ViewBag.mes != null)
+                {
+                    <div class="alert alert-success">@ViewBag.mes</div>
+                }
                 <p class="login-box-msg">Bạn quên khẩu.Bạn muốn lấy mật khẩu mới?</p>
                 <form action="recover-password.html" method="post">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" name="emailUser" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -50,7 +57,7 @@
                     <a href="@Url.Action("Index","LoginUs")">Đăng nhập</a>
                 </p>*@
             </div>
-            <!-- /.login-card-body -->
+            <!-- /.login-card-body -->}
         </div>
     </div>
     <!-- /.login-box -->

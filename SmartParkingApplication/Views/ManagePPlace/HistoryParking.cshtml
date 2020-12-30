@@ -30,31 +30,27 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row" style="margin-bottom:20px">
-                                <strong style="font-size:x-large">Bãi đỗ:</strong>
-                                <div class="col-md-2">
+                            <div class="row" style="margin-bottom:10px">
+                                <strong style="font-size:x-large">Bãi đỗ:&nbsp;</strong>
+                                <div class="w-25">
                                     <select class="form-control" id="cbNameParkingPlaceHistory">
                                     </select>
                                 </div>
-                            </div><br />
-                            <div class="row">
-                                <div class="col-sm-1" style="padding-left:30px">
-                                    <a>Từ: </a>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input style="margin-top:-5px" class="form-control w-75" type="date" id="TimeFromHis" name="TimeFromHis" />
-                                </div>
-                                <div class="col-sm-1" style="padding-left:30px">
-                                    <a>Đến: </a>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input style="margin-top:-5px" class="form-control w-75" type="date" id="TimeToHis" name="TimeToHis" />
-                                </div>
-                                <div class="col-sm-2">
-                                    <input style="margin-top:-5px" type="text" class="form-control" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" />
-                                </div>
+                                <form id="FormHistory" style="display: contents; justify-content: flex-end;">
+                                    <div style="margin-left: 10%; display: flex;">
+                                        <a style="margin-top: 5px;">Từ: </a>&nbsp;
+                                        <input class="form-control w-100" type="date" id="TimeFromHis" name="TimeFromHis" onchange="validateHistoryPP()"/>
+                                    </div>
+                                    <div style="display: flex; margin-left: 5%;">
+                                        <a style="margin-top: 5px;">Đến: </a>&nbsp;
+                                        <input class="form-control w-100" type="date" id="TimeToHis" name="TimeToHis" onchange="validateHistoryPP()"/>
+                                    </div>
+                                    <div style="margin-left: 5%; margin-right: 5px;">
+                                        <input type="text" class="form-control w-100" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" oninput="validateHistoryPP()"/>
+                                    </div>
+                                </form>
                                 <div>
-                                    <button style="margin-top:-5px" class="btn btn-success" onclick="loadDataHistoryParking();" id="btnSearchHistoryPPa">Search</button>
+                                    <button class="btn btn-success" onclick="loadDataHistoryParking();" id="btnSearchHistoryPPa">Search</button>
                                 </div>
                             </div><br />
                             <!-- table info price day and block -->
