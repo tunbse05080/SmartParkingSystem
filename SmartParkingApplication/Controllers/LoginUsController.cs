@@ -1,6 +1,7 @@
 ﻿using SmartParkingApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -74,8 +75,26 @@ namespace SmartParkingApplication.Controllers
             ViewBag.mes = "email sent success";
             ViewBag.mes = "Gửi mail thành công.Bạn vào kiểm tra mật khẩu tại gmail";
 
+            var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
+
+            
+            Account acc = db.Accounts.Find(data.AccountID);
+            acc.PassWord = "Aa@1234";
+            Update(acc);
+
             return View();
 
+        }
+     
+        public JsonResult Update(Account account)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(account).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return Json(account, JsonRequestBehavior.AllowGet);
         }
     }
 }
