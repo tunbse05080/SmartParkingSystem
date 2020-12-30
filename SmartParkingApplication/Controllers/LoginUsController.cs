@@ -67,11 +67,11 @@ namespace SmartParkingApplication.Controllers
         }
         [HttpPost][AllowAnonymous]
     public ActionResult Forgot (string emailUser){
-            string subject = "Gửi vào đây";
-            string body = "mật khẩu mới là";
+            string subject = "Yêu cầu đổi mật khẩu";
+            string body = "Mật khẩu mới là: Aa@1234";
 
             WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
-            ViewBag.mes = "email sent success";
+            ViewBag.mes = "Gửi mail thành công.Bạn vào kiểm tra mật khẩu tại gmail";
 
             return View();
 
