@@ -16,7 +16,7 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
 
-            
+
         }
 
         [HttpPost]
@@ -25,10 +25,10 @@ namespace SmartParkingApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password)&& s.Account.RoleID != 1).ToList();
+                var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password) && s.Account.RoleID != 1).ToList();
                 if (data.Count() > 0)
                 {
-                    string name = data.FirstOrDefault().Account.UserName; 
+                    string name = data.FirstOrDefault().Account.UserName;
                     //add session
                     Session["UserName"] = data.FirstOrDefault().Account.UserName;
                     Session["Name"] = data.FirstOrDefault().Name;
@@ -40,11 +40,8 @@ namespace SmartParkingApplication.Controllers
                 else
                 {
                     ViewBag.ErrorMessage = "Đăng nhập lỗi";
-
-                   
-                    //ViewBag.ErrorMessage = "Đăng nhập lỗi";
                 }
-                
+
             }
             return RedirectToAction("Index");
         }
@@ -59,7 +56,8 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
         }
-    public ActionResult Forgot (){
+        public ActionResult Forgot()
+        {
             return View();
 
         }
