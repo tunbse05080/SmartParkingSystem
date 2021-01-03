@@ -159,6 +159,8 @@
     <Content Include="Content\dist\js\Chart\highcharts.js" />
     <Content Include="Content\dist\js\Dashboard.js" />
     <Content Include="Content\dist\css\IconDashboard\ionicons.min.css" />
+    <Content Include="Content\dist\js\easy_background.js" />
+    <Content Include="Content\dist\js\easy_background.min.js" />
     <Content Include="Content\dist\js\HistoryParking.js" />
     <Content Include="Content\dist\js\IncomeReport.js" />
     <Content Include="Content\dist\js\IncomeStatistic.js" />
