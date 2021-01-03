@@ -11,7 +11,7 @@
     <title> Quên Mật Khẩu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -21,13 +21,28 @@
     <link rel="stylesheet" href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .ct {
+            height: 95.8vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    </style>
 </head>
 
-<body class="hold-transition login-page" style="background-image: url('/Content/dist/img/backgroundcar.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+<body class="hold-transition login-page" @*style="background-image: url('/Content/dist/img/backgroundcar.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover;*@">
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a class="h2">SmartParking System</a>
+                 <a class="h2" style="background-color: #007bff; color: white;">SmartParking Systems</a>
             </div>
             @using (Html.BeginForm())
             {
