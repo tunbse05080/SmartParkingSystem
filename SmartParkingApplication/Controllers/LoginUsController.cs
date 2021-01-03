@@ -67,21 +67,32 @@ namespace SmartParkingApplication.Controllers
         [AllowAnonymous]
         public ActionResult Forgot(string emailUser)
         {
-
-            string subject = "Yêu cầu đổi mật khẩu";
-            string body = "Mật khẩu mới là: Aa@1234";
-
-            WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
-            ViewBag.mes = "email sent success";
-            ViewBag.mes = "Gửi mail thành công.Bạn vào kiểm tra mật khẩu tại gmail";
-
             var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
 
-            
-            Account acc = db.Accounts.Find(data.AccountID);
-            acc.PassWord = "Aa@1234";
-            Update(acc);
+            if(data == null)
+            {
+                ViewBag.mes = "Tài khoản không tồn tại trong hệ thống";
+                return View();
+            }
+            else{
+                string subject = "Yêu cầu đổi mật khẩu";
+                string body = "Mật khẩu mới là: Aa@1234";
 
+                WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
+
+                ViewBag.mes = "Gửi mail thành công.Bạn kiểm tra mật khẩu tại gmail và quay lại trang đăng nhập";
+
+
+
+
+
+
+                Account acc = db.Accounts.Find(data.AccountID);
+                acc.PassWord = "Aa@1234";
+                Update(acc);
+
+                
+            }
             return View();
 
         }
