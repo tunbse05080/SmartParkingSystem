@@ -129,6 +129,10 @@
     <Content Include="Content\dist\img\default-150x150.png" />
     <Content Include="Content\dist\img\iconCar.png" />
     <Content Include="Content\dist\img\icons.png" />
+    <Content Include="Content\dist\img\okxe1.jpg" />
+    <Content Include="Content\dist\img\okxe2.jpg" />
+    <Content Include="Content\dist\img\okxe3.jpg" />
+    <Content Include="Content\dist\img\okxe4.jpg" />
     <Content Include="Content\dist\img\photo1.png" />
     <Content Include="Content\dist\img\photo2.png" />
     <Content Include="Content\dist\img\photo3.jpg" />
