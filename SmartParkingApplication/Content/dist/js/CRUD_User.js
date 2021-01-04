@@ -143,7 +143,7 @@ function getDetailByID(EmployeeID) {
             $('#PhoneNumberD').val('0' + result.Phone);
             $('#EmailD').val(result.email);
             $('#StatusOfWorkD').val(result.statusOfwork);
-            $('#AccountName').val(result.UserName);
+            $('#AccountName').val(result.userName);
             $('#ParkingPlaceD').val(result.NameOfParking);
 
             $('#myModalDetailUser').modal('show');
@@ -203,7 +203,7 @@ function loadData() {
                 html += '<td>' + item.email + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
                 html += '<td>' + item.StatusOfWork + '</td>';     
-                switch (item.StatusOfAccount) {
+                switch (item.statusOfAccount) {
                     case 0:
                         if (item.StatusOfWork == 'Không trong ca') {
                             html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="margin-left:1px" onclick = "return getEditByID(' + item.UserID + ')">Sửa</button></td>';
@@ -215,6 +215,9 @@ function loadData() {
                         break;
                     case 1:
                         html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button></td>';
+                        break;
+                    case 2:
+                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="margin-left:1px" onclick = "return getEditByID(' + item.UserID + ')">Sửa</button></td>';
                         break;
                 }
                 html += '</tr>';
@@ -248,7 +251,7 @@ function AddUser() {
         Phone: $('#PhoneNumber').val(),
         email: $('#Email').val(),
         IdentityCard: $('#IdentityCard').val(),
-        StatusOfWork: 1,
+        StatusOfWork: 2,
         ParkingPlaceID: $('#cbparkingPlaceU').val(),
     };
     $.ajax({
@@ -563,81 +566,6 @@ function validateUserAdd() {
 }
 
 
-// gia han HĐ
-//function ContractGH() {
-//    var emGHObj = {
-//        UserID: $('#UserIDGH').val(),
-//        UserName: $('#UserNameGH').val(),
-//        Name: $('#FullNameGH').val(),
-//        PassWork: $('#PassWordGH').val(),
-//        DateOfBirth: $('#DateOfBirthGH').val(),
-//        Gender: $('#GenderGH').val(),
-//        UserAddress: $('#AddressGH').val(),
-//        Phone: $('#PhoneNumberGH').val(),
-//        email: $('#EmailGH').val(),
-//        IdentityCard: $('#IdentityCardGH').val(),
-//        ContractSigningDate: $('#ContractSigningDateGH').val(),
-//        ContractExpirationDate: $('#ContractExpirationDateGH').val(),
-//        StatusOfWork:1,
-//        RoleID: $('#RoleNameGH').val(),
-//        ParkingPlaceID: $('#ParkingPlaceGH').val(),
-//    };
-//    $.ajax({
-//        url: "/ManageUser/Update",
-//        data: JSON.stringify(emGHObj),
-//        type: "POST",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#myModalGH').modal('hide');
-//            $('#tbUser').DataTable().clear().destroy();
-//            loadData(true);
-            
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
-
-//function dropContract() {
-//    var emGHObj = {
-//        UserID: $('#UserIDDrop').val(),
-//        UserName: $('#UserNameDrop').val(),
-//        Name: $('#FullNameDrop').val(),
-//        PassWork: $('#PassWordGH').val(),
-//        DateOfBirth: $('#DateOfBirthDrop').val(),
-//        Gender: $('#GenderDrop').val(),
-//        UserAddress: $('#AddressDrop').val(),
-//        Phone: $('#PhoneNumberDrop').val(),
-//        email: $('#EmailDrop').val(),
-//        IdentityCard: $('#IdentityCardDrop').val(),
-//        ContractSigningDate: $('#ContractSigningDateDrop').val(),
-//        ContractExpirationDate: loadDateNow(),
-//        StatusOfWork: 0,
-//        RoleID: $('#RoleNameDrop').val(),
-//        ParkingPlaceID: $('#ParkingPlaceDrop').val(),
-//    };
-//    $.ajax({
-//        url: "/ManageUser/Update",
-//        data: JSON.stringify(emGHObj),
-//        type: "POST",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#myModalDropContract').modal('hide');
-//            $('#tbUser').DataTable().clear().destroy();
-//            loadData(true);
-
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
-
-
-//comboboxgender
 function ComboboxGender() {
     $.ajax({
         url: "/ManageUser/ComboboxGender",
