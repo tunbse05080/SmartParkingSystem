@@ -30,29 +30,33 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row" style="margin-bottom:10px">
-                                <strong style="font-size:x-large">Bãi đỗ:&nbsp;</strong>
-                                <div class="w-25">
-                                    <select class="form-control" id="cbNameParkingPlaceHistory">
-                                    </select>
-                                </div>
-                                <form id="FormHistory" style="display: contents; justify-content: flex-end;">
-                                    <div style="margin-left: 10%; display: flex;">
-                                        <a style="margin-top: 5px;">Từ: </a>&nbsp;
-                                        <input class="form-control w-100" type="date" id="TimeFromHis" name="TimeFromHis" onchange="validateHistoryPP()"/>
-                                    </div>
-                                    <div style="display: flex; margin-left: 5%;">
-                                        <a style="margin-top: 5px;">Đến: </a>&nbsp;
-                                        <input class="form-control w-100" type="date" id="TimeToHis" name="TimeToHis" onchange="validateHistoryPP()"/>
-                                    </div>
-                                    <div style="margin-left: 5%; margin-right: 5px;">
-                                        <input type="text" class="form-control w-100" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" oninput="validateHistoryPP()"/>
-                                    </div>
-                                </form>
-                                <div>
-                                    <button class="btn btn-success" onclick="loadDataHistoryParking();" id="btnSearchHistoryPPa">Search</button>
-                                </div>
+                            <strong style="font-size:x-large">Bãi đỗ:&nbsp;</strong>
+                            <div class="w-25">
+                                <select class="form-control" id="cbNameParkingPlaceHistory">
+                                </select>
                             </div><br />
+                                  <div class="row" style="margin-bottom:10px">
+                                      <div class="col-sm-2" style="margin-top:5px">
+                                          <a>Chọn ngày</a>
+                                          <input type="checkbox" id="checkboxDateHis" onclick="checkBoxChoiceDateHis()"/>
+                                      </div>
+                                      <div class="col-sm-3" style="display: flex" id="dvFromHis">
+                                          <a style="margin-top: 5px;">Từ: </a>&nbsp;
+                                          <input class="form-control w-100" type="date" id="TimeFromHis" name="TimeFromHis" @*onchange="validateHistoryPP()"*@ />
+                                      </div>
+                                      <div class="col-sm-3" style="display: flex" id="dvToHis">
+                                          <a style="margin-top: 5px;">Đến: </a>&nbsp;
+                                          <input class="form-control w-100" type="date" id="TimeToHis" name="TimeToHis" @*onchange="validateHistoryPP()"*@ />
+                                      </div>
+                                      <div class="col-sm-2">
+                                          <input type="text" class="form-control w-100" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" @*oninput="validateHistoryPP()"*@ />
+                                      </div>
+                                      @*<form id="FormHistory" style="display: contents; justify-content: flex-end;">
+                                      </form>*@
+                                      <div class="col-sm-1">
+                                          <button class="btn btn-success" onclick="loadDataHistoryParking();" id="btnSearchHistoryPPa">Search</button>
+                                      </div>
+                                  </div><br />
                             <!-- table info price day and block -->
                             <div class="row invoice-info">
                                 <table id="tbHistory" class="table table-avatar">

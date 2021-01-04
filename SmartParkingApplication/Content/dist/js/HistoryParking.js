@@ -1,8 +1,7 @@
-﻿//load page
-//$(document).ready(function () {
-//    getDayFirstInLastOut();
-//    loadDataHistoryParking();
-//});
+﻿
+$(document).ready(function () {
+    checkBoxChoiceDateHis();
+});
 
 //var temp = {
 //    timeFrom: "",
@@ -10,15 +9,45 @@
 //}
 
 
+function checkBoxChoiceDateHis() {
+    if ($('#checkboxDateHis').is(':checked')) {
+        $('#dvFromHis').show();
+        $('#dvToHis').show();
+    } else {
+        $('#dvFromHis').hide();
+        $('#dvToHis').hide();
+    }
+}
+
+//function checkChoiceDateIncome() {
+//    if ($('#checkboxDateIncome').is(':checked')) {
+//        $('#dvChoiceCurrentMY').hide();
+//        $('#dvfromDateIncome').show();
+//        $('#dvtoDateIncome').show();
+//    } else {
+//        $('#dvChoiceCurrentMY').show();
+//        $('#dvfromDateIncome').hide();
+//        $('#dvtoDateIncome').hide();
+//    }
+//}
+
 //Load Data function
 function loadDataHistoryParking() {
     ////var res = validateHistoryPP();
     //if (res == false) {
     //    return false;
     //}
+    var timeTo;
+    var timeFrom;
     $('#tbHistory').DataTable().clear().destroy();
-    var timeTo = $('#TimeToHis').val();
-    var timeFrom = $('#TimeFromHis').val();
+    var checkboxDate = document.getElementById("checkboxDateHis");
+    if (checkboxDate.checked == false) {
+        timeTo = new Date();
+        timeFrom = "1970-01-01";
+    } else {
+        timeTo = $('#TimeToHis').val();
+        timeFrom = $('#TimeFromHis').val();
+    }
     var ParkingPlaceID = $('#cbNameParkingPlaceHistory').val();
     var txtSearch = $('#txtSearchHistoryPP').val();
     if (ParkingPlaceID) {

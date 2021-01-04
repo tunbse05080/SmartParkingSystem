@@ -83,7 +83,6 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadHistoryParking(int ParkingPlaceID, DateTime timeFrom, DateTime timeTo, string txtSearchHistory)
         {
-
             var trans = (from t in db.Transactions
                          where t.ParkingPlaceID == ParkingPlaceID && t.TimeOutv != null && DateTime.Compare((DateTime)t.TimeIn, timeFrom) >= 0 && DateTime.Compare((DateTime)t.TimeOutv, timeTo) <= 0 && t.LicensePlates.Contains(txtSearchHistory)
                          join c in db.Cards on t.CardID equals c.CardID into table1
