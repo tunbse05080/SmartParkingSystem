@@ -3,12 +3,6 @@ $(document).ready(function () {
     checkBoxChoiceDateHis();
 });
 
-//var temp = {
-//    timeFrom: "",
-//    timeTo: ""
-//}
-
-
 function checkBoxChoiceDateHis() {
     if ($('#checkboxDateHis').is(':checked')) {
         $('#dvFromHis').show();
@@ -18,18 +12,6 @@ function checkBoxChoiceDateHis() {
         $('#dvToHis').hide();
     }
 }
-
-//function checkChoiceDateIncome() {
-//    if ($('#checkboxDateIncome').is(':checked')) {
-//        $('#dvChoiceCurrentMY').hide();
-//        $('#dvfromDateIncome').show();
-//        $('#dvtoDateIncome').show();
-//    } else {
-//        $('#dvChoiceCurrentMY').show();
-//        $('#dvfromDateIncome').hide();
-//        $('#dvtoDateIncome').hide();
-//    }
-//}
 
 //Load Data function
 function loadDataHistoryParking() {
@@ -91,57 +73,6 @@ function loadDataHistoryParking() {
     });
 }
 
-//get day firstTime and lastOut
-//function getDayFirstInLastOut() {
-//    $.ajax({
-//        url: "/ManageHistoryParking/getDayFirstInLastOut",
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#TimeFromHis').val(result.firstIn);
-//            $('#TimeToHis').val(result.lastOut);
-//            temp.timeFrom = result.firstIn;
-//            temp.timeTo = result.lastOut;
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + errormessage.responseText);
-//        }
-//    });
-//}
-//get info transacsion from transactionID
-//function getDetailHisByID(TransactionID) {
-//    $.ajax({
-//        url: "/ManagePPlace/ParkingSSDetails/" + TransactionID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#LicensePlatesHis').val(result.LicensePlates);
-//            $('#TimeInHis').val(result.TimeIn);
-//            $('#TimeOutHis').val(result.TimeOut);
-//            $('#TypeOfTicketHis').val(result.typeTicket);
-//            $('#CardNumberHis').val(result.CardNumber);
-//            $('#TotalPriceHis').val(result.TotalPrice);
-//            $('#TypeOfVehicleHis').val(result.typeVE);
-//            $('#StaffInHis').val("TuNB");
-//            $('#StaffOutHis').val("TuNB");
-
-//            $('#myModalHistoryDetail').modal('show');
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + TransactionID + errormessage.responseText);
-//        }
-//    });
-//}
-
-//clear text
-//function clearTextHis() {
-//    $('.help-block').remove();
-//    $('.form-control').css('border-color', 'lightgrey');
-//}
-
-//validate using jquery
 function validateHistoryPP() {
     //Display css of error message
     var htmlcss = {
