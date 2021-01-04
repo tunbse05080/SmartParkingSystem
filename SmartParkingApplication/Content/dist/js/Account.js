@@ -138,8 +138,14 @@ function UpdateRole() {
     });
 }
 
+var checkConfirmPass;
 //Reset password for account base on AccountID
 function UpdatePassword() {
+    if ($('#AccountPasEdit').val() == $('#AccountPasEditConfirm').val()) {
+        checkConfirmPass = true;
+    } else {
+        checkConfirmPass = false;
+    }
     var res = validateEditPwd();
     if (res == false) {
         return false;
@@ -289,16 +295,27 @@ function validateEditPwd() {
     $.validator.addMethod('checkAccPassWordE', function (value, element) {
         return pwd.test(value);
     }, 'Mật khấu >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)');
+    //check confirm pass
+    $.validator.addMethod('checkConfirmPass', function (value, element) {
+        return checkConfirmPass != false;
+    }, 'Mật khẩu xác nhận không chính xác!');
     //Set rule + message for input by name
     $('#FormEditPwd').validate({
         rules: {
             AccountPasEdit: {
                 required: true,
                 checkAccPassWordE: true
+            },
+            AccountPasEditConfirm: {
+                required: true,
+                checkConfirmPass: true
             }
         },
         messages: {
             AccountPasEdit: {
+                required: '*Bắt buộc.'
+            },
+            AccountPasEditConfirm: {
                 required: '*Bắt buộc.'
             }
         }
