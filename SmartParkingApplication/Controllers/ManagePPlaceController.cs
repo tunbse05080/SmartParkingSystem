@@ -88,7 +88,7 @@ namespace SmartParkingApplication.Controllers
                          join c in db.Cards on t.CardID equals c.CardID into table1
                          from c in table1.DefaultIfEmpty()
                          orderby t.TimeIn
-                         select new { t.TransactionID, t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber, t.TypeOfVerhicleTran, t.TotalPrice }).ToList();
+                         select new { t.TransactionID, t.LicensePlates, t.TimeIn, t.TimeOutv, t.TypeOfTicket, c.CardNumber, t.TypeOfVerhicleTran, t.TotalPrice, userIn =  t.User1.Account.UserName, userOut = t.User2.Account.UserName }).ToList();
 
             List<Object> list = new List<object>();
             foreach (var item in trans)
@@ -115,7 +115,7 @@ namespace SmartParkingApplication.Controllers
                         typeOfVehicle = "Ô tô";
                         break;
                 }
-                var tr = new { item.TransactionID, item.LicensePlates, timeIn, timeOut, typeofTicket, item.CardNumber, typeOfVehicle, item.TotalPrice };
+                var tr = new { item.TransactionID, item.LicensePlates, timeIn, timeOut, typeofTicket, item.CardNumber, typeOfVehicle, item.TotalPrice, item.userIn, item.userOut };
                 list.Add(tr);
             }
             return Json(list, JsonRequestBehavior.AllowGet);

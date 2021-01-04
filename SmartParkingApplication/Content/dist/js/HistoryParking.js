@@ -71,8 +71,8 @@ function loadDataHistoryParking() {
                 html += '<td>' + item.CardNumber + '</td>';
                 html += '<td>' + item.typeofTicket + '</td>';
                 html += '<td>' + item.TotalPrice + '</td>';
-                html += '<td>TuNB</td>';
-                html += '<td>TuNB</td>';
+                html += '<td>' + item.userIn + '</td>';
+                html += '<td>' + item.userOut + '</td>';
 
                 //html += '<td><button class="btn btn-primary" onclick = "return getDetailHisByID(' + item.TransactionID + ')"> Chi tiết</button></td>';
                 html += '</tr>';
