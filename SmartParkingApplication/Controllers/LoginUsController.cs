@@ -70,10 +70,10 @@ namespace SmartParkingApplication.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult CheckCode(string checkCode, string emailUser)
+        public ActionResult CheckCode(string checkCode, string emailUser,string checkCodenumber)
         {
             var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
-            if (checkCode == "Aa@1234")
+            if (checkCode == checkCodenumber)
             {
                 Account acc = db.Accounts.Find(data.AccountID);
                 acc.PassWord = "Aa@1234";
@@ -82,6 +82,8 @@ namespace SmartParkingApplication.Controllers
                 string body = "Mật khẩu mới của bạn là: Aa@1234";
 
                 WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
+                ViewBag.mes = "Đổi mật khẩu thành công.Quay lại trang đăng nhập";
+                
 
             }
             else
@@ -105,11 +107,15 @@ namespace SmartParkingApplication.Controllers
                 return View();
             }
             else{
-               
-                
-                    string subject = "Yêu cầu đổi mật khẩu";
-                    string body = "Mã code của bạn là: Aa@1234";
-                    string checkCode = "Aa@1234";
+                string checkCode = "";
+                Random rd = new Random();
+
+                checkCode = rd.Next(10000, 99999).ToString();
+                string subject = "Yêu cầu đổi mật khẩu";
+                    string body = "Mã code của bạn là: "+checkCode+"";
+                    
+
+                   
 
                     WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
 
