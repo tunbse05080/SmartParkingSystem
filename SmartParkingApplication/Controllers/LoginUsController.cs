@@ -91,7 +91,7 @@ namespace SmartParkingApplication.Controllers
                 ViewBag.mes = "Mã code sai.Nhập lại mã code";
                 return View();
             }
-            return View();
+            return View("Index");
 
         }
 
@@ -99,8 +99,8 @@ namespace SmartParkingApplication.Controllers
         [AllowAnonymous]
         public ActionResult Forgot(string emailUser)
         {
-            var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
-           
+            var data = db.Users.Where(s => s.email == emailUser && s.Account.RoleID != 1).FirstOrDefault();
+          
             if(data == null)
             {
                 ViewBag.mes = "Tài khoản không tồn tại trong hệ thống";
