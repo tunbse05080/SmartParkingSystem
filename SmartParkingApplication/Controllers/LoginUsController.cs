@@ -82,7 +82,7 @@ namespace SmartParkingApplication.Controllers
                 string body = "Mật khẩu mới của bạn là: Aa@1234";
 
                 WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
-                ViewBag.mes = "Đổi mật khẩu thành công.Quay lại trang đăng nhập";
+                ViewBag.mes = "Đổi mật khẩu thành công. Quay lại trang đăng nhập";
                 
 
             }
