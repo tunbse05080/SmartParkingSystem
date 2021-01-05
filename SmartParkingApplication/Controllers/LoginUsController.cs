@@ -79,7 +79,12 @@ namespace SmartParkingApplication.Controllers
                 acc.PassWord = "Aa@1234";
                 Update(acc);
             }
-            return View();
+            else
+            {
+                ViewBag.mes = "Mã code sai.Nhập lại mã code";
+                return View();
+            }
+            return View("Index");
 
         }
 
@@ -99,7 +104,7 @@ namespace SmartParkingApplication.Controllers
                 
                     string subject = "Yêu cầu đổi mật khẩu";
                     string body = "Mã code của bạn là: Aa@1234";
-                string checkCode = "Aa@1234";
+                    string checkCode = "Aa@1234";
 
                     WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
 
