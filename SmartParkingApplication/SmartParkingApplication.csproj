@@ -2212,6 +2212,7 @@
     <Content Include="Views\ManagePPlace\HistoryParking.cshtml" />
     <Content Include="Views\StatisticReport\WorkingShiftStatistic.cshtml" />
     <Content Include="Views\Setting\UpdateUser.cshtml" />
+    <Content Include="Views\LoginUs\CheckCode.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

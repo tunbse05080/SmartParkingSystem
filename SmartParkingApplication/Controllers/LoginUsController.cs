@@ -63,39 +63,58 @@ namespace SmartParkingApplication.Controllers
             return View();
 
         }
+        public ActionResult CheckCode()
+        {
+            return View();
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult CheckCode(string checkCode, string emailUser)
+        {
+            var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
+            if (checkCode == "Aa@1234")
+            {
+                Account acc = db.Accounts.Find(data.AccountID);
+                acc.PassWord = "Aa@1234";
+                Update(acc);
+            }
+            return View();
+
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Forgot(string emailUser)
         {
             var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
-
+           
             if(data == null)
             {
                 ViewBag.mes = "Tài khoản không tồn tại trong hệ thống";
                 return View();
             }
             else{
-                string subject = "Yêu cầu đổi mật khẩu";
-                string body = "Mật khẩu mới là: Aa@1234";
-
-                WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
-
-                ViewBag.mes = "Gửi mail thành công.Bạn kiểm tra mật khẩu tại gmail và quay lại trang đăng nhập";
-
-
-
-
-
-
-                Account acc = db.Accounts.Find(data.AccountID);
-                acc.PassWord = "Aa@1234";
-                Update(acc);
-
+               
                 
+                    string subject = "Yêu cầu đổi mật khẩu";
+                    string body = "Mã code của bạn là: Aa@1234";
+                string checkCode = "Aa@1234";
+
+                    WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
+
+                    ViewBag.mes = "Gửi mail thành công.Bạn kiểm tra mã Code tại gmail";
+
+                    return RedirectToAction("CheckCode", "LoginUs",new { checkCode,emailUser });
+
+
             }
-            return View();
+           
 
         }
+        
+        
+       
      
         public JsonResult Update(Account account)
         {
