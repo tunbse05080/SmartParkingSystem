@@ -78,13 +78,18 @@ namespace SmartParkingApplication.Controllers
                 Account acc = db.Accounts.Find(data.AccountID);
                 acc.PassWord = "Aa@1234";
                 Update(acc);
+                string subject = "Đổi mật khẩu thành công";
+                string body = "Mật khẩu mới của bạn là: Aa@1234";
+
+                WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
+
             }
             else
             {
                 ViewBag.mes = "Mã code sai.Nhập lại mã code";
                 return View();
             }
-            return View("Index");
+            return View();
 
         }
 
