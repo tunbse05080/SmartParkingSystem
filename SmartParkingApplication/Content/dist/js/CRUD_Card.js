@@ -94,11 +94,14 @@ function AddCard(number) {
     });
 }
 
+var checkExistCardUpdate;
+//update card
 function UpdateCard() {
     var res = validateUpdateCard();
     if (res == false) {
         return false;
     }
+    checkExistCardUpdate = true;
     var empCardObj = {
         CardID: $('#IdCardEdit').val(),
         CardNumber: $('#CardNumberEdit').val(),
@@ -106,16 +109,22 @@ function UpdateCard() {
         Status: $('#StatusCard').val(),
     };
     $.ajax({
-        url: "/ManageCard/UpdateCard",
+        url: "/ManageCard/CheckCardToUpdate",
         data: JSON.stringify(empCardObj),
         type: "POST",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbCard').DataTable().clear().destroy();
-            loadDataCard();
-            $('#myModalUpdate').modal('hide');
-
+            if (result == true) {
+                validateUpdateCard();
+                checkExistCardUpdate = false;
+                return false;
+            } else {
+                checkExistCardUpdate = false;
+                $('#tbCard').DataTable().clear().destroy();
+                loadDataCard();
+                $('#myModalUpdate').modal('hide');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -338,12 +347,16 @@ function validateUpdateCard() {
     $.validator.addMethod('checkCardEdit', function (value, element) {
         return rfidCard.test(value);
     });
+    $.validator.addMethod('checkExistCardUpdate', function (value) {
+        return checkExistCardUpdate != true;
+    }, 'Thẻ đã tồn tại.');
     //Set rule + message for input by name
     $('#FormEditCard').validate({
         rules: {
             CardNumberEdit: {
                 required: true,
-                checkCardEdit: true
+                checkCardEdit: true,
+                checkExistCardUpdate: true
             }
         },
         messages: {

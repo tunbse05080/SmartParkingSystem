@@ -126,6 +126,24 @@ namespace SmartParkingApplication.Controllers
             return Json(card, JsonRequestBehavior.AllowGet);
         }
 
+        //check Card exist or not if not exist, update card
+        public JsonResult CheckCardToUpdate(Card card)
+        {
+            var check = true;
+            var result = (from c in db.Cards
+                          where c.CardNumber == card.CardNumber
+                          select new { c.CardNumber }).FirstOrDefault();
+            var result2 = (from c in db.Cards
+                           where c.CardID == card.CardID
+                           select new { c.CardNumber }).FirstOrDefault();
+            if (result == null || result2.CardNumber == card.CardNumber)
+            {
+                UpdateCard(card);
+                check = false;
+            }
+            return Json(check, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult UpdateCard(Card card)
         {
             if (ModelState.IsValid)
