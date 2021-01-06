@@ -91,7 +91,7 @@
 
                     <!-- /.social-auth-links -->
 
-                   
+
                 }
             </div>
             <!-- /.login-card-body -->
@@ -211,17 +211,6 @@
             }
             //checkUserNameExist();
             $.validator.setDefaults({
-                errorClass: 'help-block',
-                highlight: function (element) {
-                    $(element).closest('.form-group').addClass('has-error');
-                    $('.input-group-text').css('border-color', 'red');
-                    $(element).css('border-color', 'Red');
-                },
-                unhighlight: function (element) {
-                    $(element).closest('.form-group').removeClass('has-error');
-                    $('.input-group-text').css('border-color', 'lightgrey');
-                    $(element).css('border-color', 'lightgrey');
-                },
                 errorPlacement: function (error, element) {
                     error.appendTo($(element).parent()).css(htmlcss);
                 }
@@ -229,10 +218,10 @@
             //Set custom valid by rule
             $.validator.addMethod('checkPassWordLogin', function (value) {
                 return pwd.test(value);
-            }, 'Mật khấu >= 6 ký tự (chữ hoa, thường, số, ký tự đặc biệt.)');
+            }, '');
             $.validator.addMethod('checkUserNameLogin', function (value) {
                 return $.trim(value).length > 4;
-            }, 'Tên tài khoản > 4 ký tự.');
+            }, '');
             //Set rule + message for input by name
             $('#FormLogin').validate({
                 rules: {
@@ -257,7 +246,7 @@
             if ($('#FormLogin').valid()) {
                 $('#FormLogin').valid();
             } else {
-                $('.login-box-msg').text('Tài khoản/mật khẩu sai. Xin Nhập lại!').css('color', 'red');
+                $('.login-box-msg').text('Tài khoản/mật khẩu sai. Xin Nhập lại!').css({ 'color': 'red', 'font-weight': '700' });
                 $('#FormLogin').valid();
             }
         }
@@ -265,26 +254,30 @@
             if ($('#iconPwd').attr('class') == 'fas fa-eye') {
                 $('#iconPwd').removeClass('fas fa-eye');
                 $('#iconPwd').addClass('fas fa-eye-slash');
-                $('#pwd').prop('type', 'text');
+                $('#PassWord').prop('type', 'text');
             } else {
                 $('#iconPwd').removeClass('fas fa-eye-slash');
                 $('#iconPwd').addClass('fas fa-eye');
-                $('#pwd').prop('type', 'password');
+                $('#PassWord').prop('type', 'password');
             }
         });
+
     </script>
     <script src="~/Content/dist/js/easy_background.js"></script>
     <script>
         easy_background("body",
 
             {
-                slide: ["/Content/dist/img/baido7.jpg", "/Content/dist/img/baido8.jpg", "/Content/dist/img/baido9.jpg", "/Content/dist/img/baido11.jpg",  "/Content/dist/img/baido12.jpg", "/Content/dist/img/baido13.jpg", "/Content/dist/img/baido15.jpg", "/Content/dist/img/baido16.jpg"],
+                slide: ["/Content/dist/img/baido7.jpg", "/Content/dist/img/baido8.jpg", "/Content/dist/img/baido9.jpg", "/Content/dist/img/baido11.jpg", "/Content/dist/img/baido12.jpg", "/Content/dist/img/baido13.jpg", "/Content/dist/img/baido15.jpg", "/Content/dist/img/baido16.jpg"],
 
                 delay: [5000, 6000, 4000, 5000, 5000, 5000, 5000, 5000]
             }
 
 
         );
+        $("#UserName, #PassWord").change(function () {
+            $(".login-box-msg").text("");
+        });
     </script>
 
 </body>
