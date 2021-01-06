@@ -73,6 +73,7 @@ namespace SmartParkingApplication.Controllers
                 int accountID = Create(account);
                 User user = db.Users.Find(UserID);
                 user.AccountID = accountID;
+                user.StatusOfwork = 1;
                 UpdateUser(user);
                 check = false;
             }

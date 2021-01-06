@@ -96,36 +96,6 @@ function getEditByID(EmployeeID) {
     return false;
 }
 
-////getID Contract
-//function getGHByID(EmployeeID) {
-//    $.ajax({
-//        url: "/ManageUser/DetailsGH/" + EmployeeID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//                    $('#UserIDGH').val(result.UserID);
-//                    $('#UserNameGH').val(result.UserName);
-//                    $('#FullNameGH').val(result.Name);
-//                    $('#PassWordGH').val(result.PassWork);
-//                    $('#DateOfBirthGH').val(result.dateOfBirth);
-//                    $('#GenderGH').val(result.Gender);
-//                    $('#AddressGH').val(result.UserAddress);
-//                    $('#IdentityCardGH').val(result.IdentityCard);
-//                    $('#PhoneNumberGH').val(result.Phone);
-//                    $('#EmailGH').val(result.email);
-//                    $('#RoleNameGH').val(result.RoleID);
-//                    $('#ParkingPlaceGH').val(result.ParkingPlaceID);
-//                    $('#ContractSigningDateGH').val(loadDateNow());
-//                    $('#ContractExpirationDateGH').val(result.contractExpirationDate);
-//                    $('#myModalGH').modal('show');
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + EmployeeID + errormessage.responseText);
-//        }
-//    });
-//    return false;
-//}
 //Function for getting detail data base on EmployeeID
 function getDetailByID(EmployeeID) {
     $.ajax({
@@ -154,38 +124,6 @@ function getDetailByID(EmployeeID) {
     });
     return false;
 }
-//Function for getting detail data base on EmployeeID
-//function getDropContractByID(EmployeeID) {
-//    $.ajax({
-//        url: "/ManageUser/DetailsGH/" + EmployeeID,
-//        type: "GET",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#UserIDDrop').val(result.UserID);
-//            $('#UserNameDrop').val(result.UserName);
-//            $('#FullNameDrop').val(result.Name);
-//            $('#PassWordDrop').val(result.PassWork);
-//            $('#DateOfBirthDrop').val(result.dateOfBirth);
-//            $('#GenderDrop').val(result.Gender);
-//            $('#AddressDrop').val(result.UserAddress);
-//            $('#IdentityCardDrop').val(result.IdentityCard);
-//            $('#PhoneNumberDrop').val(result.Phone);
-//            $('#EmailDrop').val(result.email);
-//            $('#RoleNameDrop').val(result.RoleID);
-//            $('#ParkingPlaceDrop').val(result.ParkingPlaceID);
-//            $('#ContractSigningDateDrop').val(result.contractSigningDate);
-//            $('#ContractExpirationDateDrop').val(result.contractExpirationDate);
-
-//            $('#myModalDropContract').modal('show');
-//            $('#btnDrop').show();
-//        },
-//        error: function (errormessage) {
-//            alert("Exception:" + EmployeeID + errormessage.responseText);
-//        }
-//    });
-//    return false;
-//}
 
 //Load Data function
 function loadData() {
@@ -202,7 +140,7 @@ function loadData() {
                 html += '<td>' + + '0' + item.Phone + '</td>';
                 html += '<td>' + item.email + '</td>';
                 html += '<td>' + item.NameOfParking + '</td>';
-                html += '<td>' + item.StatusOfWork + '</td>';     
+                html += '<td hidden>' + item.StatusOfWork + '</td>';     
                 switch (item.statusOfAccount) {
                     case 0:
                         if (item.StatusOfWork == 'Không trong ca') {
@@ -587,28 +525,6 @@ function ComboboxGender() {
         }
     });
 }
-
-//comboboxStatusOfwork
-//function ComboboxStatusOfwork() {
-//    $.ajax({
-//        url: "/ManageUser/ComboboxStatusOfwork",
-//        type: "GET",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            var html = '';
-//            var i = 0;
-//            $.each(result, function (key, item) {
-//                html += '<option value="' + i + '">' + item + '</option>';
-//                i++;
-//            });
-//            $("#cbStatusOfwork").html(html);
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
 
 function ComboboxParkingPlace() {
     $.ajax({
