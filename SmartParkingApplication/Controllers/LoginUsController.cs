@@ -68,6 +68,11 @@ namespace SmartParkingApplication.Controllers
             return View();
 
         }
+        public ActionResult Success()
+        {
+            return View();
+
+        }
         [HttpPost]
         [AllowAnonymous]
         public ActionResult CheckCode(string checkCode, string emailUser,string checkCodenumber)
@@ -82,7 +87,7 @@ namespace SmartParkingApplication.Controllers
                 string body = "Mật khẩu mới của bạn là: Aa@1234";
 
                 WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
-                ViewBag.mes = "Đổi mật khẩu thành công. Quay lại trang đăng nhập";
+                return RedirectToAction("Success","LoginUs");
                 
 
             }
@@ -91,7 +96,7 @@ namespace SmartParkingApplication.Controllers
                 ViewBag.mes = "Mã code sai.Nhập lại mã code";
                 return View();
             }
-            return View("Index");
+          
 
         }
 
@@ -103,7 +108,7 @@ namespace SmartParkingApplication.Controllers
           
             if(data == null)
             {
-                ViewBag.mes = "Tài khoản không tồn tại trong hệ thống";
+                ViewBag.mes = "Tài khoản không tồn tại trong hệ thống này";
                 return View();
             }
             else{
