@@ -53,7 +53,7 @@ function loadChartIncome() {
             var html = '';
             $.each(result, function (key, item) {
                 html += '<tr>';
-                html += '<td>Tháng' + item.Month + '</td>';
+                html += '<td>' + item.datetime + '</td>';
                 html += '<td>' + item.sumMoto + '</td>';
                 html += '<td>' + item.sumCar + '</td>';
                 html += '</tr>';

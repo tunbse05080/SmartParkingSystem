@@ -53,7 +53,7 @@ namespace SmartParkingApplication.Controllers
 
                 var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
                 var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
-                Object data = new { dateTime.Month, sumMoto, sumCar };
+                Object data = new { datetime = dateTime.Month + "/" + dateTime.Year, sumMoto, sumCar };
                 list.Add(data);
             }
             list.Reverse();

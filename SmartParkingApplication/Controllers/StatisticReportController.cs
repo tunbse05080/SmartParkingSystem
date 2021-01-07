@@ -65,7 +65,7 @@ namespace SmartParkingApplication.Controllers
                                    where tr.TimeOutv.Value.Year == dateTime.Year && tr.TimeOutv.Value.Month == dateTime.Month && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking) && (tr.TypeOfTicket == 1)
                                    select new { tr.TotalPrice }).ToList();
                     var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
-                    Object data = new { dateTime.Month, sumCar, sumMoto };
+                    Object data = new { datetime = dateTime.Month + "/" + dateTime.Year, sumCar, sumMoto };
                     list.Add(data);
                 }
                 else
@@ -82,7 +82,7 @@ namespace SmartParkingApplication.Controllers
                                    where mi.PaymentDate.Value.Year == dateTime.Year && mi.PaymentDate.Value.Month == dateTime.Month && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == idParking
                                    select new { mi.TotalPrice }).ToList();
                     var sumCar = dataCar.Select(s => s.TotalPrice).Sum();
-                    Object data = new { dateTime.Month, sumCar, sumMoto };
+                    Object data = new { datetime = dateTime.Month + "/" + dateTime.Year, sumCar, sumMoto };
                     list.Add(data);
                 }
             }
@@ -175,7 +175,7 @@ namespace SmartParkingApplication.Controllers
                 var dataCar = (from tr in db.Transactions
                                where tr.TimeIn.Value.Year == dateTime.Year && tr.TimeIn.Value.Month == dateTime.Month && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == idParking)
                                select new { tr.TypeOfVerhicleTran }).ToList();
-                Object data = new { dateTime.Month, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                Object data = new { datetime = dateTime.Month + "/" + dateTime.Year, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
                 list.Add(data);
             }
             list.Reverse();
@@ -240,7 +240,7 @@ namespace SmartParkingApplication.Controllers
                 var result = (from us in db.UserSchedules
                             where us.User.UserID == id && us.Schedule.TimeStart.Value.Year == dateTime.Year && us.Schedule.TimeStart.Value.Month == dateTime.Month
                               select new { us.UserScheduleID }).ToList();
-                Object data = new { dateTime.Month, total = result.Count() };
+                Object data = new { datetime = dateTime.Month + "/" + dateTime.Year, total = result.Count() };
                 list.Add(data);
             }
             list.Reverse();

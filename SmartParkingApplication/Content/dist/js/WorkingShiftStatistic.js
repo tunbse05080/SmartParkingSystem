@@ -19,7 +19,7 @@ function loadChartWorkingShift() {
             var html = '';
             $.each(result, function (key, item) {
                 html += '<tr>';
-                html += '<td>Tháng' + item.Month + '</td>';
+                html += '<td>' + item.datetime + '</td>';
                 html += '<td>' + item.total + '</td>';
                 html += '</tr>';
             });
