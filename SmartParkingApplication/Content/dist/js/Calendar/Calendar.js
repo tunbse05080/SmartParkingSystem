@@ -221,6 +221,9 @@ function ComboboxUserName(check) {
         ParkingPlaceID = $('#cbparkingPlaceWorkingCalendar').val();
     } else {
         ParkingPlaceID = $('#cbparkingPlaceWS').val();
+        if (!$('#cbparkingPlaceWS').val()) {
+            ParkingPlaceID = 1;
+        }
     }
     if (!ParkingPlaceID) {
         return false;
