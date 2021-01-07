@@ -130,11 +130,10 @@ function CreateWorkingCalendar() {
 
 
 function EditWorkingCalendar() {
-    //var res = validateEditCal();
-    //if (res == false) {
-    //    return false;
-    //}
-    //var id = IdEditWorkingCalendarD;
+    var res = validateEditCal();
+    if (res == false) {
+        return false;
+    }
     var id = $('#IdEditWorkingCalendarD').val();
     var userid = $('#cbUserNameEmpEdit').val();
     $.ajax({
@@ -153,44 +152,6 @@ function EditWorkingCalendar() {
     });
 }
 
-//edit working calendar
-//function EditWorkingCalendar() {
-//    var res = validateEditCal();
-//    if (res == false) {
-//        return false;
-//    }
-//    var UserID = $('#cbUserNameEmpEdit').val();
-//    var checkboxDate = document.getElementById("checkboxDateEdit");
-//    if (checkboxDate.checked == false) {
-//        var scheObj = {
-//            TimeStart: $('#DateApplyEdit').val(),
-//            TimeEnd: $('#DateApplyEdit').val(),
-//            Slot: $('#cbWorkShiftEmpEdit').val(),
-//            ParkingPlaceID: $('#cbparkingPlaceEmpEdit').val()
-//        }
-//    } else {
-//        var scheObj = {
-//            TimeStart: $('#DateStartEdit').val(),
-//            TimeEnd: $('#DateEndEdit').val(),
-//            Slot: $('#cbWorkShiftEmpEdit').val(),
-//            ParkingPlaceID: $('#cbparkingPlaceEmpEdit').val()
-//        }
-//    }
-//    $.ajax({
-//        url: "/ManageUser/GetTimeToUpdateCalendar",
-//        type: "POST",
-//        data: JSON.stringify({ schedule: scheObj, UserID: UserID }),
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            $('#myModalEditWorkingCalendar').modal('hide');
-//            LoadDataCalendar();
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
 //checkbox show to 
 function checkedDate(check) {
     clearBox();

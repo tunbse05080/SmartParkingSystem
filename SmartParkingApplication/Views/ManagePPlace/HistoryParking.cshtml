@@ -42,17 +42,16 @@
                                       </div>
                                       <div class="col-sm-3" style="display: flex" id="dvFromHis">
                                           <a style="margin-top: 5px;">Từ: </a>&nbsp;
-                                          <input class="form-control w-100" type="date" id="TimeFromHis" name="TimeFromHis" @*onchange="validateHistoryPP()"*@ />
+                                          <input class="form-control w-100" type="date" id="TimeFromHis" name="TimeFromHis"/>
                                       </div>
                                       <div class="col-sm-3" style="display: flex" id="dvToHis">
                                           <a style="margin-top: 5px;">Đến: </a>&nbsp;
-                                          <input class="form-control w-100" type="date" id="TimeToHis" name="TimeToHis" @*onchange="validateHistoryPP()"*@ />
+                                          <input class="form-control w-100" type="date" id="TimeToHis" name="TimeToHis"/>
                                       </div>
                                       <div class="col-sm-2">
-                                          <input type="text" class="form-control w-100" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" @*oninput="validateHistoryPP()"*@ />
+                                          <input type="text" class="form-control w-100" id="txtSearchHistoryPP" name="txtSearchHistoryPP" placeholder="Nhập biển số" />
                                       </div>
-                                      @*<form id="FormHistory" style="display: contents; justify-content: flex-end;">
-                                      </form>*@
+
                                       <div class="col-sm-1">
                                           <button class="btn btn-success" onclick="loadDataHistoryParking();" id="btnSearchHistoryPPa">Search</button>
                                       </div>
@@ -70,7 +69,6 @@
                                             <th>Phí gửi(vnđ)</th>
                                             <th>NV cổng vào</th>
                                             <th>NV cổng ra</th>
-                                            @*<th>Thao tác</th>*@
                                         </tr>
                                     </thead>
                                     <tbody id="tbodyHis">
