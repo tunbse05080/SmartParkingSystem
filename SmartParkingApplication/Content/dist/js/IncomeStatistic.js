@@ -1,22 +1,24 @@
 ﻿$(document).ready(function () {
+    $('#fromDateIncome').val(loadDateNowformatdate());
+    $('#toDateIncome').val(loadDateNowformatdate());
     loadChartIncome();
     loadChartIncomeAll();
     ComboboxNameParking();
     KindOfStatisticIncome();
-    //checkChoiceDateIncome();
+    checkChoiceDateIncome();
 });
 
-//function checkChoiceDateIncome() {
-//    if ($('#checkboxDateIncome').is(':checked')) {
-//        $('#dvChoiceCurrentMY').hide();
-//        $('#dvfromDateIncome').show();
-//        $('#dvtoDateIncome').show();
-//    } else {
-//        $('#dvChoiceCurrentMY').show();
-//        $('#dvfromDateIncome').hide();
-//        $('#dvtoDateIncome').hide();
-//    }
-//}
+function checkChoiceDateIncome() {
+    if ($('#checkboxDateIncome').is(':checked')) {
+        $('#dvChoiceCurrentMY').hide();
+        $('#dvfromDateIncome').show();
+        $('#dvtoDateIncome').show();
+    } else {
+        $('#dvChoiceCurrentMY').show();
+        $('#dvfromDateIncome').hide();
+        $('#dvtoDateIncome').hide();
+    }
+}
 
 function KindOfStatisticIncome() {
     if ($('#cbKindOfStatisticIncome').val() == 0) {
@@ -95,6 +97,20 @@ function ChartIncome() {
 //Load Chart Income all parking
 function loadChartIncomeAll() {
     var choice = $('#cbChoiceTimeIncome').val();
+    var isCheckDate = $('#checkboxDateIncome').is(':checked');
+    var dateFrom;
+    var dateTo;
+    if (isCheckDate) {
+        var res = validateInStatistic();
+        if (res == false) {
+            return false;
+        }
+        dateFrom = $('#fromDateIncome').val();
+        dateTo = $('#toDateIncome').val();
+    } else {
+        dateFrom = $('#fromDateIncome').val();
+        dateTo = $('#toDateIncome').val();
+    }
     if (!choice) {
         choice = 0;
     }
@@ -102,7 +118,7 @@ function loadChartIncomeAll() {
         url: "/StatisticReport/LoadDataIncomeAll",
         type: "POST",
         contents: "application/json",
-        data: { choice: choice },
+        data: { choice: choice, dateFrom: dateFrom, dateTo: dateTo, isCheckDate: isCheckDate },
         dataType: "json",
         success: function (result) {
             var html = '';
@@ -189,4 +205,53 @@ function ComboboxNameParking() {
             alert(errormessage.responseText);
         }
     });
+}
+
+//validate using query
+function validateInStatistic() {
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkfromDateIncome', function (value, element) {
+        return new Date(value) <= new Date($('#toDateIncome').val());
+    });
+    $.validator.addMethod('checktoDateIncome', function (value, element) {
+        return new Date(value) >= new Date($('#fromDateIncome').val());
+    });
+    //Set rule + message for input by name
+    $('#FormCheckDateInStatistic').validate({
+        rules: {
+            fromDateIncome: {
+                checkfromDateIncome: true
+            },
+            toDateIncome: {
+                checktoDateIncome: true
+            }
+        },
+        messages: {
+            fromDateIncome: {
+                checkfromDateIncome: 'Phải nhỏ hơn hoặc bằng thời gian kết thúc!'
+            },
+            toDateIncome: {
+                checktoDateIncome: 'Phải lớn hơn hoặc bằng thời gian bắt đầu!'
+            }
+        }
+    });
+    return $('#FormCheckDateInStatistic').valid();
 }

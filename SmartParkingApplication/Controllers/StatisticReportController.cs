@@ -34,14 +34,6 @@ namespace SmartParkingApplication.Controllers
 
         public ActionResult WorkingShiftStatistic()
         {
-            //List<string> list = new List<string>();
-            //for(int i = 0; i < 12; i++)
-            //{
-            //    DateTime dateTime = DateTime.Now.AddMonths(-i);
-            //    list.Add("Tháng " + dateTime.Month);
-            //}
-            //list.Reverse();
-            //ViewData["12Monthlys"] = list;
             return View();
         }
 
@@ -90,33 +82,32 @@ namespace SmartParkingApplication.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        //Load Chart CarDensity
-        public JsonResult LoadDataIncomeAll(int choice)
+        //Load Chart IncomeStatistic
+        public JsonResult LoadDataIncomeAll(int choice, DateTime dateFrom, DateTime dateTo, bool isCheckDate)
         {
             var result = (from tr in db.ParkingPlaces
                           select new { tr.ParkingPlaceID, tr.NameOfParking }).ToList();
             List<Object> list = new List<object>();
             var totalMoto = 0;
             var totalCar = 0;
-            if (choice == 0)
+            if (isCheckDate)
             {
                 foreach (var item in result)
                 {
-
                     var dataMotoDailyTK = (from tr in db.Transactions
-                                           where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                           where DateTime.Compare((DateTime)tr.TimeIn, dateFrom) >= 0 && DateTime.Compare((DateTime)tr.TimeOutv, dateTo) <= 0 && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == item.ParkingPlaceID)
                                            select new { tr.TotalPrice }).ToList();
 
                     var dataCarDailyTK = (from tr in db.Transactions
-                                          where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                          where DateTime.Compare((DateTime)tr.TimeIn, dateFrom) >= 0 && DateTime.Compare((DateTime)tr.TimeOutv, dateTo) <= 0 && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == item.ParkingPlaceID)
                                           select new { tr.TotalPrice }).ToList();
 
                     var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                             where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                             where DateTime.Compare((DateTime)mi.PaymentDate, dateFrom) >= 0 && DateTime.Compare((DateTime)mi.PaymentDate, dateTo) <= 0 && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
                                              select new { mi.TotalPrice }).ToList();
 
                     var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                            where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                            where DateTime.Compare((DateTime)mi.PaymentDate, dateFrom) >= 0 && DateTime.Compare((DateTime)mi.PaymentDate, dateTo) <= 0 && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
                                             select new { mi.TotalPrice }).ToList();
 
                     var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
@@ -129,33 +120,65 @@ namespace SmartParkingApplication.Controllers
             }
             else
             {
-                foreach (var item in result)
+                if (choice == 0)
                 {
-                    var dataMotoDailyTK = (from tr in db.Transactions
-                                           where tr.TimeOutv.Value.Year == DateTime.Now.Year && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == item.ParkingPlaceID)
-                                           select new { tr.TotalPrice }).ToList();
+                    foreach (var item in result)
+                    {
 
-                    var dataCarDailyTK = (from tr in db.Transactions
-                                          where tr.TimeOutv.Value.Year == DateTime.Now.Year && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == item.ParkingPlaceID)
-                                          select new { tr.TotalPrice }).ToList();
+                        var dataMotoDailyTK = (from tr in db.Transactions
+                                               where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                               select new { tr.TotalPrice }).ToList();
 
-                    var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                             where mi.PaymentDate.Value.Year == DateTime.Now.Year && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
-                                             select new { mi.TotalPrice }).ToList();
+                        var dataCarDailyTK = (from tr in db.Transactions
+                                              where tr.TimeOutv.Value.Year == DateTime.Now.Year && tr.TimeOutv.Value.Month == DateTime.Now.Month && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                              select new { tr.TotalPrice }).ToList();
 
-                    var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                            where mi.PaymentDate.Value.Year == DateTime.Now.Year && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
-                                            select new { mi.TotalPrice }).ToList();
+                        var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                                 where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                                 select new { mi.TotalPrice }).ToList();
 
-                    var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
-                    var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
-                    totalMoto += (int)sumMoto;
-                    totalCar += (int)sumCar;
-                    Object data = new { name = item.NameOfParking, sumMoto, sumCar, totalAll = sumMoto + sumCar };
-                    list.Add(data);
+                        var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                                where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                                select new { mi.TotalPrice }).ToList();
+
+                        var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
+                        var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
+                        totalMoto += (int)sumMoto;
+                        totalCar += (int)sumCar;
+                        Object data = new { name = item.NameOfParking, sumMoto, sumCar, totalAll = sumMoto + sumCar };
+                        list.Add(data);
+                    }
+                }
+                else
+                {
+                    foreach (var item in result)
+                    {
+                        var dataMotoDailyTK = (from tr in db.Transactions
+                                               where tr.TimeOutv.Value.Year == DateTime.Now.Year && (tr.TypeOfVerhicleTran == 0) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                               select new { tr.TotalPrice }).ToList();
+
+                        var dataCarDailyTK = (from tr in db.Transactions
+                                              where tr.TimeOutv.Value.Year == DateTime.Now.Year && (tr.TypeOfVerhicleTran == 1) && (tr.ParkingPlaceID == item.ParkingPlaceID)
+                                              select new { tr.TotalPrice }).ToList();
+
+                        var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                                 where mi.PaymentDate.Value.Year == DateTime.Now.Year && (mi.MonthlyTicket.TypeOfVehicle == 0) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                                 select new { mi.TotalPrice }).ToList();
+
+                        var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
+                                                where mi.PaymentDate.Value.Year == DateTime.Now.Year && (mi.MonthlyTicket.TypeOfVehicle == 1) && mi.MonthlyTicket.ParkingPlaceID == item.ParkingPlaceID
+                                                select new { mi.TotalPrice }).ToList();
+
+                        var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
+                        var sumCar = dataCarDailyTK.Select(s => s.TotalPrice).Sum() + dataCarMonthlyTK.Select(s => s.TotalPrice).Sum();
+                        totalMoto += (int)sumMoto;
+                        totalCar += (int)sumCar;
+                        Object data = new { name = item.NameOfParking, sumMoto, sumCar, totalAll = sumMoto + sumCar };
+                        list.Add(data);
+                    }
                 }
             }
-            list.Add(new { name = "Tổng tiền", sumMoto =  totalMoto, sumCar = totalCar, totalAll = totalMoto + totalCar });
+            list.Add(new { name = "Tổng tiền", sumMoto = totalMoto, sumCar = totalCar, totalAll = totalMoto + totalCar });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

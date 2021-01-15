@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     checkBoxChoiceDateHis();
     $('#TimeFromHis').val(loadDateNowformatdate());
     $('#TimeToHis').val(loadDateNowformatdate());

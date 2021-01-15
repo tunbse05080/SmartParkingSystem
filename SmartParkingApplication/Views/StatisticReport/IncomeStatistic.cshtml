@@ -31,31 +31,34 @@
                     <div class="card">
                         <div class="card-header">
                             <div id="KindOfIncomeStatistic">
-                                <strong style="font-size:x-large">Chọn loại thống kê</strong>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <select class="form-control" id="cbKindOfStatisticIncome" onchange="KindOfStatisticIncome();loadChartIncome()">
-                                            <option value="0">Tất cả bãi đỗ</option>
-                                            <option value="1">Từng bãi đỗ</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-3" id="dvChoiceCurrentMY">
-                                        <select class="form-control" id="cbChoiceTimeIncome" onchange="loadChartIncomeAll()">
-                                            <option value="0">Trong tháng này</option>
-                                            <option value="1">Trong năm này</option>
-                                        </select>
-                                    </div>
-                                    @*<div class="col-sm-3" id="dvfromDateIncome">
-                                        <input class="form-control" type="date" id="fromDateIncome" name="fromDateIncome" />
-                                    </div>
-                                    <div class="col-sm-3" id="dvtoDateIncome">
-                                        <input class="form-control" type="date" id="toDateIncome" name="toDateIncome" />
-                                    </div>
+                                <form id="FormCheckDateInStatistic">
+                                    <strong style="font-size:x-large">Chọn loại thống kê</strong>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <select class="form-control" id="cbKindOfStatisticIncome" onchange="KindOfStatisticIncome();loadChartIncome()">
+                                                <option value="0">Tất cả bãi đỗ</option>
+                                                <option value="1">Từng bãi đỗ</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3" id="dvChoiceCurrentMY">
+                                            <select class="form-control" id="cbChoiceTimeIncome" onchange="loadChartIncomeAll()">
+                                                <option value="0">Trong tháng này</option>
+                                                <option value="1">Trong năm này</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="col-sm-2" style="margin-left:20px;margin-top:5px">
-                                        <label>Chọn ngày &nbsp;</label><input type="checkbox" id="checkboxDateIncome" onclick="checkChoiceDateIncome()" />
-                                    </div>*@
-                                </div>
+                                        <div class="col-sm-3" id="dvfromDateIncome">
+                                            <input class="form-control" type="date" id="fromDateIncome" name="fromDateIncome" onchange="loadChartIncomeAll()" />
+                                        </div>
+                                        <div class="col-sm-3" id="dvtoDateIncome">
+                                            <input class="form-control" type="date" id="toDateIncome" name="toDateIncome" onchange="loadChartIncomeAll()" />
+                                        </div>
+
+                                        <div class="col-sm-2" style="margin-left:20px;margin-top:5px">
+                                            <label>Chọn ngày &nbsp;</label><input type="checkbox" id="checkboxDateIncome" onclick="checkChoiceDateIncome()" onchange="loadChartIncomeAll()" />
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                             <div id="eachParkingIncome">
                                 <strong style="font-size:x-large">Bãi đỗ</strong>
