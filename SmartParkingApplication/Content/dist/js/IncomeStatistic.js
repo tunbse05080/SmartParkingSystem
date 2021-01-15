@@ -26,12 +26,16 @@ function KindOfStatisticIncome() {
         $('#ChartIncome').hide();
         $('#dvChartIncomeAll').show();
         $('#cbChoiceTimeIncome').show();
+        $('#dvCheckboxDateIncome').show();
     } else {
+        $('#dvCheckboxDateIncome').hide();
         $('#eachParkingIncome').show();
         $('#ChartIncome').show();
         $('#dvChartIncomeAll').hide();
         $('#cbChoiceTimeIncome').hide();
         $('#dvChoiceDateIncome').hide();
+        $('#dvfromDateIncome').hide();
+        $('#dvtoDateIncome').hide();
     }
 }
 
@@ -101,7 +105,7 @@ function loadChartIncomeAll() {
     var dateFrom;
     var dateTo;
     if (isCheckDate) {
-        var res = validateInStatistic();
+        var res = validateIncomeStatistic();
         if (res == false) {
             return false;
         }
@@ -150,7 +154,7 @@ function loadChartIncomeAll() {
             ChartIncomeAll();
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            //alert(errormessage.responseText);
         }
     });
 }
@@ -208,7 +212,7 @@ function ComboboxNameParking() {
 }
 
 //validate using query
-function validateInStatistic() {
+function validateIncomeStatistic() {
     //Display css of error message
     var htmlcss = {
         'color': 'Red'

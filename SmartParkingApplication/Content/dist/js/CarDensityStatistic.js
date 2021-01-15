@@ -1,9 +1,24 @@
 ﻿$(document).ready(function () {
+    $('#fromDateVeDensity').val(loadDateNowformatdate());
+    $('#toDateVeDensity').val(loadDateNowformatdate());
     loadChartCarDensity();
     loadChartCarDensityAll();
     KindOfStatisticDensity();
     ChartCarDensityAll();
+    checkChoiceDateVeDensity();
 });
+
+function checkChoiceDateVeDensity() {
+    if ($('#checkboxDateVeDensity').is(':checked')) {
+        $('#dvChoiceCurrentMYVeDensity').hide();
+        $('#dvfromDateVeDensity').show();
+        $('#dvtoDateVeDensity').show();
+    } else {
+        $('#dvChoiceCurrentMYVeDensity').show();
+        $('#dvfromDateVeDensity').hide();
+        $('#dvtoDateVeDensity').hide();
+    }
+}
 
 function KindOfStatisticDensity() {
     if ($('#cbKindOfStatisticDensity').val() == 0) {
@@ -11,25 +26,42 @@ function KindOfStatisticDensity() {
         $('#ChartCarDensity').hide();
         $('#dvChartCarDensityAll').show();
         $('#cbChoiceTimeDensity').show();
-
+        $('#dvCheckboxDateVeDensity').show();
     } else {
         $('#eachParking').show();
         $('#ChartCarDensity').show();
         $('#dvChartCarDensityAll').hide();
         $('#cbChoiceTimeDensity').hide();
+        $('#dvCheckboxDateVeDensity').hide();
+        $('#dvfromDateVeDensity').hide();
+        $('#dvtoDateVeDensity').hide();
     }
 }
 
 //load Chart of CarDensity all parking
 function loadChartCarDensityAll() {
     var choice = $('#cbChoiceTimeDensity').val();
+    var isCheckDate = $('#checkboxDateVeDensity').is(':checked');
+    var dateFrom;
+    var dateTo;
+    if (isCheckDate) {
+        var res = validateVehicleDensity();
+        if (res == false) {
+            return false;
+        }
+        dateFrom = $('#fromDateVeDensity').val();
+        dateTo = $('#toDateVeDensity').val();
+    } else {
+        dateFrom = $('#fromDateVeDensity').val();
+        dateTo = $('#toDateVeDensity').val();
+    }
     if (!choice) {
         choice = 0;
     }
     $.ajax({
         url: "/StatisticReport/LoadChartCarDensityAll",
         type: "POST",
-        data: { choice: choice },
+        data: { choice: choice, dateFrom: dateFrom, dateTo: dateTo, isCheckDate: isCheckDate },
         contents: "application/json",
         dataType: "json",
         success: function (result) {
@@ -60,7 +92,6 @@ function loadChartCarDensityAll() {
             ChartCarDensityAll();
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
         }
     });
 }
@@ -144,4 +175,53 @@ function ChartCarDensity() {
             }
         },
     });
+}
+
+//validate using query
+function validateVehicleDensity() {
+    //Display css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkfromDateVeDensity', function (value, element) {
+        return new Date(value) <= new Date($('#toDateVeDensity').val());
+    });
+    $.validator.addMethod('checktoDateVeDensity', function (value, element) {
+        return new Date(value) >= new Date($('#fromDateVeDensity').val());
+    });
+    //Set rule + message for input by name
+    $('#FormCheckDateVeDensity').validate({
+        rules: {
+            fromDateVeDensity: {
+                checkfromDateVeDensity: true
+            },
+            toDateVeDensity: {
+                checktoDateVeDensity: true
+            }
+        },
+        messages: {
+            fromDateVeDensity: {
+                checkfromDateVeDensity: 'Phải nhỏ hơn hoặc bằng thời gian kết thúc!'
+            },
+            toDateVeDensity: {
+                checktoDateVeDensity: 'Phải lớn hơn hoặc bằng thời gian bắt đầu!'
+            }
+        }
+    });
+    return $('#FormCheckDateVeDensity').valid();
 }

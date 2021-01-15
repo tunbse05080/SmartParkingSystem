@@ -31,21 +31,33 @@
                     <div class="card">
                         <div class="card-header">
                             <div id="KindOfStatistic">
-                                <strong style="font-size:x-large">Chọn loại thống kê</strong>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <select class="form-control" id="cbKindOfStatisticDensity" onchange="KindOfStatisticDensity();loadChartCarDensity()">
-                                            <option value="0">Tất cả bãi đỗ</option>
-                                            <option value="1">Từng bãi đỗ</option>
-                                        </select>
+                                <form id="FormCheckDateVeDensity">
+                                    <strong style="font-size:x-large">Chọn loại thống kê</strong>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <select class="form-control" id="cbKindOfStatisticDensity" onchange="KindOfStatisticDensity();loadChartCarDensity()">
+                                                <option value="0">Tất cả bãi đỗ</option>
+                                                <option value="1">Từng bãi đỗ</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3" id="dvChoiceCurrentMYVeDensity">
+                                            <select class="form-control" id="cbChoiceTimeDensity" onchange="loadChartCarDensityAll()">
+                                                <option value="0">Trong tháng này</option>
+                                                <option value="1">Trong năm này</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3" id="dvfromDateVeDensity">
+                                            <input class="form-control" type="date" id="fromDateVeDensity" name="fromDateVeDensity" onchange="loadChartCarDensityAll()" />
+                                        </div>
+                                        <div class="col-sm-3" id="dvtoDateVeDensity">
+                                            <input class="form-control" type="date" id="toDateVeDensity" name="toDateVeDensity" onchange="loadChartCarDensityAll()" />
+                                        </div>
+
+                                        <div class="col-sm-2" style="margin-left:20px;margin-top:5px" id="dvCheckboxDateVeDensity">
+                                            <label>Chọn ngày &nbsp;</label><input type="checkbox" id="checkboxDateVeDensity" onclick="checkChoiceDateVeDensity()" onchange="loadChartCarDensityAll()" />
+                                        </div>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" id="cbChoiceTimeDensity" onchange="loadChartCarDensityAll()">
-                                            <option value="0">Trong tháng này</option>
-                                            <option value="1">Trong năm này</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                             <div id="eachParking">
                                 <strong style="font-size:x-large">Bãi đỗ</strong>

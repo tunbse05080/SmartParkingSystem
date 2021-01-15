@@ -206,24 +206,24 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Load Chart CarDensity
-        public JsonResult LoadChartCarDensityAll(int choice)
+        public JsonResult LoadChartCarDensityAll(int choice, DateTime dateFrom, DateTime dateTo, bool isCheckDate)
         {
             var result = (from tr in db.ParkingPlaces
                           select new { tr.ParkingPlaceID, tr.NameOfParking }).ToList();
             List<Object> list = new List<object>();
             var totalMoto = 0;
             var totalCar = 0;
-            if (choice == 0)
+            if (isCheckDate)
             {
                 foreach (var item in result)
                 {
                     //number moto come in of each parking on current monthly
                     var dataMoto = (from tr in db.Transactions
-                                    where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.TimeIn.Value.Month == DateTime.Now.Month && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 0
+                                    where DateTime.Compare((DateTime)tr.TimeIn, dateFrom) >= 0 && DateTime.Compare((DateTime)tr.TimeOutv, dateTo) <= 0 && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 0
                                     select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
                     //number car come in of each parking on current monthly
                     var dataCar = (from tr in db.Transactions
-                                   where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.TimeIn.Value.Month == DateTime.Now.Month && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
+                                   where DateTime.Compare((DateTime)tr.TimeIn, dateFrom) >= 0 && DateTime.Compare((DateTime)tr.TimeOutv, dateTo) <= 0 && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
                                    select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
                     var data = new { name = item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
                     totalMoto += dataMoto.Count();
@@ -233,20 +233,41 @@ namespace SmartParkingApplication.Controllers
             }
             else
             {
-                foreach (var item in result)
+                if (choice == 0)
                 {
-                    //number moto come in of each parking on current year
-                    var dataMoto = (from tr in db.Transactions
-                                    where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 0
-                                    select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
-                    //number car come in of each parking on current year
-                    var dataCar = (from tr in db.Transactions
-                                   where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
-                                   select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
-                    var data = new { name = item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
-                    totalMoto += dataMoto.Count();
-                    totalCar += dataCar.Count();
-                    list.Add(data);
+                    foreach (var item in result)
+                    {
+                        //number moto come in of each parking on current monthly
+                        var dataMoto = (from tr in db.Transactions
+                                        where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.TimeIn.Value.Month == DateTime.Now.Month && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 0
+                                        select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                        //number car come in of each parking on current monthly
+                        var dataCar = (from tr in db.Transactions
+                                       where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.TimeIn.Value.Month == DateTime.Now.Month && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
+                                       select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                        var data = new { name = item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                        totalMoto += dataMoto.Count();
+                        totalCar += dataCar.Count();
+                        list.Add(data);
+                    }
+                }
+                else
+                {
+                    foreach (var item in result)
+                    {
+                        //number moto come in of each parking on current year
+                        var dataMoto = (from tr in db.Transactions
+                                        where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 0
+                                        select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                        //number car come in of each parking on current year
+                        var dataCar = (from tr in db.Transactions
+                                       where tr.TimeIn.Value.Year == DateTime.Now.Year && tr.ParkingPlaceID == item.ParkingPlaceID && tr.TypeOfVerhicleTran == 1
+                                       select new { tr.ParkingPlace.NameOfParking, tr.TypeOfVerhicleTran }).ToList();
+                        var data = new { name = item.NameOfParking, dataMoto = dataMoto.Count(), dataCar = dataCar.Count() };
+                        totalMoto += dataMoto.Count();
+                        totalCar += dataCar.Count();
+                        list.Add(data);
+                    }
                 }
             }
             list.Add(new { name = "Tổng lượt xe", dataMoto = totalMoto, dataCar = totalCar });
@@ -313,102 +334,5 @@ namespace SmartParkingApplication.Controllers
                         select new { p.ParkingPlaceID, p.NameOfParking }).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
-        //public JsonResult ComboboxStaffName()
-        //{
-        //    var list = (from p in db.Users
-        //                where p.AccountID != null && p.Account.RoleID == 2
-        //                select new { p.UserID, p.Account.UserName }).ToList();
-
-        //    return Json(list, JsonRequestBehavior.AllowGet);
-        //}
-        //public List<double> ListIncome12Monthlys()
-        //{
-        //    List<double> listMotoDestiny = new List<double>();
-        //    List<double> listCarDestiny = new List<double>();
-        //    for (int i = 0; i < 12; i++)
-        //    {
-        //        //get density dataMoto base on ParkingPlace ID ( most nearly 12 months )
-        //        var dataMoto = (from tr in db.Transactions
-        //                        where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 0)
-        //                        select new { tr.TypeOfVerhicleTran }).ToList();
-        //        listMotoDestiny.Add(dataMoto.Count());
-
-        //        //get density dataCar base on ParkingPlace ID ( most nearly 12 months )
-        //        var dataCar = (from tr in db.Transactions
-        //                       where (tr.TimeOutv.Value.Month == DateTime.Now.Month - i) && (tr.TypeOfVerhicleTran == 1)
-        //                       select new { tr.TypeOfVerhicleTran }).ToList();
-        //        listCarDestiny.Add(dataCar.Count());
-        //    }
-        //    listMotoDestiny.Reverse();
-        //    listCarDestiny.Reverse();
-        //    return null;
-        //}
-
-
-        //public ActionResult ExportIncome12Monthlys()
-        //{
-        //    var schedule = db.Schedules.ToList();
-        //    var useschedule = db.UserSchedules.ToList();
-        //    // var role = db.Roles.ToList();
-        //    var alluser = new GridView();
-        //    //===================================================
-        //    DataTable dt = new DataTable();
-        //    //Add Datacolumn
-        //    DataColumn workCol = dt.Columns.Add("Tên chủ thẻ", typeof(String));
-
-        //    dt.Columns.Add("Ca làm việc", typeof(String));
-        //    dt.Columns.Add("Số điện thoại", typeof(String));
-        //    dt.Columns.Add("Email", typeof(String));
-        //    dt.Columns.Add("Loại xe", typeof(String));
-        //    dt.Columns.Add("Ngày đăng kí", typeof(String));
-        //    dt.Columns.Add("Ngày hết hạn", typeof(String));
-
-        //    foreach (var item in Schedule)
-        //    {
-        //        DataRow newRow = dt.NewRow();
-        //        string typeVehicle = "";
-        //        switch (item.TypeOfVehicle)
-        //        {
-        //            case 0:
-        //                typeVehicle = "Xe Máy";
-        //                break;
-        //            case 1:
-        //                typeVehicle = "Ô tô";
-        //                break;
-        //        }
-        //        newRow["Tên chủ thẻ"] = item.CusName;
-        //        newRow["Số CMND"] = item.IdentityCard;
-        //        newRow["Số điện thoại"] = item.Phone;
-        //        newRow["Email"] = item.Email;
-        //        newRow["Loại xe"] = typeVehicle;
-        //        newRow["Ngày đăng kí"] = item.RegisDate;
-        //        newRow["Ngày hết hạn"] = item.ExpiryDate;
-
-        //        dt.Rows.Add(newRow);
-        //    }
-
-        //    //====================================================
-        //    alluser.DataSource = dt;
-        //    // gv.DataSource = ds;
-        //    alluser.DataBind();
-
-        //    Response.ClearContent();
-        //    Response.Buffer = true;
-
-        //    Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
-        //    Response.ContentType = "application/ms-excel";
-
-        //    Response.Charset = "";
-        //    StringWriter objStringWriter = new StringWriter();
-        //    HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
-
-        //    alluser.RenderControl(objHtmlTextWriter);
-
-        //    Response.Output.Write(objStringWriter.ToString());
-        //    Response.Flush();
-        //    Response.End();
-        //    return Redirect("/StatisticReport/IncomeStatistic");
-        //}
     }
 }
