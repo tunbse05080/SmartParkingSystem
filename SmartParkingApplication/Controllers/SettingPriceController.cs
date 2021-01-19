@@ -23,75 +23,98 @@ namespace SmartParkingApplication.Controllers
         public JsonResult LoadDataPrice(int ParkingPlaceID)
         {
             List<Object> list = new List<Object>();
-            var result = (from p in db.Prices
-                          where p.ParkingPlaceID == ParkingPlaceID
-                          orderby p.TimeOfApply descending
-                          select new { p.PriceID, p.TypeOfvehicle, p.DayPrice, p.FirstBlock, p.NextBlock , p.TimeOfApply }).ToList();
-            foreach (var item in result)
+            try
             {
-                var TimeApply = item.TimeOfApply.Value.ToString("dd/MM/yyyy");
-                var typeOfVehicle = "";
-                switch (item.TypeOfvehicle)
+                var result = (from p in db.Prices
+                              where p.ParkingPlaceID == ParkingPlaceID
+                              orderby p.TimeOfApply descending
+                              select new { p.PriceID, p.TypeOfvehicle, p.DayPrice, p.FirstBlock, p.NextBlock, p.TimeOfApply }).ToList();
+                foreach (var item in result)
                 {
-                    case 0:
-                        typeOfVehicle = "Xe máy";
-                        break;
-                    case 1:
-                        typeOfVehicle = "Ô tô";
-                        break;
+                    var TimeApply = item.TimeOfApply.Value.ToString("dd/MM/yyyy");
+                    var typeOfVehicle = "";
+                    switch (item.TypeOfvehicle)
+                    {
+                        case 0:
+                            typeOfVehicle = "Xe máy";
+                            break;
+                        case 1:
+                            typeOfVehicle = "Ô tô";
+                            break;
+                    }
+                    list.Add(new { item.PriceID, typeOfVehicle, item.DayPrice, item.FirstBlock, item.NextBlock, TimeApply });
                 }
-                list.Add(new { item.PriceID, typeOfVehicle, item.DayPrice, item.FirstBlock, item.NextBlock, TimeApply});
             }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoadDataPriceMonthly(int ParkingPlaceID)
         {
             List<Object> list = new List<Object>();
-            var result = (from p in db.MothlyPrices
-                          where p.ParkingPlaceID == ParkingPlaceID
-                          orderby p.TimeOfApplyMontlhyPrice descending
-                          select new { p.MonthlyPriceID, p.TypeOfvehicle, p.MonthlyPrice,p.TimeOfApplyMontlhyPrice }).ToList();
-            foreach (var item in result)
+            try
             {
-                var TimeApply = item.TimeOfApplyMontlhyPrice.Value.ToString("dd/MM/yyyy");
-                var typeOfVehicle = "";
-                switch (item.TypeOfvehicle)
+                var result = (from p in db.MothlyPrices
+                              where p.ParkingPlaceID == ParkingPlaceID
+                              orderby p.TimeOfApplyMontlhyPrice descending
+                              select new { p.MonthlyPriceID, p.TypeOfvehicle, p.MonthlyPrice, p.TimeOfApplyMontlhyPrice }).ToList();
+                foreach (var item in result)
                 {
-                    case 0:
-                        typeOfVehicle = "Xe máy";
-                        break;
-                    case 1:
-                        typeOfVehicle = "Ô tô";
-                        break;
+                    var TimeApply = item.TimeOfApplyMontlhyPrice.Value.ToString("dd/MM/yyyy");
+                    var typeOfVehicle = "";
+                    switch (item.TypeOfvehicle)
+                    {
+                        case 0:
+                            typeOfVehicle = "Xe máy";
+                            break;
+                        case 1:
+                            typeOfVehicle = "Ô tô";
+                            break;
+                    }
+                    list.Add(new { item.MonthlyPriceID, typeOfVehicle, item.MonthlyPrice, TimeApply });
                 }
-                list.Add(new { item.MonthlyPriceID, typeOfVehicle, item.MonthlyPrice, TimeApply });
             }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //Check Update for DailyPrice
         public JsonResult CheckUpdateDailyPrice(Price price)
         {
-            var result = (from p in db.Prices
-                          where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
-                          select new { p.PriceID }).FirstOrDefault();
-            if (price.PriceID == 0 && result == null)
+            try
             {
-                price.FirstBlock = 0;
-                price.NextBlock = 0;
-                price.TimeOfNextBlock = 0;
-                price.TimeOfFirstBlock = 0;
-                Create(price);
+                var result = (from p in db.Prices
+                              where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
+                              select new { p.PriceID }).FirstOrDefault();
+                if (price.PriceID == 0 && result == null)
+                {
+                    price.FirstBlock = 0;
+                    price.NextBlock = 0;
+                    price.TimeOfNextBlock = 0;
+                    price.TimeOfFirstBlock = 0;
+                    Create(price);
+                }
+                else
+                {
+                    price.PriceID = result.PriceID;
+                    price.FirstBlock = 0;
+                    price.NextBlock = 0;
+                    price.TimeOfNextBlock = 0;
+                    price.TimeOfFirstBlock = 0;
+                    Update(price);
+                }
             }
-            else
+            catch (Exception)
             {
-                price.PriceID = result.PriceID;
-                price.FirstBlock = 0;
-                price.NextBlock = 0;
-                price.TimeOfNextBlock = 0;
-                price.TimeOfFirstBlock = 0;
-                Update(price);
+                return Json("False", JsonRequestBehavior.AllowGet);
             }
             return Json(price, JsonRequestBehavior.AllowGet);
         }
@@ -99,38 +122,54 @@ namespace SmartParkingApplication.Controllers
         //Check Update for BlockPrice
         public JsonResult CheckUpdateBlockPrice(Price price)
         {
-            var result = (from p in db.Prices
-                          where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
-                          select new { p.PriceID }).FirstOrDefault();
-            if (price.PriceID == 0 && result == null)
+            try
             {
-                price.DayPrice = 0;
-                Create(price);
+                var result = (from p in db.Prices
+                              where p.ParkingPlaceID == price.ParkingPlaceID && p.TypeOfvehicle == price.TypeOfvehicle && p.TimeOfApply == price.TimeOfApply
+                              select new { p.PriceID }).FirstOrDefault();
+                if (price.PriceID == 0 && result == null)
+                {
+                    price.DayPrice = 0;
+                    Create(price);
+                }
+                else
+                {
+                    price.PriceID = result.PriceID;
+                    price.DayPrice = 0;
+                    Update(price);
+                }
             }
-            else
+            catch (Exception)
             {
-                price.PriceID = result.PriceID;
-                price.DayPrice = 0;
-                Update(price);
+                return Json("False", JsonRequestBehavior.AllowGet);
             }
+
             return Json(price, JsonRequestBehavior.AllowGet);
         }
 
         //Check update monthly price for all parkingplace
         public JsonResult CheckMonthlyPrice(MothlyPrice monthlyPrice)
         {
-            var result = (from p in db.MothlyPrices
-                          where p.TypeOfvehicle == monthlyPrice.TypeOfvehicle && p.ParkingPlaceID == monthlyPrice.ParkingPlaceID && p.TimeOfApplyMontlhyPrice == monthlyPrice.TimeOfApplyMontlhyPrice
-                          select new { p.MonthlyPriceID }).FirstOrDefault();
-            if (result == null)
+            try
             {
-                CreateMonthPrice(monthlyPrice);
+                var result = (from p in db.MothlyPrices
+                              where p.TypeOfvehicle == monthlyPrice.TypeOfvehicle && p.ParkingPlaceID == monthlyPrice.ParkingPlaceID && p.TimeOfApplyMontlhyPrice == monthlyPrice.TimeOfApplyMontlhyPrice
+                              select new { p.MonthlyPriceID }).FirstOrDefault();
+                if (result == null)
+                {
+                    CreateMonthPrice(monthlyPrice);
+                }
+                else
+                {
+                    monthlyPrice.MonthlyPriceID = result.MonthlyPriceID;
+                    UpdateMonthPrice(monthlyPrice);
+                }
             }
-            else
+            catch (Exception)
             {
-                monthlyPrice.MonthlyPriceID = result.MonthlyPriceID;
-                UpdateMonthPrice(monthlyPrice);
+                return Json("False", JsonRequestBehavior.AllowGet);
             }
+
             return Json(monthlyPrice, JsonRequestBehavior.AllowGet);
         }
 
@@ -183,53 +222,68 @@ namespace SmartParkingApplication.Controllers
         //get detail info price of month ticket
         public JsonResult PriceMonthDetails(int id)
         {
-            MothlyPrice price = db.MothlyPrices.Find(id);
-            var TimeOfApply = price.TimeOfApplyMontlhyPrice.Value.ToString("dd/MM/yyyy");
-            var typeOfVehicle = "";
-            switch (price.TypeOfvehicle)
+            try
             {
-                case 0:
-                    typeOfVehicle = "Xe máy";
-                    break;
-                case 1:
-                    typeOfVehicle = "Ô tô";
-                    break;
+                MothlyPrice price = db.MothlyPrices.Find(id);
+                var TimeOfApply = price.TimeOfApplyMontlhyPrice.Value.ToString("dd/MM/yyyy");
+                var typeOfVehicle = "";
+                switch (price.TypeOfvehicle)
+                {
+                    case 0:
+                        typeOfVehicle = "Xe máy";
+                        break;
+                    case 1:
+                        typeOfVehicle = "Ô tô";
+                        break;
+                }
+                var result = new
+                {
+                    typeOfVehicle,
+                    price.MonthlyPrice,
+                    TimeOfApply
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var result = new
+            catch (Exception)
             {
-                typeOfVehicle,
-                price.MonthlyPrice,
-                TimeOfApply
-            };
-            return Json(result, JsonRequestBehavior.AllowGet);
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
         }
 
         //get detail info price of day and block
         public JsonResult PriceDetails(int id)
         {
-            Price price = db.Prices.Find(id);
-            var TimeOfApply = price.TimeOfApply.Value.ToString("dd/MM/yyyy");
-            var typeOfVehicle = "";
-            switch (price.TypeOfvehicle)
+            try
             {
-                case 0:
-                    typeOfVehicle = "Xe máy";
-                    break;
-                case 1:
-                    typeOfVehicle = "Ô tô";
-                    break;
+                Price price = db.Prices.Find(id);
+                var TimeOfApply = price.TimeOfApply.Value.ToString("dd/MM/yyyy");
+                var typeOfVehicle = "";
+                switch (price.TypeOfvehicle)
+                {
+                    case 0:
+                        typeOfVehicle = "Xe máy";
+                        break;
+                    case 1:
+                        typeOfVehicle = "Ô tô";
+                        break;
+                }
+                var result = new
+                {
+                    typeOfVehicle,
+                    price.DayPrice,
+                    price.FirstBlock,
+                    price.NextBlock,
+                    price.TimeOfFirstBlock,
+                    price.TimeOfNextBlock,
+                    TimeOfApply
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var result = new
+            catch (Exception)
             {
-                typeOfVehicle,
-                price.DayPrice,
-                price.FirstBlock,
-                price.NextBlock,
-                price.TimeOfFirstBlock,
-                price.TimeOfNextBlock,
-                TimeOfApply
-            };
-            return Json(result, JsonRequestBehavior.AllowGet);
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //get price of Monthly ticket base on typeOfVehicle

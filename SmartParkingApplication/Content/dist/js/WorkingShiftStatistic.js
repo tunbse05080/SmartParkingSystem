@@ -16,15 +16,20 @@ function loadChartWorkingShift() {
         data: { id: id },
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.datetime + '</td>';
-                html += '<td>' + item.total + '</td>';
-                html += '</tr>';
-            });
-            $('#tbodyChartWorkingShift').html(html);
-            ChartWorkingShift();
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.datetime + '</td>';
+                    html += '<td>' + item.total + '</td>';
+                    html += '</tr>';
+                });
+                $('#tbodyChartWorkingShift').html(html);
+                ChartWorkingShift();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

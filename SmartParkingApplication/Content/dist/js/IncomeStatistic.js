@@ -56,16 +56,21 @@ function loadChartIncome() {
         data: { idParking: idParking, idTypeOfTicket: idTypeOfTicket },
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.datetime + '</td>';
-                html += '<td>' + item.sumMoto + '</td>';
-                html += '<td>' + item.sumCar + '</td>';
-                html += '</tr>';
-            });
-            $('#tbodyChartIncome').html(html);
-            ChartIncome();
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.datetime + '</td>';
+                    html += '<td>' + item.sumMoto + '</td>';
+                    html += '<td>' + item.sumCar + '</td>';
+                    html += '</tr>';
+                });
+                $('#tbodyChartIncome').html(html);
+                ChartIncome();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -125,33 +130,38 @@ function loadChartIncomeAll() {
         data: { choice: choice, dateFrom: dateFrom, dateTo: dateTo, isCheckDate: isCheckDate },
         dataType: "json",
         success: function (result) {
-            var html = '';
-            var htmlHide = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.name + '</td>';
-                html += '<td>' + item.sumMoto + '</td>';
-                html += '<td>' + item.sumCar + '</td>';
-                html += '<td>' + item.totalAll + '</td>';
-                html += '</tr>';
-                if (item.name != "Tổng tiền") {
-                    //tbody hide
-                    htmlHide += '<tr>';
-                    htmlHide += '<td>' + item.name + '</td>';
-                    htmlHide += '<td>' + item.sumMoto + '</td>';
-                    htmlHide += '<td>' + item.sumCar + '</td>';
-                    htmlHide += '</tr>';
-                }
-            });
-            //table hide
-            $('#tbodyChartIncomeAllHide').html(htmlHide);
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                var htmlHide = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.name + '</td>';
+                    html += '<td>' + item.sumMoto + '</td>';
+                    html += '<td>' + item.sumCar + '</td>';
+                    html += '<td>' + item.totalAll + '</td>';
+                    html += '</tr>';
+                    if (item.name != "Tổng tiền") {
+                        //tbody hide
+                        htmlHide += '<tr>';
+                        htmlHide += '<td>' + item.name + '</td>';
+                        htmlHide += '<td>' + item.sumMoto + '</td>';
+                        htmlHide += '<td>' + item.sumCar + '</td>';
+                        htmlHide += '</tr>';
+                    }
+                });
+                //table hide
+                $('#tbodyChartIncomeAllHide').html(htmlHide);
 
-            $('#tbodyChartIncomeAll').html(html);
-            $('#tbChartIncomeAll').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": false, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf"]
-            }).buttons().container().appendTo('#tbChartIncomeAll_wrapper .col-md-6:eq(0)');
-            ChartIncomeAll();
+                $('#tbodyChartIncomeAll').html(html);
+                $('#tbChartIncomeAll').DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": false, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf"]
+                }).buttons().container().appendTo('#tbChartIncomeAll_wrapper .col-md-6:eq(0)');
+                ChartIncomeAll();
+            }
+
         },
         error: function (errormessage) {
             //alert(errormessage.responseText);
@@ -192,17 +202,22 @@ function ComboboxNameParking() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<option value=' + item.ParkingPlaceID + '>' + item.NameOfParking + '</option>';
-            });
-            $('#cbNameParkingPlace').html(html);
-            $('#cbNameParkingPlaceTK').html(html);
-            $('#cbNameParkingPlaceD').html(html);
-            $('#cbNameParkingPlaceDaily').html(html);
-            $('#cbNameParkingPlaceBlock').html(html);
-            $('#cbNameParkingPlaceMonthly').html(html);
-            $('#cbNameParkingPlaceReport').html(html);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<option value=' + item.ParkingPlaceID + '>' + item.NameOfParking + '</option>';
+                });
+                $('#cbNameParkingPlace').html(html);
+                $('#cbNameParkingPlaceTK').html(html);
+                $('#cbNameParkingPlaceD').html(html);
+                $('#cbNameParkingPlaceDaily').html(html);
+                $('#cbNameParkingPlaceBlock').html(html);
+                $('#cbNameParkingPlaceMonthly').html(html);
+                $('#cbNameParkingPlaceReport').html(html);
+
+            }
 
         },
         error: function (errormessage) {

@@ -65,31 +65,36 @@ function loadChartCarDensityAll() {
         contents: "application/json",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            var htmlHide = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.name + '</td>';
-                html += '<td>' + item.dataMoto + '</td>';
-                html += '<td>' + item.dataCar + '</td>';
-                html += '</tr>';
-                if (item.name != "Tổng lượt xe") {
-                    htmlHide += '<tr>';
-                    htmlHide += '<td>' + item.name + '</td>';
-                    htmlHide += '<td>' + item.dataMoto + '</td>';
-                    htmlHide += '<td>' + item.dataCar + '</td>';
-                    htmlHide += '</tr>';
-                }
-            });
-            //table hide
-            $('#tbodyChartCarDensityAllHide').html(htmlHide);
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                var htmlHide = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.name + '</td>';
+                    html += '<td>' + item.dataMoto + '</td>';
+                    html += '<td>' + item.dataCar + '</td>';
+                    html += '</tr>';
+                    if (item.name != "Tổng lượt xe") {
+                        htmlHide += '<tr>';
+                        htmlHide += '<td>' + item.name + '</td>';
+                        htmlHide += '<td>' + item.dataMoto + '</td>';
+                        htmlHide += '<td>' + item.dataCar + '</td>';
+                        htmlHide += '</tr>';
+                    }
+                });
+                //table hide
+                $('#tbodyChartCarDensityAllHide').html(htmlHide);
 
-            $('#tbodyChartCarDensityAll').html(html);
-            $('#tbChartCarDensityAll').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": false, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf"]
-            }).buttons().container().appendTo('#tbChartCarDensityAll_wrapper .col-md-6:eq(0)');
-            ChartCarDensityAll();
+                $('#tbodyChartCarDensityAll').html(html);
+                $('#tbChartCarDensityAll').DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": false, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf"]
+                }).buttons().container().appendTo('#tbChartCarDensityAll_wrapper .col-md-6:eq(0)');
+                ChartCarDensityAll();
+            }
+
         },
         error: function (errormessage) {
         }
@@ -135,16 +140,21 @@ function loadChartCarDensity() {
         data: { idParking: idParking },
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.datetime + '</td>';
-                html += '<td>' + item.dataMoto + '</td>';
-                html += '<td>' + item.dataCar + '</td>';
-                html += '</tr>';
-            });
-            $('#tbodyChartCarDensity').html(html);
-            ChartCarDensity();
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.datetime + '</td>';
+                    html += '<td>' + item.dataMoto + '</td>';
+                    html += '<td>' + item.dataCar + '</td>';
+                    html += '</tr>';
+                });
+                $('#tbodyChartCarDensity').html(html);
+                ChartCarDensity();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

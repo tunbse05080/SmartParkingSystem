@@ -51,23 +51,28 @@ function loadDataPrice() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.typeOfVehicle + '</td>';
-                html += '<td>' + item.DayPrice + '</td>';
-                html += '<td>' + item.FirstBlock + '</td>';
-                html += '<td>' + item.NextBlock + '</td>';
-                html += '<td>' + item.TimeApply + '</td>';
-                html += '<td><button class="btn btn-primary" onclick="return getDetailPriceByID(' + item.PriceID + ')" >Chi tiết</button></td>';
-                html += '</tr>';
-            });
-            $('#tbodypr').html(html);
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.typeOfVehicle + '</td>';
+                    html += '<td>' + item.DayPrice + '</td>';
+                    html += '<td>' + item.FirstBlock + '</td>';
+                    html += '<td>' + item.NextBlock + '</td>';
+                    html += '<td>' + item.TimeApply + '</td>';
+                    html += '<td><button class="btn btn-primary" onclick="return getDetailPriceByID(' + item.PriceID + ')" >Chi tiết</button></td>';
+                    html += '</tr>';
+                });
+                $('#tbodypr').html(html);
 
-            $("#tbPrice").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"]
-            }).buttons().container().appendTo('#tbPrice_wrapper .col-md-6:eq(0)');
+                $("#tbPrice").DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                }).buttons().container().appendTo('#tbPrice_wrapper .col-md-6:eq(0)');
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -89,21 +94,26 @@ function loadDataPriceMonthly() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.typeOfVehicle + '</td>';
-                html += '<td>' + item.MonthlyPrice + '</td>';
-                html += '<td>' + item.TimeApply + '</td>';
-                html += '<td><button class="btn btn-primary" onclick="return getDetailPriceMonthByID(' + item.MonthlyPriceID + ')" >Chi tiết</button></td>';
-                html += '</tr>';
-            });
-            $('#tbodyprMonth').html(html);
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.typeOfVehicle + '</td>';
+                    html += '<td>' + item.MonthlyPrice + '</td>';
+                    html += '<td>' + item.TimeApply + '</td>';
+                    html += '<td><button class="btn btn-primary" onclick="return getDetailPriceMonthByID(' + item.MonthlyPriceID + ')" >Chi tiết</button></td>';
+                    html += '</tr>';
+                });
+                $('#tbodyprMonth').html(html);
 
-            $("#tbPriceMonth").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"]
-            }).buttons().container().appendTo('#tbPriceMonth_wrapper .col-md-6:eq(0)');
+                $("#tbPriceMonth").DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                }).buttons().container().appendTo('#tbPriceMonth_wrapper .col-md-6:eq(0)');
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -159,10 +169,15 @@ function UpdateDailyPrice() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPrice').DataTable().clear().destroy();
-            checkLoadData();
-            $('#myModalSettingDailyPrice').modal('hide');
-            clear();
+            if (result == "False") {
+                alert("Thiết lập giá vé không thành công!");
+            } else {
+                $('#tbPrice').DataTable().clear().destroy();
+                checkLoadData();
+                $('#myModalSettingDailyPrice').modal('hide');
+                clear();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -189,10 +204,15 @@ function UpdateMonthlyPrice() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPriceMonth').DataTable().clear().destroy();
-            checkLoadData();
-            $('#myModalSettingMonthlyPrice').modal('hide');
-            clear();
+            if (result == "False") {
+                alert("Thiết lập giá vé không thành công!");
+            } else {
+                $('#tbPriceMonth').DataTable().clear().destroy();
+                checkLoadData();
+                $('#myModalSettingMonthlyPrice').modal('hide');
+                clear();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -223,10 +243,15 @@ function UpdateBlockPrice() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPrice').DataTable().clear().destroy();
-            loadDataPrice();
-            $('#myModalSettingBlockPrice').modal('hide');
-            clear();
+            if (result == "False") {
+                alert("Thiết lập giá vé không thành công!");
+            } else {
+                $('#tbPrice').DataTable().clear().destroy();
+                loadDataPrice();
+                $('#myModalSettingBlockPrice').modal('hide');
+                clear();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -264,14 +289,19 @@ function getDetailPriceByID(PriceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#TypeOfVehicleDetailP').val(result.typeOfVehicle);
-            $('#DailyPriceDetail').val(result.DayPrice + " VNĐ");
-            $('#FBlockPriceDetail').val(result.FirstBlock + " VNĐ");
-            $('#NBlockPriceDetail').val(result.NextBlock + " VNĐ");
-            $('#TimeOfFirstBlock').val(result.TimeOfFirstBlock + " giờ");
-            $('#TimeOfNextBlock').val(result.TimeOfNextBlock + " giờ");
-            $('#TimeApply').val(result.TimeOfApply);
-            $('#myModalDetailPrice').modal('show');
+            if (result == "False") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#TypeOfVehicleDetailP').val(result.typeOfVehicle);
+                $('#DailyPriceDetail').val(result.DayPrice + " VNĐ");
+                $('#FBlockPriceDetail').val(result.FirstBlock + " VNĐ");
+                $('#NBlockPriceDetail').val(result.NextBlock + " VNĐ");
+                $('#TimeOfFirstBlock').val(result.TimeOfFirstBlock + " giờ");
+                $('#TimeOfNextBlock').val(result.TimeOfNextBlock + " giờ");
+                $('#TimeApply').val(result.TimeOfApply);
+                $('#myModalDetailPrice').modal('show');
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -287,11 +317,16 @@ function getDetailPriceMonthByID(PriceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#TypeOfVehicleDetailMonth').val(result.typeOfVehicle);
-            $('#MonthlyPriceDetail').val(result.MonthlyPrice + " VNĐ");
-            $('#TimeApplyMonthly').val(result.TimeOfApply);
+            if (result == "False") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#TypeOfVehicleDetailMonth').val(result.typeOfVehicle);
+                $('#MonthlyPriceDetail').val(result.MonthlyPrice + " VNĐ");
+                $('#TimeApplyMonthly').val(result.TimeOfApply);
 
-            $('#myModalDetailPriceMonth').modal('show');
+                $('#myModalDetailPriceMonth').modal('show');
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
