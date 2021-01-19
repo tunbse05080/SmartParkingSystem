@@ -43,33 +43,37 @@ function LoadDataAccount() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.Name + '</td>';
-                html += '<td>' + item.IdentityCard + '</td>';
-                html += '<td>' + item.RoleName + '</td>';
-                html += '<td>' + item.status + '</td>';
-                if (item.status == "Trống") {
-                    html += '<td><button class="btn btn-primary" onclick = "return getModalAddAccount(' + item.UserID + ')">Thêm tài khoản</button></td>';
-                } else {
-                    switch (item.StatusOfAccount) {
-                        case 0:
-                            html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalLock(' + item.AccountID + ')">Khóa tài khoản</button></td>';
-                            break;
-                        case 1:
-                            html += '<td><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalUnlock(' + item.AccountID + ')">Mở khóa tài khoản</button></td>';
-                            break;
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu tài khoản không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.Name + '</td>';
+                    html += '<td>' + item.IdentityCard + '</td>';
+                    html += '<td>' + item.RoleName + '</td>';
+                    html += '<td>' + item.status + '</td>';
+                    if (item.status == "Trống") {
+                        html += '<td><button class="btn btn-primary" onclick = "return getModalAddAccount(' + item.UserID + ')">Thêm tài khoản</button></td>';
+                    } else {
+                        switch (item.StatusOfAccount) {
+                            case 0:
+                                html += '<td><button class="btn btn-primary" onclick = "return getAccountModalRole(' + item.AccountID + ')">Phân lại quyền</button><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalPassword(' + item.AccountID + ')">Đặt lại mật khẩu</button><button class="btn btn-danger" style="margin-left:1px" onclick = "return getAccountModalLock(' + item.AccountID + ')">Khóa tài khoản</button></td>';
+                                break;
+                            case 1:
+                                html += '<td><button class="btn btn-warning" style="margin-left:1px" onclick = "return getAccountModalUnlock(' + item.AccountID + ')">Mở khóa tài khoản</button></td>';
+                                break;
+                        }
                     }
-                }
-                html += '</tr>';
-            });
-            $('#tbodyAccount').html(html);
+                    html += '</tr>';
+                });
+                $('#tbodyAccount').html(html);
 
-            $("#tbAccount").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#tbAccount_wrapper .col-md-6:eq(0)');
+                $("#tbAccount").DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#tbAccount_wrapper .col-md-6:eq(0)');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -99,15 +103,19 @@ function AddAccount() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result == true) {
-                validateAddAcc();
-                checkExist = false;
-                return false;
+            if (result == "AddFalse") {
+                alert("Thêm tài khoản thất bại!");
             } else {
-                checkExist = true;
-                $('#myModalAccount').modal("hide");
-                $('#tbAccount').DataTable().clear().destroy();
-                LoadDataAccount();
+                if (result == true) {
+                    validateAddAcc();
+                    checkExist = false;
+                    return false;
+                } else {
+                    checkExist = true;
+                    $('#myModalAccount').modal("hide");
+                    $('#tbAccount').DataTable().clear().destroy();
+                    LoadDataAccount();
+                }
             }
         },
         error: function (errormessage) {
@@ -127,10 +135,14 @@ function UpdateRole() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            //AddAccountForUser(result.AccountID, result.UserID);
-            $('#myModalRoleAccountEdit').modal('hide');
-            $('#tbAccount').DataTable().clear().destroy();
-            LoadDataAccount();
+            if (result == "UpdateFalse") {
+                alert("Cập nhật chức vụ thất bại!");
+            } else {
+                //AddAccountForUser(result.AccountID, result.UserID);
+                $('#myModalRoleAccountEdit').modal('hide');
+                $('#tbAccount').DataTable().clear().destroy();
+                LoadDataAccount();
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -159,9 +171,13 @@ function UpdatePassword() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#myModalPassAccountEdit').modal('hide');
-            $('#tbAccount').DataTable().clear().destroy();
-            LoadDataAccount();
+            if (result == "UpdateFalse") {
+                alert("Cập nhật mật khẩu thất bại!");
+            } else {
+                $('#myModalPassAccountEdit').modal('hide');
+                $('#tbAccount').DataTable().clear().destroy();
+                LoadDataAccount();
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -185,13 +201,17 @@ function UpdateStatus(status) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result.StatusOfAccount == 0) {
-                $('#myModalUnlockAccountEdit').modal('hide');
+            if (result == "UpdateFalse") {
+                alert("Cập nhật trạng thái thất bại!");
             } else {
-                $('#myModalLockAccountEdit').modal('hide');
+                if (result.StatusOfAccount == 0) {
+                    $('#myModalUnlockAccountEdit').modal('hide');
+                } else {
+                    $('#myModalLockAccountEdit').modal('hide');
+                }
+                $('#tbAccount').DataTable().clear().destroy();
+                LoadDataAccount();
             }
-            $('#tbAccount').DataTable().clear().destroy();
-            LoadDataAccount();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

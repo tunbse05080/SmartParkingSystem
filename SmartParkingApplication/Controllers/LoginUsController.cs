@@ -17,8 +17,6 @@ namespace SmartParkingApplication.Controllers
         public ActionResult Index()
         {
             return View();
-
-
         }
 
         [HttpPost]
@@ -133,10 +131,7 @@ namespace SmartParkingApplication.Controllers
            
 
         }
-        
-        
-       
-     
+
         public JsonResult Update(Account account)
         {
             if (ModelState.IsValid)

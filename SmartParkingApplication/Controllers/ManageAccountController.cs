@@ -20,91 +20,137 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult LoadDataAccount()
         {
-            var result = (from u in db.Users
-                          select new { u.UserID, u.AccountID, u.Name, u.IdentityCard, u.Account.Role.RoleName, u.Account.StatusOfAccount }).ToList();
-            List < Object > list = new List<object>();
-            foreach (var item in result)
+            List<Object> list = new List<object>();
+            try
             {
-                var status = "";
-                var RoleName = "";
-                if(item.StatusOfAccount == null)
+                var result = (from u in db.Users
+                              select new { u.UserID, u.AccountID, u.Name, u.IdentityCard, u.Account.Role.RoleName, u.Account.StatusOfAccount }).ToList();
+
+                foreach (var item in result)
                 {
-                    status = "Trống";
+                    var status = "";
+                    var RoleName = "";
+                    if (item.StatusOfAccount == null)
+                    {
+                        status = "Trống";
+                    }
+                    if (item.RoleName == null)
+                    {
+                        RoleName = "Trống";
+                    }
+                    else
+                    {
+                        RoleName = item.RoleName;
+                    }
+                    switch (item.StatusOfAccount)
+                    {
+                        case 0:
+                            status = "Đang hoạt động";
+                            break;
+                        case 1:
+                            status = "Đã khóa";
+                            break;
+                    }
+                    var tr = new { item.UserID, item.AccountID, item.Name, item.IdentityCard, RoleName, status, item.StatusOfAccount };
+                    list.Add(tr);
                 }
-                if(item.RoleName == null)
-                {
-                    RoleName = "Trống";
-                }
-                else
-                {
-                    RoleName = item.RoleName;
-                }
-                switch (item.StatusOfAccount)
-                {
-                    case 0:
-                        status = "Đang hoạt động";
-                        break;
-                    case 1:
-                        status = "Đã khóa";
-                        break;
-                }
-                var tr = new {item.UserID, item.AccountID, item.Name, item.IdentityCard, RoleName, status, item.StatusOfAccount };
-                list.Add(tr);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Account/Details/
-        public JsonResult Details(int id)
-        {
-            var account = db.Accounts.Find(id);
-            return Json(new { account.AccountID,account.UserName,account.PassWord,account.RoleID,account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
-        }
+        //// GET: Account/Details/
+        //public JsonResult Details(int id)
+        //{
+        //    try
+        //    {
+        //        var account = db.Accounts.Find(id);
+        //        return Json(new { account.AccountID, account.UserName, account.PassWord, account.RoleID, account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+        //    }
+        //}
 
         //check username exist or not if exist find user and add account for user
         public JsonResult CheckUserToAdd(Account account, int UserID)
         {
-            var check = true;
-            var result = (from a in db.Accounts
-                          where a.UserName.ToLower().Equals(account.UserName.ToLower())
-                          select new { a.UserName }).FirstOrDefault();
-            if(result == null)
+            try
             {
-                int accountID = Create(account);
-                User user = db.Users.Find(UserID);
-                user.AccountID = accountID;
-                user.StatusOfwork = 1;
-                UpdateUser(user);
-                check = false;
+                var check = true;
+                var result = (from a in db.Accounts
+                              where a.UserName.ToLower().Equals(account.UserName.ToLower())
+                              select new { a.UserName }).FirstOrDefault();
+                if (result == null)
+                {
+                    int accountID = Create(account);
+                    User user = db.Users.Find(UserID);
+                    user.AccountID = accountID;
+                    user.StatusOfwork = 1;
+                    UpdateUser(user);
+                    check = false;
+                }
+                return Json(check, JsonRequestBehavior.AllowGet);
             }
-            return Json(check, JsonRequestBehavior.AllowGet);
+            catch (Exception)
+            {
+                return Json("AddFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //find account to update role
         public JsonResult CheckAccToUpdateRole(int AccountID, int RoleID)
         {
-            Account account = db.Accounts.Find(AccountID);
-            account.RoleID = RoleID;
-            Update(account);
-            return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                Account account = db.Accounts.Find(AccountID);
+                account.RoleID = RoleID;
+                Update(account);
+                return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
+            }
         }
 
         //find account to reset password
         public JsonResult CheckAccToResetPass(int AccountID, string Password)
         {
-            Account account = db.Accounts.Find(AccountID);
-            account.PassWord = Password;
-            Update(account);
-            return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                Account account = db.Accounts.Find(AccountID);
+                account.PassWord = Password;
+                Update(account);
+                return Json(new { account.AccountID }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //find account to update status
         public JsonResult CheckAccToUpdateStatus(int AccountID, int Status)
         {
-            Account account = db.Accounts.Find(AccountID);
-            account.StatusOfAccount = Status;
-            Update(account);
-            return Json(new { account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                Account account = db.Accounts.Find(AccountID);
+                account.StatusOfAccount = Status;
+                Update(account);
+                return Json(new { account.StatusOfAccount }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //Create account
