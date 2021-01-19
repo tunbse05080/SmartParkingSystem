@@ -188,12 +188,12 @@ namespace SmartParkingApplication.Controllers
             return Json(account, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult checkUserNameExist(string UserNameAcc)
-        {
-            var result = (from a in db.Accounts
-                          where a.UserName.ToLower().Equals(UserNameAcc.ToLower())
-                          select new { a.UserName }).FirstOrDefault();
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult checkUserNameExist(string UserNameAcc)
+        //{
+        //    var result = (from a in db.Accounts
+        //                  where a.UserName.ToLower().Equals(UserNameAcc.ToLower())
+        //                  select new { a.UserName }).FirstOrDefault();
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

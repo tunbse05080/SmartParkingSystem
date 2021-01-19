@@ -233,7 +233,6 @@ function validateAddAcc() {
     var htmlcss = {
         'color': 'Red'
     }
-    //checkUserNameExist();
     $.validator.setDefaults({
         errorClass: 'help-block',
         highlight: function (element) {
