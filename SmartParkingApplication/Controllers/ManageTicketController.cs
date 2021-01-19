@@ -239,8 +239,8 @@ namespace SmartParkingApplication.Controllers
         {
             try
             {
-                var MonthlyTicketUser = db.MonthlyTickets.Where(x => x.ExpiryDate == DateTime.Now.AddDays(-7)).ToList();
-                var parking = db.ParkingPlaces.ToList();
+                var dateNow = DateTime.Now.AddDays(+7);
+                List<MonthlyTicket> monthlyTicket = db.MonthlyTickets.Where(x => x.ExpiryDate <= dateNow && x.ExpiryDate >= DateTime.Now).ToList();
                 var alluser = new GridView();
                 //===================================================
                 DataTable dt = new DataTable();
@@ -259,7 +259,7 @@ namespace SmartParkingApplication.Controllers
                 //Add in the datarow
 
 
-                foreach (var item in MonthlyTicketUser)
+                foreach (var item in monthlyTicket)
                 {
                     DataRow newRow = dt.NewRow();
 

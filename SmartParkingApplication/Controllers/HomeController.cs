@@ -91,12 +91,12 @@ namespace SmartParkingApplication.Controllers
 
                 //get income dataMoto of MonthlyTicket ( the current month )
                 var dataMotoMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                         where mi.MonthlyTicket.RegisDate.Value.Year == DateTime.Now.Year && mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 0)
+                                         where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 0)
                                          select new { mi.TotalPrice }).ToList();
 
                 //get income dataCar of MonthlyTicket ( the current month )
                 var dataCarMonthlyTK = (from mi in db.MonthlyIncomeStatements
-                                        where mi.MonthlyTicket.RegisDate.Value.Year == DateTime.Now.Year && mi.MonthlyTicket.RegisDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 1)
+                                        where mi.PaymentDate.Value.Year == DateTime.Now.Year && mi.PaymentDate.Value.Month == DateTime.Now.Month && (mi.MonthlyTicket.TypeOfVehicle == 1)
                                         select new { mi.TotalPrice }).ToList();
 
                 var sumMoto = dataMotoDailyTK.Select(s => s.TotalPrice).Sum() + dataMotoMonthlyTK.Select(s => s.TotalPrice).Sum();
