@@ -20,39 +20,90 @@ namespace SmartParkingApplication.Controllers
         // GET: ManageUser
         public ActionResult Index()
         {
-            //List<User> list = db.Users.ToList();
-
             return View();
         }
 
         //load data User Staff
         public JsonResult LoadData()
         {
-            var users = (from u in db.Users
-                         where u.Account.Role.RoleID == 1 || u.Account.RoleID == null
-                         orderby u.UserID
-                         select new
-                         {
-                             u.UserID,
-                             u.Name,
-                             u.DateOfBirth,
-                             u.UserAddress,
-                             u.IdentityCard,
-                             u.Phone,
-                             u.email,
-                             u.StatusOfwork,
-                             u.ParkingPlace.NameOfParking,
-                             u.Account.Role.RoleName,
-                             u.Account.StatusOfAccount
-                         }).ToList();
-
             List<Object> list = new List<object>();
-            foreach (var item in users)
+            try
             {
-                var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy");
-                //var expdateFormES = item.ContractExpirationDate.Value.ToString("yyyy/MM/dd");
-                string statusOfwork = string.Empty;
-                switch (item.StatusOfwork)
+                var users = (from u in db.Users
+                             where u.Account.Role.RoleID == 1 || u.Account.RoleID == null
+                             orderby u.UserID
+                             select new
+                             {
+                                 u.UserID,
+                                 u.Name,
+                                 u.DateOfBirth,
+                                 u.UserAddress,
+                                 u.IdentityCard,
+                                 u.Phone,
+                                 u.email,
+                                 u.StatusOfwork,
+                                 u.ParkingPlace.NameOfParking,
+                                 u.Account.Role.RoleName,
+                                 u.Account.StatusOfAccount
+                             }).ToList();
+
+
+                foreach (var item in users)
+                {
+                    var datebirth = item.DateOfBirth.Value.ToString("dd/MM/yyyy");
+                    //var expdateFormES = item.ContractExpirationDate.Value.ToString("yyyy/MM/dd");
+                    string statusOfwork = string.Empty;
+                    switch (item.StatusOfwork)
+                    {
+                        case 0:
+                            statusOfwork = "Đang trong ca";
+                            break;
+                        case 1:
+                            statusOfwork = "Không trong ca";
+                            break;
+                        case 2:
+                            statusOfwork = "Trống";
+                            break;
+                    }
+                    int statusOfAccount = 0;
+                    if (item.StatusOfAccount == null)
+                    {
+                        statusOfAccount = 2;
+                    }
+                    else
+                    {
+                        statusOfAccount = (int)item.StatusOfAccount;
+                    }
+                    var tr = new { item.UserID, item.Name, DateOfBirth = datebirth, item.UserAddress, item.IdentityCard, item.Phone, item.email, StatusOfWork = statusOfwork, item.NameOfParking, statusOfAccount };
+                    list.Add(tr);
+                }
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        //detail info User
+        public JsonResult Details(int id)
+        {
+            try
+            {
+                var user = db.Users.Find(id);
+                var gender = "";
+                var dateOfBirth = "";
+                var statusOfwork = "";
+                switch (user.Gender)
+                {
+                    case 0:
+                        gender = "Nam";
+                        break;
+                    case 1:
+                        gender = "Nữ";
+                        break;
+                }
+                switch (user.StatusOfwork)
                 {
                     case 0:
                         statusOfwork = "Đang trong ca";
@@ -64,81 +115,48 @@ namespace SmartParkingApplication.Controllers
                         statusOfwork = "Trống";
                         break;
                 }
-                int statusOfAccount = 0;
-                if(item.StatusOfAccount == null)
+                string roleName = "";
+                string userName = "";
+                if (user.AccountID == null)
                 {
-                    statusOfAccount = 2;
+                    roleName = "Trống";
+                    userName = "Trống";
                 }
                 else
                 {
-                    statusOfAccount = (int)item.StatusOfAccount;
+                    roleName = user.Account.Role.RoleName;
+                    userName = user.Account.UserName;
                 }
-                var tr = new { item.UserID, item.Name, DateOfBirth = datebirth, item.UserAddress, item.IdentityCard, item.Phone, item.email, StatusOfWork = statusOfwork, item.NameOfParking, statusOfAccount };
-                list.Add(tr);
+                var status = user.StatusOfwork;
+                dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
+                var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, roleName, user.StatusOfwork, statusOfwork, user.AccountID, userName, user.Gender, user.ParkingPlaceID };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
-
-        //detail info User
-        public JsonResult Details(int id)
-        {
-            var user = db.Users.Find(id);
-            var gender = "";
-            var dateOfBirth = "";
-            var statusOfwork = "";
-            switch (user.Gender)
+            catch (Exception)
             {
-                case 0:
-                    gender = "Nam";
-                    break;
-                case 1:
-                    gender = "Nữ";
-                    break;
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
             }
-            switch (user.StatusOfwork)
-            {
-                case 0:
-                    statusOfwork = "Đang trong ca";
-                    break;
-                case 1:
-                    statusOfwork = "Không trong ca";
-                    break;
-                case 2:
-                    statusOfwork = "Trống";
-                    break;
-            }
-            string roleName = "";
-            string userName = "";
-            if (user.AccountID == null)
-            {
-                roleName = "Trống";
-                userName = "Trống";
-            }
-            else
-            {
-                roleName = user.Account.Role.RoleName;
-                userName = user.Account.UserName;
-            }
-            var status = user.StatusOfwork;
-            dateOfBirth = user.DateOfBirth.Value.ToString("MM/dd/yyyy");
-            //var contractSigningDate = user.ContractSigningDate.Value.ToString("MM/dd/yyyy");
-            //var contractExpirationDate = user.ContractExpirationDate.Value.ToString("MM/dd/yyyy");
-            var result = new { user.UserID, user.Name, user.UserAddress, gender, dateOfBirth, user.Phone, user.email, user.IdentityCard, user.ParkingPlace.NameOfParking, roleName, user.StatusOfwork, statusOfwork, user.AccountID, userName, user.Gender, user.ParkingPlaceID };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            
         }
 
         //check Identity Card exist or not if not exist, create user
         public JsonResult CheckIdentityCardToAdd(User user)
         {
             var check = true;
-            var result = (from u in db.Users
-                          where u.IdentityCard == user.IdentityCard
-                          select new { u.IdentityCard }).FirstOrDefault();
-            if(result == null)
+            try
             {
-                Create(user);
-                check = false;
+                var result = (from u in db.Users
+                              where u.IdentityCard == user.IdentityCard
+                              select new { u.IdentityCard }).FirstOrDefault();
+                if (result == null)
+                {
+                    Create(user);
+                    check = false;
+                }
+            }
+            catch (Exception)
+            {
+                return Json("AddFalse", JsonRequestBehavior.AllowGet);
             }
             return Json(check, JsonRequestBehavior.AllowGet);
         }
@@ -147,16 +165,23 @@ namespace SmartParkingApplication.Controllers
         public JsonResult CheckIdentityCardToUpdate(User user)
         {
             var check = true;
-            var result = (from u in db.Users
-                          where u.IdentityCard == user.IdentityCard
-                          select new { u.IdentityCard }).FirstOrDefault();
-            var result2 = (from u in db.Users
-                           where u.UserID == user.UserID
-                           select new { u.IdentityCard }).FirstOrDefault();
-            if (result == null || result2.IdentityCard == user.IdentityCard)
+            try
             {
-                Update(user);
-                check = false;
+                var result = (from u in db.Users
+                              where u.IdentityCard == user.IdentityCard
+                              select new { u.IdentityCard }).FirstOrDefault();
+                var result2 = (from u in db.Users
+                               where u.UserID == user.UserID
+                               select new { u.IdentityCard }).FirstOrDefault();
+                if (result == null || result2.IdentityCard == user.IdentityCard)
+                {
+                    Update(user);
+                    check = false;
+                }
+            }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
             }
             return Json(check, JsonRequestBehavior.AllowGet);
         }
@@ -186,81 +211,131 @@ namespace SmartParkingApplication.Controllers
         //combobox Gender
         public JsonResult ComboboxGender()
         {
-            var list = db.Users.Select(u => u.Gender).Distinct().ToList();
             List<string> result = new List<string>();
-            foreach (var item in list)
+            try
             {
-                var gender = "";
-                switch (item)
+                var list = db.Users.Select(u => u.Gender).Distinct().ToList();
+
+                foreach (var item in list)
                 {
-                    case 0:
-                        gender = "Nam";
-                        result.Add(gender);
-                        break;
-                    case 1:
-                        gender = "Nữ";
-                        result.Add(gender);
-                        break;
+                    var gender = "";
+                    switch (item)
+                    {
+                        case 0:
+                            gender = "Nam";
+                            result.Add(gender);
+                            break;
+                        case 1:
+                            gender = "Nữ";
+                            result.Add(gender);
+                            break;
+                    }
                 }
             }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         // combobox status of work
         public JsonResult ComboboxStatusOfwork()
         {
-            var list = db.Users.Select(u => u.StatusOfwork).Distinct().ToList();
             List<string> result = new List<string>();
-            foreach (var item in list)
+            try
             {
-                var statusOfwork = "";
-                switch (item)
+                var list = db.Users.Select(u => u.StatusOfwork).Distinct().ToList();
+
+                foreach (var item in list)
                 {
-                    case 0:
-                        statusOfwork = "Đang trong ca";
-                        result.Add(statusOfwork);
-                        break;
-                    case 1:
-                        statusOfwork = "Không trong ca";
-                        result.Add(statusOfwork);
-                        break;
+                    var statusOfwork = "";
+                    switch (item)
+                    {
+                        case 0:
+                            statusOfwork = "Đang trong ca";
+                            result.Add(statusOfwork);
+                            break;
+                        case 1:
+                            statusOfwork = "Không trong ca";
+                            result.Add(statusOfwork);
+                            break;
+                    }
                 }
             }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         //combobox parking place user
         public JsonResult ComboboxParkingPlace()
         {
-            var list = from p in db.ParkingPlaces
-                       select new { p.ParkingPlaceID, p.NameOfParking };
-            return Json(list, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var list = from p in db.ParkingPlaces
+                           select new { p.ParkingPlaceID, p.NameOfParking };
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //combobox Rolename user
         public JsonResult ComboboxRoleName()
         {
-            var list = from r in db.Roles
-                       select new { r.RoleID, r.RoleName };
-            return Json(list, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var list = from r in db.Roles
+                           select new { r.RoleID, r.RoleName };
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //combobox UserName
         public JsonResult ComboboxUserName(int ParkingPlaceID)
         {
-            var result = (from u in db.Users
-                          where u.ParkingPlaceID == ParkingPlaceID && u.Account.RoleID == 1
-                          select new { u.UserID, u.Account.UserName }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var result = (from u in db.Users
+                              where u.ParkingPlaceID == ParkingPlaceID && u.Account.RoleID == 1
+                              select new { u.UserID, u.Account.UserName }).ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //get name of staff base on UserID
         public JsonResult GetNameStaff(int id)
         {
-            var result = (from u in db.Users
-                          where u.UserID == id
-                          select new { u.Name }).FirstOrDefault();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var result = (from u in db.Users
+                              where u.UserID == id
+                              select new { u.Name }).FirstOrDefault();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //Working calendar
@@ -271,11 +346,18 @@ namespace SmartParkingApplication.Controllers
         //load data to fullcalendar
         public JsonResult LoadDataCalendar(int ParkingPlaceID)
         {
-            List<Object> list = new List<object>();
-            var result = (from us in db.UserSchedules
-                          where us.User.ParkingPlaceID == ParkingPlaceID
-                          select new { us.UserScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var result = (from us in db.UserSchedules
+                              where us.User.ParkingPlaceID == ParkingPlaceID
+                              select new { us.UserScheduleID, us.User.Name, us.Schedule.TimeStart, us.Schedule.TimeEnd }).ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //get datetime by working shift
@@ -311,60 +393,75 @@ namespace SmartParkingApplication.Controllers
         //get datetime and create schedule for user
         public JsonResult GetTimeToCreateCalendar(Schedule schedule, int UserID)
         {
-            //get number day between dateStart and dateEnd
-            TimeSpan timeSpan = (TimeSpan)(schedule.TimeEnd - schedule.TimeStart);
-            //create UserSchedule for each date
-            for (int i = 0; i <= timeSpan.Days; i++)
+            var result = "";
+            try
             {
-                //declare timeStart and timeEnd
-                DateTime timeStart = DateTime.Now;
-                DateTime timeEnd = DateTime.Now;
-                List<DateTime> list = GetTimeByShift(schedule);
-                timeStart = list.First();
-                timeEnd = list.Last();
-                //each for, timeStart increase 1 day
-                timeStart = timeStart.AddDays(i);
-                //each for, timeEnd increase 2 days if shift 3
-                if (schedule.Slot == 3)
+                //get number day between dateStart and dateEnd
+                TimeSpan timeSpan = (TimeSpan)(schedule.TimeEnd - schedule.TimeStart);
+                //create UserSchedule for each date
+                for (int i = 0; i <= timeSpan.Days; i++)
                 {
-                    timeEnd = timeEnd.AddDays(i + 1);
-                }
-                else
-                {
-                    timeEnd = timeEnd.AddDays(i);
-                }
-                Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot, ParkingPlaceID = schedule.ParkingPlaceID };
-                //check schedule exist or not
-                if (IsCreatedSchedule(newSchedule) == 0)
-                {
-                    //create working schedule
-                    int scheduleID = CreateWorkingCalendar(newSchedule);
-                    UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
+                    //declare timeStart and timeEnd
+                    DateTime timeStart = DateTime.Now;
+                    DateTime timeEnd = DateTime.Now;
+                    List<DateTime> list = GetTimeByShift(schedule);
+                    timeStart = list.First();
+                    timeEnd = list.Last();
+                    //each for, timeStart increase 1 day
+                    timeStart = timeStart.AddDays(i);
+                    //each for, timeEnd increase 2 days if shift 3
+                    if (schedule.Slot == 3)
+                    {
+                        timeEnd = timeEnd.AddDays(i + 1);
+                    }
+                    else
+                    {
+                        timeEnd = timeEnd.AddDays(i);
+                    }
+                    Schedule newSchedule = new Schedule { TimeStart = timeStart, TimeEnd = timeEnd, Slot = schedule.Slot, ParkingPlaceID = schedule.ParkingPlaceID };
+                    //check schedule exist or not
+                    if (IsCreatedSchedule(newSchedule) == 0)
+                    {
+                        //create working schedule
+                        int scheduleID = CreateWorkingCalendar(newSchedule);
+                        UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
 
-                    //create working schedule for user
-                    CreateUserSchedule(newUS);
-                //check this user exist or not in newschedule 
-                }else if (checkUserSchedule(UserID, newSchedule) == true)
-                {
-                    //create working schedule
-                    int scheduleID = CreateWorkingCalendar(newSchedule);
-                    UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
+                        //create working schedule for user
+                        CreateUserSchedule(newUS);
+                        //check this user exist or not in newschedule 
+                    }
+                    else if (checkUserSchedule(UserID, newSchedule) == true)
+                    {
+                        //create working schedule
+                        int scheduleID = CreateWorkingCalendar(newSchedule);
+                        UserSchedule newUS = new UserSchedule { UserID = UserID, ScheduleID = scheduleID };
 
-                    //create working schedule for user
-                    CreateUserSchedule(newUS);
+                        //create working schedule for user
+                        CreateUserSchedule(newUS);
+                    }
                 }
             }
-            var result = "";
+            catch (Exception)
+            {
+                return Json("AddFalse", JsonRequestBehavior.AllowGet);
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateWorkingShift(int id, int userid)
         {
-            UserSchedule userSchedule = db.UserSchedules.Find(id);
-            userSchedule.UserID = userid;
-            if (checkUserSchedule(userid, userSchedule.Schedule) == true)
+            try
             {
-                UpdateWorkingcalendar(userSchedule);
+                UserSchedule userSchedule = db.UserSchedules.Find(id);
+                userSchedule.UserID = userid;
+                if (checkUserSchedule(userid, userSchedule.Schedule) == true)
+                {
+                    UpdateWorkingcalendar(userSchedule);
+                }
+            }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
@@ -395,16 +492,6 @@ namespace SmartParkingApplication.Controllers
             {
                 return true; //Khong tim thay userID da lam viec trong ca nay
             }
-        }
-
-        //check UserSchedule exist or not if not return UserSchedule
-        public UserSchedule IsCreatedUserSchedule(int ScheduleID)
-        {
-            var result = (from us in db.UserSchedules
-                         where us.ScheduleID == ScheduleID
-                         select new { us.UserScheduleID, us.ScheduleID }).FirstOrDefault();
-            UserSchedule userSchedule = new UserSchedule { UserScheduleID = result.UserScheduleID, ScheduleID = result.ScheduleID };
-            return userSchedule;
         }
 
         //create Userschedule

@@ -45,18 +45,23 @@ function LoadDataCalendar() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            let evenArr = [];
-            $.each(result, function (key, item) {
-                let evenObj = {
-                    id: item.UserScheduleID,
-                    title: item.Name,
-                    start: getFormatDatetime(item.TimeStart),
-                    end: getFormatDatetime(item.TimeEnd)
-                }
-                evenArr.push(evenObj);
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                let evenArr = [];
+                $.each(result, function (key, item) {
+                    let evenObj = {
+                        id: item.UserScheduleID,
+                        title: item.Name,
+                        start: getFormatDatetime(item.TimeStart),
+                        end: getFormatDatetime(item.TimeEnd)
+                    }
+                    evenArr.push(evenObj);
 
-            });
-            initCalendar(evenArr);
+                });
+                initCalendar(evenArr);
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -118,9 +123,13 @@ function CreateWorkingCalendar() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            //CreateUserSchedule(result.ScheduleID);
-            $('#myModalCreateWorkingCalendar').modal('hide');
-            LoadDataCalendar();
+            if (result == "AddFalse") {
+                alert("Tạo lịch làm việc không thành công!");
+            } else {
+                $('#myModalCreateWorkingCalendar').modal('hide');
+                LoadDataCalendar();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -143,8 +152,13 @@ function EditWorkingCalendar() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#myModalEditWorkingCalendar').modal('hide');
-            LoadDataCalendar();
+            if (result == "UpdateFalse") {
+                alert("Sửa lịch làm việc không thành công!");
+            } else {
+                $('#myModalEditWorkingCalendar').modal('hide');
+                LoadDataCalendar();
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -199,13 +213,18 @@ function getNameStaff(check) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            if (check == 1) {
-                $('#FullNameEmp').val(result.Name);
-                $('myModalCreateWorkingCalendar').modal('Show');
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
             } else {
-                $('#FullNameEmpEdit').val(result.Name);
-                $('myModalEditWorkingCalendar').modal('Show');
+                if (check == 1) {
+                    $('#FullNameEmp').val(result.Name);
+                    $('myModalCreateWorkingCalendar').modal('Show');
+                } else {
+                    $('#FullNameEmpEdit').val(result.Name);
+                    $('myModalEditWorkingCalendar').modal('Show');
+                }
             }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -235,32 +254,37 @@ function ComboboxUserName(check) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<option value="' + item.UserID + '">' + item.UserName + '</option>';
-            });
-            if (check == 1) {
-                $("#cbUserNameEmp").html(html);
-                $('#cbUserNameEmp').val(null).trigger('change');
-                $("#cbUserNameEmp").select2({
-                    placeholder: "Chọn tên tài khoản",
-                    allowClear: true
-                });
-            } else if (check == 2) {
-                $("#cbUserNameEmpEdit").html(html);
-                $('#cbUserNameEmpEdit').val(null).trigger('change');
-                $("#cbUserNameEmpEdit").select2({
-                    placeholder: "Chọn tên tài khoản",
-                    allowClear: true
-                });
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
             } else {
-                $('#cbUserNameWS').html(html);
-                $('#cbUserNameWS').val(null).trigger('change');
-                $("#cbUserNameWS").select2({
-                    placeholder: "Chọn tên tài khoản",
-                    allowClear: true
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<option value="' + item.UserID + '">' + item.UserName + '</option>';
                 });
+                if (check == 1) {
+                    $("#cbUserNameEmp").html(html);
+                    $('#cbUserNameEmp').val(null).trigger('change');
+                    $("#cbUserNameEmp").select2({
+                        placeholder: "Chọn tên tài khoản",
+                        allowClear: true
+                    });
+                } else if (check == 2) {
+                    $("#cbUserNameEmpEdit").html(html);
+                    $('#cbUserNameEmpEdit').val(null).trigger('change');
+                    $("#cbUserNameEmpEdit").select2({
+                        placeholder: "Chọn tên tài khoản",
+                        allowClear: true
+                    });
+                } else {
+                    $('#cbUserNameWS').html(html);
+                    $('#cbUserNameWS').val(null).trigger('change');
+                    $("#cbUserNameWS").select2({
+                        placeholder: "Chọn tên tài khoản",
+                        allowClear: true
+                    });
+                }
             }
+            
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

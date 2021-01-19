@@ -73,21 +73,26 @@ function getEditByID(EmployeeID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            var str = result.dateOfBirth;
-            var test = str.split("/");
-            $('#IdEdit').val(result.UserID);
-            $('#FullNameEdit').val(result.Name);
-            $('#DateOfBirthEdit').val(test[2] + '-' + test[0] + '-' + test[1]);
-            $('#AddressEdit').val(result.UserAddress);
-            $('#cbGenderEdit').val(result.Gender);
-            $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneNumberEdit').val('0' + result.Phone);
-            $('#EmailEdit').val(result.email);
-            $('#StatusOfWorkingEdit').val(result.StatusOfwork);
-            $('#AccountID').val(result.AccountID);
-            $('#cbparkingPlaceUEdit').val(result.ParkingPlaceID);
-            $('#myModalUserEdit').modal('show');
-            $('#btnUpdate').show();
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var str = result.dateOfBirth;
+                var test = str.split("/");
+                $('#IdEdit').val(result.UserID);
+                $('#FullNameEdit').val(result.Name);
+                $('#DateOfBirthEdit').val(test[2] + '-' + test[0] + '-' + test[1]);
+                $('#AddressEdit').val(result.UserAddress);
+                $('#cbGenderEdit').val(result.Gender);
+                $('#IdentityCardEdit').val(result.IdentityCard);
+                $('#PhoneNumberEdit').val('0' + result.Phone);
+                $('#EmailEdit').val(result.email);
+                $('#StatusOfWorkingEdit').val(result.StatusOfwork);
+                $('#AccountID').val(result.AccountID);
+                $('#cbparkingPlaceUEdit').val(result.ParkingPlaceID);
+                $('#myModalUserEdit').modal('show');
+                $('#btnUpdate').show();
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
@@ -104,19 +109,24 @@ function getDetailByID(EmployeeID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#IdD').val(result.UserID);
-            $('#FullNameD').val(result.Name);
-            $('#DateOfBirthD').val(result.dateOfBirth);
-            $('#GenderD').val(result.gender);
-            $('#AddressD').val(result.UserAddress);
-            $('#IdentityCardD').val(result.IdentityCard);
-            $('#PhoneNumberD').val('0' + result.Phone);
-            $('#EmailD').val(result.email);
-            $('#StatusOfWorkD').val(result.statusOfwork);
-            $('#AccountName').val(result.userName);
-            $('#ParkingPlaceD').val(result.NameOfParking);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#IdD').val(result.UserID);
+                $('#FullNameD').val(result.Name);
+                $('#DateOfBirthD').val(result.dateOfBirth);
+                $('#GenderD').val(result.gender);
+                $('#AddressD').val(result.UserAddress);
+                $('#IdentityCardD').val(result.IdentityCard);
+                $('#PhoneNumberD').val('0' + result.Phone);
+                $('#EmailD').val(result.email);
+                $('#StatusOfWorkD').val(result.statusOfwork);
+                $('#AccountName').val(result.userName);
+                $('#ParkingPlaceD').val(result.NameOfParking);
 
-            $('#myModalDetailUser').modal('show');
+                $('#myModalDetailUser').modal('show');
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + EmployeeID + errormessage.responseText);
@@ -133,39 +143,44 @@ function loadData() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.Name + '</td>';
-                html += '<td>' + + '0' + item.Phone + '</td>';
-                html += '<td>' + item.email + '</td>';
-                html += '<td>' + item.NameOfParking + '</td>';
-                html += '<td hidden>' + item.StatusOfWork + '</td>';     
-                switch (item.statusOfAccount) {
-                    case 0:
-                        if (item.StatusOfWork == 'Không trong ca') {
-                            html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="margin-left:1px" onclick = "return getEditByID(' + item.UserID + ')">Sửa</button></td>';
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.Name + '</td>';
+                    html += '<td>' + + '0' + item.Phone + '</td>';
+                    html += '<td>' + item.email + '</td>';
+                    html += '<td>' + item.NameOfParking + '</td>';
+                    html += '<td hidden>' + item.StatusOfWork + '</td>';
+                    switch (item.statusOfAccount) {
+                        case 0:
+                            if (item.StatusOfWork == 'Không trong ca') {
+                                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="margin-left:1px" onclick = "return getEditByID(' + item.UserID + ')">Sửa</button></td>';
+                                break;
+                            } else {
+                                html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button></td>';
+                                break;
+                            }
                             break;
-                        } else {
+                        case 1:
                             html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button></td>';
                             break;
-                        }
-                        break;
-                    case 1:
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button></td>';
-                        break;
-                    case 2:
-                        html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="margin-left:1px" onclick = "return getEditByID(' + item.UserID + ')">Sửa</button></td>';
-                        break;
-                }
-                html += '</tr>';
-            });
-            $('#tbodyUser').html(html);
+                        case 2:
+                            html += '<td><button class="btn btn-primary" onclick = "return getDetailByID(' + item.UserID + ')"> Chi tiết</button><button class="btn btn-success" style="margin-left:1px" onclick = "return getEditByID(' + item.UserID + ')">Sửa</button></td>';
+                            break;
+                    }
+                    html += '</tr>';
+                });
+                $('#tbodyUser').html(html);
 
-            $("#tbUser").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#tbUser_wrapper .col-md-6:eq(0)');
+                $("#tbUser").DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#tbUser_wrapper .col-md-6:eq(0)');
+            }
+            
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -199,16 +214,21 @@ function AddUser() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result == true) {
-                validateUserAdd();
-                checkExistIdentityCard = false;
-                return false;
+            if (result == "AddFalse") {
+                alert("Thêm nhân viên không thành công!");
             } else {
-                checkExistIdentityCard = true;
-                $('#myModalUser').modal('hide');
-                $('#tbUser').DataTable().clear().destroy();
-                loadData();
+                if (result == true) {
+                    validateUserAdd();
+                    checkExistIdentityCard = false;
+                    return false;
+                } else {
+                    checkExistIdentityCard = true;
+                    $('#myModalUser').modal('hide');
+                    $('#tbUser').DataTable().clear().destroy();
+                    loadData();
+                }
             }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -245,15 +265,19 @@ function UpdateUser() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result == true) {
-                validateUserEdit();
-                checkExistIdentityCardEdit = false;
-                return false;
+            if (result == "UpdateFalse") {
+                alert("Cập nhật thông tin không thành công!");
             } else {
-                checkExistIdentityCardEdit = false;
-                $('#myModalUserEdit').modal('hide');
-                $('#tbUser').DataTable().clear().destroy();
-                loadData();
+                if (result == true) {
+                    validateUserEdit();
+                    checkExistIdentityCardEdit = false;
+                    return false;
+                } else {
+                    checkExistIdentityCardEdit = false;
+                    $('#myModalUserEdit').modal('hide');
+                    $('#tbUser').DataTable().clear().destroy();
+                    loadData();
+                }
             }
         },
         error: function (errormessage) {
@@ -511,14 +535,19 @@ function ComboboxGender() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            var i = 0;
-            $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
-            });
-            $("#cbGender").html(html);
-            $("#cbGenderEdit").html(html);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var html = '';
+                var i = 0;
+                $.each(result, function (key, item) {
+                    html += '<option value="' + i + '">' + item + '</option>';
+                    i++;
+                });
+                $("#cbGender").html(html);
+                $("#cbGenderEdit").html(html);
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -533,17 +562,22 @@ function ComboboxParkingPlace() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<option value="' + item.ParkingPlaceID + '">' + item.NameOfParking + '</option>';
-            });
-            $("#cbparkingPlaceU").html(html);
-            $("#cbparkingPlaceUEdit").html(html);
-            $("#cbparkingPlaceEmp").html(html);
-            $("#cbparkingPlaceEmpEdit").html(html);
-            $("#cbparkingPlaceWorkingCalendar").html(html);
-            $("#cbNameParkingPlaceHistory").html(html);
-            $("#cbparkingPlaceWS").html(html);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<option value="' + item.ParkingPlaceID + '">' + item.NameOfParking + '</option>';
+                });
+                $("#cbparkingPlaceU").html(html);
+                $("#cbparkingPlaceUEdit").html(html);
+                $("#cbparkingPlaceEmp").html(html);
+                $("#cbparkingPlaceEmpEdit").html(html);
+                $("#cbparkingPlaceWorkingCalendar").html(html);
+                $("#cbNameParkingPlaceHistory").html(html);
+                $("#cbparkingPlaceWS").html(html);
+            }
+
         },
         error: function (errormessage) {
             //alert(errormessage.responseText);
@@ -558,14 +592,18 @@ function ComboboxRoleName() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<option value="' + item.RoleID + '">' + item.RoleName + '</option>';
-            });
-            $("#cbRoleNameU").html(html);
-            $("#cbRoleNameUEdit").html(html);
-            $("#cbRoleNameREdit").html(html);
-            $("#cbRoleNameAcc").html(html);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<option value="' + item.RoleID + '">' + item.RoleName + '</option>';
+                });
+                $("#cbRoleNameU").html(html);
+                $("#cbRoleNameUEdit").html(html);
+                $("#cbRoleNameREdit").html(html);
+                $("#cbRoleNameAcc").html(html);
+            }
 
         },
         error: function (errormessage) {
@@ -573,4 +611,3 @@ function ComboboxRoleName() {
         }
     });
 }
-
