@@ -1,4 +1,5 @@
-﻿//load page
+﻿
+//load page
 $(document).ready(function () {
     loadDataParkingPlace();
 });
@@ -10,39 +11,44 @@ function loadDataParkingPlace() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var data = result.datapp;
-            var html = '';
-            var totalPlace = '';
-            $.each(data, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.NameOfParking + '</td>';
-                html += '<td>' + item.Location + '</td>';
-                html += '<td>' + item.NumberOfCar + '</td>';
-                html += '<td>' + item.NumberCarBlank + '</td>';
-                html += '<td>' + item.NumberOfMotoBike + '</td>';
-                html += '<td>' + item.NumberMotoBikeBlank + '</td>';
-                html += '<td>' + item.StatusOfParkingPlace+ '</td>';
-                
-                switch (item.StatusOfParkingPlace) {
-                    case "Dừng hoạt động":
-                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-warning" style="width:150px" onclick="return getUnLockParkingByID(' + item.ParkingPlaceID + ')" >Mở Hoạt Động</button></td>';
-                        break;
-                    case "Đang hoạt động":
-                        html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button><button class="btn btn-danger" style="width:218px" onclick="return getLockParkingByID(' + item.ParkingPlaceID + ')" > Tạm Dừng Hoạt Động</button></td>';
-                        break;
-                   
-                }
-                
-                html += '</tr>';
-            });
-            $('#tbodypp').html(html);
-            $('#tbPPlace').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#tbPPlace_wrapper .col-md-6:eq(0)');
-            totalPlace += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
-            totalPlace += '<p>Tổng Số Bãi Đỗ</p>';
-            $('#totalParkingPlace').html(totalPlace);
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var data = result.datapp;
+                var html = '';
+                var totalPlace = '';
+                $.each(data, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.NameOfParking + '</td>';
+                    html += '<td>' + item.Location + '</td>';
+                    html += '<td>' + item.NumberOfCar + '</td>';
+                    html += '<td>' + item.NumberCarBlank + '</td>';
+                    html += '<td>' + item.NumberOfMotoBike + '</td>';
+                    html += '<td>' + item.NumberMotoBikeBlank + '</td>';
+                    html += '<td>' + item.StatusOfParkingPlace + '</td>';
+
+                    switch (item.StatusOfParkingPlace) {
+                        case "Dừng hoạt động":
+                            html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-warning" style="width:150px" onclick="return getUnLockParkingByID(' + item.ParkingPlaceID + ')" >Mở Hoạt Động</button></td>';
+                            break;
+                        case "Đang hoạt động":
+                            html += '<td><button class="btn btn-primary" style="width:109px" onclick = "return getPPDetailByID(' + item.ParkingPlaceID + ')"> Chi tiết</button><button class="btn btn-success" style="width:109px" onclick="return getPPByID(' + item.ParkingPlaceID + ')" > Sửa</button><button class="btn btn-danger" style="width:218px" onclick="return getLockParkingByID(' + item.ParkingPlaceID + ')" > Tạm Dừng Hoạt Động</button></td>';
+                            break;
+
+                    }
+
+                    html += '</tr>';
+                });
+                $('#tbodypp').html(html);
+                $('#tbPPlace').DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#tbPPlace_wrapper .col-md-6:eq(0)');
+                totalPlace += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
+                totalPlace += '<p>Tổng Số Bãi Đỗ</p>';
+                $('#totalParkingPlace').html(totalPlace);
+            }
+
         },
         error: function () {
             
@@ -76,18 +82,20 @@ function UpdatePP() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            
-            if (result == true) {
-                validateUpdatePP();
-                checkExistNameParkingUpdate = false;
-                return false;
+            if (result == "UpdateFalse") {
+                alert("Cập nhật bãi đỗ không thành công!");
             } else {
-                checkExistNameParkingUpdate = false;
-                $('#tbPPlace').DataTable().clear().destroy();
-                loadDataParkingPlace();
-                $('#myModalUpdatePP').modal('hide');
+                if (result == true) {
+                    validateUpdatePP();
+                    checkExistNameParkingUpdate = false;
+                    return false;
+                } else {
+                    checkExistNameParkingUpdate = false;
+                    $('#tbPPlace').DataTable().clear().destroy();
+                    loadDataParkingPlace();
+                    $('#myModalUpdatePP').modal('hide');
+                }
             }
-
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -104,15 +112,19 @@ function getPPByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#ParkingPlaceIDEdit').val(result.ParkingPlaceID);
-            $('#NameOfParkingEdit').val(result.NameOfParking);
-            $('#LocationEdit').val(result.Location);
-            $('#NumberOfCarEdit').val(result.NumberOfCar);
-            $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
-            $('#NumberCarBlankEdit').val(result.NumberCarBlank);
-            $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
-            $('#StatusParkingPlaceEdit').val(result.StatusOfParkingPlace);
-            $('#myModalUpdatePP').modal('show');
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#ParkingPlaceIDEdit').val(result.ParkingPlaceID);
+                $('#NameOfParkingEdit').val(result.NameOfParking);
+                $('#LocationEdit').val(result.Location);
+                $('#NumberOfCarEdit').val(result.NumberOfCar);
+                $('#NumberOfMotoBikeEdit').val(result.NumberOfMotoBike);
+                $('#NumberCarBlankEdit').val(result.NumberCarBlank);
+                $('#NumberMotoBikeBlankEdit').val(result.NumberMotoBikeBlank);
+                $('#StatusParkingPlaceEdit').val(result.StatusOfParkingPlace);
+                $('#myModalUpdatePP').modal('show');
+            }
         },
         error: function (errormessage) {
             alert("Exception:" + ParkingPlaceID + errormessage.responseText);
@@ -120,6 +132,7 @@ function getPPByID(ParkingPlaceID) {
     });
     return false;
 }
+
 function getPPDetailByID(ParkingPlaceID) {
     $.ajax({
         url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
@@ -127,15 +140,19 @@ function getPPDetailByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#ParkingPlaceIDd').val(result.ParkingPlaceID);
-            $('#NameOfParkingd').val(result.NameOfParking);
-            $('#Locationd').val(result.Location);
-            $('#NumberOfCardd').val(result.NumberOfCar);
-            $('#NumberOfMotoBiked').val(result.NumberOfMotoBike);
-            $('#NumberCarBlankd').val(result.NumberCarBlank);
-            $('#NumberMotoBikeBlankd').val(result.NumberMotoBikeBlank);
-            $('#StatusOfParkingPlaced').val(result.statusOfParking);
-            $('#myModalDetailPP').modal('show');
+            if (result == "") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#ParkingPlaceIDd').val(result.ParkingPlaceID);
+                $('#NameOfParkingd').val(result.NameOfParking);
+                $('#Locationd').val(result.Location);
+                $('#NumberOfCardd').val(result.NumberOfCar);
+                $('#NumberOfMotoBiked').val(result.NumberOfMotoBike);
+                $('#NumberCarBlankd').val(result.NumberCarBlank);
+                $('#NumberMotoBikeBlankd').val(result.NumberMotoBikeBlank);
+                $('#StatusOfParkingPlaced').val(result.statusOfParking);
+                $('#myModalDetailPP').modal('show');
+            }
         },
         error: function (errormessage) {
             alert("Exception:" + ParkingPlaceID + errormessage.responseText);
@@ -167,15 +184,19 @@ function AddPP() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result == true) {
-                validateAddPP();
-                checkExistNameParking = false;
-                return false;
+            if (result == "AddFalse") {
+                alert("Thêm bãi đỗ không thành công!");
             } else {
-                checkExistNameParking = false;
-                $('#tbPPlace').DataTable().clear().destroy();
-                loadDataParkingPlace();
-                $('#myModalPP').modal('hide');
+                if (result == true) {
+                    validateAddPP();
+                    checkExistNameParking = false;
+                    return false;
+                } else {
+                    checkExistNameParking = false;
+                    $('#tbPPlace').DataTable().clear().destroy();
+                    loadDataParkingPlace();
+                    $('#myModalPP').modal('hide');
+                }
             }
         },
         error: function (errormessage) {
@@ -390,13 +411,17 @@ function ComboboxStatusOfParking() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            var i = 0;
-            $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
-            });
-            $("#cbStatusOfParking").html(html);
+            if (result == "LoadFalse") {
+                alert("Tải combobox tình trạng bãi đỗ không thành công!");
+            } else {
+                var html = '';
+                var i = 0;
+                $.each(result, function (key, item) {
+                    html += '<option value="' + i + '">' + item + '</option>';
+                    i++;
+                });
+                $("#cbStatusOfParking").html(html);
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -411,20 +436,23 @@ function getLockParkingByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#ParkingPlaceIDlock').val(result.ParkingPlaceID);
-            $('#NameOfParkinglock').val(result.NameOfParking);
-            $('#NumberOfMotoBikelock').val(result.NumberOfMotoBike);
-            $('#Locationlock').val(result.Location);
-            $('#NumberOfCarlock').val(result.NumberOfCar);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#ParkingPlaceIDlock').val(result.ParkingPlaceID);
+                $('#NameOfParkinglock').val(result.NameOfParking);
+                $('#NumberOfMotoBikelock').val(result.NumberOfMotoBike);
+                $('#Locationlock').val(result.Location);
+                $('#NumberOfCarlock').val(result.NumberOfCar);
 
-            $('#NumberCarBlanklock').val(result.NumberCarBlank);
-            $('#NumberMotoBikeBlanklock').val(result.NumberMotoBikeBlank);
-            $('#StatusOfParkinglock').val(result.statusOfParking);
+                $('#NumberCarBlanklock').val(result.NumberCarBlank);
+                $('#NumberMotoBikeBlanklock').val(result.NumberMotoBikeBlank);
+                $('#StatusOfParkinglock').val(result.statusOfParking);
 
+                $('#myModalParkingLock').modal('show');
+                $('#btnLockParking').show();
+            }
 
-
-            $('#myModalParkingLock').modal('show');
-            $('#btnLockParking').show();
         },
         error: function (errormessage) {
             alert("Exception:" + ParkingPlaceID + errormessage.responseText);
@@ -432,6 +460,7 @@ function getLockParkingByID(ParkingPlaceID) {
     });
     return false;
 }
+
 function LockParking() {
     var emplockObj = {
         ParkingPlaceID: $('#ParkingPlaceIDlock').val(),
@@ -451,16 +480,20 @@ function LockParking() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPPlace').DataTable().clear().destroy();
-            loadDataParkingPlace();
-            $('#myModalParkingLock').modal('hide');
-
+            if (result == "UpdateFalse") {
+                alert("Khóa bãi đỗ không thành công!");
+            } else {
+                $('#tbPPlace').DataTable().clear().destroy();
+                loadDataParkingPlace();
+                $('#myModalParkingLock').modal('hide');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
         }
     });
 }
+
 function UnlockParking() {
     var empParkingObj = {
         ParkingPlaceID: $('#ParkingPlaceIDUnLock').val(),
@@ -479,16 +512,20 @@ function UnlockParking() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbPPlace').DataTable().clear().destroy();
-            loadDataParkingPlace();
-            $('#myModalUnLockParking').modal('hide');
-
+            if (result == "UpdateFalse") {
+                alert("Mở khóa bãi đỗ không thành công!");
+            } else {
+                $('#tbPPlace').DataTable().clear().destroy();
+                loadDataParkingPlace();
+                $('#myModalUnLockParking').modal('hide');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
         }
     });
 }
+
 function getUnLockParkingByID(ParkingPlaceID) {
     $.ajax({
         url: "/ManagePPlace/ParkingPlaceDetails/" + ParkingPlaceID,
@@ -496,20 +533,22 @@ function getUnLockParkingByID(ParkingPlaceID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#ParkingPlaceIDUnLock').val(result.ParkingPlaceID);
-            $('#NameOfParkingUnlock').val(result.NameOfParking);
-            $('#NumberOfMotoBikeUnlock').val(result.NumberOfMotoBike);
-            $('#LocationUnlock').val(result.Location);
-            $('#NumberOfCarUnlock').val(result.NumberOfCar);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#ParkingPlaceIDUnLock').val(result.ParkingPlaceID);
+                $('#NameOfParkingUnlock').val(result.NameOfParking);
+                $('#NumberOfMotoBikeUnlock').val(result.NumberOfMotoBike);
+                $('#LocationUnlock').val(result.Location);
+                $('#NumberOfCarUnlock').val(result.NumberOfCar);
 
-            $('#NumberCarBlankUnlock').val(result.NumberCarBlank);
-            $('#NumberMotoBikeBlankUnlock').val(result.NumberMotoBikeBlank);
-            
+                $('#NumberCarBlankUnlock').val(result.NumberCarBlank);
+                $('#NumberMotoBikeBlankUnlock').val(result.NumberMotoBikeBlank);
 
+                $('#myModalUnLockParking').modal('show');
+                $('#btnUnLockParking').show();
+            }
 
-
-            $('#myModalUnLockParking').modal('show');
-            $('#btnUnLockParking').show();
         },
         error: function (errormessage) {
             alert("Exception:" + ParkingPlaceID + errormessage.responseText);

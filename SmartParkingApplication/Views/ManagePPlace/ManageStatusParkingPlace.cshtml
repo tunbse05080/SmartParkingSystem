@@ -15,23 +15,27 @@
             data: { ParkingPlaceID: ParkingPlaceID },
             url: '@Url.Action("loadtTableMotor", "ManagePPlace")',
             success: function (result) {
-                var html = "";
-                for (var i = 0; i < result.length; i++) {
-                    html += '<tr><td> Xe Máy </td>';
+                if (result == "LoadFalse") {
+                    alert("Tải dữ liệu không thành công!");
+                } else {
+                    var html = "";
+                    for (var i = 0; i < result.length; i++) {
+                        html += '<tr><td> Xe Máy </td>';
 
-                    html += '<td>' + result[i].ToTalDaGuiXemay + '</td>';
-                    html += '<td>' + result[i].NumberMotoBikeBlank + '</td>';
+                        html += '<td>' + result[i].ToTalDaGuiXemay + '</td>';
+                        html += '<td>' + result[i].NumberMotoBikeBlank + '</td>';
 
-                    html += '</tr>';
-                    html += '<tr>';
-                    html += '<td> Ô tô </td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Ô tô </td>';
 
-                    html += '<td>' + result[i].ToTalDaGuiOto + '</td>';
-                    html += '<td>' + result[i].NumberCarlank + '</td>';
+                        html += '<td>' + result[i].ToTalDaGuiOto + '</td>';
+                        html += '<td>' + result[i].NumberCarlank + '</td>';
 
-                    html += '</tr>';
+                        html += '</tr>';
+                    }
+                    $('#tableList').html(html);
                 }
-                $('#tableList').html(html);
             },
             error: function (errormessage) {
                 if (timeFrom == null && timeTo == null) {
