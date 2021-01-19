@@ -2234,6 +2234,8 @@
     <Content Include="Views\LoginUs\CheckCode.cshtml" />
     <Content Include="Views\LoginUs\Success.cshtml" />
     <Content Include="Views\ErrorPage\Index.cshtml" />
+    <Content Include="Views\ErrorPage\ErrorPageLogin.cshtml" />
+    <Content Include="Views\ErrorPage\ErrorPageLogout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

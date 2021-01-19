@@ -38,15 +38,23 @@ namespace SmartParkingApplication.Models
 
         public override string[] GetRolesForUser(string username)
         {
-            User user = db.Users.Single(x => x.Account.UserName.Equals(username));
-            if(user != null)
+            try
             {
-                return new String[] { user.Account.Role.RoleName };
+                User user = db.Users.Single(x => x.Account.UserName.Equals(username));
+                if (user != null)
+                {
+                    return new String[] { user.Account.Role.RoleName };
+                }
+                else
+                {
+                    return new String[] { };
+                }
             }
-            else
+            catch (Exception)
             {
                 return new String[] { };
             }
+
         }
 
         public override string[] GetUsersInRole(string roleName)

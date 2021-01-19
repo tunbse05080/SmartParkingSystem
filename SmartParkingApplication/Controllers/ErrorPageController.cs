@@ -13,5 +13,16 @@ namespace SmartParkingApplication.Controllers
         {
             return View();
         }
+
+        public ActionResult ErrorPageLogin()
+        {
+            return View();
+        }
+
+        public ActionResult ErrorPageLogout()
+        {
+            return View();
+        }
+
     }
 }

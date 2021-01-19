@@ -23,34 +23,50 @@ namespace SmartParkingApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string username, string password)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password) && s.Account.RoleID != 1).ToList();
-                if (data.Count() > 0)
+                if (ModelState.IsValid)
                 {
-                    string name = data.FirstOrDefault().Account.UserName;
-                    //add session
-                    Session["UserName"] = data.FirstOrDefault().Account.UserName;
-                    Session["Name"] = data.FirstOrDefault().Name;
-                    Session["idAccount"] = data.FirstOrDefault().AccountID;
-                    FormsAuthentication.SetAuthCookie(name, false);
+                    var data = db.Users.Where(s => s.Account.UserName.Equals(username) && s.Account.PassWord.Equals(password) && s.Account.RoleID != 1).ToList();
+                    if (data.Count() > 0)
+                    {
+                        string name = data.FirstOrDefault().Account.UserName;
+                        //add session
+                        Session["UserName"] = data.FirstOrDefault().Account.UserName;
+                        Session["Name"] = data.FirstOrDefault().Name;
+                        Session["idAccount"] = data.FirstOrDefault().AccountID;
+                        FormsAuthentication.SetAuthCookie(name, false);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "Đăng nhập lỗi";
-                }
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Đăng nhập lỗi";
+                    }
 
+                }
             }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorPageLogin", "ErrorPage");
+            }
+
             return RedirectToAction("Index");
         }
 
         public ActionResult Logout()
         {
-            Session.Clear();
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "LoginUS");
+            try
+            {
+                Session.Clear();
+                FormsAuthentication.SignOut();
+                return RedirectToAction("Index", "LoginUS");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorPageLogout", "ErrorPage");
+            }
+
         }
         public ActionResult ll()
         {
@@ -75,26 +91,30 @@ namespace SmartParkingApplication.Controllers
         [AllowAnonymous]
         public ActionResult CheckCode(string checkCode, string emailUser,string checkCodenumber)
         {
-            var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
-            if (checkCode == checkCodenumber)
+            try
             {
-                Account acc = db.Accounts.Find(data.AccountID);
-                acc.PassWord = "Aa@1234";
-                Update(acc);
-                string subject = "Đổi mật khẩu thành công";
-                string body = "Mật khẩu mới của bạn là: Aa@1234";
+                var data = db.Users.Where(s => s.email == emailUser).FirstOrDefault();
+                if (checkCode == checkCodenumber)
+                {
+                    Account acc = db.Accounts.Find(data.AccountID);
+                    acc.PassWord = "Aa@1234";
+                    Update(acc);
+                    string subject = "Đổi mật khẩu thành công";
+                    string body = "Mật khẩu mới của bạn là: Aa@1234";
 
-                WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
-                return RedirectToAction("Success","LoginUs");
-                
-
+                    WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
+                    return RedirectToAction("Success", "LoginUs");
+                }
+                else
+                {
+                    ViewBag.mes = "Mã code sai.Nhập lại mã code";
+                    return View();
+                }
             }
-            else
+            catch (Exception)
             {
-                ViewBag.mes = "Mã code sai.Nhập lại mã code";
-                return View();
+                return RedirectToAction("ErrorPageLogin", "ErrorPage");
             }
-          
 
         }
 
@@ -102,34 +122,36 @@ namespace SmartParkingApplication.Controllers
         [AllowAnonymous]
         public ActionResult Forgot(string emailUser)
         {
-            var data = db.Users.Where(s => s.email == emailUser && s.Account.RoleID != 1).FirstOrDefault();
-          
-            if(data == null)
+
+            try
             {
-                ViewBag.mes = "Tài khoản không tồn tại trong hệ thống này";
-                return View();
-            }
-            else{
-                string checkCode = "";
-                Random rd = new Random();
+                var data = db.Users.Where(s => s.email == emailUser && s.Account.RoleID != 1).FirstOrDefault();
 
-                checkCode = rd.Next(10000, 99999).ToString();
-                string subject = "Yêu cầu đổi mật khẩu";
-                    string body = "Mã code của bạn là: "+checkCode+"";
-                    
+                if (data == null)
+                {
+                    ViewBag.mes = "Tài khoản không tồn tại trong hệ thống này";
+                    return View();
+                }
+                else
+                {
+                    string checkCode = "";
+                    Random rd = new Random();
 
-                   
+                    checkCode = rd.Next(10000, 99999).ToString();
+                    string subject = "Yêu cầu đổi mật khẩu";
+                    string body = "Mã code của bạn là: " + checkCode + "";
 
                     WebMail.Send(emailUser, subject, body, null, null, null, true, null, null, null, null, null, null);
 
                     ViewBag.mes = "Gửi mail thành công.Bạn kiểm tra mã Code tại gmail";
 
-                    return RedirectToAction("CheckCode", "LoginUs",new { checkCode,emailUser });
-
-
+                    return RedirectToAction("CheckCode", "LoginUs", new { checkCode, emailUser });
+                }
             }
-           
-
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorPageLogin", "ErrorPage");
+            }
         }
 
         public JsonResult Update(Account account)
