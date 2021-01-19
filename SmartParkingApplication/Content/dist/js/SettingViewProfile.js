@@ -1,7 +1,4 @@
-﻿//$(document).ready(function () {
-//    getSVDetailByID();
-    
-//});
+﻿
 function getSVDetailByID() {
     $.ajax({
         
@@ -10,12 +7,17 @@ function getSVDetailByID() {
         contentType: "application/json" + UserID,
         dataType: "json",
         success: function (result) {
-            $('#email').val(result.email);
-            $('#DateOfBirth').val(result.DateOfBirth);
-            $('#Gender').val(result.Gender);
-            $('#Name').val(result.Name);
-            $('#Phone').val(result.Phone);
-            $('#UserAddress').val(result.UserAddress);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#email').val(result.email);
+                $('#DateOfBirth').val(result.DateOfBirth);
+                $('#Gender').val(result.Gender);
+                $('#Name').val(result.Name);
+                $('#Phone').val(result.Phone);
+                $('#UserAddress').val(result.UserAddress);
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + UserID + errormessage.responseText);
@@ -23,6 +25,7 @@ function getSVDetailByID() {
     });
     return false;
 }
+
 function ComboboxGender() {
     $.ajax({
         url: "/ManageUser/ComboboxGender",
@@ -30,20 +33,26 @@ function ComboboxGender() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            var i = 0;
-            $.each(result, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
-            });
-            $("#cbGender").html(html);
-            $("#cbGenderEdit").html(html);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var html = '';
+                var i = 0;
+                $.each(result, function (key, item) {
+                    html += '<option value="' + i + '">' + item + '</option>';
+                    i++;
+                });
+                $("#cbGender").html(html);
+                $("#cbGenderEdit").html(html);
+            }
+
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
         }
     });
 }
+
 function UpdateUserView() {
 
     var empObj = {
@@ -67,7 +76,9 @@ function UpdateUserView() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-
+            if (result == "UpdateFalse") {
+                alert("Cập nhật không thành công!");
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

@@ -199,10 +199,17 @@ namespace SmartParkingApplication.Controllers
         //update User
         public JsonResult Update(User user)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
             }
 
             return Json(user, JsonRequestBehavior.AllowGet);
