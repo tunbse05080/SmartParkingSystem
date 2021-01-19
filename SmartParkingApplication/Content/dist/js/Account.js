@@ -104,7 +104,7 @@ function AddAccount() {
         dataType: "json",
         success: function (result) {
             if (result == "AddFalse") {
-                alert("Thêm tài khoản thất bại!");
+                alert("Thêm tài khoản không thành công!");
             } else {
                 if (result == true) {
                     validateAddAcc();
@@ -136,7 +136,7 @@ function UpdateRole() {
         dataType: "json",
         success: function (result) {
             if (result == "UpdateFalse") {
-                alert("Cập nhật chức vụ thất bại!");
+                alert("Cập nhật chức vụ không thành công!");
             } else {
                 //AddAccountForUser(result.AccountID, result.UserID);
                 $('#myModalRoleAccountEdit').modal('hide');
@@ -172,7 +172,7 @@ function UpdatePassword() {
         dataType: "json",
         success: function (result) {
             if (result == "UpdateFalse") {
-                alert("Cập nhật mật khẩu thất bại!");
+                alert("Cập nhật mật khẩu không thành công!");
             } else {
                 $('#myModalPassAccountEdit').modal('hide');
                 $('#tbAccount').DataTable().clear().destroy();
@@ -202,7 +202,7 @@ function UpdateStatus(status) {
         dataType: "json",
         success: function (result) {
             if (result == "UpdateFalse") {
-                alert("Cập nhật trạng thái thất bại!");
+                alert("Cập nhật trạng thái không thành công!");
             } else {
                 if (result.StatusOfAccount == 0) {
                     $('#myModalUnlockAccountEdit').modal('hide');
