@@ -2,7 +2,6 @@
     loadChartDashboard();
 });
 
-
 //Load Chart Income
 function loadChartDashboard() {
     $.ajax({
@@ -11,16 +10,20 @@ function loadChartDashboard() {
         contents: "application/json",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.datetime + '</td>';
-                html += '<td>' + item.sumMoto + '</td>';
-                html += '<td>' + item.sumCar + '</td>';
-                html += '</tr>';
-            });
-            $('#tbodyChartIncomeTotal').html(html);
-            ChartIncomeTotal()
+            if (result == "LoadFalse") {
+                alert("Tải biểu đồ không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.datetime + '</td>';
+                    html += '<td>' + item.sumMoto + '</td>';
+                    html += '<td>' + item.sumCar + '</td>';
+                    html += '</tr>';
+                });
+                $('#tbodyChartIncomeTotal').html(html);
+                ChartIncomeTotal();
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

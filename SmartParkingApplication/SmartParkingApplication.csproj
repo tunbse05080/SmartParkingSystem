@@ -2122,6 +2122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginUsController.cs" />
     <Compile Include="Controllers\ManageAccountController.cs" />
@@ -2232,6 +2233,7 @@
     <Content Include="Views\Setting\UpdateUser.cshtml" />
     <Content Include="Views\LoginUs\CheckCode.cshtml" />
     <Content Include="Views\LoginUs\Success.cshtml" />
+    <Content Include="Views\ErrorPage\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
