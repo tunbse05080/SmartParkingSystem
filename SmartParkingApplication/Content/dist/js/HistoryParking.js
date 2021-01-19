@@ -41,25 +41,30 @@ function loadDataHistoryParking() {
         data: JSON.stringify({ timeFrom: timeFrom, timeTo: timeTo, ParkingPlaceID: ParkingPlaceID, txtSearchHistory: txtSearch }),
         dataType: "json",
         success: function (result) {
-            var html = '';
-            $.each(result, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.LicensePlates + '</td>';
-                html += '<td>' + item.timeIn + '</td>';
-                html += '<td>' + item.timeOut + '</td>';
-                html += '<td>' + item.CardNumber + '</td>';
-                html += '<td>' + item.typeofTicket + '</td>';
-                html += '<td>' + item.TotalPrice + '</td>';
-                html += '<td>' + item.userIn + '</td>';
-                html += '<td>' + item.userOut + '</td>';
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.LicensePlates + '</td>';
+                    html += '<td>' + item.timeIn + '</td>';
+                    html += '<td>' + item.timeOut + '</td>';
+                    html += '<td>' + item.CardNumber + '</td>';
+                    html += '<td>' + item.typeofTicket + '</td>';
+                    html += '<td>' + item.TotalPrice + '</td>';
+                    html += '<td>' + item.userIn + '</td>';
+                    html += '<td>' + item.userOut + '</td>';
 
-                html += '</tr>';
-            });
-            $('#tbodyHis').html(html);
-            $('#tbHistory').DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": false, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#tbHistory_wrapper .col-md-6:eq(0)');
+                    html += '</tr>';
+                });
+                $('#tbodyHis').html(html);
+                $('#tbHistory').DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": false, "ordering": true, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#tbHistory_wrapper .col-md-6:eq(0)');
+            }
+            
         },
         error: function (errormessage) {
             if (errormessage.responseText != '') {

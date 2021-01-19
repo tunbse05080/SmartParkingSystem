@@ -139,30 +139,35 @@ function ComboboxTicket() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
-            var i = 0;
-            $.each(result.typeOfVehicles, function (key, item) {
-                html += '<option value="' + i + '">' + item + '</option>';
-                i++;
-            });
-            $("#cbTypeOfVehicleTK").html(html);
-            $("#cbTypeOfVehicleEdit").html(html);
-            html = '';
-            $.each(result.numberCards, function (key, item) {
-                html += '<option value="' + item.CardID + '">' + item.CardNumber + '</option>';
-            });
-            $("#cbCardNumberTK").html(html);
-            $('#cbCardNumberTK').val(null).trigger('change');
-            $("#cbCardNumberTK").select2({
-                placeholder: "Chọn số thẻ",
-                allowClear: true
-            });
-            $("#cbCardNumberEdit").html(html);
-            $("#cbCardNumberEdit").select2({
-                placeholder: "Chọn số thẻ",
-                allowClear: true
-            });
-            $('#cbCardNumberEdit').val(null).trigger('change');
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var html = '';
+                var i = 0;
+                $.each(result.typeOfVehicles, function (key, item) {
+                    html += '<option value="' + i + '">' + item + '</option>';
+                    i++;
+                });
+                $("#cbTypeOfVehicleTK").html(html);
+                $("#cbTypeOfVehicleEdit").html(html);
+                html = '';
+                $.each(result.numberCards, function (key, item) {
+                    html += '<option value="' + item.CardID + '">' + item.CardNumber + '</option>';
+                });
+                $("#cbCardNumberTK").html(html);
+                $('#cbCardNumberTK').val(null).trigger('change');
+                $("#cbCardNumberTK").select2({
+                    placeholder: "Chọn số thẻ",
+                    allowClear: true
+                });
+                $("#cbCardNumberEdit").html(html);
+                $("#cbCardNumberEdit").select2({
+                    placeholder: "Chọn số thẻ",
+                    allowClear: true
+                });
+                $('#cbCardNumberEdit').val(null).trigger('change');
+            }
+            
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -179,43 +184,48 @@ function loadDataTicket() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var data = result.dataTicket;
-            var html = '';
-            var totalTicket = '';
-            var status = "";
-            $.each(data, function (key, item) {
-                html += '<tr>';
-                html += '<td>' + item.CusName + '</td>';
-                html += '<td>' + item.LicensePlates + '</td>';
-                html += '<td>' + item.ExpiryDate + '</td>';
-                html += '<td>' + item.CardNumber + '</td>';
-                if (item.ExpiryDateES < loadDateNowToCompare()) {
-                    status = "Hết hạn HĐ";
-                    html += '<td>' + status + '</td>';
-                } else {
-                    status = "Còn HĐ";
-                    html += '<td>' + status + '</td>';
-                }
-                switch (status) {
-                    case "Còn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ');checkboxChangeCard();" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Dừng HĐ</button></td>';
-                        break;
-                    case "Hết hạn HĐ":
-                        html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketReRegister(' + item.MonthlyTicketID + ')" >Ký lại HĐ</button></td>';
-                        break;
-                }
-                html += '</tr>';
-            });
+            if (result == "LoadFalse") {
+                alert("Tải dữ liệu không thành công!");
+            } else {
+                var data = result.dataTicket;
+                var html = '';
+                var totalTicket = '';
+                var status = "";
+                $.each(data, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.CusName + '</td>';
+                    html += '<td>' + item.LicensePlates + '</td>';
+                    html += '<td>' + item.ExpiryDate + '</td>';
+                    html += '<td>' + item.CardNumber + '</td>';
+                    if (item.ExpiryDateES < loadDateNowToCompare()) {
+                        status = "Hết hạn HĐ";
+                        html += '<td>' + status + '</td>';
+                    } else {
+                        status = "Còn HĐ";
+                        html += '<td>' + status + '</td>';
+                    }
+                    switch (status) {
+                        case "Còn HĐ":
+                            html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-success" onclick="return getTicketByIDEdit(' + item.MonthlyTicketID + ');checkboxChangeCard();" >Sửa</button><button class="btn btn-warning" onclick="return getTicketByIDETK(' + item.MonthlyTicketID + ')" >Gia Hạn HĐ</button><button class="btn btn-danger" onclick="return getTicketByIDDropContract(' + item.MonthlyTicketID + ')" >Dừng HĐ</button></td>';
+                            break;
+                        case "Hết hạn HĐ":
+                            html += '<td><button class="btn btn-primary" onclick="return getTicketByIDDetail(' + item.MonthlyTicketID + ')" >Chi tiết</button><button class="btn btn-warning" onclick="return getTicketReRegister(' + item.MonthlyTicketID + ')" >Ký lại HĐ</button></td>';
+                            break;
+                    }
+                    html += '</tr>';
+                });
 
-            $('#tbodyTicket').html(html);
+                $('#tbodyTicket').html(html);
 
-            $("#tbTicket").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#tbTicket_wrapper .col-md-6:eq(0)');
-            totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
-            totalTicket += '<p>Tổng số vé tháng</p>';
-            $('#totalTicket').html(totalTicket);
+                $("#tbTicket").DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": false, "paging": true, "searching": true, "ordering": true, "info": true, retrieve: true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#tbTicket_wrapper .col-md-6:eq(0)');
+                totalTicket += '<h3>' + result.total + '<sup style="font-size: 20px"></sup></h3>';
+                totalTicket += '<p>Tổng số vé tháng</p>';
+                $('#totalTicket').html(totalTicket);
+            }
+            
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -249,6 +259,9 @@ function CreateMonthlyIncome(id, totalPrice) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+            if (result == "AddFalse") {
+                alert("Thêm doanh thu vé tháng không thành công!");
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -282,17 +295,21 @@ function AddTicket() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result.check == true) {
-                validateAddTicket();
-                checkLicensePlateExist = false;
-                return false;
+            if (result == "AddFalse") {
+                alert("Tạo vé tháng không thành công!");
             } else {
-                checkLicensePlateExist = false;
-                $('#tbTicket').DataTable().clear().destroy();
-                UpdateCardByID($('#cbCardNumberTK').val());
-                CreateMonthlyIncome(result.MonthlyTicketID, $('#priceTK').val());
-                loadDataTicket();
-                $('#myModalTicket').modal('hide');
+                if (result.check == true) {
+                    validateAddTicket();
+                    checkLicensePlateExist = false;
+                    return false;
+                } else {
+                    checkLicensePlateExist = false;
+                    $('#tbTicket').DataTable().clear().destroy();
+                    UpdateCardByID($('#cbCardNumberTK').val());
+                    CreateMonthlyIncome(result.MonthlyTicketID, $('#priceTK').val());
+                    loadDataTicket();
+                    $('#myModalTicket').modal('hide');
+                }
             }
         },
         error: function (errormessage) {
@@ -327,11 +344,14 @@ function UpdateExtendTK() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbTicket').DataTable().clear().destroy();
-            CreateMonthlyIncome($('#MonthlyTicketETK').val(), $('#priceETK').val());
-            loadDataTicket();
-            $('#myModalExtendTicket').modal('hide');
-
+            if (result == "UpdateFalse") {
+                alert("Gia hạn vé không thành công!");
+            } else {
+                $('#tbTicket').DataTable().clear().destroy();
+                CreateMonthlyIncome($('#MonthlyTicketETK').val(), $('#priceETK').val());
+                loadDataTicket();
+                $('#myModalExtendTicket').modal('hide');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -365,10 +385,14 @@ function UpdateReRegister() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbTicket').DataTable().clear().destroy();
-            CreateMonthlyIncome($('#MonthlyTicketIDRe').val(), $('#priceRe').val());
-            loadDataTicket();
-            $('#myModalReRegisterTicket').modal('hide');
+            if (result == "UpdateFalse") {
+                alert("Đăng ký lại vé không thành công!");
+            } else {
+                $('#tbTicket').DataTable().clear().destroy();
+                CreateMonthlyIncome($('#MonthlyTicketIDRe').val(), $('#priceRe').val());
+                loadDataTicket();
+                $('#myModalReRegisterTicket').modal('hide');
+            }
 
         },
         error: function (errormessage) {
@@ -387,6 +411,9 @@ function UpdateCardByID(CardID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
+            if (result == "UpdateFalse") {
+                alert("Cập nhật trạng thái thẻ không thành công!");
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -430,20 +457,23 @@ function UpdateInfoTicket() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result == true) {
-                validateEditTicket();
-                checkLicensePlateExistUpdate = false;
-                return false;
+            if (result == "UpdateFalse") {
+                alert("Cập nhật thông tin vé không thành công!");
             } else {
-                checkLicensePlateExistUpdate = false;
-                //UpdateOldCardByID($('#MonthlyTicketIdEdit').val());
-                if (checkbox.checked == true) {
-                    UpdateCardByID($('#cbCardNumberEdit').val());
+                if (result == true) {
+                    validateEditTicket();
+                    checkLicensePlateExistUpdate = false;
+                    return false;
+                } else {
+                    checkLicensePlateExistUpdate = false;
+                    if (checkbox.checked == true) {
+                        UpdateCardByID($('#cbCardNumberEdit').val());
+                    }
+                    $('#tbTicket').DataTable().clear().destroy();
+                    ComboboxTicket();
+                    loadDataTicket();
+                    $('#myModalEditTicket').modal('hide');
                 }
-                $('#tbTicket').DataTable().clear().destroy();
-                ComboboxTicket();
-                loadDataTicket();
-                $('#myModalEditTicket').modal('hide');
             }
 
         },
@@ -475,10 +505,13 @@ function UpdateDropContractTicket() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $('#tbTicket').DataTable().clear().destroy();
-            loadDataTicket();
-            $('#myModalDropContractTicket').modal('hide');
-
+            if (result == "UpdateFalse") {
+                alert("Chấm dứt hợp đồng không thành công!");
+            } else {
+                $('#tbTicket').DataTable().clear().destroy();
+                loadDataTicket();
+                $('#myModalDropContractTicket').modal('hide');
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -494,24 +527,28 @@ function getTicketByIDDetail(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#MonthlyTicketIdDetail').val(result.MonthlyTicketID);
-            $('#CusNameDetail').val(result.CusName);
-            $('#IdentityCardDetail').val(result.IdentityCard);
-            $('#PhoneDetail').val('0' + result.Phone);
-            $('#EmailDetail').val(result.Email);
-            $('#TypeOfVehicleDetail').val(result.typeOfVehicle);
-            $('#ParkingPlaceNameDetail').val(result.NameOfParking);
-            $('#LicensePlatesDetail').val(result.LicensePlates);
-            $('#RegisDateDetail').val(result.RegisDate);
-            $('#ExpiryDateDetail').val(result.ExpiryDate);
-            $('#CardNumberDetail').val(result.cardNumber);
-            $('#myModalDetailTicket').modal('show');
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#MonthlyTicketIdDetail').val(result.MonthlyTicketID);
+                $('#CusNameDetail').val(result.CusName);
+                $('#IdentityCardDetail').val(result.IdentityCard);
+                $('#PhoneDetail').val('0' + result.Phone);
+                $('#EmailDetail').val(result.Email);
+                $('#TypeOfVehicleDetail').val(result.typeOfVehicle);
+                $('#ParkingPlaceNameDetail').val(result.NameOfParking);
+                $('#LicensePlatesDetail').val(result.LicensePlates);
+                $('#RegisDateDetail').val(result.RegisDate);
+                $('#ExpiryDateDetail').val(result.ExpiryDate);
+                $('#CardNumberDetail').val(result.cardNumber);
+                $('#myModalDetailTicket').modal('show');
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 //get ticket by id to fill modal EditTicket
@@ -524,25 +561,29 @@ function getTicketByIDEdit(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#cbCardNumberEdit').val(null).trigger('change');
-            $('#MonthlyTicketIdEdit').val(result.MonthlyTicketID);
-            $('#CusNameEdit').val(result.CusName);
-            $('#IdentityCardEdit').val(result.IdentityCard);
-            $('#PhoneEdit').val('0' + result.Phone);
-            $('#EmailEdit').val(result.Email);
-            $('#ParkingPlaceEdit').val(result.ParkingPlaceID);
-            $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
-            $('#LicensePlatesEdit').val(result.LicensePlates);
-            $('#CardNumberOld').val(result.cardId);
-            $('#RegisDateEdit').val(result.RegisDate);
-            $('#ExpiryDateEdit').val(result.ExpiryDate);
-            $('#myModalEditTicket').modal('show');
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#cbCardNumberEdit').val(null).trigger('change');
+                $('#MonthlyTicketIdEdit').val(result.MonthlyTicketID);
+                $('#CusNameEdit').val(result.CusName);
+                $('#IdentityCardEdit').val(result.IdentityCard);
+                $('#PhoneEdit').val('0' + result.Phone);
+                $('#EmailEdit').val(result.Email);
+                $('#ParkingPlaceEdit').val(result.ParkingPlaceID);
+                $('#TypeOfVehicleEdit').val(result.TypeOfVehicle);
+                $('#LicensePlatesEdit').val(result.LicensePlates);
+                $('#CardNumberOld').val(result.cardId);
+                $('#RegisDateEdit').val(result.RegisDate);
+                $('#ExpiryDateEdit').val(result.ExpiryDate);
+                $('#myModalEditTicket').modal('show');
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 //get ticket by id to fill modal DropContractTicket
@@ -553,24 +594,28 @@ function getTicketByIDDropContract(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            $('#MonthlyTicketDC').val(result.MonthlyTicketID);
-            $('#CusNameDC').val(result.CusName);
-            $('#IdentityCardDC').val(result.IdentityCard);
-            $('#PhoneDC').val(result.Phone);
-            $('#EmailDC').val(result.Email);
-            $('#ParkingPlaceDC').val(result.ParkingPlaceID);
-            $('#TypeOfVehicleDC').val(result.TypeOfVehicle);
-            $('#LicensePlatesDC').val(result.LicensePlates);
-            $('#RegisDateDC').val(result.RegisDate);
-            $('#ExpiryDateDC').val(loadDateNow());
-            $('#CardIDDC').val(result.cardId);
-            $('#myModalDropContractTicket').modal('show');
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                $('#MonthlyTicketDC').val(result.MonthlyTicketID);
+                $('#CusNameDC').val(result.CusName);
+                $('#IdentityCardDC').val(result.IdentityCard);
+                $('#PhoneDC').val(result.Phone);
+                $('#EmailDC').val(result.Email);
+                $('#ParkingPlaceDC').val(result.ParkingPlaceID);
+                $('#TypeOfVehicleDC').val(result.TypeOfVehicle);
+                $('#LicensePlatesDC').val(result.LicensePlates);
+                $('#RegisDateDC').val(result.RegisDate);
+                $('#ExpiryDateDC').val(loadDateNow());
+                $('#CardIDDC').val(result.cardId);
+                $('#myModalDropContractTicket').modal('show');
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 //get ticket by id to fill modal Extend Contract Ticket
@@ -582,27 +627,31 @@ function getTicketByIDETK(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            var date = $('#cbETK').val();
-            temp.ExpiryDate = result.ExpiryDate;
-            $('#MonthlyTicketETK').val(result.MonthlyTicketID);
-            $('#CusNameETK').val(result.CusName);
-            $('#IdentityCardETK').val(result.IdentityCard);
-            $('#PhoneETK').val(result.Phone);
-            $('#EmailETK').val(result.Email);
-            $('#ParkingPlaceIDETK').val(result.ParkingPlaceID);
-            $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
-            $('#LicensePlatesETK').val(result.LicensePlates);
-            $('#RegisDateETK').val(result.RegisDate);
-            $('#ExpiryDateETk').val(DateETK(date));
-            $('#CardIDETK').val(result.cardId);
-            $('#myModalExtendTicket').modal('show');
-            $('#btnExtendTK').show();
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var date = $('#cbETK').val();
+                temp.ExpiryDate = result.ExpiryDate;
+                $('#MonthlyTicketETK').val(result.MonthlyTicketID);
+                $('#CusNameETK').val(result.CusName);
+                $('#IdentityCardETK').val(result.IdentityCard);
+                $('#PhoneETK').val(result.Phone);
+                $('#EmailETK').val(result.Email);
+                $('#ParkingPlaceIDETK').val(result.ParkingPlaceID);
+                $('#TypeOfVehicleETK').val(result.TypeOfVehicle);
+                $('#LicensePlatesETK').val(result.LicensePlates);
+                $('#RegisDateETK').val(result.RegisDate);
+                $('#ExpiryDateETk').val(DateETK(date));
+                $('#CardIDETK').val(result.cardId);
+                $('#myModalExtendTicket').modal('show');
+                $('#btnExtendTK').show();
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 //get ticket by id to fill modal Re Register Contract ticket
@@ -615,27 +664,31 @@ function getTicketReRegister(MonthlyTicketID) {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            var date = $('#cbRe').val();
-            $('#MonthlyTicketIDRe').val(result.MonthlyTicketID);
-            $('#CusNameRe').val(result.CusName);
-            $('#IdentityCardRe').val(result.IdentityCard);
-            $('#PhoneRe').val(result.Phone);
-            $('#EmailRe').val(result.Email);
-            $('#TypeOfVehicleRe').val(result.TypeOfVehicle);
-            $('#LicensePlatesRe').val(result.LicensePlates);
-            $('#ParkingPlaceIDRe').val(result.ParkingPlaceID);
-            var date = loadDateNow();
-            var test = date.split('/');
-            $('#RegisDateRe').val(test[2] + '-' + test[0] + '-' + test[1]);
-            $('#ExpiryDateRe').val(DateReRegisterTK(date));
-            $('#CardIDRe').val(result.cardId);
-            $('#myModalReRegisterTicket').modal('show');
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                var date = $('#cbRe').val();
+                $('#MonthlyTicketIDRe').val(result.MonthlyTicketID);
+                $('#CusNameRe').val(result.CusName);
+                $('#IdentityCardRe').val(result.IdentityCard);
+                $('#PhoneRe').val(result.Phone);
+                $('#EmailRe').val(result.Email);
+                $('#TypeOfVehicleRe').val(result.TypeOfVehicle);
+                $('#LicensePlatesRe').val(result.LicensePlates);
+                $('#ParkingPlaceIDRe').val(result.ParkingPlaceID);
+                var date = loadDateNow();
+                var test = date.split('/');
+                $('#RegisDateRe').val(test[2] + '-' + test[0] + '-' + test[1]);
+                $('#ExpiryDateRe').val(DateReRegisterTK(date));
+                $('#CardIDRe').val(result.cardId);
+                $('#myModalReRegisterTicket').modal('show');
+            }
+
         },
         error: function (errormessage) {
             alert("Exception:" + MonthlyTicketID + errormessage.responseText);
         }
     });
-    return false;
 }
 
 //get price of monthly extend ticket base on typeOfVehicle and parkingPlaceID
@@ -649,7 +702,11 @@ function GetPriceMonthlyExtendTK() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            reloadModalETK(result.MonthlyPrice);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                reloadModalETK(result.MonthlyPrice);
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -668,7 +725,11 @@ function GetPriceMonthlyRegisterTK() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            reloadModalTK(result.MonthlyPrice);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                reloadModalTK(result.MonthlyPrice);
+            }
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -687,7 +748,12 @@ function GetPriceMonthlyReRegisterTK() {
         contentType: "application/json",
         dataType: "json",
         success: function (result) {
-            reloadModalReRegister(result.MonthlyPrice);
+            if (result == "LoadFalse") {
+                alert("Lấy dữ liệu không thành công!");
+            } else {
+                reloadModalReRegister(result.MonthlyPrice);
+            }
+            
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -707,25 +773,6 @@ function clearETK() {
     $('#ExpiryDateTK').val("");
     $('#priceTK').val("");
 }
-
-//function GetIdCardFromNumber(CardNumber) {
-
-//    $.ajax({
-//        url: "/ManageTicket/GetIdCardFromNumber",
-//        data: JSON.stringify({ CardNumber: CardNumber }),
-//        type: "POST",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            $.each(result, function (key, item) {
-//                CardId = item;
-//            });
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//}
 
 //Valdidation using jquery
 function validateAddTicket() {

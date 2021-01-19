@@ -26,47 +26,54 @@ namespace SmartParkingApplication.Controllers
         //load list monthly ticket
         public JsonResult LoadData()
         {
-
-            var ticket = from t in db.MonthlyTickets
-                         join c in db.Cards on t.CardID equals c.CardID into table1
-                         from c in table1.DefaultIfEmpty()
-                         orderby t.MonthlyTicketID
-                         select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate, c.CardNumber};
-
+            var total = 0;
             List<Object> list = new List<object>();
-            foreach (var item in ticket)
+            try
             {
-                var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy");
-                var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
-                var expiryDateES = item.ExpiryDate.Value.ToString("yyyy/MM/dd");
-                string typeOfVehicle = string.Empty;
-                switch (item.TypeOfVehicle)
+                var ticket = from t in db.MonthlyTickets
+                             join c in db.Cards on t.CardID equals c.CardID into table1
+                             from c in table1.DefaultIfEmpty()
+                             orderby t.MonthlyTicketID
+                             select new { t.MonthlyTicketID, t.CusName, t.IdentityCard, t.Phone, t.Email, t.TypeOfVehicle, t.LicensePlates, t.RegisDate, t.ExpiryDate, c.CardNumber };
+
+                foreach (var item in ticket)
                 {
-                    case 0:
-                        typeOfVehicle = "Xe máy";
-                        break;
-                    case 1:
-                        typeOfVehicle = "Ô tô";
-                        break;
+                    var regisDate = item.RegisDate.Value.ToString("dd/MM/yyyy");
+                    var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
+                    var expiryDateES = item.ExpiryDate.Value.ToString("yyyy/MM/dd");
+                    string typeOfVehicle = string.Empty;
+                    switch (item.TypeOfVehicle)
+                    {
+                        case 0:
+                            typeOfVehicle = "Xe máy";
+                            break;
+                        case 1:
+                            typeOfVehicle = "Ô tô";
+                            break;
+                    }
+                    var tr = new
+                    {
+                        MonthlyTicketID = item.MonthlyTicketID,
+                        CusName = item.CusName,
+                        IdentityCard = item.IdentityCard,
+                        Phone = item.Phone,
+                        Email = item.Email,
+                        typeOfVehicle,
+                        LicensePlates = item.LicensePlates,
+                        RegisDate = regisDate,
+                        ExpiryDate = expiryDate,
+                        CardNumber = item.CardNumber,
+                        ExpiryDateES = expiryDateES,
+                    };
+
+                    list.Add(tr);
                 }
-                var tr = new
-                {
-                    MonthlyTicketID = item.MonthlyTicketID,
-                    CusName = item.CusName,
-                    IdentityCard = item.IdentityCard,
-                    Phone = item.Phone,
-                    Email = item.Email,
-                    typeOfVehicle,
-                    LicensePlates = item.LicensePlates,
-                    RegisDate = regisDate,
-                    ExpiryDate = expiryDate,
-                    CardNumber = item.CardNumber,
-                    ExpiryDateES = expiryDateES,
-                };
-                
-                list.Add(tr);
+                total = list.Count();
             }
-            var total = list.Count();
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
             return Json(new { dataTicket = list, total }, JsonRequestBehavior.AllowGet);
         }
 
@@ -74,31 +81,37 @@ namespace SmartParkingApplication.Controllers
         public JsonResult CheckExistLicensePlatesToUpdate(MonthlyTicket monthlyTicket)
         {
             var check = true;
-            var result = (from m in db.MonthlyTickets
-                          where m.LicensePlates == monthlyTicket.LicensePlates && m.ParkingPlaceID == monthlyTicket.ParkingPlaceID
-                          select new { m.LicensePlates }).FirstOrDefault();
-            var result2 = (from m in db.MonthlyTickets
-                           where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
-                           select new { m.LicensePlates }).FirstOrDefault();
-            var cardID = (from m in db.MonthlyTickets
-                          where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
-                          select new { m.CardID }).FirstOrDefault();
-            Card card = db.Cards.Find(cardID.CardID);
-            
-            if (result == null || result2.LicensePlates == monthlyTicket.LicensePlates)
+            try
             {
-                if(cardID.CardID != monthlyTicket.CardID)
+                var result = (from m in db.MonthlyTickets
+                              where m.LicensePlates == monthlyTicket.LicensePlates && m.ParkingPlaceID == monthlyTicket.ParkingPlaceID
+                              select new { m.LicensePlates }).FirstOrDefault();
+                var result2 = (from m in db.MonthlyTickets
+                               where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
+                               select new { m.LicensePlates }).FirstOrDefault();
+                var cardID = (from m in db.MonthlyTickets
+                              where m.MonthlyTicketID == monthlyTicket.MonthlyTicketID
+                              select new { m.CardID }).FirstOrDefault();
+                Card card = db.Cards.Find(cardID.CardID);
+
+                if (result == null || result2.LicensePlates == monthlyTicket.LicensePlates)
                 {
-                    card.Status = 0;
+                    if (cardID.CardID != monthlyTicket.CardID)
+                    {
+                        card.Status = 0;
+                    }
+                    else
+                    {
+                        card.Status = 1;
+                    }
+                    UpdateOldCard(card);
+                    UpdateTicket(monthlyTicket);
+                    check = false;
                 }
-                else
-                {
-                    card.Status = 1;
-                }
-                UpdateOldCard(card);
-                //monthlyTicket.Card.Status = 1;
-                UpdateTicket(monthlyTicket);
-                check = false;
+            }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
             }
             return Json(check, JsonRequestBehavior.AllowGet);
         }
@@ -107,14 +120,22 @@ namespace SmartParkingApplication.Controllers
         public JsonResult CheckExistLicensePlatesToAdd(MonthlyTicket monthlyTicket)
         {
             var check = true;
-            var result = (from m in db.MonthlyTickets
-                          where m.LicensePlates == monthlyTicket.LicensePlates && m.ParkingPlaceID == monthlyTicket.ParkingPlaceID
-                          select new { m.LicensePlates }).FirstOrDefault();
             MonthlyTicket ticket = new MonthlyTicket();
-            if (result == null)
+            try
             {
-                ticket = Create(monthlyTicket);
-                check = false;
+                var result = (from m in db.MonthlyTickets
+                              where m.LicensePlates == monthlyTicket.LicensePlates && m.ParkingPlaceID == monthlyTicket.ParkingPlaceID
+                              select new { m.LicensePlates }).FirstOrDefault();
+                
+                if (result == null)
+                {
+                    ticket = Create(monthlyTicket);
+                    check = false;
+                }
+            }
+            catch (Exception)
+            {
+                return Json("AddFalse", JsonRequestBehavior.AllowGet);
             }
             return Json(new { check, ticket.MonthlyTicketID } , JsonRequestBehavior.AllowGet);
         }
@@ -141,30 +162,45 @@ namespace SmartParkingApplication.Controllers
 
         public JsonResult TicketDetails(int id)
         {
-            var ticket = db.MonthlyTickets.Find(id);
-            var typeOfVehicle = "";
-            switch (ticket.TypeOfVehicle)
+            try
             {
-                case 0:
-                    typeOfVehicle = "Xe máy";
-                    break;
-                case 1:
-                    typeOfVehicle = "Ô tô";
-                    break;
+                var ticket = db.MonthlyTickets.Find(id);
+                var typeOfVehicle = "";
+                switch (ticket.TypeOfVehicle)
+                {
+                    case 0:
+                        typeOfVehicle = "Xe máy";
+                        break;
+                    case 1:
+                        typeOfVehicle = "Ô tô";
+                        break;
+                }
+                var RegisDate = ticket.RegisDate.Value.ToString("MM/dd/yyyy");
+                var ExpiryDate = ticket.ExpiryDate.Value.ToString("MM/dd/yyyy");
+                var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardId = ticket.CardID, cardNumber = ticket.Card.CardNumber, ticket.TypeOfVehicle, ticket.ParkingPlaceID, ticket.ParkingPlace.NameOfParking };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var RegisDate = ticket.RegisDate.Value.ToString("MM/dd/yyyy");
-            var ExpiryDate = ticket.ExpiryDate.Value.ToString("MM/dd/yyyy");
-            var result = new { ticket.MonthlyTicketID, ticket.CusName, ticket.IdentityCard, ticket.Phone, ticket.Email, typeOfVehicle, RegisDate, ExpiryDate, ticket.LicensePlates, cardId = ticket.CardID, cardNumber = ticket.Card.CardNumber, ticket.TypeOfVehicle, ticket.ParkingPlaceID, ticket.ParkingPlace.NameOfParking };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult UpdateTicket(MonthlyTicket ticket)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(ticket).State = EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(ticket).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
+            catch (Exception)
+            {
+                return Json("UpdateFalse", JsonRequestBehavior.AllowGet);
+            }
+
             return Json(ticket, JsonRequestBehavior.AllowGet);
         }
 
@@ -180,139 +216,135 @@ namespace SmartParkingApplication.Controllers
         //Create MonthlyIncomeStatement
         public JsonResult CreateMonthlyIncome(int id,string totalPrice)
         {
-            string[] temp = totalPrice.Split(' ');
-            int price = Convert.ToInt32(temp[0].Replace(",", string.Empty));
-            MonthlyIncomeStatement monthlyIncome = new MonthlyIncomeStatement { MonthlyTicketID = id, TotalPrice = price , PaymentDate = DateTime.Now };
-            if (ModelState.IsValid)
+            try
             {
-                db.MonthlyIncomeStatements.Add(monthlyIncome);
-                db.SaveChanges();
+                string[] temp = totalPrice.Split(' ');
+                int price = Convert.ToInt32(temp[0].Replace(",", string.Empty));
+                MonthlyIncomeStatement monthlyIncome = new MonthlyIncomeStatement { MonthlyTicketID = id, TotalPrice = price, PaymentDate = DateTime.Now };
+                if (ModelState.IsValid)
+                {
+                    db.MonthlyIncomeStatements.Add(monthlyIncome);
+                    db.SaveChanges();
+                }
+                return Json(monthlyIncome, JsonRequestBehavior.AllowGet);
             }
-            return Json(monthlyIncome, JsonRequestBehavior.AllowGet);
+            catch (Exception)
+            {
+                return Json("AddFalse", JsonRequestBehavior.AllowGet);
+            }
         }
-
-        //public MonthlyTicket GetTicket(MonthlyTicket ticket)
-        //{
-        //    var data = db.Cards.Where(c => c.CardNumber.Equals(ticket.CardID));
-        //    MonthlyTicket result = null;
-        //    foreach (var item in data)
-        //    {
-        //        result = new MonthlyTicket { MonthlyTicketID = ticket.MonthlyTicketID, CusName = ticket.CusName, Email = ticket.Email, Phone = ticket.Phone, RegisDate = ticket.RegisDate, ExpiryDate = ticket.ExpiryDate, LicensePlates = ticket.LicensePlates, IdentityCard = ticket.IdentityCard, TypeOfVehicle = ticket.TypeOfVehicle, CardID = item.CardID };
-        //    }
-        //    return result;
-        //}
-
-        //public JsonResult GetIdCardFromNumber(string CardNumber)
-        //{
-
-        //    var result = db.Cards.Where(c => c.CardNumber.Equals(CardNumber)).Select(c => c.CardID);
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
 
         //Xuat file Exel Ticket
         public ActionResult XuatFileExel()
         {
-
-            var MonthlyTicketUser = db.MonthlyTickets.ToList();
-            var parking = db.ParkingPlaces.ToList();
-           // var role = db.Roles.ToList();
-            var alluser = new GridView();
-            //===================================================
-            DataTable dt = new DataTable();
-            //Add Datacolumn
-            DataColumn workCol = dt.Columns.Add("Tên chủ thẻ", typeof(String));
-
-            dt.Columns.Add("Số CMND", typeof(String));
-            dt.Columns.Add("Số điện thoại", typeof(String));
-            dt.Columns.Add("Email", typeof(String));
-            dt.Columns.Add("Loại xe", typeof(String));
-            dt.Columns.Add("Ngày đăng kí", typeof(String));
-            dt.Columns.Add("Ngày hết hạn", typeof(String));
-          
-            // them ngay gia han
-
-            //Add in the datarow
-
-
-            foreach (var item in MonthlyTicketUser)
+            try
             {
-                DataRow newRow = dt.NewRow();
-                // newRow["Họ tên"] = item.UserName;
-                //newRow["Phòng ban"] = item.email;
-                //newRow["Chức vụ"] = item.ParkingPlace.NameOfParking;
-                //newRow["Học vấn"] = item.Name;
-                //newRow["Chuyên ngành"] = item.UserAddress;
-                string typeVehicle = "";
-                switch (item.TypeOfVehicle)
+                var MonthlyTicketUser = db.MonthlyTickets.Where(x => x.ExpiryDate == DateTime.Now.AddDays(-7)).ToList();
+                var parking = db.ParkingPlaces.ToList();
+                var alluser = new GridView();
+                //===================================================
+                DataTable dt = new DataTable();
+                //Add Datacolumn
+                DataColumn workCol = dt.Columns.Add("Tên chủ thẻ", typeof(String));
+
+                dt.Columns.Add("Số CMND", typeof(String));
+                dt.Columns.Add("Số điện thoại", typeof(String));
+                dt.Columns.Add("Email", typeof(String));
+                dt.Columns.Add("Loại xe", typeof(String));
+                dt.Columns.Add("Ngày đăng kí", typeof(String));
+                dt.Columns.Add("Ngày hết hạn", typeof(String));
+
+                // them ngay gia han
+
+                //Add in the datarow
+
+
+                foreach (var item in MonthlyTicketUser)
                 {
-                    case 0:
-                        typeVehicle = "Xe Máy";
-                        break;
-                    case 1:
-                        typeVehicle = "Ô tô";
-                        break;
+                    DataRow newRow = dt.NewRow();
+
+                    string typeVehicle = "";
+                    switch (item.TypeOfVehicle)
+                    {
+                        case 0:
+                            typeVehicle = "Xe Máy";
+                            break;
+                        case 1:
+                            typeVehicle = "Ô tô";
+                            break;
+                    }
+                    newRow["Tên chủ thẻ"] = item.CusName;
+                    newRow["Số CMND"] = item.IdentityCard;
+                    newRow["Số điện thoại"] = item.Phone;
+                    newRow["Email"] = item.Email;
+                    newRow["Loại xe"] = typeVehicle;
+                    newRow["Ngày đăng kí"] = item.RegisDate;
+                    newRow["Ngày hết hạn"] = item.ExpiryDate;
+
+                    dt.Rows.Add(newRow);
                 }
-                newRow["Tên chủ thẻ"] = item.CusName;
-                newRow["Số CMND"] = item.IdentityCard;
-                newRow["Số điện thoại"] = item.Phone;
-                newRow["Email"] = item.Email;
-                newRow["Loại xe"] = typeVehicle;
-                newRow["Ngày đăng kí"] = item.RegisDate;
-                newRow["Ngày hết hạn"] = item.ExpiryDate;
-                //newRow["Số CMND"] = item.IdentityCard;
-                //// newRow["Ngày ký HĐ"] = item.UserName;
-                //// newRow["Ngày hết HĐ"] = item.UserName;
-                //newRow["Ngày Ký HĐ"] = item.ContractSigningDate;
-                //newRow["Ngày Hết HĐ"] = item.ContractExpirationDate;
-                //newRow["Ngày Gia hạn"] = item.ContractRenewalDate;
-                //newRow["Chức vụ"] = item.Role.RoleName;
-                //newRow["Bãi làm việc"] = item.ParkingPlace.NameOfParking;
-                // newRow["Số CMND"] = item.UserName;
-                //full fesh
 
-                dt.Rows.Add(newRow);
+                //====================================================
+                alluser.DataSource = dt;
+                // gv.DataSource = ds;
+                alluser.DataBind();
+
+                Response.ClearContent();
+                Response.Buffer = true;
+
+                Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
+                Response.ContentType = "application/ms-excel";
+
+                Response.Charset = "";
+                StringWriter objStringWriter = new StringWriter();
+                HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+
+                alluser.RenderControl(objHtmlTextWriter);
+
+                Response.Output.Write(objStringWriter.ToString());
+                Response.Flush();
+                Response.End();
+                return Redirect("/ManageTicket");
             }
-
-            //====================================================
-            alluser.DataSource = dt;
-            // gv.DataSource = ds;
-            alluser.DataBind();
-
-            Response.ClearContent();
-            Response.Buffer = true;
-
-            Response.AddHeader("content-disposition", "attachment; filename=danh-sach.xls");
-            Response.ContentType = "application/ms-excel";
-
-            Response.Charset = "";
-            StringWriter objStringWriter = new StringWriter();
-            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
-
-            alluser.RenderControl(objHtmlTextWriter);
-
-            Response.Output.Write(objStringWriter.ToString());
-            Response.Flush();
-            Response.End();
-            return Redirect("/ManageTicket");
+            catch (Exception)
+            {
+                return Redirect("/ErrorPage");
+            }
         }
 
         public JsonResult ComboboxTicket()
         {
-            var typeOfVehicles = new { motobike = "Xe máy", car = "Ô tô" };
-            var numberCards = (from c in db.Cards
-                              where c.Status == 0
-                              select new { c.CardNumber,c.CardID }).ToList();
-            return Json( new { numberCards , typeOfVehicles } , JsonRequestBehavior.AllowGet);
+            try
+            {
+                var typeOfVehicles = new { motobike = "Xe máy", car = "Ô tô" };
+                var numberCards = (from c in db.Cards
+                                   where c.Status == 0
+                                   select new { c.CardNumber, c.CardID }).ToList();
+                return Json(new { numberCards, typeOfVehicles }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //get price of monthly ticket base on typeOfVehicle
         public JsonResult GetPriceMonthly(int typeOfVehicle, int parkingPlaceID)
         {
-            var result = (from p in db.MothlyPrices
-                          where p.TypeOfvehicle == typeOfVehicle && p.ParkingPlaceID == parkingPlaceID && p.TimeOfApplyMontlhyPrice <= DateTime.Now
-                          orderby p.TimeOfApplyMontlhyPrice descending
-                          select new { p.MonthlyPrice }).FirstOrDefault();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var result = (from p in db.MothlyPrices
+                              where p.TypeOfvehicle == typeOfVehicle && p.ParkingPlaceID == parkingPlaceID && p.TimeOfApplyMontlhyPrice <= DateTime.Now
+                              orderby p.TimeOfApplyMontlhyPrice descending
+                              select new { p.MonthlyPrice }).FirstOrDefault();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("LoadFalse", JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }
