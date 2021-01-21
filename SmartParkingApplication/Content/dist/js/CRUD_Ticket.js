@@ -250,275 +250,6 @@ function clearTextBoxTicket() {
     $('#cbCardNumberTK').val(null).trigger('change');
 }
 
-//Create MonthlyIncomeStatment
-function CreateMonthlyIncome(id, totalPrice) {
-    $.ajax({
-        url: "/ManageTicket/CreateMonthlyIncome",
-        type: "POST",
-        data: JSON.stringify({ id: id, totalPrice: totalPrice }),
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            if (result == "AddFalse") {
-                alert("Thêm doanh thu vé tháng không thành công!");
-            }
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-var checkLicensePlateExist;
-function AddTicket() {
-    var res = validateAddTicket();
-    if (res == false) {
-        return false;
-    }
-    checkLicensePlateExist = true;
-    var empTicketObj = {
-        CusName: $('#CusNameTK').val(),
-        IdentityCard: $('#IdentityCardTK').val(),
-        Phone: $('#PhoneTK').val(),
-        Email: $('#EmailTK').val(),
-        TypeOfVehicle: $('#cbTypeOfVehicleTK').val(),
-        LicensePlates: $('#LicensePlatesTK').val(),
-        ParkingPlaceID: $('#cbNameParkingPlaceTK').val(),
-        RegisDate: $('#RegisDateTK').val(),
-        ExpiryDate: $('#ExpiryDateTK').val(),
-        CardID: $('#cbCardNumberTK').val()
-    };
-    $.ajax({
-        url: "/ManageTicket/CheckExistLicensePlatesToAdd",
-        data: JSON.stringify(empTicketObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result == "AddFalse") {
-                alert("Tạo vé tháng không thành công!");
-            } else {
-                if (result.check == true) {
-                    validateAddTicket();
-                    checkLicensePlateExist = false;
-                    return false;
-                } else {
-                    checkLicensePlateExist = false;
-                    $('#tbTicket').DataTable().clear().destroy();
-                    UpdateCardByID($('#cbCardNumberTK').val());
-                    CreateMonthlyIncome(result.MonthlyTicketID, $('#priceTK').val());
-                    loadDataTicket();
-                    $('#myModalTicket').modal('hide');
-                }
-            }
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-//Update Extend ticket
-function UpdateExtendTK() {
-    var res = validateExtendTK();
-    if (res == false) {
-        return false;
-    }
-    var empTicketObj = {
-        MonthlyTicketID: $('#MonthlyTicketETK').val(),
-        CusName: $('#CusNameETK').val(),
-        IdentityCard: $('#IdentityCardETK').val(),
-        Phone: $('#PhoneETK').val(),
-        Email: $('#EmailETK').val(),
-        ParkingPlaceID: $('#ParkingPlaceIDETK').val(),
-        TypeOfVehicle: $('#TypeOfVehicleETK').val(),
-        LicensePlates: $('#LicensePlatesETK').val(),
-        RegisDate: $('#RegisDateETK').val(),
-        ExpiryDate: $('#ExpiryDateETk').val(),
-        CardID: $('#CardIDETK').val(),
-    };
-    $.ajax({
-        url: "/ManageTicket/UpdateTicket",
-        data: JSON.stringify(empTicketObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result == "UpdateFalse") {
-                alert("Gia hạn vé không thành công!");
-            } else {
-                $('#tbTicket').DataTable().clear().destroy();
-                CreateMonthlyIncome($('#MonthlyTicketETK').val(), $('#priceETK').val());
-                loadDataTicket();
-                $('#myModalExtendTicket').modal('hide');
-            }
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-//Update Re Register ticket
-function UpdateReRegister() {
-    var res = validateReRegister();
-    if (res == false) {
-        return false;
-    }
-    var empTicketObj = {
-        MonthlyTicketID: $('#MonthlyTicketIDRe').val(),
-        CusName: $('#CusNameRe').val(),
-        IdentityCard: $('#IdentityCardRe').val(),
-        Phone: $('#PhoneRe').val(),
-        Email: $('#EmailRe').val(),
-        ParkingPlaceID: $('#ParkingPlaceIDRe').val(),
-        TypeOfVehicle: $('#TypeOfVehicleRe').val(),
-        LicensePlates: $('#LicensePlatesRe').val(),
-        RegisDate: $('#RegisDateRe').val(),
-        ExpiryDate: $('#ExpiryDateRe').val(),
-        CardID: $('#CardIDRe').val(),
-    };
-    $.ajax({
-        url: "/ManageTicket/UpdateTicket",
-        data: JSON.stringify(empTicketObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result == "UpdateFalse") {
-                alert("Đăng ký lại vé không thành công!");
-            } else {
-                $('#tbTicket').DataTable().clear().destroy();
-                CreateMonthlyIncome($('#MonthlyTicketIDRe').val(), $('#priceRe').val());
-                loadDataTicket();
-                $('#myModalReRegisterTicket').modal('hide');
-            }
-
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-//Change status to using card when add ticket success
-function UpdateCardByID(CardID) {
-    var idC = CardID;
-    $.ajax({
-        url: "/ManageCard/UpdateCardByID",
-        data: "{ idCard :" + idC + "}",
-        type: "POST",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            if (result == "UpdateFalse") {
-                alert("Cập nhật trạng thái thẻ không thành công!");
-            }
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-
-var checkLicensePlateExistUpdate;
-//Edit info ticket
-function UpdateInfoTicket() {
-    var res = validateEditTicket();
-    if (res == false) {
-        return false;
-    }
-    var checkbox = document.getElementById("checkboxChange");
-    var cardID;
-    if (checkbox.checked == true) {
-        cardID = $('#cbCardNumberEdit').val();
-    } else {
-        cardID = $('#CardNumberOld').val();
-    }
-    checkLicensePlateExistUpdate = true;
-    var empTicketObj = {
-        MonthlyTicketID: $('#MonthlyTicketIdEdit').val(),
-        CusName: $('#CusNameEdit').val(),
-        IdentityCard: $('#IdentityCardEdit').val(),
-        Phone: $('#PhoneEdit').val(),
-        Email: $('#EmailEdit').val(),
-        ParkingPlaceID: $('#ParkingPlaceEdit').val(),
-        TypeOfVehicle: $('#TypeOfVehicleEdit').val(),
-        LicensePlates: $('#LicensePlatesEdit').val(),
-        RegisDate: $('#RegisDateEdit').val(),
-        ExpiryDate: $('#ExpiryDateEdit').val(),
-        CardID: cardID,
-    };
-    $.ajax({
-        url: "/ManageTicket/CheckExistLicensePlatesToUpdate",
-        data: JSON.stringify(empTicketObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result == "UpdateFalse") {
-                alert("Cập nhật thông tin vé không thành công!");
-            } else {
-                if (result == true) {
-                    validateEditTicket();
-                    checkLicensePlateExistUpdate = false;
-                    return false;
-                } else {
-                    checkLicensePlateExistUpdate = false;
-                    if (checkbox.checked == true) {
-                        UpdateCardByID($('#cbCardNumberEdit').val());
-                    }
-                    $('#tbTicket').DataTable().clear().destroy();
-                    ComboboxTicket();
-                    loadDataTicket();
-                    $('#myModalEditTicket').modal('hide');
-                }
-            }
-
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
-//Drop contract ticket
-function UpdateDropContractTicket() {
-    var empTicketObj = {
-        MonthlyTicketID: $('#MonthlyTicketDC').val(),
-        CusName: $('#CusNameDC').val(),
-        IdentityCard: $('#IdentityCardDC').val(),
-        Phone: $('#PhoneDC').val(),
-        Email: $('#EmailDC').val(),
-        TypeOfVehicle: $('#TypeOfVehicleDC').val(),
-        ParkingPlaceID: $('#ParkingPlaceDC').val(),
-        LicensePlates: $('#LicensePlatesDC').val(),
-        RegisDate: $('#RegisDateDC').val(),
-        ExpiryDate: $('#ExpiryDateDC').val(),
-        CardID: $('#CardIDDC').val(),
-    };
-    $.ajax({
-        url: "/ManageTicket/UpdateTicket",
-        data: JSON.stringify(empTicketObj),
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result == "UpdateFalse") {
-                alert("Chấm dứt hợp đồng không thành công!");
-            } else {
-                $('#tbTicket').DataTable().clear().destroy();
-                loadDataTicket();
-                $('#myModalDropContractTicket').modal('hide');
-            }
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
-}
-
 //get ticket by id to fill modal DetailTicket
 function getTicketByIDDetail(MonthlyTicketID) {
     $.ajax({
@@ -775,6 +506,101 @@ function clearETK() {
 }
 
 //Valdidation using jquery
+function validateEditTicket() {
+    var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
+    var idcard = new RegExp('^[0-9]{9,}$');
+    var plate = new RegExp('^[0-9]{2}[A-Z]{1}[0-9]{5,6}$');
+    //Díplay css of error message
+    var htmlcss = {
+        'color': 'Red'
+    }
+    $.validator.setDefaults({
+        errorClass: 'help-block',
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $(element).css('border-color', 'Red');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $(element).css('border-color', 'lightgrey');
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo($(element).parent()).css(htmlcss);
+        }
+    });
+    //Set custom valid by rule
+    $.validator.addMethod('checkOwnerNameE', function (value, element) {
+        return $.trim(value).length > 4;
+    });
+    $.validator.addMethod('checkIDCardE', function (value, element) {
+        return idcard.test(value);
+    });
+    $.validator.addMethod('checkPhoneE', function (value, element) {
+        return phone.test(value);
+    });
+    $.validator.addMethod('checkPlateE', function (value, element) {
+        return plate.test(value);
+    });
+    $.validator.addMethod('checkPlateEExist', function (value, element) {
+        return checkLicensePlateExistUpdate != true;
+    }, 'Biển số đã tồn tại trong bãi.');
+    //Set rule for input by name
+    $('#FormEditTicket').validate({
+        rules: {
+            CusNameEdit: {
+                required: true,
+                checkOwnerNameE: true
+            },
+            PhoneEdit: {
+                required: true,
+                checkPhoneE: true
+            },
+            IdentityCardEdit: {
+                required: true,
+                checkIDCardE: true
+            },
+            EmailEdit: {
+                required: true,
+                email: true
+            },
+            LicensePlatesEdit: {
+                required: true,
+                checkPlateE: true,
+                checkPlateEExist: true
+            },
+            cbCardNumberEdit: {
+                required: true
+            }
+        },
+        messages: {
+            CusNameEdit: {
+                required: '*Bắt buộc.',
+                checkOwnerNameE: 'Tên chủ xe có ít nhất 5 kí tự!'
+            },
+            PhoneEdit: {
+                required: '*Bắt buộc.',
+                checkPhoneE: 'Số điện thoại định dạng sai!'
+            },
+            IdentityCardEdit: {
+                required: '*Bắt buộc.',
+                checkIDCardE: 'CMND/CCCD định dạng sai!'
+            },
+            EmailEdit: {
+                required: '*Bắt buộc.',
+                email: 'Email định dạng sai!'
+            },
+            LicensePlatesEdit: {
+                required: '*Bắt buộc.',
+                checkPlateE: 'Biển số định dạng sai!'
+            },
+            cbCardNumberEdit: {
+                required: '*Bắt buộc.'
+            }
+        }
+    });
+    return $('#FormEditTicket').valid();
+}
+
 function validateAddTicket() {
     var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
     var idcard = new RegExp('^[0-9]{9,}$');
@@ -961,99 +787,4 @@ function validateExtendTK() {
         }
     });
     return $('#FormExTK').valid();
-}
-
-function validateEditTicket() {
-    var phone = new RegExp('^((09|03|07|08|05)+([0-9]{8})\\b)$');
-    var idcard = new RegExp('^[0-9]{9,}$');
-    var plate = new RegExp('^[0-9]{2}[A-Z]{1}[0-9]{5,6}$');
-    //Díplay css of error message
-    var htmlcss = {
-        'color': 'Red'
-    }
-    $.validator.setDefaults({
-        errorClass: 'help-block',
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-            $(element).css('border-color', 'Red');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-            $(element).css('border-color', 'lightgrey');
-        },
-        errorPlacement: function (error, element) {
-            error.appendTo($(element).parent()).css(htmlcss);
-        }
-    });
-    //Set custom valid by rule
-    $.validator.addMethod('checkOwnerNameE', function (value, element) {
-        return $.trim(value).length > 4;
-    });
-    $.validator.addMethod('checkIDCardE', function (value, element) {
-        return idcard.test(value);
-    });
-    $.validator.addMethod('checkPhoneE', function (value, element) {
-        return phone.test(value);
-    });
-    $.validator.addMethod('checkPlateE', function (value, element) {
-        return plate.test(value);
-    });
-    $.validator.addMethod('checkPlateEExist', function (value, element) {
-        return checkLicensePlateExistUpdate != true;
-    }, 'Biển số đã tồn tại trong bãi.');
-    //Set rule for input by name
-    $('#FormEditTicket').validate({
-        rules: {
-            CusNameEdit: {
-                required: true,
-                checkOwnerNameE: true
-            },
-            PhoneEdit: {
-                required: true,
-                checkPhoneE: true
-            },
-            IdentityCardEdit: {
-                required: true,
-                checkIDCardE: true
-            },
-            EmailEdit: {
-                required: true,
-                email: true
-            },
-            LicensePlatesEdit: {
-                required: true,
-                checkPlateE: true,
-                checkPlateEExist: true
-            },
-            cbCardNumberEdit: {
-                required: true
-            }
-        },
-        messages: {
-            CusNameEdit: {
-                required: '*Bắt buộc.',
-                checkOwnerNameE: 'Tên chủ xe có ít nhất 5 kí tự!'
-            },
-            PhoneEdit: {
-                required: '*Bắt buộc.',
-                checkPhoneE: 'Số điện thoại định dạng sai!'
-            },
-            IdentityCardEdit: {
-                required: '*Bắt buộc.',
-                checkIDCardE: 'CMND/CCCD định dạng sai!'
-            },
-            EmailEdit: {
-                required: '*Bắt buộc.',
-                email: 'Email định dạng sai!'
-            },
-            LicensePlatesEdit: {
-                required: '*Bắt buộc.',
-                checkPlateE: 'Biển số định dạng sai!'
-            },
-            cbCardNumberEdit: {
-                required: '*Bắt buộc.'
-            }
-        }
-    });
-    return $('#FormEditTicket').valid();
 }

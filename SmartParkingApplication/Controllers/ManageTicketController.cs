@@ -20,7 +20,7 @@ namespace SmartParkingApplication.Controllers
         // GET: ManageUser
         public ActionResult Index()
         {
-           return View();
+            return View();
         }
 
         //load list monthly ticket
@@ -76,8 +76,9 @@ namespace SmartParkingApplication.Controllers
             }
             return Json(new { dataTicket = list, total }, JsonRequestBehavior.AllowGet);
         }
-
+        
         //check license plate exist or not if not exist update info monthly ticket
+        [HttpPost]
         public JsonResult CheckExistLicensePlatesToUpdate(MonthlyTicket monthlyTicket)
         {
             var check = true;
@@ -117,6 +118,7 @@ namespace SmartParkingApplication.Controllers
         }
 
         //check license plate exist or not if not exist add monthly ticket
+        [HttpPost]
         public JsonResult CheckExistLicensePlatesToAdd(MonthlyTicket monthlyTicket)
         {
             var check = true;
@@ -126,7 +128,7 @@ namespace SmartParkingApplication.Controllers
                 var result = (from m in db.MonthlyTickets
                               where m.LicensePlates == monthlyTicket.LicensePlates && m.ParkingPlaceID == monthlyTicket.ParkingPlaceID
                               select new { m.LicensePlates }).FirstOrDefault();
-                
+
                 if (result == null)
                 {
                     ticket = Create(monthlyTicket);
@@ -137,7 +139,7 @@ namespace SmartParkingApplication.Controllers
             {
                 return Json("AddFalse", JsonRequestBehavior.AllowGet);
             }
-            return Json(new { check, ticket.MonthlyTicketID } , JsonRequestBehavior.AllowGet);
+            return Json(new { check, ticket.MonthlyTicketID }, JsonRequestBehavior.AllowGet);
         }
 
         public MonthlyTicket Create(MonthlyTicket ticket)
@@ -186,6 +188,7 @@ namespace SmartParkingApplication.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult UpdateTicket(MonthlyTicket ticket)
         {
             try
@@ -204,6 +207,7 @@ namespace SmartParkingApplication.Controllers
             return Json(ticket, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public void UpdateOldCard(Card card)
         {
             if (ModelState.IsValid)
@@ -214,7 +218,8 @@ namespace SmartParkingApplication.Controllers
         }
 
         //Create MonthlyIncomeStatement
-        public JsonResult CreateMonthlyIncome(int id,string totalPrice)
+        [HttpPost]
+        public JsonResult CreateMonthlyIncome(int id, string totalPrice)
         {
             try
             {

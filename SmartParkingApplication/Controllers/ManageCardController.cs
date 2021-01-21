@@ -61,6 +61,7 @@ namespace SmartParkingApplication.Controllers
             return Json(new { dataCard = list, total}, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public JsonResult CheckCardToAdd(Card card)
         {
             var check = true;
@@ -81,6 +82,7 @@ namespace SmartParkingApplication.Controllers
             return Json(check, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public void Create(Card card)
         {
             if (ModelState.IsValid)
@@ -133,6 +135,7 @@ namespace SmartParkingApplication.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult UpdateCardByID(string idCard)
         {
             try
@@ -156,6 +159,7 @@ namespace SmartParkingApplication.Controllers
         }
 
         //check Card exist or not if not exist, update card
+        [HttpPost]
         public JsonResult CheckCardToUpdate(Card card)
         {
             try
@@ -179,6 +183,7 @@ namespace SmartParkingApplication.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult UpdateCard(Card card)
         {
             try
